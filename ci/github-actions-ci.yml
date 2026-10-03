@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    # The pipeline promises Node >= 20 (RUNBOOK step 1); 22 is the current LTS.
+    name: Tests (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Tests
+        run: npm test
+
+  data:
+    name: Archive and run log
+    runs-on: ubuntu-latest
+    steps:
+      # Full history: the append-only check compares with the state before this push, which can be
+      # several commits back when one push carries several commits.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate archive and run log
+        run: npm run validate
+
+      # This runs after the push has landed, so it detects a violation rather than blocking it; the
+      # blocking check is RUNBOOK step 13 (validate.mjs --against-git-ref HEAD before committing).
+      - name: Append-only check against the pre-push state
+        env:
+          BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+            BASE="$(git rev-parse --verify --quiet HEAD^ || true)"
+          fi
+          if [ -z "$BASE" ]; then
+            echo "No base commit (first commit): append-only check skipped."
+            exit 0
+          fi
+          if ! git cat-file -e "${BASE}^{commit}" 2>/dev/null; then
+            git fetch --no-tags origin "$BASE" || {
+              echo "::error::Base commit $BASE is not available (history rewritten or force-pushed?); the append-only check cannot run."
+              exit 1
+            }
+          fi
+          echo "Append-only check against $BASE"
+          node pipeline/scripts/validate.mjs --against-git-ref "$BASE" --quiet

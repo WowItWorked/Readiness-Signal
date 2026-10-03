@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emergingtechrisk.com/Readiness-Signal/schema/run.schema.json",
+  "title": "Readiness Signal run record",
+  "description": "One record per scheduled run in docs/data/runs.json (SPEC §3.3), written by publish.mjs whether the run published, was silent or failed. Documentation only: validation (including cross-checks against the archive) is in pipeline/lib/validate.mjs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id", "slot", "started_at", "finished_at", "status", "items", "threshold_level", "funnel",
+    "stage2_by_section", "mechanism_distribution"
+  ],
+  "properties": {
+    "run_id": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}-(0600|1000|1400|1800)$" },
+    "slot": { "$ref": "#/$defs/et_iso", "description": "Edition slot in ET; must match run_id." },
+    "started_at": { "$ref": "#/$defs/et_iso" },
+    "finished_at": { "$ref": "#/$defs/et_iso" },
+    "status": {
+      "enum": ["published", "silent", "failed"],
+      "description": "published iff items is non-empty; a silent run is logged but is not an edition."
+    },
+    "items": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^RS-\\d{6}-\\d{4}-\\d{2}$" },
+      "description": "Ids of the items this run appended; each exists in the archive with timestamp == slot."
+    },
+    "threshold_level": { "type": "string", "pattern": "^[a-z_]{1,20}$", "description": "'high' at launch." },
+    "funnel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sources_ok", "sources_failed", "fetched", "in_window", "unseen", "stage1_pass", "stage2_pass", "dedup_dropped", "published"],
+      "properties": {
+        "sources_ok": { "$ref": "#/$defs/count" },
+        "sources_failed": { "$ref": "#/$defs/count" },
+        "fetched": { "$ref": "#/$defs/count", "description": "Entries parsed from responding sources." },
+        "in_window": { "$ref": "#/$defs/count", "description": "Distinct candidates inside the collection window (incl. manual additions)." },
+        "unseen": { "$ref": "#/$defs/count", "description": "In-window candidates not in seen.json." },
+        "stage1_pass": { "$ref": "#/$defs/count" },
+        "stage2_pass": { "$ref": "#/$defs/count", "description": "Stories that passed stage 2: judgments with verdict pass that are not cluster_merged members (FILTER.md 8.1 counts stories, not members)." },
+        "dedup_dropped": { "$ref": "#/$defs/count", "description": "Stage-1 survivors removed by stage-3 dedup: resurfacing published stories (same_story_dropped, the cross-run drops) plus members merged into another candidate's story (cluster_merged)." },
+        "published": { "$ref": "#/$defs/count", "description": "== items.length == stage2_pass (each passing story is one item)." }
+      }
+    },
+    "stage2_by_section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["executive_visibility", "capability_shift", "regulatory_trajectory"],
+      "properties": {
+        "executive_visibility": { "$ref": "#/$defs/tested_passed" },
+        "capability_shift": { "$ref": "#/$defs/tested_passed" },
+        "regulatory_trajectory": { "$ref": "#/$defs/tested_passed" }
+      }
+    },
+    "mechanism_distribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_issue", "kri_kpi", "praf_coverage", "awareness_only"],
+      "properties": {
+        "candidate_issue": { "$ref": "#/$defs/count" },
+        "kri_kpi": { "$ref": "#/$defs/count" },
+        "praf_coverage": { "$ref": "#/$defs/count" },
+        "awareness_only": { "$ref": "#/$defs/count" }
+      },
+      "description": "Counts over this run's published items; sums to items.length."
+    },
+    "notes": { "type": "string", "maxLength": 280 }
+  },
+  "$defs": {
+    "et_iso": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}[+-]\\d{2}:\\d{2}$" },
+    "count": { "type": "integer", "minimum": 0 },
+    "tested_passed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tested", "passed"],
+      "properties": { "tested": { "$ref": "#/$defs/count" }, "passed": { "$ref": "#/$defs/count" } }
+    }
+  }
+}

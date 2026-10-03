@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FICTIONAL TEST FIXTURE: not real publications or events. -->
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="https://research.example.org/">
+  <title>Example Research Notes</title>
+  <link rel="self" href="https://research.example.org/atom.xml"/>
+  <updated>2026-10-02T09:00:00Z</updated>
+  <entry>
+    <title type="html">Loss data &lt;em&gt;study&lt;/em&gt; quantifies third-party outage costs</title>
+    <link rel="self" href="https://research.example.org/api/entries/7"/>
+    <link rel="alternate" type="text/html" href="notes/2026/outage-costs"/>
+    <id>tag:research.example.org,2026:7</id>
+    <published>2026-10-02T08:00:00-04:00</published>
+    <updated>2026-10-02T09:30:00-04:00</updated>
+    <summary type="html">&lt;p&gt;An analysis of 400 incidents estimates median losses per outage hour.&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;FULL ATOM CONTENT THAT MUST NEVER BE STORED.&lt;/p&gt;</content>
+    <source>
+      <title>Upstream Syndication Title Must Be Ignored</title>
+      <link rel="alternate" href="https://upstream.example.net/"/>
+    </source>
+  </entry>
+  <entry>
+    <title>Entry with only an updated date</title>
+    <link href="https://research.example.org/notes/2026/updated-only"/>
+    <id>https://research.example.org/notes/2026/updated-only</id>
+    <updated>2026-09-30T12:00:00Z</updated>
+    <summary>Plain summary.</summary>
+  </entry>
+  <entry>
+    <title>Entry without any date</title>
+    <id>https://research.example.org/notes/2026/no-date</id>
+  </entry>
+</feed>

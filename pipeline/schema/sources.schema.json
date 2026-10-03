@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emergingtechrisk.com/Readiness-Signal/schema/sources.schema.json",
+  "title": "Readiness Signal source registry (pipeline/sources.json)",
+  "description": "Public sources the pipeline collects from. Documentation only: validated in code by pipeline/lib/sources.mjs (unknown keys are warnings, not errors).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "sources"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "publication", "source_class", "type", "url", "paywalled", "region", "notes"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Unique kebab-case id." },
+          "publication": { "type": "string", "minLength": 1, "description": "Name shown as the source publication." },
+          "source_class": { "enum": ["news", "regulator", "standards_body", "industry_trade", "vendor_threat_research", "research_analysis"] },
+          "type": {
+            "enum": ["feed", "cisa-kev", "page"],
+            "description": "feed: RSS 2.0 / Atom / RSS 1.0 (RDF), auto-detected. cisa-kev: the CISA KEV catalogue JSON (one candidate per CVE added in the window, url = the CISA catalogue entry for that CVE; the collector's headline is marked headline_composed and is omitted from item sources). page: read manually by the agent, listed as 'manual' in fetch-report.json; add what is found with add-manual.mjs."
+          },
+          "url": { "type": "string", "pattern": "^https://", "format": "uri" },
+          "paywalled": { "type": "boolean", "description": "Paywalled publications: headline and lead-level reference only; lead capped at 40 words." },
+          "region": { "enum": ["US", "UK", "EU", "INTL"] },
+          "lead_words": { "type": "integer", "minimum": 0, "maximum": 200, "default": 60, "description": "Words of description/summary kept as the lead. Paywalled sources: max 40." },
+          "notes": { "type": "string" },
+          "tier": {
+            "enum": ["general", "trade"],
+            "description": "Optional, news sources only. general = general or business press; trade = trade or specialist press. Used for FILTER.md 2.7.4 prominence and the 2.9 source order (general before trade; within a tier, public before paywalled)."
+          },
+          "enabled": { "type": "boolean", "default": true, "description": "Optional. false skips the source without deleting it." },
+          "exclude_url_patterns": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 3 },
+            "description": "Optional. Entries whose link contains any of these substrings (case-insensitive) are skipped at fetch and counted as excluded, e.g. [\"/event-info/\"] for sponsored webinar listings. Event-listing URL segments are also dropped at stage 1 for every source (lexicon EVENT_URL_SEGMENTS)."
+          },
+          "prefilter": {
+            "enum": ["lenient", "authority", "primary", "standard", "strict", "high_volume"],
+            "description": "Optional stage-1 profile override (default by class: regulator/standards_body lenient; vendor_threat_research primary, or authority on a government CERT host such as cisa.gov or ncsc.gov.uk; news/industry_trade standard; research_analysis strict; arXiv/SSRN hosts high_volume)."
+          }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "paywalled": { "const": true } }, "required": ["lead_words"] },
+            "then": { "properties": { "lead_words": { "maximum": 40 } } }
+          }
+        ]
+      }
+    }
+  }
+}

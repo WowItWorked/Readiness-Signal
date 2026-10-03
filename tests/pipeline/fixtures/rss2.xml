@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FICTIONAL TEST FIXTURE: not real publications or events. -->
+<rss version="2.0"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>Example Security Wire</title>
+    <link>https://news.example.com/</link>
+    <description>Fixture feed</description>
+    <atom:link href="https://news.example.com/feed/" rel="self" type="application/rss+xml"/>
+    <item>
+      <title><![CDATA[Attackers exploit zero-day in Example Gateway &amp; VPN appliances]]></title>
+      <link>https://news.example.com/2026/10/gateway-zero-day/?utm_source=rss&amp;utm_medium=feed</link>
+      <guid isPermaLink="false">example-1001</guid>
+      <pubDate>Fri, 02 Oct 2026 13:15:00 +0000</pubDate>
+      <media:title>Media title must be ignored</media:title>
+      <description><![CDATA[<p>Threat actors are <b>actively exploiting</b> a pre-authentication flaw in Example Gateway devices, the vendor said on Friday.</p><p>The post Attackers exploit zero-day appeared first on Example Security Wire.</p>]]></description>
+      <content:encoded><![CDATA[<p>FULL BODY TEXT THAT MUST NEVER BE STORED. Paragraph two of the full article.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Regulator&#8217;s speech flags AI model risk &#x2014; “early signal”</title>
+      <link>/2026/10/regulator-speech-ai/</link>
+      <dc:date>2026-10-01T18:30:00Z</dc:date>
+      <description>&lt;p&gt;A deputy governor said firms &amp;amp; vendors must evidence model validation.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Undated item with permalink guid</title>
+      <guid>https://news.example.com/2026/10/undated-item</guid>
+      <description>No date on this one.</description>
+    </item>
+    <item>
+      <title>Date-only publication</title>
+      <link>https://news.example.com/2026/09/date-only</link>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+      <description>one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twenty-one twenty-two twenty-three twenty-four twenty-five twenty-six twenty-seven twenty-eight twenty-nine thirty thirty-one thirty-two thirty-three thirty-four thirty-five thirty-six thirty-seven thirty-eight thirty-nine forty forty-one forty-two forty-three forty-four forty-five forty-six forty-seven forty-eight forty-nine fifty fifty-one fifty-two fifty-three fifty-four fifty-five fifty-six fifty-seven fifty-eight fifty-nine sixty sixty-one sixty-two sixty-three sixty-four sixty-five</description>
+    </item>
+  </channel>
+</rss>

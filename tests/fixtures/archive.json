@@ -1,0 +1,1440 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "RS-260115-1000-01",
+      "timestamp": "2026-01-15T10:00:00-05:00",
+      "section": "executive_visibility",
+      "claim": "Ransomware at a shared core-banking host took dozens of small banks offline for three days.",
+      "domains": [
+        "resilience",
+        "third_party",
+        "cyber"
+      ],
+      "source_class": "news",
+      "mechanism": "praf_coverage",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "Every client of the host lost core processing at once, so individual recovery plans offered no diversity. Recovery time was set by the provider’s rebuild, not by any client’s tolerance."
+        },
+        {
+          "domain": "third_party",
+          "text": "Shared hosting for core systems creates concentration that contract-by-contract reviews do not show. Exit and substitution options for a core processor are measured in months, not days."
+        },
+        {
+          "domain": "cyber",
+          "text": "The intrusion reached the provider’s shared management plane, so segmentation between client environments did not contain it."
+        },
+        {
+          "domain": "risk_quantification",
+          "text": "Correlated loss across many clients of one provider is a tail scenario that single-firm loss data will not contain."
+        }
+      ],
+      "validation_question": "Does the risk assessment framework include a scenario where a shared core-processing provider is unavailable for several days because of ransomware, and what recovery assumption does it use?",
+      "candidate_issue_statement": "Where the risk assessment framework has no scenario for multi-day loss of a shared core-processing provider, the severity of a correlated outage is not assessed, and recovery plans may rest on provider recovery times never tested against ransomware.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Wire",
+          "url": "https://example.com/example-wire/technology/cybersecurity/",
+          "headline": "Ransomware at banking tech provider knocks small lenders offline",
+          "published": "2026-01-14"
+        },
+        {
+          "publication": "Example Banking Association",
+          "url": "https://example.com/example-banking-association/topic/technology/",
+          "headline": "Community banks wait on core provider to restore systems",
+          "published": "2026-01-15",
+          "source_class": "industry_trade"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260219-1400-01",
+      "timestamp": "2026-02-19T14:00:00-05:00",
+      "section": "executive_visibility",
+      "claim": "A card processor breach exposed merchant-scoped payment tokens, not card numbers or security codes.",
+      "domains": [
+        "data",
+        "third_party"
+      ],
+      "source_class": "news",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "data",
+          "text": "Tokens issued for one merchant cannot be used elsewhere, and no primary account numbers or security codes were reported exposed. Reissuing cards would not reduce risk."
+        },
+        {
+          "domain": "third_party",
+          "text": "The processor sits several links down most acquiring chains, so any exposure path is fourth-party at most and limited to merchant-side token data."
+        },
+        {
+          "domain": "fraud",
+          "text": "Card-not-present fraud does not follow from merchant-scoped tokens, though phishing that cites the breach is likely while coverage lasts."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "Merchant-scoped tokens are not usable outside the issuing merchant, and no card numbers, security codes or customer credentials were reported exposed. The event stayed within the design basis of tokenisation, which card-security standards already expect, so it shows no new failure mode and no control, metric or framework action follows. Coverage is heavy enough that a director may raise it.",
+      "sources": [
+        {
+          "publication": "Example Herald",
+          "url": "https://example.com/example-herald/technology",
+          "headline": "Card processor says attackers accessed merchant token systems",
+          "published": "2026-02-18"
+        },
+        {
+          "publication": "Example Sector ISAC",
+          "url": "https://example.com/example-sector-isac/",
+          "headline": "Token breach leaves card numbers untouched, processor says",
+          "published": "2026-02-19",
+          "source_class": "industry_trade"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260305-1800-01",
+      "timestamp": "2026-03-05T18:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "A large US bank’s chief executive told investors post-quantum migration is now a board-level programme.",
+      "domains": [
+        "cyber",
+        "data",
+        "risk_quantification"
+      ],
+      "source_class": "news",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Migration starts with knowing where quantum-vulnerable algorithms are used, including inside vendor products and hardware security modules. Few estates hold a complete cryptographic inventory."
+        },
+        {
+          "domain": "data",
+          "text": "Data with a long confidentiality life, such as customer records and archived keys, is exposed today to collection for later decryption."
+        },
+        {
+          "domain": "risk_quantification",
+          "text": "Without an inventory the exposure cannot be sized, so migration cost and timeline estimates rest on assumption rather than evidence."
+        },
+        {
+          "domain": "third_party",
+          "text": "Much of the cryptography in use sits inside supplier software, so migration depends on vendor roadmaps outside direct control."
+        }
+      ],
+      "validation_question": "Is there a current inventory of systems and vendor products relying on quantum-vulnerable cryptography, and is migration progress reported to an accountable executive?",
+      "candidate_issue_statement": "Where no inventory of quantum-vulnerable cryptography is maintained and migration progress is not reported, exposure of long-lived data to collection for later decryption cannot be sized, and the migration timeline cannot be evidenced to the board.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Wire",
+          "url": "https://example.com/example-wire/business/finance/",
+          "headline": "Bank chief says quantum-safe encryption is now a board priority",
+          "published": "2026-03-05"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260308-0600-01",
+      "timestamp": "2026-03-08T06:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "A newly named ransomware group is a rebrand, using the same encryptor and access methods.",
+      "domains": [
+        "cyber"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Two independent analyses tie the encryptor code, initial-access methods and leak-site infrastructure to an established group. Detections and response playbooks written for the predecessor apply unchanged."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The group is a rebrand; its tooling and access methods are unchanged, so detections built for the predecessor still apply. Adversary capability has not shifted, only the name, so no control, metric or framework action follows.",
+      "sources": [
+        {
+          "publication": "Example Threat Lab",
+          "url": "https://example.com/example-threat-lab/en-us/category/threat-research/",
+          "headline": "New ransomware name, familiar code",
+          "published": "2026-03-06"
+        },
+        {
+          "publication": "Example Security Research",
+          "url": "https://example.com/example-security-research/en-us/security/blog/topic/threat-intelligence/",
+          "headline": "Linking a new ransomware brand to a known operator",
+          "published": "2026-03-07"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260414-1000-01",
+      "timestamp": "2026-04-14T10:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "A telecom carrier outage cut a regional bank’s branches and ATMs for a full business day.",
+      "domains": [
+        "resilience",
+        "third_party"
+      ],
+      "source_class": "news",
+      "mechanism": "praf_coverage",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "Branches and ATMs shared one carrier with no diverse routing, so a single network fault removed every physical channel at once."
+        },
+        {
+          "domain": "third_party",
+          "text": "Telecom carriers are rarely recorded as critical suppliers, so their concentration seldom appears in third-party risk reporting."
+        },
+        {
+          "domain": "fraud",
+          "text": "Customers pushed to unfamiliar channels during an outage are easier targets for impersonation scams."
+        }
+      ],
+      "validation_question": "Does the risk assessment framework include a scenario where the primary telecom carrier fails across branches and ATMs for a full day, and is carrier diversity evidenced?",
+      "candidate_issue_statement": "Where the risk assessment framework has no scenario for day-long failure of a primary telecom carrier, and carrier diversity for branches and ATMs is not evidenced, a single network fault could remove every physical channel at once without the impact having been assessed.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Tech Daily",
+          "url": "https://example.com/example-tech-daily/news/business",
+          "headline": "Network fault leaves bank branches and cash machines offline",
+          "published": "2026-04-13"
+        },
+        {
+          "publication": "Example Central Bank",
+          "url": "https://example.com/example-central-bank/news-centre",
+          "headline": "Statement on fixed network resilience incident",
+          "published": "2026-04-14",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260506-1400-01",
+      "timestamp": "2026-05-06T14:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Researchers showed an email-reading AI assistant can be steered by hidden text into leaking files.",
+      "domains": [
+        "ai",
+        "data",
+        "cyber"
+      ],
+      "source_class": "research_analysis",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "Assistants that read untrusted content and can also act on internal data turn every inbound message into a possible instruction. Model-level filtering reduced the attack but did not stop it."
+        },
+        {
+          "domain": "data",
+          "text": "Exfiltration ran through the assistant’s own permissions, so data-loss controls that watch human users rather than agents did not trigger."
+        },
+        {
+          "domain": "cyber",
+          "text": "The attack needs no malware or credential theft; a crafted email is enough, which places it inside the phishing threat model."
+        }
+      ],
+      "validation_question": "For AI assistants that read external email or documents, is their access to internal data and outbound actions restricted and logged separately from the user’s own access?",
+      "candidate_issue_statement": "Where AI assistants that process untrusted external content can reach internal data or send content outward without separate restriction and logging, a crafted message can direct the assistant to disclose information, and the disclosure may escape controls designed around human users.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Preprint Server",
+          "url": "https://example.com/example-preprint-server/list/cs.CR/recent",
+          "headline": "Indirect prompt injection against enterprise email assistants: an empirical study",
+          "published": "2026-05-04"
+        },
+        {
+          "publication": "Example Gazette",
+          "url": "https://example.com/example-gazette/security/",
+          "headline": "Hidden text turns AI mail helper into data leaker",
+          "published": "2026-05-06",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260617-1800-01",
+      "timestamp": "2026-06-17T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "A congressional committee chair asked whether lenders can explain individual AI-driven credit declines.",
+      "domains": [
+        "ai",
+        "data"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "The question points to decision-level explanation rather than model-level documentation, a distinction that matters most for complex models."
+        },
+        {
+          "domain": "data",
+          "text": "Explaining a past decision depends on retaining the inputs and model version used at the time it was made."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "Consumer-credit rules in the US, UK and EU already require specific reasons for adverse credit decisions whatever the model type, and a question at a hearing adds no new expectation. No control, metric or framework action follows; it is logged as direction of travel in case formal guidance appears.",
+      "sources": [
+        {
+          "publication": "Example Prudential Supervisor",
+          "url": "https://example.com/example-prudential-supervisor/calendar/",
+          "headline": "Hearing: artificial intelligence in consumer lending",
+          "published": "2026-06-16"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260708-1000-01",
+      "timestamp": "2026-07-08T10:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "UK industry data show authorised push payment scams now exceed half of reported fraud losses.",
+      "domains": [
+        "fraud",
+        "risk_quantification"
+      ],
+      "source_class": "industry_trade",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "fraud",
+          "text": "The loss mix has moved from unauthorised fraud to scams in which the customer is deceived into sending the payment. Controls aimed at stolen credentials do not address it."
+        },
+        {
+          "domain": "risk_quantification",
+          "text": "Under mandatory reimbursement, scam losses land on the sending and receiving firms. Loss models calibrated on card fraud will understate the exposure."
+        }
+      ],
+      "validation_question": "Are authorised push payment scam losses, including reimbursement cost, reported separately from unauthorised fraud, and does the figure reach the committee that sets fraud appetite?",
+      "candidate_issue_statement": "If authorised push payment scam losses and reimbursement costs are not reported as a distinct indicator, growth in the largest category of fraud loss can go unseen by those setting appetite, and controls may stay weighted toward unauthorised fraud.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Payments Scheme",
+          "url": "https://example.com/example-payments-scheme/policy-and-guidance/reports-and-publications",
+          "headline": "Half-year fraud update 2026",
+          "published": "2026-07-07"
+        },
+        {
+          "publication": "Example Financial Intelligence Unit",
+          "url": "https://example.com/example-financial-intelligence-unit/news-and-updates/",
+          "headline": "APP scam reimbursement: latest performance data",
+          "published": "2026-07-06",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260729-1400-01",
+      "timestamp": "2026-07-29T14:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Synthetic-identity fraud rings now age accounts for six months before maxing out credit.",
+      "domains": [
+        "fraud",
+        "data",
+        "ai"
+      ],
+      "source_class": "regulator",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "fraud",
+          "text": "Detection tuned to behaviour in an account’s first weeks misses accounts that behave normally for two quarters before the bust-out."
+        },
+        {
+          "domain": "data",
+          "text": "Rings reuse addresses, devices and phone numbers across products; the pattern only shows when signals are linked across accounts."
+        },
+        {
+          "domain": "ai",
+          "text": "Generated identity documents now pass basic document checks at onboarding, so more synthetic identities reach the ageing stage."
+        }
+      ],
+      "validation_question": "Are bust-out credit losses tracked by account age at default, so that a shift toward longer-aged synthetic accounts would be visible?",
+      "candidate_issue_statement": "Where bust-out fraud losses are not segmented by account age, a shift toward synthetic identities aged beyond early-life monitoring would not be detected, and losses could be misclassified as ordinary credit defaults.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Data Protection Authority",
+          "url": "https://example.com/example-data-protection-authority/",
+          "headline": "Synthetic identity fraud: updated mitigation guidance",
+          "published": "2026-07-28"
+        },
+        {
+          "publication": "Example Risk Consortium",
+          "url": "https://example.com/example-risk-consortium/",
+          "headline": "Synthetic identity exposure rises for lenders",
+          "published": "2026-07-27",
+          "source_class": "industry_trade"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260819-0600-01",
+      "timestamp": "2026-08-19T06:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "A hijacked build plugin shipped a credential stealer inside signed releases for eleven days.",
+      "domains": [
+        "cyber",
+        "third_party"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Code signing attested that releases came from the expected pipeline, not that the pipeline was clean. Signature checks passed throughout."
+        },
+        {
+          "domain": "third_party",
+          "text": "Software vendors that use the plugin may have shipped affected builds to customers without knowing, so exposure extends beyond internal development."
+        },
+        {
+          "domain": "data",
+          "text": "The stealer targeted cloud keys and tokens on build hosts, which can open routes to production data stores."
+        }
+      ],
+      "validation_question": "Can every internal build and vendor product that used a specific compromised build-tool version be identified within one business day?",
+      "candidate_issue_statement": "Where internal builds and vendor products cannot be traced to the build-tool versions they used, response to a supply-chain compromise depends on manual inquiry, and affected software may stay in production for days after the compromise is public.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Intel Group",
+          "url": "https://example.com/example-intel-group/advisories/",
+          "headline": "Malicious code in build plugin releases",
+          "published": "2026-08-18"
+        },
+        {
+          "publication": "Example Gazette",
+          "url": "https://example.com/example-gazette/security/",
+          "headline": "Signed releases carried a stealer for eleven days",
+          "published": "2026-08-19",
+          "source_class": "news"
+        },
+        {
+          "publication": "Example Payments Regulator",
+          "url": "https://example.com/example-payments-regulator/news-events/cybersecurity-advisories",
+          "headline": "Supply chain compromise affecting build tooling",
+          "published": "2026-08-19",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260903-1000-01",
+      "timestamp": "2026-09-03T10:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "A 90-minute settlement system outage pushed thousands of payroll payments into the next day.",
+      "domains": [
+        "resilience",
+        "third_party"
+      ],
+      "source_class": "news",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "The outage was short; the harm came from batch cut-offs with no manual fallback, so a brief fault became a missed payday."
+        },
+        {
+          "domain": "third_party",
+          "text": "A payment system operator cannot be exited or substituted. The controllable element is the participant’s own fallback and how recently it was rehearsed."
+        }
+      ],
+      "validation_question": "If the settlement system were unavailable for two hours before payroll cut-off, is there a documented manual fallback, and when was it last rehearsed?",
+      "candidate_issue_statement": "Where no rehearsed manual fallback exists for payroll settlement when the payment system operator is unavailable before cut-off, a short outage can cause missed customer payments, and the harm depends entirely on the operator’s recovery time.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Wire",
+          "url": "https://example.com/example-wire/business/finance/",
+          "headline": "Settlement outage delays wage payments for thousands",
+          "published": "2026-09-02"
+        },
+        {
+          "publication": "Example Trade Journal",
+          "url": "https://example.com/example-trade-journal/news-and-insights/",
+          "headline": "Incident update: settlement service",
+          "published": "2026-09-02",
+          "source_class": "industry_trade"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260910-1800-01",
+      "timestamp": "2026-09-10T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "A senior US supervisor described AI model inventories as a baseline examination expectation.",
+      "domains": [
+        "ai",
+        "data"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "The remarks restate that AI use cases, including generative tools, belong in the model inventory; they do not add a new requirement."
+        },
+        {
+          "domain": "data",
+          "text": "Inventory quality was framed around lineage of training and input data, not the count of models."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "Including AI use cases in model inventories is already an expectation under existing model risk management guidance; the speech restates it rather than extending it. No control, metric or framework action follows from a restatement. Logged as direction of travel in case formal guidance follows.",
+      "sources": [
+        {
+          "publication": "Example Communications Regulator",
+          "url": "https://example.com/example-communications-regulator/newsevents/speeches.htm",
+          "headline": "Supervisory expectations for artificial intelligence in banking",
+          "published": "2026-09-10"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260918-1000-01",
+      "timestamp": "2026-09-18T10:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "A draft standards profile treats harmful actions by AI agents as a distinct operational risk event.",
+      "domains": [
+        "ai",
+        "risk_quantification"
+      ],
+      "source_class": "standards_body",
+      "mechanism": "praf_coverage",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "Agents acting with delegated credentials are treated as their own event type rather than a subset of model risk, because the harm comes from actions, not outputs."
+        },
+        {
+          "domain": "risk_quantification",
+          "text": "Loss events would need re-tagging, and historical baselines for the new category will be thin, so early estimates rest on scenario judgement."
+        },
+        {
+          "domain": "cyber",
+          "text": "An agent holding standing credentials is an attractive target, and its misuse can look like legitimate automated activity in logs."
+        }
+      ],
+      "validation_question": "Does the risk assessment framework include a scenario where an AI agent operating with delegated access takes a harmful action at scale?",
+      "candidate_issue_statement": "Where the risk assessment framework has no scenario for harmful actions by AI agents operating with delegated access, an emerging event type is neither assessed nor sized, and exposure may grow with agent adoption before it shows in loss data.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Standards Institute",
+          "url": "https://example.com/example-standards-institute/itl/ai-risk-management-framework",
+          "headline": "Draft overlay for agentic AI systems: request for comment",
+          "published": "2026-09-17"
+        },
+        {
+          "publication": "Example Credit Bureau",
+          "url": "https://example.com/example-credit-bureau/",
+          "headline": "Reference taxonomy update: AI-related loss events",
+          "published": "2026-09-16",
+          "source_class": "industry_trade"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260919-1400-01",
+      "timestamp": "2026-09-19T14:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Data-broker records now link finance staff’s personal phones to corporate org charts for pretexting.",
+      "domains": [
+        "fraud",
+        "cyber",
+        "data"
+      ],
+      "source_class": "news",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "fraud",
+          "text": "Payment approvers can be reached on personal devices, outside the corporate controls that record and filter calls and messages."
+        },
+        {
+          "domain": "cyber",
+          "text": "Pretext calls to personal numbers bypass email filtering and call recording, so the first sign may be a payment request that looks routine."
+        },
+        {
+          "domain": "data",
+          "text": "Removal from broker sites works but decays as records are re-listed, so exposure is a recurring measurement rather than a one-off fix."
+        }
+      ],
+      "validation_question": "Is the number of payment approvers and senior executives with personal contact details on major data-broker sites measured and trended, and who receives the figure?",
+      "candidate_issue_statement": "Where exposure of payment approvers’ and executives’ personal contact details is not measured, reduction of a known pretexting route cannot be evidenced, and re-listing on broker sites after removal goes unnoticed.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Times",
+          "url": "https://example.com/example-times/",
+          "headline": "How data brokers feed targeted pretexting",
+          "published": "2026-09-18"
+        },
+        {
+          "publication": "Example Incident Response",
+          "url": "https://example.com/example-incident-response/research",
+          "headline": "Reaching finance staff through personal devices",
+          "published": "2026-09-17",
+          "source_class": "vendor_threat_research"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260921-1000-01",
+      "timestamp": "2026-09-21T10:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Attackers bypassed phishing-resistant MFA by persuading help desks to re-enrol staff authentication factors.",
+      "domains": [
+        "cyber",
+        "fraud"
+      ],
+      "source_class": "industry_trade",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Phishing-resistant MFA is only as strong as its recovery path. The weakness sat in the help-desk process, not the authenticator."
+        },
+        {
+          "domain": "fraud",
+          "text": "The same pretext works on customer account recovery through contact centres, where callers are routinely helped to reset access."
+        },
+        {
+          "domain": "third_party",
+          "text": "Outsourced service desks may follow scripts that allow phone-only verification out of hours."
+        }
+      ],
+      "validation_question": "Can the service desk reset or re-enrol a staff member’s MFA factor on a phone call alone, including through any outsourced desk out of hours?",
+      "candidate_issue_statement": "Where staff MFA factors can be reset or re-enrolled through the service desk without out-of-band identity verification, phishing-resistant authentication can be bypassed by social engineering, and the bypass leaves no authentication failure to detect.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Finance Association",
+          "url": "https://example.com/example-finance-association/newsroom",
+          "headline": "Member alert: help-desk social engineering targets MFA resets",
+          "published": "2026-09-20"
+        },
+        {
+          "publication": "Example Security Research",
+          "url": "https://example.com/example-security-research/en-us/security/blog/topic/threat-intelligence/",
+          "headline": "Help-desk pretexting against financial services",
+          "published": "2026-09-19",
+          "source_class": "vendor_threat_research"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260922-0600-01",
+      "timestamp": "2026-09-22T06:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "A central bank official warned that shared AI models could amplify herding in market stress.",
+      "domains": [
+        "ai",
+        "risk_quantification"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "The concern is many firms relying on a few similar models, so that trading and risk decisions move together under stress."
+        },
+        {
+          "domain": "risk_quantification",
+          "text": "Correlated behaviour across market participants is a system-wide effect; firm-level market risk models are not built to capture it."
+        },
+        {
+          "domain": "resilience",
+          "text": "Common dependence on a few model providers also creates an operational concentration, separate from the market effect."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The remarks address system-wide herding across market participants, a macroprudential question for authorities rather than a control any single firm operates. No firm-level control, metric or framework action follows. Logged as direction of travel; supervisory follow-up would arrive through consultation first.",
+      "sources": [
+        {
+          "publication": "Example Cyber Agency",
+          "url": "https://example.com/example-cyber-agency/news/speeches",
+          "headline": "Artificial intelligence and financial stability",
+          "published": "2026-09-21"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260923-1400-01",
+      "timestamp": "2026-09-23T14:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "A lender was fined after learning of a supplier data breach from a journalist.",
+      "domains": [
+        "third_party",
+        "data"
+      ],
+      "source_class": "news",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "third_party",
+          "text": "Notification clauses existed but compliance with them was never measured; the regulator treated the gap as a control failure."
+        },
+        {
+          "domain": "data",
+          "text": "Customer notification deadlines run from the firm’s own awareness, which arrived nine days after the supplier knew."
+        }
+      ],
+      "validation_question": "Do critical supplier contracts set an incident-notification deadline, and is actual notification time measured and reported for each supplier incident?",
+      "candidate_issue_statement": "Where supplier incident-notification time is neither contractually bounded for all critical suppliers nor tracked as an indicator, third-party breaches may be learned of late, and regulatory and customer notification deadlines may be missed.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Wire",
+          "url": "https://example.com/example-wire/business/finance/",
+          "headline": "Lender penalised over slow response to supplier breach",
+          "published": "2026-09-23"
+        },
+        {
+          "publication": "Example Banking Supervisor",
+          "url": "https://example.com/example-banking-supervisor/action-weve-taken/enforcement/",
+          "headline": "Monetary penalty notice: late notification of a processor breach",
+          "published": "2026-09-22",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260923-1400-02",
+      "timestamp": "2026-09-23T14:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Ransomware crews now encrypt hypervisors and delete snapshot backups in a single automated step.",
+      "domains": [
+        "cyber",
+        "resilience",
+        "risk_quantification"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "praf_coverage",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Attacking the virtualisation layer encrypts hundreds of servers at once and bypasses endpoint tools that run inside guest systems."
+        },
+        {
+          "domain": "resilience",
+          "text": "Snapshots held on the same platform are deleted first, so recovery depends on backups that are isolated and immutable."
+        },
+        {
+          "domain": "risk_quantification",
+          "text": "Scenarios that assume partial encryption and fast snapshot restore will understate both outage duration and loss severity."
+        }
+      ],
+      "validation_question": "Does the ransomware scenario in the risk assessment framework assume loss of the virtualisation layer and its snapshots, and what recovery time does it use?",
+      "candidate_issue_statement": "Where the ransomware scenario assumes partial encryption and restore from platform snapshots, loss of the virtualisation layer with its snapshots is not assessed, and modelled outage duration and loss severity may be understated.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Exploit Watch",
+          "url": "https://example.com/example-exploit-watch/",
+          "headline": "Hypervisor-first ransomware playbooks",
+          "published": "2026-09-22"
+        },
+        {
+          "publication": "Example Payments Office",
+          "url": "https://example.com/example-payments-office/section/keep-up-to-date/reports-advisories",
+          "headline": "Advisory: ransomware targeting virtualisation platforms",
+          "published": "2026-09-23",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260925-1000-01",
+      "timestamp": "2026-09-25T10:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "Prudential supervisors signalled that critical cloud provider concentration will enter system-wide stress testing.",
+      "domains": [
+        "resilience",
+        "third_party",
+        "risk_quantification"
+      ],
+      "source_class": "regulator",
+      "mechanism": "praf_coverage",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "Expect a severe-but-plausible scenario covering simultaneous loss of one critical provider across several important services."
+        },
+        {
+          "domain": "third_party",
+          "text": "Supervisors are moving from contract-level reviews to a system-level view of where many firms share the same provider."
+        },
+        {
+          "domain": "risk_quantification",
+          "text": "Correlated provider failure will need defensible loss estimates, not illustrative figures, once supervisors compare results across firms."
+        }
+      ],
+      "validation_question": "Does the risk assessment framework include a scenario for simultaneous loss of a critical cloud provider across more than one important business service?",
+      "candidate_issue_statement": "Where the risk assessment framework has no scenario for simultaneous failure of a critical cloud provider across several important business services, an emerging supervisory expectation is unaddressed, and correlated outage losses are not sized.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Cyber Agency",
+          "url": "https://example.com/example-cyber-agency/financial-stability",
+          "headline": "Financial stability report: critical third parties and the cloud",
+          "published": "2026-09-24"
+        },
+        {
+          "publication": "Example Stability Board",
+          "url": "https://example.com/example-stability-board/bcbs/publications.htm",
+          "headline": "Consultative document: system-wide third-party concentration",
+          "published": "2026-09-23",
+          "source_class": "standards_body"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260926-1800-01",
+      "timestamp": "2026-09-26T18:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "A bank’s customer chatbot quoted outdated overdraft fees for six weeks after a fee change.",
+      "domains": [
+        "ai",
+        "data"
+      ],
+      "source_class": "news",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "The failure was stale content, not model hallucination: the assistant answered faithfully from a knowledge base that had not been updated."
+        },
+        {
+          "domain": "data",
+          "text": "Fee tables were copied into the assistant’s knowledge base rather than linked to the system of record, so a change in one did not reach the other."
+        },
+        {
+          "domain": "third_party",
+          "text": "Where the assistant is a vendor service, content refresh may sit in the vendor’s process rather than the firm’s own change control."
+        }
+      ],
+      "validation_question": "When a fee, rate or term changes, is content used by customer-facing AI assistants updated from the system of record and checked before the change takes effect?",
+      "candidate_issue_statement": "Where content used by customer-facing AI assistants is not refreshed from the system of record as part of fee and term changes, assistants can give customers incorrect pricing information, and errors may persist until complaints reveal them.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Post",
+          "url": "https://example.com/example-post/technology",
+          "headline": "Chatbot gave customers out-of-date fee information for weeks",
+          "published": "2026-09-26"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260928-0600-01",
+      "timestamp": "2026-09-28T06:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Infostealer kits now replay passkey-authenticated sessions, avoiding any re-authentication prompt.",
+      "domains": [
+        "cyber",
+        "fraud"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Phishing-resistant login protects the sign-in, not the session that follows. Long-lived session tokens are now the exposure."
+        },
+        {
+          "domain": "fraud",
+          "text": "Customer online banking sessions are exposed the same way where token lifetimes are generous and not bound to the device."
+        }
+      ],
+      "validation_question": "What is the maximum session-token lifetime for critical workforce applications and customer online banking, and are tokens bound to the device that created them?",
+      "candidate_issue_statement": "Where session tokens for critical workforce and customer applications are long-lived and not bound to a device, stolen tokens can be replayed from elsewhere, and phishing-resistant authentication is bypassed without any failed login to detect.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Code Security",
+          "url": "https://example.com/example-code-security/blog/topics/threat-intelligence",
+          "headline": "Session replay moves into commodity infostealers",
+          "published": "2026-09-27"
+        },
+        {
+          "publication": "Example Chronicle",
+          "url": "https://example.com/example-chronicle/news/security/",
+          "headline": "Stealer kit sells ready-to-replay passkey sessions",
+          "published": "2026-09-27",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260929-1000-01",
+      "timestamp": "2026-09-29T10:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "A senior US banking supervisor testified that major AI model providers may warrant direct oversight.",
+      "domains": [
+        "ai",
+        "third_party",
+        "resilience"
+      ],
+      "source_class": "regulator",
+      "mechanism": "praf_coverage",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "Behaviour changes in a widely used model, such as a version update, can alter outputs across many firms at once without any change on their side."
+        },
+        {
+          "domain": "third_party",
+          "text": "Treating model providers like critical service providers would shift attention from individual contracts to shared dependence across the sector."
+        },
+        {
+          "domain": "resilience",
+          "text": "Loss or degradation of a common model provider is a correlated outage affecting every service built on it."
+        }
+      ],
+      "validation_question": "Does the risk assessment framework include a scenario where a widely used AI model provider becomes unavailable or changes behaviour across several business services at once?",
+      "candidate_issue_statement": "Where the risk assessment framework has no scenario for unavailability or behaviour change of a shared AI model provider, concentration on that provider is not assessed, and an outage could affect several business services at once without a planned response.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example House Committee",
+          "url": "https://example.com/example-house-committee/hearings",
+          "headline": "Hearing: oversight of prudential regulators",
+          "published": "2026-09-28"
+        },
+        {
+          "publication": "Example Banking Standards Committee",
+          "url": "https://example.com/example-banking-standards-committee/publications/",
+          "headline": "Monitoring AI adoption and third-party concentration in finance",
+          "published": "2026-09-25",
+          "source_class": "standards_body"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260930-1400-01",
+      "timestamp": "2026-09-30T14:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "A faulty endpoint-security update crashed workstations at several banks for most of a morning.",
+      "domains": [
+        "resilience",
+        "third_party",
+        "cyber"
+      ],
+      "source_class": "news",
+      "mechanism": "praf_coverage",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "Recovery needed hands-on repair of each affected machine, so time to restore scaled with headcount, not with automation."
+        },
+        {
+          "domain": "third_party",
+          "text": "Security agents run with deep system privileges and update automatically, so one vendor’s release process becomes a single point of failure."
+        },
+        {
+          "domain": "cyber",
+          "text": "Delaying security updates to reduce this risk lengthens exposure to real threats; staged rollout is the usual compromise."
+        }
+      ],
+      "validation_question": "Does the risk assessment framework include a scenario where a faulty security-agent update disables most workstations at once, and does it assume manual recovery?",
+      "candidate_issue_statement": "Where the risk assessment framework has no scenario for a defective security-agent update disabling workstations at scale, manual recovery effort and service impact are not assessed, and update staging may not be required of the vendor.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Courier",
+          "url": "https://example.com/example-courier/tech/cybersecurity",
+          "headline": "Bad security update leaves bank staff locked out of PCs",
+          "published": "2026-09-30"
+        },
+        {
+          "publication": "Example Gazette",
+          "url": "https://example.com/example-gazette/security/",
+          "headline": "Endpoint agent update bricks Windows fleets",
+          "published": "2026-09-30"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-260930-1400-02",
+      "timestamp": "2026-09-30T14:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "A cyber loss-model vendor raised its ransomware severity curves for banks by about a third.",
+      "domains": [
+        "risk_quantification",
+        "cyber"
+      ],
+      "source_class": "industry_trade",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "risk_quantification",
+          "text": "The revision reflects insurance claims inflation feeding into the vendor’s severity data, not new loss experience at banks specifically."
+        },
+        {
+          "domain": "cyber",
+          "text": "No change in attack technique or frequency sits behind the revision, so threat assumptions in existing scenarios are unaffected."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The revision reflects claims-cost inflation in insured losses, not a change in attack technique, frequency or control effectiveness. A vendor curve is one calibration input among several, so no control, metric or framework change follows on this evidence alone. Worth knowing in case the figure is quoted at committee.",
+      "sources": [
+        {
+          "publication": "Example Banking Review",
+          "url": "https://example.com/example-banking-review/risk-management/operational-risk",
+          "headline": "Vendor reprices ransomware severity for banks",
+          "published": "2026-09-29"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-261001-0600-01",
+      "timestamp": "2026-10-01T06:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "A euro-area supervisor said major ICT incident reports will be benchmarked across banks next year.",
+      "domains": [
+        "resilience",
+        "cyber",
+        "data"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "Benchmarking will compare incident counts and recovery times across firms, so outliers in either direction may draw questions."
+        },
+        {
+          "domain": "cyber",
+          "text": "Cyber events dominate major ICT incident reports, so consistent classification of cyber incidents matters most to the comparison."
+        },
+        {
+          "domain": "data",
+          "text": "The benchmark uses reports already submitted under existing rules; data quality, not new data, will drive comparability."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "Benchmarking is supervisory analysis of incident reports already submitted under existing reporting rules; it adds no reporting obligation, control requirement or new risk. No control, metric or framework action follows. Logged as direction of travel, since comparisons may later prompt supervisory questions about classification.",
+      "sources": [
+        {
+          "publication": "Example Senate Committee",
+          "url": "https://example.com/example-senate-committee/press/speeches/html/index.en.html",
+          "headline": "Operational resilience: what incident data is telling supervisors",
+          "published": "2026-09-30"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-261001-1800-01",
+      "timestamp": "2026-10-01T18:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Edge-device vulnerabilities are now routinely exploited within two days of public disclosure.",
+      "domains": [
+        "cyber",
+        "third_party",
+        "resilience",
+        "risk_quantification"
+      ],
+      "source_class": "regulator",
+      "mechanism": "praf_coverage",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Patch timelines measured in weeks are now slower than attacker weaponisation for internet-facing appliances such as VPN gateways and file-transfer servers."
+        },
+        {
+          "domain": "third_party",
+          "text": "Vendor-managed appliances often sit outside internal patch telemetry, so exposure windows on them are rarely measured at all."
+        },
+        {
+          "domain": "resilience",
+          "text": "Emergency patching of edge devices can itself cause outages, so change control needs a defined fast path."
+        },
+        {
+          "domain": "risk_quantification",
+          "text": "Scenarios that assume a two-week exposure window will understate attack frequency for internet-facing systems."
+        }
+      ],
+      "validation_question": "What exposure window do cyber scenarios in the risk assessment framework assume for internet-facing appliances, and is it shorter than 48 hours?",
+      "candidate_issue_statement": "Where the exposure-window assumption for internet-facing appliances in cyber scenarios has not been recalibrated against current time-to-exploit evidence, modelled attack frequency may be understated, and residual risk reported to committees may be too low.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Payments Regulator",
+          "url": "https://example.com/example-payments-regulator/known-exploited-vulnerabilities-catalog",
+          "headline": "Known exploited vulnerabilities: edge-device additions",
+          "published": "2026-10-01"
+        },
+        {
+          "publication": "Example Code Security",
+          "url": "https://example.com/example-code-security/blog/topics/threat-intelligence",
+          "headline": "Time-to-exploit for edge infrastructure keeps falling",
+          "published": "2026-09-30",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "Example Malware Lab",
+          "url": "https://example.com/example-malware-lab/blog",
+          "headline": "Appliance exploitation now precedes most patches",
+          "published": "2026-09-29",
+          "source_class": "vendor_threat_research"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-261002-0600-01",
+      "timestamp": "2026-10-02T06:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Repositories using AI coding assistants contained roughly twice as many hard-coded secrets.",
+      "domains": [
+        "ai",
+        "data",
+        "cyber"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "Assistants reproduce credential patterns from the surrounding code, and adoption is outpacing secure-coding review."
+        },
+        {
+          "domain": "data",
+          "text": "Secrets in source code are an exposure path that sits outside data-loss controls focused on documents and email."
+        },
+        {
+          "domain": "cyber",
+          "text": "Cloud keys pushed to public repositories are typically tested by attackers within hours."
+        }
+      ],
+      "validation_question": "Are secrets detected per thousand commits trended over time, and can the figure be split by whether an AI coding assistant was in use?",
+      "candidate_issue_statement": "Where secret-scanning results are not trended as an indicator or segmented by AI-assisted development, the effect of assistant adoption on credential exposure cannot be observed, and rising leakage may go unnoticed until keys are abused.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Network Research",
+          "url": "https://example.com/example-network-research/state-of-secrets-sprawl-report",
+          "headline": "Secrets sprawl in AI-assisted repositories",
+          "published": "2026-09-30"
+        },
+        {
+          "publication": "Example Preprint Server",
+          "url": "https://example.com/example-preprint-server/list/cs.SE/recent",
+          "headline": "Credential leakage in assistant-generated code: a measurement study",
+          "published": "2026-09-28",
+          "source_class": "research_analysis"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-261002-1000-01",
+      "timestamp": "2026-10-02T10:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "A cloned-voice call impersonating a CFO cleared a large wire after callback was waived.",
+      "domains": [
+        "fraud",
+        "ai",
+        "cyber"
+      ],
+      "source_class": "news",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "fraud",
+          "text": "Callback verification existed and was waived under time pressure. The exception process failed, not the control design."
+        },
+        {
+          "domain": "ai",
+          "text": "Executives with public earnings-call or conference audio can be cloned convincingly from a few minutes of speech."
+        },
+        {
+          "domain": "cyber",
+          "text": "The pretext followed a compromised assistant mailbox, a business email compromise chain that made the request look routine."
+        }
+      ],
+      "validation_question": "Is the rate at which callback verification on high-value payments is waived or overridden measured, and who sees that figure each month?",
+      "candidate_issue_statement": "Where exceptions to callback verification on high-value payments are not counted or reported, the effectiveness of the main control against impersonation fraud cannot be evidenced, and routine waivers can go unnoticed until a fraudulent payment clears.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Courier",
+          "url": "https://example.com/example-courier/tech/cybersecurity",
+          "headline": "Deepfake voice and a skipped check: how a wire went out",
+          "published": "2026-10-01"
+        },
+        {
+          "publication": "Example Reserve Board",
+          "url": "https://example.com/example-reserve-board/resources/advisoriesbulletinsfact-sheets",
+          "headline": "Alert on fraud schemes involving deepfake media",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-261002-1400-01",
+      "timestamp": "2026-10-02T14:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "A cloud identity-service failure took several banks’ mobile apps offline for four hours.",
+      "domains": [
+        "resilience",
+        "third_party"
+      ],
+      "source_class": "news",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "Failover assumed a healthy secondary region, but the provider’s shared identity service failed in both. Four hours is longer than many impact tolerances set for mobile banking."
+        },
+        {
+          "domain": "third_party",
+          "text": "The concentration sat in the provider’s identity layer rather than compute, a dependency that most exit and substitution plans do not map."
+        },
+        {
+          "domain": "fraud",
+          "text": "Outages push customers to contact centres, where authentication is weaker and social engineering rises."
+        },
+        {
+          "domain": "cyber",
+          "text": "Expect phishing that imitates bank status pages and outage notices while the story is in the news."
+        }
+      ],
+      "validation_question": "Has mobile banking failover been tested against loss of the cloud provider’s identity service, not just a compute region, and when was it last exercised?",
+      "candidate_issue_statement": "Where mobile banking resilience testing does not cover loss of the cloud provider’s shared identity service, failover may not recover within the impact tolerance, and a failure mode already seen elsewhere in the sector remains untested.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Wire",
+          "url": "https://example.com/example-wire/technology/",
+          "headline": "Bank apps go dark as cloud sign-in service fails",
+          "published": "2026-10-02"
+        },
+        {
+          "publication": "Example Payments Review",
+          "url": "https://example.com/example-payments-review/technology",
+          "headline": "Outage shows failover plans missed the identity layer",
+          "published": "2026-10-02",
+          "source_class": "industry_trade"
+        },
+        {
+          "publication": "Example Gazette",
+          "url": "https://example.com/example-gazette/off_prem/",
+          "headline": "Identity service fault spread across regions",
+          "published": "2026-10-02"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-261002-1400-02",
+      "timestamp": "2026-10-02T14:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "The help-desk MFA reset campaign now uses stolen ticket histories to pass outsourced desks’ identity checks.",
+      "domains": [
+        "cyber",
+        "third_party",
+        "fraud"
+      ],
+      "source_class": "industry_trade",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Knowledge-based checks fail when attackers hold the history of earlier tickets. Verification has to rest on something the caller could not have read."
+        },
+        {
+          "domain": "third_party",
+          "text": "The campaign moved to outsourced service desks, whose ticketing platforms and verification scripts are set by the provider and rarely tested by clients."
+        },
+        {
+          "domain": "fraud",
+          "text": "Stolen ticket data also supports customer-side pretexting, since it reveals names, devices and past issues to quote back."
+        }
+      ],
+      "validation_question": "Do outsourced service desks verify callers requesting MFA resets through a method that does not rely on ticket history or other knowledge an attacker could have stolen?",
+      "candidate_issue_statement": "Where outsourced service desks verify MFA reset requests with knowledge-based checks that ticket history can answer, attackers holding stolen ticketing data can pass verification, and phishing-resistant authentication is bypassed through the supplier rather than the firm.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Finance Association",
+          "url": "https://example.com/example-finance-association/newsroom",
+          "headline": "Update: help-desk campaign shifts to outsourced providers",
+          "published": "2026-10-02"
+        },
+        {
+          "publication": "Example Secrets Research",
+          "url": "https://example.com/example-secrets-research/en-us/blog/",
+          "headline": "Ticketing data fuels a new wave of help-desk social engineering",
+          "published": "2026-10-01",
+          "source_class": "vendor_threat_research"
+        }
+      ],
+      "backfilled": false,
+      "update_of": "RS-260921-1000-01"
+    },
+    {
+      "id": "RS-261002-1400-03",
+      "timestamp": "2026-10-02T14:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "A widely shared ‘mega-leak’ of bank logins is recompiled old breach data, not a new compromise.",
+      "domains": [
+        "data",
+        "fraud",
+        "cyber"
+      ],
+      "source_class": "news",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "data",
+          "text": "Researchers matched the records to earlier, already-disclosed breaches and infostealer logs; no new source of exposure was identified."
+        },
+        {
+          "domain": "fraud",
+          "text": "Recycled credentials still feed account-takeover attempts, but the volume and method are unchanged from before the publicity."
+        },
+        {
+          "domain": "cyber",
+          "text": "Credential-stuffing defences built for the original leaks already apply, so the coverage does not reflect new attacker capability."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "Analysis by several researchers found no new breach: the records are recompiled from earlier, already-disclosed leaks and infostealer logs. Credential-stuffing and account-takeover controls built for those leaks still apply, so no control, metric or framework action follows. Coverage is heavy enough that a director may raise it.",
+      "sources": [
+        {
+          "publication": "Example Chronicle",
+          "url": "https://example.com/example-chronicle/news/security/",
+          "headline": "Massive ‘bank credentials’ dump is mostly recycled data",
+          "published": "2026-10-02"
+        },
+        {
+          "publication": "Example Bulletin",
+          "url": "https://example.com/example-bulletin/",
+          "headline": "Researchers trace viral leak to years-old breaches",
+          "published": "2026-10-01"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    },
+    {
+      "id": "RS-261002-1400-04",
+      "timestamp": "2026-10-02T14:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Deepfake video injected into camera feeds now defeats common liveness checks at remote account opening.",
+      "domains": [
+        "fraud",
+        "ai",
+        "data"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "fraud",
+          "text": "Injection replaces the camera feed with synthetic video, so checks that judge the face rather than the device and feed are bypassed."
+        },
+        {
+          "domain": "ai",
+          "text": "Face-swap tools now run in real time on consumer hardware and respond to on-screen liveness prompts such as head turns."
+        },
+        {
+          "domain": "data",
+          "text": "Accounts opened this way carry synthetic or stolen identity data into customer records, contaminating later identity checks."
+        }
+      ],
+      "validation_question": "Is the rate of detected camera-injection or deepfake attempts at remote onboarding measured, and is the figure reviewed alongside onboarding fraud losses?",
+      "candidate_issue_statement": "Where injection and deepfake attempts at remote onboarding are not measured, a rising attack rate against liveness checks cannot be seen, and fraudulent accounts may be opened at scale before losses reveal the trend.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Example Fraud Intelligence",
+          "url": "https://example.com/example-fraud-intelligence/blog/",
+          "headline": "Camera injection attacks against remote KYC",
+          "published": "2026-10-01"
+        },
+        {
+          "publication": "Example Identity Review",
+          "url": "https://example.com/example-identity-review/",
+          "headline": "Injection attacks outpace presentation attacks in remote onboarding",
+          "published": "2026-09-30",
+          "source_class": "industry_trade"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
+    }
+  ]
+}

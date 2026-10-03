@@ -1,0 +1,2828 @@
+{
+  "schema_version": 1,
+  "runs": [
+    {
+      "run_id": "2026-03-05-1800",
+      "slot": "2026-03-05T18:00:00-05:00",
+      "started_at": "2026-03-05T18:02:25-05:00",
+      "finished_at": "2026-03-05T18:15:48-05:00",
+      "status": "published",
+      "items": [
+        "RS-260305-1800-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 261,
+        "in_window": 222,
+        "unseen": 155,
+        "stage1_pass": 38,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 14,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 19,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 1
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 1,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-03-08-0600",
+      "slot": "2026-03-08T06:00:00-04:00",
+      "started_at": "2026-03-08T06:02:14-04:00",
+      "finished_at": "2026-03-08T06:14:15-04:00",
+      "status": "published",
+      "items": [
+        "RS-260308-0600-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 304,
+        "in_window": 253,
+        "unseen": 162,
+        "stage1_pass": 11,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 4,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 5,
+          "passed": 1
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 1
+      }
+    },
+    {
+      "run_id": "2026-04-14-1000",
+      "slot": "2026-04-14T10:00:00-04:00",
+      "started_at": "2026-04-14T10:05:32-04:00",
+      "finished_at": "2026-04-14T10:21:09-04:00",
+      "status": "published",
+      "items": [
+        "RS-260414-1000-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 343,
+        "in_window": 266,
+        "unseen": 183,
+        "stage1_pass": 22,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 7,
+          "passed": 1
+        },
+        "capability_shift": {
+          "tested": 9,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 1,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-05-06-1400",
+      "slot": "2026-05-06T14:00:00-04:00",
+      "started_at": "2026-05-06T14:05:45-04:00",
+      "finished_at": "2026-05-06T14:17:35-04:00",
+      "status": "published",
+      "items": [
+        "RS-260506-1400-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 361,
+        "in_window": 301,
+        "unseen": 186,
+        "stage1_pass": 26,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 8,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 12,
+          "passed": 1
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 1,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-06-17-1800",
+      "slot": "2026-06-17T18:00:00-04:00",
+      "started_at": "2026-06-17T18:04:55-04:00",
+      "finished_at": "2026-06-17T18:26:11-04:00",
+      "status": "published",
+      "items": [
+        "RS-260617-1800-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 289,
+        "in_window": 227,
+        "unseen": 143,
+        "stage1_pass": 31,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 12,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 13,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 1
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 1
+      }
+    },
+    {
+      "run_id": "2026-07-08-1000",
+      "slot": "2026-07-08T10:00:00-04:00",
+      "started_at": "2026-07-08T10:04:03-04:00",
+      "finished_at": "2026-07-08T10:27:58-04:00",
+      "status": "published",
+      "items": [
+        "RS-260708-1000-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 344,
+        "in_window": 284,
+        "unseen": 188,
+        "stage1_pass": 35,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 11,
+          "passed": 1
+        },
+        "capability_shift": {
+          "tested": 16,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 5,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 1,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-07-29-1400",
+      "slot": "2026-07-29T14:00:00-04:00",
+      "started_at": "2026-07-29T14:03:45-04:00",
+      "finished_at": "2026-07-29T14:17:59-04:00",
+      "status": "published",
+      "items": [
+        "RS-260729-1400-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 330,
+        "in_window": 273,
+        "unseen": 165,
+        "stage1_pass": 23,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 8,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 11,
+          "passed": 1
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 1,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-08-19-0600",
+      "slot": "2026-08-19T06:00:00-04:00",
+      "started_at": "2026-08-19T06:02:45-04:00",
+      "finished_at": "2026-08-19T06:14:55-04:00",
+      "status": "published",
+      "items": [
+        "RS-260819-0600-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 416,
+        "in_window": 331,
+        "unseen": 225,
+        "stage1_pass": 29,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 11,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 14,
+          "passed": 1
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 1,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-03-1000",
+      "slot": "2026-09-03T10:00:00-04:00",
+      "started_at": "2026-09-03T10:04:40-04:00",
+      "finished_at": "2026-09-03T10:15:58-04:00",
+      "status": "published",
+      "items": [
+        "RS-260903-1000-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 312,
+        "in_window": 257,
+        "unseen": 151,
+        "stage1_pass": 35,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 13,
+          "passed": 1
+        },
+        "capability_shift": {
+          "tested": 16,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 1,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-10-1800",
+      "slot": "2026-09-10T18:00:00-04:00",
+      "started_at": "2026-09-10T18:03:05-04:00",
+      "finished_at": "2026-09-10T18:20:01-04:00",
+      "status": "published",
+      "items": [
+        "RS-260910-1800-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 281,
+        "in_window": 210,
+        "unseen": 124,
+        "stage1_pass": 31,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 10,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 15,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 4,
+          "passed": 1
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 1
+      }
+    },
+    {
+      "run_id": "2026-09-18-0600",
+      "slot": "2026-09-18T06:00:00-04:00",
+      "started_at": "2026-09-18T06:06:59-04:00",
+      "finished_at": "2026-09-18T06:27:58-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 385,
+        "in_window": 306,
+        "unseen": 183,
+        "stage1_pass": 33,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 13,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 15,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 4,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-18-1000",
+      "slot": "2026-09-18T10:00:00-04:00",
+      "started_at": "2026-09-18T10:03:13-04:00",
+      "finished_at": "2026-09-18T10:27:13-04:00",
+      "status": "published",
+      "items": [
+        "RS-260918-1000-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 320,
+        "in_window": 245,
+        "unseen": 139,
+        "stage1_pass": 35,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 12,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 19,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 1
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 1,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-18-1400",
+      "slot": "2026-09-18T14:00:00-04:00",
+      "started_at": "2026-09-18T14:04:33-04:00",
+      "finished_at": "2026-09-18T14:22:41-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 374,
+        "in_window": 274,
+        "unseen": 170,
+        "stage1_pass": 19,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 7,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 7,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-18-1800",
+      "slot": "2026-09-18T18:00:00-04:00",
+      "started_at": "2026-09-18T18:06:24-04:00",
+      "finished_at": "2026-09-18T18:20:55-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 248,
+        "in_window": 197,
+        "unseen": 132,
+        "stage1_pass": 17,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 5,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 6,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-19-0600",
+      "slot": "2026-09-19T06:00:00-04:00",
+      "started_at": "2026-09-19T06:05:22-04:00",
+      "finished_at": "2026-09-19T06:20:43-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 291,
+        "in_window": 245,
+        "unseen": 171,
+        "stage1_pass": 21,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 7,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 7,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-19-1000",
+      "slot": "2026-09-19T10:00:00-04:00",
+      "started_at": "2026-09-19T10:02:23-04:00",
+      "finished_at": "2026-09-19T10:17:34-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 197,
+        "in_window": 151,
+        "unseen": 98,
+        "stage1_pass": 10,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 4,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 4,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-19-1400",
+      "slot": "2026-09-19T14:00:00-04:00",
+      "started_at": "2026-09-19T14:04:20-04:00",
+      "finished_at": "2026-09-19T14:26:34-04:00",
+      "status": "published",
+      "items": [
+        "RS-260919-1400-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 177,
+        "in_window": 147,
+        "unseen": 103,
+        "stage1_pass": 10,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 3,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 4,
+          "passed": 1
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 1,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-19-1800",
+      "slot": "2026-09-19T18:00:00-04:00",
+      "started_at": "2026-09-19T18:05:10-04:00",
+      "finished_at": "2026-09-19T18:27:53-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 168,
+        "in_window": 125,
+        "unseen": 81,
+        "stage1_pass": 16,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 5,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 8,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-20-0600",
+      "slot": "2026-09-20T06:00:00-04:00",
+      "started_at": "2026-09-20T06:02:08-04:00",
+      "finished_at": "2026-09-20T06:21:31-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 251,
+        "in_window": 183,
+        "unseen": 116,
+        "stage1_pass": 12,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 3,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 4,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "Weekend volume low; stage 1 dominated by product announcements."
+    },
+    {
+      "run_id": "2026-09-20-1000",
+      "slot": "2026-09-20T10:00:00-04:00",
+      "started_at": "2026-09-20T10:03:57-04:00",
+      "finished_at": "2026-09-20T10:22:11-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 174,
+        "in_window": 146,
+        "unseen": 99,
+        "stage1_pass": 16,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 6,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 8,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-20-1400",
+      "slot": "2026-09-20T14:00:00-04:00",
+      "started_at": "2026-09-20T14:05:03-04:00",
+      "finished_at": "2026-09-20T14:24:52-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 182,
+        "in_window": 142,
+        "unseen": 90,
+        "stage1_pass": 17,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 5,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 7,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-20-1800",
+      "slot": "2026-09-20T18:00:00-04:00",
+      "started_at": "2026-09-20T18:03:14-04:00",
+      "finished_at": "2026-09-20T18:21:10-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 211,
+        "in_window": 165,
+        "unseen": 111,
+        "stage1_pass": 11,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 3,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 6,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-21-0600",
+      "slot": "2026-09-21T06:00:00-04:00",
+      "started_at": "2026-09-21T06:05:49-04:00",
+      "finished_at": "2026-09-21T06:19:40-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 510,
+        "in_window": 396,
+        "unseen": 274,
+        "stage1_pass": 30,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 10,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 13,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-21-1000",
+      "slot": "2026-09-21T10:00:00-04:00",
+      "started_at": "2026-09-21T10:04:36-04:00",
+      "finished_at": "2026-09-21T10:23:15-04:00",
+      "status": "published",
+      "items": [
+        "RS-260921-1000-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 327,
+        "in_window": 281,
+        "unseen": 186,
+        "stage1_pass": 24,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 8,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 10,
+          "passed": 1
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 1,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-21-1400",
+      "slot": "2026-09-21T14:00:00-04:00",
+      "started_at": "2026-09-21T14:06:10-04:00",
+      "finished_at": "2026-09-21T14:19:16-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 334,
+        "in_window": 247,
+        "unseen": 167,
+        "stage1_pass": 26,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 8,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 13,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-21-1800",
+      "slot": "2026-09-21T18:00:00-04:00",
+      "started_at": "2026-09-21T18:06:45-04:00",
+      "finished_at": "2026-09-21T18:18:48-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 241,
+        "in_window": 190,
+        "unseen": 125,
+        "stage1_pass": 33,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 11,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 17,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-22-0600",
+      "slot": "2026-09-22T06:00:00-04:00",
+      "started_at": "2026-09-22T06:02:04-04:00",
+      "finished_at": "2026-09-22T06:20:18-04:00",
+      "status": "published",
+      "items": [
+        "RS-260922-0600-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 400,
+        "in_window": 326,
+        "unseen": 231,
+        "stage1_pass": 36,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 14,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 14,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 4,
+          "passed": 1
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 1
+      }
+    },
+    {
+      "run_id": "2026-09-22-1000",
+      "slot": "2026-09-22T10:00:00-04:00",
+      "started_at": "2026-09-22T10:04:37-04:00",
+      "finished_at": "2026-09-22T10:20:17-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 273,
+        "in_window": 201,
+        "unseen": 142,
+        "stage1_pass": 24,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 7,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 12,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-22-1400",
+      "slot": "2026-09-22T14:00:00-04:00",
+      "started_at": "2026-09-22T14:04:46-04:00",
+      "finished_at": "2026-09-22T14:29:13-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 304,
+        "in_window": 248,
+        "unseen": 142,
+        "stage1_pass": 37,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 11,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 18,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 4,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-22-1800",
+      "slot": "2026-09-22T18:00:00-04:00",
+      "started_at": "2026-09-22T18:05:47-04:00",
+      "finished_at": "2026-09-22T18:19:03-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 293,
+        "in_window": 237,
+        "unseen": 163,
+        "stage1_pass": 28,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 9,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 11,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 4,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-23-0600",
+      "slot": "2026-09-23T06:00:00-04:00",
+      "started_at": "2026-09-23T06:05:11-04:00",
+      "finished_at": "2026-09-23T06:17:50-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 407,
+        "in_window": 318,
+        "unseen": 185,
+        "stage1_pass": 24,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 8,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 12,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-23-1000",
+      "slot": "2026-09-23T10:00:00-04:00",
+      "started_at": "2026-09-23T10:05:49-04:00",
+      "finished_at": "2026-09-23T10:27:49-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 329,
+        "in_window": 263,
+        "unseen": 176,
+        "stage1_pass": 23,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 9,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 9,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-23-1400",
+      "slot": "2026-09-23T14:00:00-04:00",
+      "started_at": "2026-09-23T14:02:47-04:00",
+      "finished_at": "2026-09-23T14:21:40-04:00",
+      "status": "published",
+      "items": [
+        "RS-260923-1400-01",
+        "RS-260923-1400-02"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 278,
+        "in_window": 238,
+        "unseen": 136,
+        "stage1_pass": 14,
+        "stage2_pass": 2,
+        "dedup_dropped": 0,
+        "published": 2
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 4,
+          "passed": 1
+        },
+        "capability_shift": {
+          "tested": 5,
+          "passed": 1
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 1,
+        "praf_coverage": 1,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-23-1800",
+      "slot": "2026-09-23T18:00:00-04:00",
+      "started_at": "2026-09-23T18:05:05-04:00",
+      "finished_at": "2026-09-23T18:17:36-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 272,
+        "in_window": 196,
+        "unseen": 111,
+        "stage1_pass": 31,
+        "stage2_pass": 1,
+        "dedup_dropped": 1,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 12,
+          "passed": 1
+        },
+        "capability_shift": {
+          "tested": 12,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 4,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "One stage-2 pass dropped as the same story as RS-260923-1400-01 with no material update."
+    },
+    {
+      "run_id": "2026-09-24-0600",
+      "slot": "2026-09-24T06:00:00-04:00",
+      "started_at": "2026-09-24T06:06:05-04:00",
+      "finished_at": "2026-09-24T06:17:18-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 463,
+        "in_window": 339,
+        "unseen": 237,
+        "stage1_pass": 26,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 10,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 12,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-24-1000",
+      "slot": "2026-09-24T10:00:00-04:00",
+      "started_at": "2026-09-24T10:04:09-04:00",
+      "finished_at": "2026-09-24T10:17:55-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 324,
+        "in_window": 268,
+        "unseen": 155,
+        "stage1_pass": 32,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 11,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 15,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-24-1400",
+      "slot": "2026-09-24T14:00:00-04:00",
+      "started_at": "2026-09-24T14:05:09-04:00",
+      "finished_at": "2026-09-24T14:16:42-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 326,
+        "in_window": 254,
+        "unseen": 165,
+        "stage1_pass": 20,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 7,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 8,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-24-1800",
+      "slot": "2026-09-24T18:00:00-04:00",
+      "started_at": "2026-09-24T18:06:41-04:00",
+      "finished_at": "2026-09-24T18:17:28-04:00",
+      "status": "failed",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 17,
+        "sources_failed": 29,
+        "fetched": 134,
+        "in_window": 0,
+        "unseen": 0,
+        "stage1_pass": 0,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 0,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "Fewer than half of sources responded (17 of 46) after a network fault on the runner; run recorded as failed and nothing published."
+    },
+    {
+      "run_id": "2026-09-25-0600",
+      "slot": "2026-09-25T06:00:00-04:00",
+      "started_at": "2026-09-25T06:05:14-04:00",
+      "finished_at": "2026-09-25T06:27:22-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 443,
+        "in_window": 320,
+        "unseen": 230,
+        "stage1_pass": 27,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 9,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 12,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-25-1000",
+      "slot": "2026-09-25T10:00:00-04:00",
+      "started_at": "2026-09-25T10:02:19-04:00",
+      "finished_at": "2026-09-25T10:20:35-04:00",
+      "status": "published",
+      "items": [
+        "RS-260925-1000-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 311,
+        "in_window": 230,
+        "unseen": 141,
+        "stage1_pass": 37,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 13,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 18,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 4,
+          "passed": 1
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 1,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-25-1400",
+      "slot": "2026-09-25T14:00:00-04:00",
+      "started_at": "2026-09-25T14:05:30-04:00",
+      "finished_at": "2026-09-25T14:24:41-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 365,
+        "in_window": 307,
+        "unseen": 193,
+        "stage1_pass": 38,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 13,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 19,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 5,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-25-1800",
+      "slot": "2026-09-25T18:00:00-04:00",
+      "started_at": "2026-09-25T18:02:58-04:00",
+      "finished_at": "2026-09-25T18:16:25-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 230,
+        "in_window": 174,
+        "unseen": 100,
+        "stage1_pass": 15,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 5,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 5,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-26-0600",
+      "slot": "2026-09-26T06:00:00-04:00",
+      "started_at": "2026-09-26T06:05:14-04:00",
+      "finished_at": "2026-09-26T06:21:27-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 263,
+        "in_window": 215,
+        "unseen": 128,
+        "stage1_pass": 11,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 4,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 3,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-26-1000",
+      "slot": "2026-09-26T10:00:00-04:00",
+      "started_at": "2026-09-26T10:02:16-04:00",
+      "finished_at": "2026-09-26T10:14:09-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 162,
+        "in_window": 126,
+        "unseen": 81,
+        "stage1_pass": 12,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 4,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 6,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-26-1400",
+      "slot": "2026-09-26T14:00:00-04:00",
+      "started_at": "2026-09-26T14:06:34-04:00",
+      "finished_at": "2026-09-26T14:30:14-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 197,
+        "in_window": 149,
+        "unseen": 100,
+        "stage1_pass": 13,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 5,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 5,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-26-1800",
+      "slot": "2026-09-26T18:00:00-04:00",
+      "started_at": "2026-09-26T18:06:02-04:00",
+      "finished_at": "2026-09-26T18:18:53-04:00",
+      "status": "published",
+      "items": [
+        "RS-260926-1800-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 143,
+        "in_window": 116,
+        "unseen": 83,
+        "stage1_pass": 9,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 3,
+          "passed": 1
+        },
+        "capability_shift": {
+          "tested": 3,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 1,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-27-0600",
+      "slot": "2026-09-27T06:00:00-04:00",
+      "started_at": "2026-09-27T06:04:09-04:00",
+      "finished_at": "2026-09-27T06:18:12-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 236,
+        "in_window": 194,
+        "unseen": 135,
+        "stage1_pass": 21,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 7,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 11,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-27-1000",
+      "slot": "2026-09-27T10:00:00-04:00",
+      "started_at": "2026-09-27T10:05:15-04:00",
+      "finished_at": "2026-09-27T10:19:28-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 217,
+        "in_window": 181,
+        "unseen": 129,
+        "stage1_pass": 13,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 5,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 6,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "Two capability_shift near misses dropped: vendor marketing framed as research, and a known technique without new evidence."
+    },
+    {
+      "run_id": "2026-09-27-1400",
+      "slot": "2026-09-27T14:00:00-04:00",
+      "started_at": "2026-09-27T14:03:59-04:00",
+      "finished_at": "2026-09-27T14:26:37-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 205,
+        "in_window": 156,
+        "unseen": 111,
+        "stage1_pass": 14,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 5,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 6,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-27-1800",
+      "slot": "2026-09-27T18:00:00-04:00",
+      "started_at": "2026-09-27T18:03:08-04:00",
+      "finished_at": "2026-09-27T18:14:33-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 156,
+        "in_window": 120,
+        "unseen": 73,
+        "stage1_pass": 16,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 5,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 6,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-28-0600",
+      "slot": "2026-09-28T06:00:00-04:00",
+      "started_at": "2026-09-28T06:05:24-04:00",
+      "finished_at": "2026-09-28T06:18:32-04:00",
+      "status": "published",
+      "items": [
+        "RS-260928-0600-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 427,
+        "in_window": 360,
+        "unseen": 252,
+        "stage1_pass": 36,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 13,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 18,
+          "passed": 1
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 1,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-28-1000",
+      "slot": "2026-09-28T10:00:00-04:00",
+      "started_at": "2026-09-28T10:06:17-04:00",
+      "finished_at": "2026-09-28T10:29:52-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 349,
+        "in_window": 279,
+        "unseen": 172,
+        "stage1_pass": 25,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 10,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 11,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-28-1400",
+      "slot": "2026-09-28T14:00:00-04:00",
+      "started_at": "2026-09-28T14:06:25-04:00",
+      "finished_at": "2026-09-28T14:31:13-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 353,
+        "in_window": 268,
+        "unseen": 190,
+        "stage1_pass": 37,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 15,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 16,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 4,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-28-1800",
+      "slot": "2026-09-28T18:00:00-04:00",
+      "started_at": "2026-09-28T18:04:44-04:00",
+      "finished_at": "2026-09-28T18:18:43-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 230,
+        "in_window": 182,
+        "unseen": 116,
+        "stage1_pass": 34,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 14,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 16,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-29-0600",
+      "slot": "2026-09-29T06:00:00-04:00",
+      "started_at": "2026-09-29T06:03:44-04:00",
+      "finished_at": "2026-09-29T06:24:12-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 489,
+        "in_window": 377,
+        "unseen": 244,
+        "stage1_pass": 26,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 11,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 10,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-29-1000",
+      "slot": "2026-09-29T10:00:00-04:00",
+      "started_at": "2026-09-29T10:05:13-04:00",
+      "finished_at": "2026-09-29T10:15:52-04:00",
+      "status": "published",
+      "items": [
+        "RS-260929-1000-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 292,
+        "in_window": 246,
+        "unseen": 171,
+        "stage1_pass": 37,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 14,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 15,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 4,
+          "passed": 1
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 1,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-29-1400",
+      "slot": "2026-09-29T14:00:00-04:00",
+      "started_at": "2026-09-29T14:03:05-04:00",
+      "finished_at": "2026-09-29T14:17:30-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 357,
+        "in_window": 284,
+        "unseen": 179,
+        "stage1_pass": 29,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 9,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 15,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-29-1800",
+      "slot": "2026-09-29T18:00:00-04:00",
+      "started_at": "2026-09-29T18:04:22-04:00",
+      "finished_at": "2026-09-29T18:24:05-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 260,
+        "in_window": 221,
+        "unseen": 141,
+        "stage1_pass": 16,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 6,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 6,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-30-0600",
+      "slot": "2026-09-30T06:00:00-04:00",
+      "started_at": "2026-09-30T06:05:14-04:00",
+      "finished_at": "2026-09-30T06:23:03-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 404,
+        "in_window": 300,
+        "unseen": 188,
+        "stage1_pass": 29,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 9,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 12,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 4,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-30-1000",
+      "slot": "2026-09-30T10:00:00-04:00",
+      "started_at": "2026-09-30T10:05:47-04:00",
+      "finished_at": "2026-09-30T10:17:22-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 311,
+        "in_window": 225,
+        "unseen": 152,
+        "stage1_pass": 17,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 6,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 7,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-09-30-1400",
+      "slot": "2026-09-30T14:00:00-04:00",
+      "started_at": "2026-09-30T14:04:08-04:00",
+      "finished_at": "2026-09-30T14:27:23-04:00",
+      "status": "published",
+      "items": [
+        "RS-260930-1400-01",
+        "RS-260930-1400-02"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 272,
+        "in_window": 211,
+        "unseen": 140,
+        "stage1_pass": 20,
+        "stage2_pass": 2,
+        "dedup_dropped": 0,
+        "published": 2
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 8,
+          "passed": 1
+        },
+        "capability_shift": {
+          "tested": 8,
+          "passed": 1
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 1,
+        "awareness_only": 1
+      }
+    },
+    {
+      "run_id": "2026-09-30-1800",
+      "slot": "2026-09-30T18:00:00-04:00",
+      "started_at": "2026-09-30T18:06:37-04:00",
+      "finished_at": "2026-09-30T18:23:55-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 43,
+        "sources_failed": 3,
+        "fetched": 307,
+        "in_window": 250,
+        "unseen": 150,
+        "stage1_pass": 28,
+        "stage2_pass": 1,
+        "dedup_dropped": 1,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 11,
+          "passed": 1
+        },
+        "capability_shift": {
+          "tested": 11,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 4,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "One stage-2 pass dropped as the same story as RS-260930-1400-01 with no material update."
+    },
+    {
+      "run_id": "2026-10-01-0600",
+      "slot": "2026-10-01T06:00:00-04:00",
+      "started_at": "2026-10-01T06:03:40-04:00",
+      "finished_at": "2026-10-01T06:19:31-04:00",
+      "status": "published",
+      "items": [
+        "RS-261001-0600-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 471,
+        "in_window": 364,
+        "unseen": 230,
+        "stage1_pass": 18,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 6,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 9,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 1
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 1
+      }
+    },
+    {
+      "run_id": "2026-10-01-1000",
+      "slot": "2026-10-01T10:00:00-04:00",
+      "started_at": "2026-10-01T10:03:59-04:00",
+      "finished_at": "2026-10-01T10:15:22-04:00",
+      "status": "failed",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 21,
+        "sources_failed": 25,
+        "fetched": 107,
+        "in_window": 0,
+        "unseen": 0,
+        "stage1_pass": 0,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 0,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "Fewer than half of sources responded (21 of 46); several feeds timed out. Run recorded as failed and nothing published."
+    },
+    {
+      "run_id": "2026-10-01-1400",
+      "slot": "2026-10-01T14:00:00-04:00",
+      "started_at": "2026-10-01T14:03:16-04:00",
+      "finished_at": "2026-10-01T14:20:15-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 347,
+        "in_window": 294,
+        "unseen": 181,
+        "stage1_pass": 33,
+        "stage2_pass": 1,
+        "dedup_dropped": 1,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 12,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 15,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 5,
+          "passed": 1
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "One stage-2 pass dropped as the same story as RS-261001-0600-01 with no material update."
+    },
+    {
+      "run_id": "2026-10-01-1800",
+      "slot": "2026-10-01T18:00:00-04:00",
+      "started_at": "2026-10-01T18:06:36-04:00",
+      "finished_at": "2026-10-01T18:26:40-04:00",
+      "status": "published",
+      "items": [
+        "RS-261001-1800-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 44,
+        "sources_failed": 2,
+        "fetched": 301,
+        "in_window": 217,
+        "unseen": 123,
+        "stage1_pass": 25,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 9,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 12,
+          "passed": 1
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 1,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-10-02-0600",
+      "slot": "2026-10-02T06:00:00-04:00",
+      "started_at": "2026-10-02T06:03:18-04:00",
+      "finished_at": "2026-10-02T06:19:32-04:00",
+      "status": "published",
+      "items": [
+        "RS-261002-0600-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 403,
+        "in_window": 291,
+        "unseen": 207,
+        "stage1_pass": 24,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 7,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 11,
+          "passed": 1
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 1,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-10-02-1000",
+      "slot": "2026-10-02T10:00:00-04:00",
+      "started_at": "2026-10-02T10:06:06-04:00",
+      "finished_at": "2026-10-02T10:21:41-04:00",
+      "status": "published",
+      "items": [
+        "RS-261002-1000-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 46,
+        "sources_failed": 0,
+        "fetched": 332,
+        "in_window": 249,
+        "unseen": 144,
+        "stage1_pass": 14,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 4,
+          "passed": 1
+        },
+        "capability_shift": {
+          "tested": 5,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 1,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
+    },
+    {
+      "run_id": "2026-10-02-1400",
+      "slot": "2026-10-02T14:00:00-04:00",
+      "started_at": "2026-10-02T14:03:12-04:00",
+      "finished_at": "2026-10-02T14:21:40-04:00",
+      "status": "published",
+      "items": [
+        "RS-261002-1400-01",
+        "RS-261002-1400-02",
+        "RS-261002-1400-03",
+        "RS-261002-1400-04"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 45,
+        "sources_failed": 1,
+        "fetched": 374,
+        "in_window": 277,
+        "unseen": 181,
+        "stage1_pass": 16,
+        "stage2_pass": 4,
+        "dedup_dropped": 0,
+        "published": 4
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 5,
+          "passed": 2
+        },
+        "capability_shift": {
+          "tested": 5,
+          "passed": 2
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 2,
+        "kri_kpi": 1,
+        "praf_coverage": 0,
+        "awareness_only": 1
+      },
+      "notes": "RS-261002-1400-02 published as a material update to RS-260921-1000-01."
+    }
+  ]
+}

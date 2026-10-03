@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- FICTIONAL content on example.* domains. The structure mirrors a live banking-security news feed
+     (observed 2026-10-02): a channel pubDate but no date on any item, a description that opens with an
+     escaped image and a bold subtitle, and guid = link. -->
+<rss version="2.0">
+<channel>
+<title>Example Bank Security Articles</title>
+<link>https://banksec.example.com/rssFeeds.php?type=articles</link>
+<description>Example bank information security articles</description>
+<pubDate>Fri, 02 Oct 2026 12:46:28 -0400</pubDate>
+			<item>
+			<title>Attackers abuse help-desk resets to bypass MFA at payment firms</title>
+			<link>https://banksec.example.com/attackers-abuse-help-desk-resets-a-33003</link>
+			<guid>https://banksec.example.com/attackers-abuse-help-desk-resets-a-33003</guid>
+			<description>&lt;img src=&quot;https://cdn.example.com/a-33003.jpg&quot; align=right hspace=4&gt;&lt;b&gt;Social Engineering Campaign Targets IT Service Desks&lt;/b&gt; Attackers persuaded IT help desks to reset staff MFA, then moved laterally.</description>
+			</item>
+			<item>
+			<title>Breach Roundup: gateway flaw under attack</title>
+			<link>https://banksec.example.com/breach-roundup-gateway-flaw-a-33001</link>
+			<guid>https://banksec.example.com/breach-roundup-gateway-flaw-a-33001</guid>
+			<description>&lt;b&gt;Also: Ransomware Arrests&lt;/b&gt; A weekly roundup.</description>
+			</item>
+</channel>
+</rss>

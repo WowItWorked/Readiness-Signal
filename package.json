@@ -1,0 +1,15 @@
+{
+  "name": "readiness-signal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static technology-risk triage archive: a filter, not a feed.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node -e \"const fs=require('fs'),p=require('path'),w=(d)=>fs.readdirSync(d,{withFileTypes:true}).flatMap((e)=>e.isDirectory()?w(p.join(d,e.name)):e.name.endsWith('.test.mjs')?[p.join(d,e.name)]:[]);const r=require('child_process').spawnSync(process.execPath,['--test',...w('tests').sort()],{stdio:'inherit'});process.exit(r.status===null?1:r.status)\"",
+    "serve": "node scripts/serve.mjs",
+    "serve:fixtures": "node scripts/serve.mjs --fixtures",
+    "validate": "node pipeline/scripts/validate.mjs",
+    "calibration": "node pipeline/scripts/calibration.mjs"
+  }
+}

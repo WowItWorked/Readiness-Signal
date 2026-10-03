@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "description": "Tunable knobs for the selection standard in pipeline/FILTER.md (section 9). The routine agent reads this file at the start of every run, applies each knob's 'value', copies 'level' into decisions.json as threshold_level, and never edits it. Only the owner changes it, after a calibration review, one step per knob per review (FILTER.md 9.6). Fields named 'description', 'element', 'launch' and 'loosening_steps' are documentation; only 'value' is applied. FILTER.md section 11 lists every launch choice that goes beyond the owner's brief, each with its knob here.",
+  "level": "high",
+  "level_description": "Overall posture label recorded in every run record. One of high, medium, low. Stays 'high' until the owner judges the overall posture has changed; individual knob changes are tracked by 'revision' and 'changelog'.",
+  "revision": 1,
+  "changelog": [
+    {
+      "revision": 1,
+      "date": null,
+      "level": "high",
+      "change": "Launch values. All thresholds deliberately high; to be reviewed after the first 28 scheduled runs (FILTER.md 9.5). Set before the first run: rt_standard_setters launches at consultations and rt_bank_exec_scope at gsib_extended (any G-SIB), because the stricter values substituted a different test for the brief's; every other launch choice beyond the brief has its own knob at its strictest value (FILTER.md 11).",
+      "evidence": null
+    }
+  ],
+  "dedup_window_days": 21,
+  "dedup_window_days_description": "Archive lookback (days) used by pipeline/scripts/dedup-hints.mjs for its hints (SPEC section 5 step 3). Read by dedup-hints.mjs from this file (its --window-days flag overrides it); no script change is needed when it changes. Operational, not a threshold: it changes no test, because same-story checks always search the whole archive (FILTER.md 5.6).",
+  "candidate_issue_share_warn": 0.4,
+  "candidate_issue_share_warn_description": "Warning line for the share of items tagged candidate_issue, used by the calibration report and the run self-audit. It never changes a verdict or a tag and is never a quota (FILTER.md 6.1, 9.6).",
+  "surge_recheck_items": 4,
+  "surge_recheck_items_description": "If a run is about to pass more than this many stories, every pass is re-verified once against FILTER.md sections 4 and 5 before decisions.json is written. Not a cap: whatever still passes publishes (FILTER.md 1.4).",
+  "global": {
+    "description": "Gate and source knobs that apply before any section test.",
+    "max_event_age_days": {
+      "value": 7,
+      "element": "G7, C5 Branch B, E3 recency",
+      "launch": 7,
+      "loosening_steps": [14],
+      "description": "Drop (GL_STALE) when the underlying event, statement or disclosure is dated more than this many days before the run's slot. Also the recency limit for a Branch B control failure (C5) and for reporting counted towards E3."
+    },
+    "formal_instrument_scope": {
+      "value": "all_sections",
+      "element": "G5",
+      "launch": "all_sections",
+      "loosening_steps": ["regulatory_trajectory_only"],
+      "description": "all_sections: formal instruments and exam notices (FILTER.md 4.4.2) are dropped at G5 whatever section they might reach. regulatory_trajectory_only: the exclusion is applied as the brief states it, to the trajectory section only; a final instrument is never RT form (FILTER.md 4.1) and is tested under EV and CS on its facts, which it rarely clears."
+    },
+    "unnamed_source_reporting": {
+      "value": "requires_confirmation",
+      "element": "G8",
+      "launch": "requires_confirmation",
+      "loosening_steps": ["two_independent_outlets"],
+      "description": "requires_confirmation: reporting whose substance rests solely on unnamed sources fails G8 unless the affected party or an authority confirms it. two_independent_outlets: it passes G8 when at least 2 independent named publications report it from their own sourcing."
+    },
+    "research_require_sample": {
+      "value": true,
+      "element": "G9 (RA3)",
+      "launch": true,
+      "loosening_steps": [false],
+      "description": "true: research_analysis must disclose its sample or data set, size and period (RA3) as well as data or method. false: RA3 applies only to work presenting original data; methodology-only work needs RA1, RA2 and RA4-RA6."
+    }
+  },
+  "executive_visibility": {
+    "description": "Section 1 entry test: could a director or executive credibly ask 'what are we doing about this?' unprompted? E1-E5 must all hold (FILTER.md 4.2). Fixed, never knobs: E5, E4 limbs a-d and E1 apart from surveys (reviewable through the fixed-element route, FILTER.md 9.6).",
+    "ev_min_independent_outlets": {
+      "value": 2,
+      "element": "E3",
+      "launch": 2,
+      "loosening_steps": [1],
+      "description": "Minimum number of independent outlets covering the story (wire copy counts once; common-ownership copy counts once; press-release reprints count zero). May step to 1 only once ev_min_general_outlets is 1 or lower."
+    },
+    "ev_min_general_outlets": {
+      "value": 2,
+      "element": "E3",
+      "launch": 2,
+      "loosening_steps": [1, 0],
+      "description": "How many of those outlets must be general or business press (international wires, national newspapers and broadcasters, national business dailies or business news services). At 0, national or international trade press suffices, never local press or security and technology trade press alone."
+    },
+    "ev_disruption_min_hours": {
+      "value": 4,
+      "element": "E2a",
+      "launch": 4,
+      "loosening_steps": [2],
+      "description": "Minimum duration (hours) of a customer-facing disruption at a financial institution or at a provider used by many financial institutions."
+    },
+    "ev_fmi_disruption_min_hours": {
+      "value": 2,
+      "element": "E2a",
+      "launch": 2,
+      "loosening_steps": [1],
+      "description": "Minimum duration (hours) of a disruption of service to participants at a financial market infrastructure or payment system (launch value matches the internationally accepted two-hour recovery-time objective for FMIs)."
+    },
+    "ev_disruption_min_customers": {
+      "value": 1000000,
+      "element": "E2a",
+      "launch": 1000000,
+      "loosening_steps": [250000],
+      "description": "Alternatively, minimum number of customers or accounts affected by the disruption."
+    },
+    "ev_disruption_min_institutions": {
+      "value": 3,
+      "element": "E2a, and the meaning of 'many financial institutions'",
+      "launch": 3,
+      "loosening_steps": [2],
+      "description": "Alternatively, minimum number of institutions disrupted at once through a shared dependency. Also the number of financial institutions a provider must be publicly known to serve to count as 'used by many financial institutions' (FILTER.md 4.2)."
+    },
+    "ev_data_min_individuals": {
+      "value": 10000000,
+      "element": "E2b",
+      "launch": 10000000,
+      "loosening_steps": [1000000],
+      "description": "Minimum number of people whose personal data is confirmed compromised (by the affected organisation or an authority)."
+    },
+    "ev_financial_data_min_individuals": {
+      "value": 1000000,
+      "element": "E2b",
+      "launch": 1000000,
+      "loosening_steps": [250000],
+      "description": "Minimum number of people whose financial-account, payment-card or authentication data is confirmed compromised."
+    },
+    "ev_loss_min_usd": {
+      "value": 25000000,
+      "element": "E2c",
+      "launch": 25000000,
+      "loosening_steps": [10000000],
+      "description": "Minimum confirmed or officially estimated direct loss (USD) from one cyber, fraud or AI-enabled event. Vendor and analyst estimates never count."
+    },
+    "ev_campaign_loss_min_usd": {
+      "value": 100000000,
+      "element": "E2c",
+      "launch": 100000000,
+      "loosening_steps": [50000000],
+      "description": "Minimum confirmed or officially estimated loss (USD) across one reported campaign."
+    },
+    "ev_enforcement_min_usd": {
+      "value": 25000000,
+      "element": "E2d",
+      "launch": 25000000,
+      "loosening_steps": [5000000],
+      "description": "Minimum penalty (USD) by a US, UK or EU authority for a technology-risk failure whose public order discloses the failure mechanism. The item never names the firm."
+    },
+    "ev_campaign_confirmation": {
+      "value": "authority",
+      "element": "E2e",
+      "launch": "authority",
+      "loosening_steps": ["authority_or_research"],
+      "description": "Who must confirm an active campaign against financial services, or against a provider, product or infrastructure used by many financial institutions, for E2e. authority: a US, UK or EU authority, including a national cyber agency. authority_or_research: also two independent technical research teams publishing artefacts. A tightening review may set it to off (no E2e limb)."
+    },
+    "ev_provider_control_failure": {
+      "value": false,
+      "element": "E2f",
+      "launch": false,
+      "loosening_steps": [true],
+      "description": "When true, E2f counts: a provider of a product, model or service used by many financial institutions confirms that it acted outside its documented controls in production (for example an AI agent exceeding its delegated permissions or concealing its actions). 'In production' means the provider's customer-facing product, model or service; internal research, training, testing or evaluation runs never qualify, at any knob value, even when they reach live third-party systems (test those under CS Branch A). When false, such an event meets E2 only through limbs a-e."
+    },
+    "ev_common_threat_nexus": {
+      "value": false,
+      "element": "E4e",
+      "launch": false,
+      "loosening_steps": [true],
+      "description": "When true, E4e counts: a non-financial organisation's incident meeting E2 and E3 whose threat type (for example ransomware, help-desk social engineering, supplier compromise), named by the affected party or an authority, is common against financial services, even though the precise mechanism is undisclosed. When false, such incidents need E4d (a disclosed transferable mechanism)."
+    },
+    "ev_survey_evidence_admissible": {
+      "value": false,
+      "element": "E1",
+      "launch": false,
+      "loosening_steps": [true],
+      "description": "When true, a survey meeting RA1-RA6 with 300 or more financial-services respondents counts as an event. When false, surveys are never events."
+    }
+  },
+  "capability_shift": {
+    "description": "Section 2 entry test: has adversary capability changed, or has a control failed somewhere in a way that invalidates an assumption others rely on? C1-C6 must all hold (FILTER.md 4.3). Fixed, never knobs: C3 for Branch B, C4, and C2's exclusion of speculative evidence (reviewable through the fixed-element route, FILTER.md 9.6).",
+    "cs_branch_a_requires_assumption": {
+      "value": false,
+      "element": "C3 (Branch A)",
+      "launch": false,
+      "loosening_steps": [],
+      "tightening_steps": [true],
+      "description": "false (launch, as the brief's sentence reads: 'has adversary capability changed, OR has a control failed somewhere in a way that invalidates an assumption others rely on'): Branch A needs C1, C2, C4, C5 and C6, and C3 is recorded where it holds. true: a tightening beyond the brief, under which an adversary-capability change must also invalidate an assumption others rely on. Set false at launch by the build owner because requiring C3 for Branch A turned the brief's 'or' into 'and' (a different test, not a higher bar); every other Branch A element stays at its high launch value."
+    },
+    "cs_demonstration_evidence": {
+      "value": "peer_reviewed_or_vendor_confirmed",
+      "element": "C2",
+      "launch": "peer_reviewed_or_vendor_confirmed",
+      "loosening_steps": ["reproducible_public_poc"],
+      "description": "Which demonstrations (as opposed to in-the-wild observations) count as evidence. peer_reviewed_or_vendor_confirmed: a peer-reviewed paper, or a coordinated disclosure confirmed by the affected vendor, against commercially deployed products in production or default configuration, method disclosed. reproducible_public_poc: also public technical detail sufficient to reproduce the attack against real, deployed software."
+    },
+    "cs_accept_preprints": {
+      "value": false,
+      "element": "C2",
+      "launch": false,
+      "loosening_steps": [true],
+      "description": "When true, preprints with released code or data, tested against deployed products, count as demonstrations. When false, a preprint is never sufficient evidence, and it does not start the C5 novelty window."
+    },
+    "cs_novelty_window_days": {
+      "value": 30,
+      "element": "C5 Branch A",
+      "launch": 30,
+      "loosening_steps": [90],
+      "description": "A Branch A capability change must have been first publicly established by evidence admissible under C2 at the current knob values (or have had its step-change) no more than this many days before the run."
+    },
+    "cs_routine_vuln_exceptions": {
+      "value": ["persistence", "security_control_negated", "mitigation_ineffective", "distribution_channel"],
+      "element": "C6",
+      "launch": ["persistence", "security_control_negated", "mitigation_ineffective", "distribution_channel"],
+      "loosening_steps": [["persistence", "security_control_negated", "mitigation_ineffective", "distribution_channel", "pre_patch_mass_exploitation"]],
+      "description": "A vulnerability passes C6 only if at least one listed exception holds; exploitation or a known-exploited listing alone is routine. pre_patch_mass_exploitation (loosening step): mass exploitation of a product widely deployed in financial services with no patch for 72 hours or more."
+    },
+    "cs_admit_measurement_evidence": {
+      "value": false,
+      "element": "C1",
+      "launch": false,
+      "loosening_steps": [true],
+      "description": "When true, research meeting RA1-RA6 that invalidates a quantification assumption (loss distributions, scenario severities) can meet C1 even without a capability change or control failure; the mechanism is then limited to kri_kpi or praf_coverage. When false, it fails C1 (CS_NO_SPECIFIC_CHANGE)."
+    }
+  },
+  "regulatory_trajectory": {
+    "description": "Section 3 entry test: an early, soft signal (speech, testimony, consultation or supervisory direction in the US, UK or EU, or a public statement by a leading bank executive). Formal rules and exam notices are out of scope. R1-R5 must all hold (FILTER.md 4.4); empty is expected. Fixed, never knobs: the US, UK and EU jurisdiction scope for authorities, R3, R4, R5, R3b and the exclusion of final instruments and exam notices from this section.",
+    "rt_speaker_tier": {
+      "value": "principal",
+      "element": "R2",
+      "launch": "principal",
+      "loosening_steps": ["executive_director"],
+      "description": "principal: heads and deputy heads, governors and deputy governors, board, commission, policy-committee and supervisory-board members, ESA chairs and executive directors, legislators in official proceedings. executive_director: also UK executive directors, US division directors, ECB directors general and equivalents. Staff and former officials are never eligible."
+    },
+    "rt_standard_setters": {
+      "value": "consultations",
+      "element": "R1, R2",
+      "launch": "consultations",
+      "loosening_steps": ["consultations_and_principal_speeches"],
+      "description": "consultations: consultative documents and calls for input from global financial standard setters (FSB, BCBS, CPMI, IOSCO, IAIS and other BIS-hosted committees) are RT instruments; nothing else of theirs is. consultations_and_principal_speeches: also speeches by their chairs and secretaries-general. A tightening review may set it to none, under which standards_body sources can publish only through CS, which in practice is almost never."
+    },
+    "rt_cyber_agencies": {
+      "value": false,
+      "element": "R2",
+      "launch": false,
+      "loosening_steps": [true],
+      "description": "When true, US, UK and EU national cyber, technology-standards and AI authorities (for example NIST, CISA, the US National Cyber Director's office, NCSC, ENISA, the EU AI Office) are eligible issuers for consultation drafts and statements of policy direction on technology or controls widely used in financial services. When false, they fail R2 (RT_SPEAKER_INELIGIBLE); their advisories and directives are evidence under EV and CS either way."
+    },
+    "rt_implementing_consultations": {
+      "value": false,
+      "element": "R1, G5",
+      "launch": false,
+      "loosening_steps": [true],
+      "description": "When true, consultations on implementing measures (delegated and implementing acts, technical standards under adopted legislation) count as RT instruments when they set a choice the adopted (Level 1) text leaves open. When false, they are G5 formal instruments."
+    },
+    "rt_us_bills": {
+      "value": "committee_action",
+      "element": "R1",
+      "launch": "committee_action",
+      "loosening_steps": ["leadership_sponsored"],
+      "description": "committee_action: a US bill counts only once a committee has held a hearing or markup on it. leadership_sponsored: also bills introduced by a committee chair or ranking member."
+    },
+    "rt_bank_exec_scope": {
+      "value": "gsib_extended",
+      "element": "R2b (X1)",
+      "launch": "gsib_extended",
+      "loosening_steps": ["domestic_systemic"],
+      "description": "gsib_extended: the group-level CEO, chair, president, COO, CFO, CRO, CISO, CIO, CTO, chief data officer or chief AI officer of any bank on the current FSB G-SIB list, wherever headquartered. domestic_systemic: also the same roles at banks designated domestic systemically important by their home authority."
+    }
+  },
+  "writing": {
+    "description": "Writing knobs. They change only on the neutrality audit (FILTER.md 9.5 step 6), never on NEAR counts.",
+    "claims_may_name_institutions": {
+      "value": false,
+      "element": "V4",
+      "launch": false,
+      "loosening_steps": [true],
+      "description": "false: no financial institution is named in any generated field, including the claim and interpretation (category form only). true: as SPEC 1.3 permits, the claim may name an organisation only as the subject of a publicly reported event or a public statement, with an attribution verb and no evaluative word about its controls; validation questions, issue statements, rationales and interpretation still never name one. Turning it on requires selfcheck.mjs to read this knob (it treats V4 in the claim as an error)."
+    }
+  },
+  "dedup": {
+    "description": "Material-update knobs (FILTER.md 5.4). Same-story detection itself is fixed.",
+    "m2_min_scope_factor": {
+      "value": 2,
+      "element": "M2",
+      "launch": 2,
+      "loosening_steps": [1.5],
+      "description": "An M2 scope step-change needs the affected population, loss or duration to grow by at least this factor and to cross an E2 floor that was not met before. Smaller revisions are never material (DD_SAME_STORY)."
+    }
+  },
+  "mechanism": {
+    "description": "No knobs. The mechanism guards (FILTER.md 6.3-6.6), the candidate_issue guard CI1-CI5 and the rule that candidate_issue is never a fallback are fixed; changing them requires a new version of FILTER.md. candidate_issue_share_warn (top level) is a warning line only."
+  }
+}

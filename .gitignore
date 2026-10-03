@@ -1,0 +1,10 @@
+# Design handoff: local reference only. Its sample content is fictional and must never be published.
+.design-handoff/
+# Per-run scratch
+pipeline/work/
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Atomic-write temp files left by an interrupted publish
+.*.tmp-*

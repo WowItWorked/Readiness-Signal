@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FICTIONAL content on example.* domains. The structure mirrors a live financial-services trade news
+     feed (observed 2026-10-02) that mixes articles with sponsored webinars under /event-info/, dated on
+     the event day (so in the future when first listed) and with tracking parameters on every link. -->
+<rss version="2.0">
+    <channel>
+        <title>Example Fintech News: Security</title>
+        <link>https://fintech.example.com/</link>
+        <description>Latest security news</description>
+            <item>
+                <title>Card processor discloses outage that halted authorisations for six hours</title>
+                <link>https://fintech.example.com/newsarticle/44001/card-processor-outage?utm_medium=rssfinextra&amp;utm_source=finextrafeed</link>
+                <guid isPermaLink="true">https://fintech.example.com/newsarticle/44001/card-processor-outage?utm_medium=rssfinextra&amp;utm_source=finextrafeed</guid>
+                <pubDate>Fri, 02 Oct 2026 10:00:00 GMT</pubDate>
+                <description>A card processor said a failed configuration change stopped authorisations for six hours.</description>
+            </item>
+            <item>
+                <title>AI without the hype: what AML transformation means</title>
+                <link>https://fintech.example.com/event-info/627/ai-without-the-hype-aml?utm_medium=rssfinextra&amp;utm_source=finextrafeed</link>
+                <guid isPermaLink="true">https://fintech.example.com/event-info/627/ai-without-the-hype-aml?utm_medium=rssfinextra&amp;utm_source=finextrafeed</guid>
+                <pubDate>Sat, 03 Oct 2026 15:00:00 GMT</pubDate>
+                <description>How can organisations innovate with AI while meeting governance and regulatory expectations?</description>
+            </item>
+            <item>
+                <title>Mind the gap: what is missing from modern resilience?</title>
+                <link>https://fintech.example.com/event-info/639/mind-the-gap-resilience?utm_medium=rssfinextra&amp;utm_source=finextrafeed</link>
+                <guid isPermaLink="true">https://fintech.example.com/event-info/639/mind-the-gap-resilience?utm_medium=rssfinextra&amp;utm_source=finextrafeed</guid>
+                <pubDate>Tue, 03 Nov 2026 15:00:00 GMT</pubDate>
+                <description>A roadmap towards engineering resilience into the technology estate from the outset.</description>
+            </item>
+            <item>
+                <title>Ransomware operators breach managed service provider used by lenders</title>
+                <link>https://fintech.example.com/event-info/601/ransomware-msp-roundtable?utm_medium=rssfinextra&amp;utm_source=finextrafeed</link>
+                <guid isPermaLink="true">https://fintech.example.com/event-info/601/ransomware-msp-roundtable?utm_medium=rssfinextra&amp;utm_source=finextrafeed</guid>
+                <pubDate>Thu, 01 Oct 2026 15:00:00 GMT</pubDate>
+                <description>A past webinar whose title reads like news: ransomware, managed service provider, lenders.</description>
+            </item>
+    </channel>
+</rss>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- FICTIONAL content on example.* domains. The structure mirrors a live US central bank testimony feed
+     (observed 2026-10-02): link, guid, description and pubDate all in CDATA, and some older entries
+     carrying the null date "Sat, 30 Dec 1899" (day 0 of a spreadsheet-style date) instead of their own. -->
+<rss version="2.0">
+    <channel>
+        <title>Example Reserve: Testimony</title>
+        <link><![CDATA[https://reserve.example.gov/feeds/feeds.htm]]></link>
+        <description><![CDATA[Testimony of Example Reserve officials]]></description>
+        <language>en</language>
+        <item>
+            <title>Governor, Supervision and Regulation</title>
+            <link><![CDATA[https://reserve.example.gov/newsevents/testimony/governor20261001a.htm]]></link>
+            <guid><![CDATA[https://reserve.example.gov/newsevents/testimony/governor20261001a.htm]]></guid>
+            <description><![CDATA[Testimony Before the Committee on Financial Services, U.S. House of Representatives]]></description>
+            <category>Testimony</category>
+            <pubDate><![CDATA[Thu, 1 Oct 2026 14:00:00 GMT]]></pubDate>
+        </item>
+        <item>
+            <title>Vice Chair, Supervision and Regulation</title>
+            <link><![CDATA[https://reserve.example.gov/newsevents/testimony/vicechair20241120a.htm]]></link>
+            <guid><![CDATA[https://reserve.example.gov/newsevents/testimony/vicechair20241120a.htm]]></guid>
+            <description><![CDATA[Testimony Before the Committee on Financial Services, U.S. House of Representatives, Washington, D.C.]]></description>
+            <category>Testimony</category>
+            <pubDate><![CDATA[Sat, 30 Dec 1899 15:00:00 GMT]]></pubDate>
+        </item>
+        <item>
+            <title>Chair, Semiannual Monetary Policy Report to the Congress</title>
+            <link><![CDATA[https://reserve.example.gov/newsevents/testimony/chair20240709a.htm]]></link>
+            <guid><![CDATA[https://reserve.example.gov/newsevents/testimony/chair20240709a.htm]]></guid>
+            <description><![CDATA[Testimony Before the Committee on Banking, Housing, and Urban Affairs, U.S. Senate, Washington, D.C.]]></description>
+            <category>Testimony</category>
+            <pubDate><![CDATA[Sat, 30 Dec 1899 21:30:00 GMT]]></pubDate>
+        </item>
+        <item>
+            <title>Governor, Payment System Resilience</title>
+            <link><![CDATA[https://reserve.example.gov/newsevents/testimony/governor20260915a.htm]]></link>
+            <guid><![CDATA[https://reserve.example.gov/newsevents/testimony/governor20260915a.htm]]></guid>
+            <description><![CDATA[Testimony Before the Committee on Banking, Housing, and Urban Affairs, U.S. Senate]]></description>
+            <category>Testimony</category>
+            <pubDate><![CDATA[Tue, 15 Sep 2026 14:00:00 GMT]]></pubDate>
+        </item>
+    </channel>
+</rss>

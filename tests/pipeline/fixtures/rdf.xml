@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FICTIONAL TEST FIXTURE: not real publications or events. -->
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns="http://purl.org/rss/1.0/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel rdf:about="https://cb.example.int/speeches.rss">
+    <title>Example Central Bank Speeches</title>
+    <link>https://cb.example.int/speeches/</link>
+    <description>Fixture</description>
+    <items>
+      <rdf:Seq>
+        <rdf:li rdf:resource="https://cb.example.int/speeches/2026-10-01-operational-resilience"/>
+        <rdf:li rdf:resource="https://cb.example.int/speeches/2026-09-29-monetary"/>
+      </rdf:Seq>
+    </items>
+  </channel>
+  <item rdf:about="https://cb.example.int/speeches/2026-10-01-operational-resilience">
+    <title>Operational resilience and third-party concentration</title>
+    <link>https://cb.example.int/speeches/2026-10-01-operational-resilience</link>
+    <description>Speech by a fictional deputy governor at an example conference.</description>
+    <dc:date>2026-10-01</dc:date>
+  </item>
+  <item rdf:about="https://cb.example.int/speeches/2026-09-29-monetary">
+    <title>Monetary policy outlook</title>
+    <description>Speech on the economy.</description>
+    <dc:date>2026-09-29T10:00:00+02:00</dc:date>
+  </item>
+</rdf:RDF>

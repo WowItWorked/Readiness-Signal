@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Readiness Signal</title>
+<meta name="description" content="Readiness Signal: a technology-risk triage digest. Four runs a day publish only what clears a high bar, each item tagged with what it asks of the reader. Silence when nothing does.">
+<meta name="theme-color" content="#0B1F44">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&amp;display=swap">
+<link rel="stylesheet" href="assets/app.css">
+<script type="module" src="assets/app.js"></script>
+</head>
+<body>
+<div id="app" class="rs">
+  <header class="mast" data-k="mast">
+    <div class="mast-in">
+      <div class="mast-top">
+        <a class="brand" href="#dashboard">
+          <span class="brand-bar" aria-hidden="true"></span>
+          <span class="brand-text"><span class="brand-name">Readiness Signal</span><span class="brand-tag">Only what clears the bar. Silence when nothing does.</span></span>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main id="main" tabindex="-1" class="main boot" data-k="boot"><p class="loading">Loading the archive…</p></main>
+  <noscript>
+    <main class="main"><div class="card notice"><p class="notice-t">Readiness Signal needs JavaScript to show the archive.</p><p class="notice-b">The site is static and stores nothing; enable JavaScript for this page and reload.</p></div></main>
+  </noscript>
+</div>
+<div id="live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

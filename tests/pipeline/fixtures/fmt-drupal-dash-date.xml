@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FICTIONAL content on example.* domains. The structure mirrors a live UK regulator's Drupal RSS feed
+     (observed 2026-10-02): pubDate written as "Weekday, Month D, YYYY - HH:MM" with no zone, plain-text
+     description with line breaks, numeric non-permalink guid. -->
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0" xml:base="https://regulator.example.org.uk/">
+  <channel>
+    <title>Example Conduct Authority</title>
+    <link>https://regulator.example.org.uk/</link>
+    <description/>
+    <language>en</language>
+
+    <item>
+  <title>Firms told to strengthen controls on mule account detection</title>
+  <link>https://regulator.example.org.uk/news/news-stories/firms-told-strengthen-mule-account-detection</link>
+  <description>
+The authority has written to payment firms about weaknesses in how mule accounts are detected and closed.
+
+The letter sets out findings from a review of onboarding and transaction monitoring at a sample of firms.</description>
+      <category>News stories</category>
+    <pubDate>Friday, October 2, 2026 - 11:58</pubDate>
+<dc:creator>ECA</dc:creator>
+<guid isPermaLink="false">175586</guid>
+</item>
+<item>
+  <title>Consultation on operational incident reporting closes</title>
+  <link>https://regulator.example.org.uk/news/statements/consultation-incident-reporting-closes</link>
+  <description>The consultation on incident and third-party reporting closed with responses from across the sector.</description>
+      <category>Statements</category>
+    <pubDate>Monday, September 28, 2026 - 09:05</pubDate>
+<dc:creator>ECA</dc:creator>
+<guid isPermaLink="false">175571</guid>
+</item>
+<item>
+  <title>Board appointment announced</title>
+  <link>https://regulator.example.org.uk/news/press-releases/board-appointment</link>
+  <description>A new non-executive director joins the board.</description>
+    <pubDate>Published soon after the meeting</pubDate>
+<guid isPermaLink="false">175560</guid>
+</item>
+  </channel>
+</rss>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FICTIONAL content on example.* domains. The structure mirrors a live EU authority's Drupal RSS feed
+     (observed 2026-10-02): no pubDate or dc:date; the date exists only as an escaped
+     <time datetime="..."> inside <description>, which starts with the title repeated, the created date
+     and nested taxonomy labels before the introduction and the body. -->
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xml:base="https://authority.example.eu/">
+  <channel>
+    <title>Example Markets Authority</title>
+    <link>https://authority.example.eu/</link>
+    <description/>
+    <language>en</language>
+
+
+<item>
+  <title>Authority calls for changes to make crypto-asset rules clearer and safer</title>
+  <link>https://authority.example.eu/press-news/news/authority-calls-changes-crypto-asset-rules</link>
+  <description>&lt;span class="field field--name-title field--type-string field--label-hidden"&gt;Authority calls for changes to make crypto-asset rules clearer and safer&lt;/span&gt;
+
+&lt;span class="field field--name-created field--type-created field--label-hidden"&gt;&lt;time datetime="2026-09-30T15:25:31+02:00" title="Wednesday, September 30, 2026 - 15:25" class="datetime"&gt;30 September 2026&lt;/time&gt;
+&lt;/span&gt;
+
+      &lt;div class="field field--name-field-news-section field--type-entity-reference field--label-hidden field__items"&gt;
+              &lt;div class="field__item"&gt;Digital Finance and Innovation&lt;/div&gt;
+              &lt;div class="field__item"&gt;Investor protection&lt;/div&gt;
+          &lt;/div&gt;
+
+            &lt;div class="clearfix text-formatted field field--name-field-news-introduction field--type-text-long field--label-hidden field__item"&gt;&lt;p&gt;The Example Markets Authority has responded to a public consultation on the review of the crypto-asset framework, recommending stronger safeguards for staking and lending.&lt;/p&gt;
+&lt;/div&gt;
+
+            &lt;div class="clearfix text-formatted field field--name-field-news-body field--type-text-long field--label-hidden field__item"&gt;&lt;p&gt;FULL BODY TEXT that is never needed for a lead because the introduction already fills it, padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding.&lt;/p&gt;
+&lt;/div&gt;
+      </description>
+</item>
+<item>
+  <title>Statement on outsourcing to cloud providers</title>
+  <link>https://authority.example.eu/press-news/news/statement-outsourcing-cloud</link>
+  <description>&amp;lt;span class=&amp;quot;field field--name-created&amp;quot;&amp;gt;&amp;lt;time datetime=&amp;quot;2026-09-29T09:00:00+02:00&amp;quot;&amp;gt;29 September 2026&amp;lt;/time&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;p&amp;gt;A double-escaped description: firms relying on a single cloud region are reminded of exit planning expectations.&amp;lt;/p&amp;gt;</description>
+</item>
+  </channel>
+</rss>

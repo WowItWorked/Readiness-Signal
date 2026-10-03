@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "readiness-signal-fixtures",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["scripts/serve.mjs", "--fixtures"],
+      "port": 8148
+    },
+    {
+      "name": "readiness-signal-live-data",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["scripts/serve.mjs", "--port", "8149"],
+      "port": 8149
+    }
+  ]
+}
