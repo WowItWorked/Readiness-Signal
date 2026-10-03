@@ -180,7 +180,7 @@ Lint (errors unless marked warn):
 - Append-only: `node pipeline/scripts/validate.mjs --against-git-ref <ref>` fails if any item present
   at `<ref>` is missing or changed, or any run record at `<ref>` is missing or changed.
 
-## 7. Site (`/docs`) — implement the v2 design faithfully
+## 7. Site (`/docs`) — the v2 design's layout and behaviour, with the §7.5 visual refresh
 
 Files: `docs/index.html`, `docs/assets/app.css`, `docs/assets/model.js` (pure logic, no DOM,
 importable by Node tests), `docs/assets/view.js` (rendering + escaping), `docs/assets/app.js`
@@ -255,7 +255,8 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   represents this risk at all."
 - How an item is built: design copy, "a validation question you can paste to a program owner".
 - What it is not: "It is not a risk rating. Nothing here is red, amber or green; the green mark is emphasis only
-  and never means safe." / "It is not a threat feed or a news service, and it says nothing about any
+  and never means safe. Colours mark what an item asks of you, never how serious it is." / "It is not a threat
+  feed or a news service, and it says nothing about any
   institution's control position. The validation question is where that record starts, inside your own
   organisation."
 - Where things live: design copy.
@@ -265,6 +266,19 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
 The design switches on the root width: narrow `< 640`, wide `≥ 980`, else medium. Implement with CSS media
 queries at those widths reproducing every `L.*` value in the design (`lineCols/lineAreas`, `bodyCols/bodyAreas`,
 `dashLine/dashAreas`, `boardCols`, `mixCols`, paddings, popover placement, search width, about columns).
+
+### 7.5 Visual refresh (owner request, 2026-10-03)
+
+The owner asked for "more personality, more color, and rounded edges". Layout, breakpoints, behaviour and copy
+stay as above; the visual layer changes:
+
+- Rounded surfaces (cards 16 px, panels 12 px, controls 10 px, chips and filter buttons as pills) with soft
+  shadows in place of hard rules; a navy-to-indigo masthead gradient with a faint decorative texture.
+- Each mechanism has a categorical hue used on its tag, rail, board column, mix strip and expanded panels:
+  Candidate issue fuchsia, KRI / KPI cyan, PRAF coverage violet, Awareness only blue-indigo (kept clearly apart from the violet and from the brand indigo). Hues stay outside red,
+  amber and green so colour never reads as severity or safety; awareness only carries the same weight as the
+  others. The brand green remains emphasis only.
+- Text meets WCAG AA on every background; animation respects `prefers-reduced-motion`; no monospace.
 
 ## 8. Tests and tooling
 

@@ -18,7 +18,13 @@ export function rail(mechKey) {
   return `<span class="rail" aria-hidden="true">${ICONS.map((i) => `<span${i === on ? ' class="on"' : ''}></span>`).join('')}</span>`;
 }
 
-const mechTag = (mechKey, cls = 'mech') => `<span class="${cls}">${rail(mechKey)}<span class="mech-label">${esc(M.mechOf(mechKey).label)}</span></span>`;
+/** data-mech lets the stylesheet set the mechanism hue (--m-*) on this element and its contents. */
+const mechAttr = (mechKey) => ` data-mech="${esc(mechKey)}"`;
+
+const mechTag = (mechKey, cls = 'mech') => `<span class="${cls}"${mechAttr(mechKey)}>${rail(mechKey)}<span class="mech-label">${esc(M.mechOf(mechKey).label)}</span></span>`;
+
+/** Decorative "quiet signal" for empty states: a flat line with one soft blip. */
+const QUIET = '<svg class="quiet-sig" viewBox="0 0 104 22" aria-hidden="true" focusable="false"><path class="q-line" d="M2 16H38M66 16H102"/><path class="q-blip" d="M38 16C44 16 46 6 52 6S60 16 66 16"/><circle class="q-dot" cx="52" cy="6" r="2.25"/></svg>';
 
 const navAttrs = (page, preset = '', v = '') => ` data-act="nav" data-page="${page}"${preset ? ` data-preset="${preset}"` : ''}${v ? ` data-v="${esc(v)}"` : ''}`;
 
@@ -30,6 +36,8 @@ const NAV = [['dashboard', 'Dashboard'], ['report', 'Report'], ['archive', 'Arch
 function masthead(st) {
   const { ui, data, error, loading } = st;
   const latest = loading ? '&nbsp;' : error ? 'Unavailable' : esc(M.mastheadLatest(data));
+  // The dot pulses (briefly) only when there is an edition to point at.
+  const isLive = !loading && !error && !!data && !!M.latestEdition(data);
   const nav = ui.printMode ? '' : `
     <nav class="nav" aria-label="Primary">${NAV.map(([k, l]) => {
     const on = ui.page === k;
@@ -44,7 +52,7 @@ function masthead(st) {
         <span class="brand-text"><span class="brand-name">Readiness Signal</span><span class="brand-tag">Only what clears the bar. Silence when nothing does.</span></span>
       </a>
       <div class="mast-latest">
-        <div class="mast-latest-k"><span class="dot" aria-hidden="true"></span>Latest edition</div>
+        <div class="mast-latest-k"><span class="dot${isLive ? ' live' : ''}" aria-hidden="true"></span>Latest edition</div>
         <div class="mast-latest-v">${latest}</div>
       </div>
     </div>${nav}
@@ -84,12 +92,15 @@ function dashRow(it, rule, area, extraCls = '') {
     </button>`;
 }
 
+/** Dashboard domain counts render as pills; an em dash (none) is a quiet, unfilled pill. */
+const domCount = (n) => `<span class="dom-n${n === '—' ? ' zero' : ''}">${esc(n)}</span>`;
+
 function dashboardMain(st) {
   const d = M.dashboard(st.data, st.now);
   const exec = d.exec.length
     ? d.exec.map((e, i) => dashRow(e, i > 0,
       `<span class="dash-sec">${e.isNew ? '<span class="dot" aria-hidden="true"></span>' : ''}${esc(e.when)}</span>`)).join('')
-    : `<p class="dash-none">${esc(d.execNone)}</p>`;
+    : `<div class="dash-none">${QUIET}<p>${esc(d.execNone)}</p></div>`;
 
   const latest = d.latest
     ? `<header class="latest-head">
@@ -100,9 +111,9 @@ function dashboardMain(st) {
     : `<header class="latest-head">
         <div class="latest-head-t"><span class="kicker">Latest edition</span><h2 class="h-21">None yet</h2></div>
       </header>
-      <p class="dash-none">No edition has been published yet. Runs at 06:00, 10:00, 14:00 and 18:00 ET publish only what clears the bar; a silent run is a result.</p>`;
+      <div class="dash-none">${QUIET}<p>No edition has been published yet. Runs at 06:00, 10:00, 14:00 and 18:00 ET publish only what clears the bar; a silent run is a result.</p></div>`;
 
-  const board = d.board.map((col) => `<div class="board-col">
+  const board = d.board.map((col) => `<div class="board-col"${mechAttr(col.mech)}>
         <div class="board-head">
           ${mechTag(col.mech)}
           <div class="num-row"><span class="num-30">${col.n}</span><span class="num-desc">${esc(col.desc)}</span></div>
@@ -121,7 +132,7 @@ function dashboardMain(st) {
       </button>`).join('');
 
   const domRows = d.domRows.map((r) => `<button type="button" class="dom-row" aria-label="${esc(r.name)}"${navAttrs('report', 'domain', r.key)}>
-        <span class="dom-name">${esc(r.label)}</span><span class="dom-n">${r.n}</span><span class="dom-n">${r.act}</span>
+        <span class="dom-name">${esc(r.label)}</span>${domCount(r.n)}${domCount(r.act)}
       </button>`).join('');
 
   return `<main id="main" tabindex="-1" class="main dash" data-k="main-dashboard">
@@ -258,7 +269,7 @@ export function itemArticle(it, idx, st) {
     </div>`;
 
   if (!open) {
-    return `<article id="${esc(it.id)}" class="item${idx ? ' ruled' : ''}">${headRow}</article>`;
+    return `<article id="${esc(it.id)}" class="item${idx ? ' ruled' : ''}"${mechAttr(it.mechanism)}>${headRow}</article>`;
   }
 
   const mail = M.safeHref(M.mailtoHref(it, permalink));
@@ -319,7 +330,7 @@ export function itemArticle(it, idx, st) {
       </div>
     </div>`;
 
-  return `<article id="${esc(it.id)}" class="item open${idx ? ' ruled' : ''}">${headRow}${body}</article>`;
+  return `<article id="${esc(it.id)}" class="item open${idx ? ' ruled' : ''}"${mechAttr(it.mechanism)}>${headRow}${body}</article>`;
 }
 
 // ---------------------------------------------------------------------------------------
@@ -341,13 +352,14 @@ function group(g, st) {
     const e = g.empty;
     empty = `<div class="empty">
         <div class="empty-l">
+          ${QUIET}
           <p class="empty-t">${esc(e.title)}</p>
           <p class="empty-b">${esc(e.body)}</p>
           ${e.hasHidden ? '<button type="button" class="text-btn" data-act="showall">Clear domain and source filters</button>' : ''}
         </div>
         ${e.last ? `<div class="empty-r">
           <span class="kicker">Last published in this section</span>
-          <button type="button" class="last-btn" data-act="reveal" data-id="${esc(e.last.item.id)}">
+          <button type="button" class="last-btn" data-act="reveal" data-id="${esc(e.last.item.id)}"${mechAttr(e.last.item.mechanism)}>
             <span class="last-when">${esc(e.last.when)} · <span class="last-mech">${esc(e.last.mech)}</span></span>
             <span class="last-claim">${esc(e.last.item.claim)}</span>
           </button>
@@ -362,12 +374,12 @@ function listMain(st) {
   const { ui, data, now } = st;
   const lm = M.listModel(data, ui, now);
   const ctx = { ...st, showSec: lm.isArch };
-  const mix = lm.mix.map((m) => `<div class="mix-cell">${mechTag(m.mech)}<div class="num-row"><span class="num-24">${m.n}</span><span class="num-desc">${esc(m.desc)}</span></div></div>`).join('');
+  const mix = lm.mix.map((m) => `<div class="mix-cell"${mechAttr(m.mech)}>${mechTag(m.mech)}<div class="num-row"><span class="num-24">${m.n}</span><span class="num-desc">${esc(m.desc)}</span></div></div>`).join('');
   let empty = '';
   if (lm.archiveEmpty) {
-    empty = `<div class="card notice"><p class="notice-t">Nothing published yet.</p><p class="notice-b">Every item that clears the bar is added here and stays searchable. Nothing is replaced.</p></div>`;
+    empty = `<div class="card notice quiet">${QUIET}<p class="notice-t">Nothing published yet.</p><p class="notice-b">Every item that clears the bar is added here and stays searchable. Nothing is replaced.</p></div>`;
   } else if (lm.listEmpty) {
-    empty = `<div class="card notice"><p class="notice-t">Nothing in the archive matches.</p><p class="notice-b">Widen the time range, change the search, or clear the filters.</p></div>`;
+    empty = `<div class="card notice quiet">${QUIET}<p class="notice-t">Nothing in the archive matches.</p><p class="notice-b">Widen the time range, change the search, or clear the filters.</p></div>`;
   }
   const bar = ui.printMode ? '' : filterBar(lm, ui);
   return `${bar}<main id="main" tabindex="-1" class="main list" data-k="main-${ui.page}">
@@ -392,7 +404,7 @@ function aboutMain() {
           <span class="badge badge-36 badge-${S.mark}" aria-hidden="true">${S.n}</span>
           <div class="test-t"><span class="test-h">${esc(S.title)}</span><span class="test-b">${esc(S.test)}${S.n === 3 ? ' Most candidates fail this test, so the section is often empty.' : ''}</span></div>
         </div>`).join('');
-  const mechs = M.MECHANISMS.map((m) => `<div class="mech-cell">${mechTag(m.key)}<span class="mech-about">${esc(m.about)}</span></div>`).join('');
+  const mechs = M.MECHANISMS.map((m) => `<div class="mech-cell"${mechAttr(m.key)}>${mechTag(m.key)}<span class="mech-about">${esc(m.about)}</span></div>`).join('');
   return `<main id="main" tabindex="-1" class="main" data-k="main-about">
   <article class="card about">
     <div class="about-lead">
@@ -433,7 +445,7 @@ function aboutMain() {
     <div class="about-sec">
       <h2 class="h-19">What it is not</h2>
       <div class="prose">
-        <p>It is not a risk rating. Nothing here is red, amber or green; the green mark is emphasis only and never means safe.</p>
+        <p>It is not a risk rating. Nothing here is red, amber or green; the green mark is emphasis only and never means safe. Colours mark what an item asks of you, never how serious it is.</p>
         <p>It is not a threat feed or a news service, and it says nothing about any institution’s control position. The validation question is where that record starts, inside your own organisation.</p>
       </div>
     </div>
