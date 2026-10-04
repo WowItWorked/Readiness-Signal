@@ -294,7 +294,7 @@ describe('states', () => {
     const dash = text(render({ page: 'dashboard' }, empty));
     assert.ok(dash.includes('Last update None yet'));
     // No run has applied the test yet, so the dashboard does not claim that nothing cleared it.
-    assert.ok(dash.includes('Nothing published this week. No run in the last 7 days has applied the entry test yet.'));
+    assert.ok(!dash.includes('Executive Visibility, last 7 days')); // card removed from the dashboard (owner request 2026-10-04)
     assert.ok(!dash.includes('Nothing cleared the Executive Visibility test'));
     assert.ok(dash.includes('No edition has been published yet.'));
     assert.ok(dash.includes('Open the report') && !dash.includes('All 0 items'));
@@ -311,9 +311,12 @@ describe('states', () => {
     assert.ok(!arcHtml.includes('data-act="toggleall"') && !arcHtml.includes('class="export-btn"'));
   });
 
-  test('a silent week: the dashboard says nothing cleared the test', () => {
+  test('the dashboard opens with the last update; no Executive Visibility card', () => {
+    const html = render({ page: 'dashboard' });
+    assert.ok(!html.includes('exec-card') && !html.includes('Executive Visibility, last 7 days'));
+    assert.ok(html.indexOf('latest-card') > html.indexOf('class="h1"'));
     const d = M.prepare({ items: [] }, { runs: [{ slot: '2026-10-02T06:00:00-04:00', status: 'silent', items: [] }] });
-    assert.ok(text(render({ page: 'dashboard' }, d)).includes('Nothing cleared the Executive Visibility test this week.'));
+    assert.ok(!text(render({ page: 'dashboard' }, d)).includes('Executive Visibility test'));
   });
 
   test('print: the permalink prints in full', () => {

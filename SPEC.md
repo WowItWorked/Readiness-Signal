@@ -214,6 +214,8 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
 - Dashboard, Report (24 h / 7 d / 30 d; Section, Domain, Source filters with counts; expand/collapse all;
   export collapsed/expanded via print), Archive (All / month / custom range; search over claim, domains,
   publications, headlines; grouped by month), About — all exactly as designed, with the copy changes below.
+  Owner change (2026-10-04): the Dashboard has no "Executive Visibility, last 7 days" card; it opens with the
+  Last update card, followed by the mechanism board and the section and domain summaries.
 - Mechanism "asks" text: Candidate issue — "Send the validation question to the owner. If the answer is no or
   unknown, raise the candidate issue." KRI / KPI — "Confirm an indicator exists, is measured, and reaches
   someone who acts on it. If not, the issue language applies." PRAF coverage — "Confirm the risk assessment
@@ -291,6 +293,8 @@ stay as above; the visual layer changes:
 - `npm run validate` → `node pipeline/scripts/validate.mjs`.
 - `npm run calibration` → `node pipeline/scripts/calibration.mjs` (funnel, pass rates by section,
   mechanism distribution with a warning when `candidate_issue` exceeds 40 % of items, reason-code tallies).
-- CI (`.github/workflows/ci.yml`, Node 20 and 22): `npm test`, `npm run validate`, append-only check
-  against the pre-push commit (`github.event.before`, or the PR base; falls back to `HEAD^`).
+- CI (Node 20 and 22): `npm test`, `npm run validate`, append-only check against the pre-push commit
+  (`github.event.before`, or the PR base; falls back to `HEAD^`). The workflow is **parked** at
+  `ci/github-actions-ci.yml` because the credential that pushed the repo lacked GitHub's `workflow` scope;
+  to enable it, move it to `.github/workflows/ci.yml` and push with a credential that has that scope.
 - Fixtures in `tests/fixtures/` are fictional, clearly marked, never deployed.

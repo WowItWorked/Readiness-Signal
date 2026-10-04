@@ -126,7 +126,10 @@ test('F03: against a ref, items new since the ref are linted as errors and items
 });
 
 test('CI workflow: full history, pre-push base, fail closed, Node 20 and 22', () => {
-  const yml = fs.readFileSync(path.join(ROOT, '.github', 'workflows', 'ci.yml'), 'utf8');
+  // Active location, or the parked copy kept until the pushing credential has the `workflow` scope.
+  const active = path.join(ROOT, '.github', 'workflows', 'ci.yml');
+  const parked = path.join(ROOT, 'ci', 'github-actions-ci.yml');
+  const yml = fs.readFileSync(fs.existsSync(active) ? active : parked, 'utf8');
   assert.match(yml, /fetch-depth: 0/);
   assert.match(yml, /github\.event\.pull_request\.base\.sha \|\| github\.event\.before/);
   assert.match(yml, /node pipeline\/scripts\/validate\.mjs --against-git-ref "\$BASE"/);

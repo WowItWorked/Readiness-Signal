@@ -97,11 +97,6 @@ const domCount = (n) => `<span class="dom-n${n === '—' ? ' zero' : ''}">${esc(
 
 function dashboardMain(st) {
   const d = M.dashboard(st.data, st.now);
-  const exec = d.exec.length
-    ? d.exec.map((e, i) => dashRow(e, i > 0,
-      `<span class="dash-sec">${e.isNew ? '<span class="dot" aria-hidden="true"></span>' : ''}${esc(e.when)}</span>`)).join('')
-    : `<div class="dash-none">${QUIET}<p>${esc(d.execNone)}</p></div>`;
-
   const latest = d.latest
     ? `<header class="latest-head">
         <div class="latest-head-t"><span class="kicker">Last update</span><h2 class="h-21">${esc(d.latest.title)}</h2></div>
@@ -140,20 +135,6 @@ function dashboardMain(st) {
     <h1 class="h1">Dashboard</h1>
     ${d.asOf ? `<span class="as-of">${esc(d.asOf)}</span>` : ''}
   </div>
-
-  <section class="card exec-card" aria-labelledby="exec-h">
-    <header class="exec-head">
-      <span class="badge badge-40 badge-solid" aria-hidden="true">1</span>
-      <div class="exec-head-in">
-        <div class="exec-head-t">
-          <h2 class="h-22" id="exec-h">Executive Visibility, last 7 days</h2>
-          <span class="sub-13">Most time-sensitive: what a director could raise unprompted. Newest first.</span>
-        </div>
-        <a class="small-link" href="#report"${navAttrs('report', 'exec')}>Open in the report</a>
-      </div>
-    </header>
-    ${exec}
-  </section>
 
   <section class="card latest-card" aria-label="Last update">
     ${latest}

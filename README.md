@@ -37,7 +37,9 @@ repo and does the following:
 Only `publish.mjs` writes the archive. It refuses anything that breaks the schema, the
 mechanical checks on the hard constraints (no first person, no named institution in
 questions, issues or rationales, no copied text, conditional issue statements), or
-append-only. CI re-checks append-only against the pre-push commit.
+append-only. A CI workflow re-checks append-only against the pre-push commit; it is parked at
+[`ci/github-actions-ci.yml`](ci/github-actions-ci.yml) until it is pushed with a GitHub credential that has the
+`workflow` scope (move it to `.github/workflows/ci.yml` to enable it).
 
 ### Hard constraints
 
