@@ -1,4 +1,221 @@
 {
   "schema_version": 1,
-  "items": []
+  "items": [
+    {
+      "id": "RS-260120-0600-01",
+      "timestamp": "2026-01-20T06:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "UK Commons Treasury Committee urges AI-specific stress tests and FCA AI guidance by end-2026.",
+      "domains": [
+        "ai",
+        "third_party"
+      ],
+      "source_class": "news",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "The committee treats AI explainability as an accountability matter: where a model's decisions cannot be explained, the senior manager answerable for them cannot show the understanding and control of risk that UK accountability rules require. Who answers for AI-caused harm among developers, deploying firms and data providers is unsettled; the committee asks the FCA to settle it by end-2026."
+        },
+        {
+          "domain": "third_party",
+          "text": "MPs report a few US technology companies supply essential services behind AI use, so one provider's failure could reach many firms at once. They call HM Treasury slow to use its powers under the critical third parties regime, which lets the Bank of England and the FCA investigate AI and cloud providers themselves, not only the firms using them."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The recommendations are addressed to HM Treasury, the Bank of England and the FCA, not to firms, and no AI stress scenario or guidance text exists yet to test against. An FCA executive director told MPs that individuals in firms answer for consumer harm caused through AI. This changes if the FCA publishes the guidance, regulators launch an AI stress test or HM Treasury uses its critical third parties powers.",
+      "sources": [
+        {
+          "publication": "The Guardian",
+          "url": "https://www.theguardian.com/business/2026/jan/20/uk-ai-risks-mps-government-bank-of-england-fca",
+          "headline": "UK exposed to ‘serious harm’ by failure to tackle AI risks, MPs warn",
+          "published": "2026-01-19",
+          "source_class": "news"
+        },
+        {
+          "publication": "The Register",
+          "url": "https://www.theregister.com/software/2026/01/20/mps-call-for-ai-stress-testing-in-financial-services/4732802",
+          "headline": "MPs ask who's responsible when AI crashes the UK finance system",
+          "published": "2026-01-20",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260120-1400-01",
+      "timestamp": "2026-01-20T14:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "The European Commission proposes powers to bar high-risk suppliers' components from critical-sector ICT assets.",
+      "domains": [
+        "third_party",
+        "data"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "third_party",
+          "text": "Supplier eligibility would gain an EU-level test alongside each organisation's own assessment: once a third country is designated, a supplier established in or controlled from it could be listed as high-risk and barred from key ICT assets, so an arrangement that passed due diligence could later carry a mandated exit with a set phase-out period."
+        },
+        {
+          "domain": "data",
+          "text": "Measures the Commission could impose on critical-sector entities include bans on transferring data to a third country or processing it remotely from one, and restrictions on outsourcing functions to managed service providers, so keeping data in the EU would not alone settle whether a provider arrangement stays permissible: remote processing and operational control would also decide."
+        },
+        {
+          "domain": "resilience",
+          "text": "Mobile network operators would have at most 36 months from publication of a high-risk supplier list to remove those suppliers' components from key network assets, so where such components are present, networks that banking and payment services depend on would see equipment replaced to a regulatory deadline, not a schedule the operator or its customers set."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The proposal would itself prohibit high-risk suppliers' components only in electronic communications networks, whose key ICT assets its annex lists. For banking and market-infrastructure entities, key ICT assets and any measures are left to later implementing acts, as are third-country designations and high-risk supplier lists, and the text awaits adoption by Parliament and Council. This changes if an implementing act identifies key ICT assets for those entities.",
+      "sources": [
+        {
+          "publication": "European Commission",
+          "url": "https://digital-strategy.ec.europa.eu/en/library/proposal-regulation-eu-cybersecurity-act",
+          "headline": "Proposal for a Regulation for the EU Cybersecurity Act",
+          "published": "2026-01-20",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "European Commission",
+          "url": "https://digital-strategy.ec.europa.eu/en/library/proposal-directive-regards-simplification-measures-and-alignment-cybersecurity-act",
+          "headline": "Proposal for a Directive as regards simplification measures and alignment with the Cybersecurity Act",
+          "published": "2026-01-20",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "European Commission",
+          "url": "https://digital-strategy.ec.europa.eu/en/news/commission-strengthens-eu-cybersecurity-resilience-and-capabilities",
+          "headline": "Commission strengthens EU cybersecurity resilience and capabilities",
+          "published": "2026-01-20",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "Euronews",
+          "url": "https://www.euronews.com/2026/01/20/brussels-pushes-for-stronger-cybersecurity-oversight-of-high-risk-technology-suppliers",
+          "headline": "Brussels pushes for stronger cybersecurity oversight of high-risk technology suppliers",
+          "published": "2026-01-20",
+          "source_class": "news"
+        },
+        {
+          "publication": "Reuters",
+          "url": "https://www.cnbc.com/2026/01/21/eu-plan-to-phase-out-high-risk-tech-draws-fire-from-chinas-huawei.html",
+          "headline": "EU plan to phase-out high-risk tech draws fire from China's Huawei",
+          "published": "2026-01-20",
+          "source_class": "news"
+        },
+        {
+          "publication": "Associated Press",
+          "url": "https://www.securityweek.com/eu-plans-phase-out-of-high-risk-telecom-suppliers-in-proposals-seen-as-targeting-china/",
+          "headline": "EU Plans Phase Out of High Risk Telecom Suppliers, in Proposals Seen as Targeting China",
+          "published": "2026-01-20",
+          "source_class": "news"
+        },
+        {
+          "publication": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/eu-plans-cybersecurity-overhaul-to-block-foreign-high-risk-suppliers/",
+          "headline": "EU plans cybersecurity overhaul to block foreign high-risk suppliers",
+          "published": "2026-01-20",
+          "source_class": "news"
+        },
+        {
+          "publication": "The Register",
+          "url": "https://www.theregister.com/on-prem/2026/01/21/eu-mulls-axing-chinese-kit-from-networks-within-3-years/5031348",
+          "headline": "EU considers whether there's Huawei of axing Chinese kit from networks within 3 years",
+          "published": "2026-01-21",
+          "source_class": "news"
+        },
+        {
+          "publication": "The Record",
+          "url": "https://therecord.media/eu-unveils-new-plans-to-tackle-huawei-zte",
+          "headline": "EU unveils new plans to tackle Huawei, ZTE as China alleges protectionism",
+          "published": "2026-01-21",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260127-1800-01",
+      "timestamp": "2026-01-27T18:00:00-05:00",
+      "section": "capability_shift",
+      "claim": "Fortinet says a FortiCloud account with a registered device could log into other customers' SSO-enabled devices.",
+      "domains": [
+        "cyber",
+        "third_party"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Patch status against an earlier FortiCloud sign-on bypass, fixed in December 2025, was no guide to exposure: the new flaw is improper access control in the vendor's cloud sign-on, so exposure turned on whether administrator login through that sign-on was enabled, and observed attacks appear limited to devices with management interfaces exposed to the internet, a security firm reports."
+        },
+        {
+          "domain": "third_party",
+          "text": "The vendor's cloud identity service acted as an authentication authority for customers' own firewalls and management appliances, so one access-control flaw at the vendor exposed devices across customers; containment came from the vendor switching the service off on 26 January and refusing logins from vulnerable versions from 27 January, measures applied at its service rather than on customers' devices."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The vendor's advisory settles why devices patched in December were reached: improper access control in its cloud sign-on let an account with a registered device log into other accounts' devices. Since 27 January the service has refused sign-on from vulnerable versions whatever the device setting, and what remains, upgrading and checking for the published indicators of compromise, is the response common frameworks already expect for a known-exploited flaw.",
+      "sources": [
+        {
+          "publication": "FortiGuard Labs",
+          "url": "https://fortiguard.fortinet.com/psirt/FG-IR-26-060",
+          "headline": "Administrative FortiCloud SSO authentication bypass",
+          "published": "2026-01-27",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "CISA",
+          "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-24858",
+          "published": "2026-01-27",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "CISA",
+          "url": "https://www.cisa.gov/news-events/alerts/2026/01/28/fortinet-releases-guidance-address-ongoing-exploitation-authentication-bypass-vulnerability-cve-2026",
+          "headline": "Fortinet Releases Guidance to Address Ongoing Exploitation of Authentication Bypass Vulnerability CVE-2026-24858",
+          "published": "2026-01-28",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/fortinet-blocks-exploited-forticloud-sso-zero-day-until-patch-is-ready/",
+          "headline": "Fortinet blocks exploited FortiCloud SSO zero day until patch is ready",
+          "published": "2026-01-27",
+          "source_class": "news"
+        },
+        {
+          "publication": "SecurityWeek",
+          "url": "https://www.securityweek.com/fortinet-patches-exploited-forticloud-sso-authentication-bypass/",
+          "headline": "Fortinet Patches Exploited FortiCloud SSO Authentication Bypass",
+          "published": "2026-01-28",
+          "source_class": "news"
+        },
+        {
+          "publication": "The Register",
+          "url": "https://www.theregister.com/security/2026/01/28/fortinet-sso-patch-bypass-gets-a-separate-critical-cve/4418504",
+          "headline": "Fortinet unearths another critical bug as SSO accounts borked post-patch",
+          "published": "2026-01-28",
+          "source_class": "news"
+        },
+        {
+          "publication": "CyberScoop",
+          "url": "https://cyberscoop.com/ortinet-zero-day-cve-2026-24858-forticloud-sso-auth-bypass/",
+          "headline": "Fortinet’s latest zero-day vulnerability carries frustrating familiarities for customers",
+          "published": "2026-01-28",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    }
+  ]
 }
