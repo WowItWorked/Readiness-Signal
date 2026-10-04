@@ -269,8 +269,8 @@ describe('colour hooks and palette', () => {
   });
 
   test('the live dot pulses only when there is an edition; motion respects reduced-motion', () => {
-    assert.ok(render({ page: 'dashboard' }).includes('<span class="dot live" aria-hidden="true"></span>Latest edition'));
-    assert.ok(render({ page: 'dashboard' }, empty).includes('<span class="dot" aria-hidden="true"></span>Latest edition'));
+    assert.ok(render({ page: 'dashboard' }).includes('<span class="dot live" aria-hidden="true"></span>Last update'));
+    assert.ok(render({ page: 'dashboard' }, empty).includes('<span class="dot" aria-hidden="true"></span>Last update'));
     assert.ok(/@media \(prefers-reduced-motion: reduce\)\s*\{[^}]*animation: none !important; transition: none !important;/.test(css));
   });
 
@@ -292,7 +292,7 @@ describe('colour hooks and palette', () => {
 describe('states', () => {
   test('day one: masthead, dashboard, report and archive look intentional', () => {
     const dash = text(render({ page: 'dashboard' }, empty));
-    assert.ok(dash.includes('Latest edition None yet'));
+    assert.ok(dash.includes('Last update None yet'));
     // No run has applied the test yet, so the dashboard does not claim that nothing cleared it.
     assert.ok(dash.includes('Nothing published this week. No run in the last 7 days has applied the entry test yet.'));
     assert.ok(!dash.includes('Nothing cleared the Executive Visibility test'));
@@ -331,7 +331,7 @@ describe('states', () => {
     for (const page of ['dashboard', 'report', 'archive']) {
       const t = text(V.renderApp({ ui: ui({ page }), data: null, now: NOW, base: BASE, error: new Error('x'), loading: false }));
       assert.ok(t.includes('The archive could not be loaded.'), page);
-      assert.ok(t.includes('Latest edition Unavailable'));
+      assert.ok(t.includes('Last update Unavailable'));
     }
     const about = text(V.renderApp({ ui: ui({ page: 'about' }), data: null, now: NOW, base: BASE, error: new Error('x'), loading: false }));
     assert.ok(about.includes('A filter, not a feed.'));

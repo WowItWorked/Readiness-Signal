@@ -52,7 +52,7 @@ function masthead(st) {
         <span class="brand-text"><span class="brand-name">Readiness Signal</span><span class="brand-tag">Only what clears the bar. Silence when nothing does.</span></span>
       </a>
       <div class="mast-latest">
-        <div class="mast-latest-k"><span class="dot${isLive ? ' live' : ''}" aria-hidden="true"></span>Latest edition</div>
+        <div class="mast-latest-k"><span class="dot${isLive ? ' live' : ''}" aria-hidden="true"></span>Last update</div>
         <div class="mast-latest-v">${latest}</div>
       </div>
     </div>${nav}
@@ -104,12 +104,12 @@ function dashboardMain(st) {
 
   const latest = d.latest
     ? `<header class="latest-head">
-        <div class="latest-head-t"><span class="kicker">Latest edition</span><h2 class="h-21">${esc(d.latest.title)}</h2></div>
+        <div class="latest-head-t"><span class="kicker">Last update</span><h2 class="h-21">${esc(d.latest.title)}</h2></div>
         <a class="small-link" href="#report"${navAttrs('report', 'latest')}>Open in the report</a>
       </header>
       ${d.latest.items.map((e, i) => dashRow(e, i > 0, `<span class="dash-sec">${esc(e.secLabel)}</span>`, ' latest-row')).join('')}`
     : `<header class="latest-head">
-        <div class="latest-head-t"><span class="kicker">Latest edition</span><h2 class="h-21">None yet</h2></div>
+        <div class="latest-head-t"><span class="kicker">Last update</span><h2 class="h-21">None yet</h2></div>
       </header>
       <div class="dash-none">${QUIET}<p>No edition has been published yet. Runs at 06:00, 10:00, 14:00 and 18:00 ET publish only what clears the bar; a silent run is a result.</p></div>`;
 
@@ -155,7 +155,7 @@ function dashboardMain(st) {
     ${exec}
   </section>
 
-  <section class="card latest-card" aria-label="Latest edition">
+  <section class="card latest-card" aria-label="Last update">
     ${latest}
   </section>
 
@@ -453,7 +453,7 @@ function aboutMain() {
     <div class="about-sec">
       <h2 class="h-19">Where things live</h2>
       <div class="lives">
-        <a class="live-row" href="#dashboard"${navAttrs('dashboard')}><span class="live-k">Dashboard</span><span class="live-v">The latest edition and the past week at a glance, by mechanism, section and domain.</span></a>
+        <a class="live-row" href="#dashboard"${navAttrs('dashboard')}><span class="live-k">Dashboard</span><span class="live-v">The last update and the past week at a glance, by mechanism, section and domain.</span></a>
         <a class="live-row" href="#report"${navAttrs('report', 'day')}><span class="live-k">Report</span><span class="live-v">The last 24 hours, week or month, organised by the three sections. Filter, expand and export.</span></a>
         <a class="live-row" href="#archive"${navAttrs('archive')}><span class="live-k">Archive</span><span class="live-v">Everything ever published, by month, with search and a custom date range. Nothing is replaced.</span></a>
       </div>

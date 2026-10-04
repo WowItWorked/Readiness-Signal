@@ -356,7 +356,7 @@ describe('dashboard aggregates', () => {
     assert.deepEqual(d.exec.map((e) => e.item.id), [
       'RS-261002-1400-01', 'RS-261002-1400-03', 'RS-261002-1000-01', 'RS-260930-1400-01', 'RS-260926-1800-01',
     ]);
-    assert.equal(d.exec[0].when, 'Latest edition · 14:00');
+    assert.equal(d.exec[0].when, 'Last update · 14:00');
     assert.equal(d.exec[0].isNew, true);
     assert.equal(d.exec[2].when, 'Fri 10:00');
     assert.equal(d.exec[2].isNew, false);

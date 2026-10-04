@@ -625,7 +625,7 @@ export function dashboard(data, now) {
   const exec = wk.filter((i) => i.section === 'executive_visibility').map((i) => ({
     item: i,
     isNew: isLatest(i),
-    when: isLatest(i) ? `Latest edition · ${hm(i.date)}` : whenShort(i.date, now),
+    when: isLatest(i) ? `Last update · ${hm(i.date)}` : whenShort(i.date, now),
   }));
   const board = MECHANISMS.map((m) => {
     const list = wk.filter((i) => i.mechanism === m.key)
@@ -677,7 +677,7 @@ export function dashboard(data, now) {
   };
 }
 
-/** Masthead "Latest edition" value. */
+/** Masthead "Last update" value (the latest published edition). */
 export function mastheadLatest(data) {
   const le = data ? latestEdition(data) : null;
   return le ? fmtFull(le.date) : 'None yet';

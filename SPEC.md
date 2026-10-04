@@ -228,7 +228,7 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
 - `backfilled: true` items: small text label "Backfilled" in the collapsed meta line; expanded footer note
   "Added by the historical backfill pass, not by a live edition." Backfilled items never count as editions.
 - `update_of`: expanded view shows "Update to: <earlier claim>" linking to `#<earlier id>`.
-- Empty states everywhere (empty archive on day one must look intentional): masthead "Latest edition — None yet";
+- Empty states everywhere (empty archive on day one must look intentional): masthead "Last update — None yet" (the label reads "Last update"; its value is the latest published edition);
   dashboard "As of" = latest run's `finished_at` (any status), hidden if no runs.
 - Data load failure: a plain message in the main column; never a blank page.
 - Footer (replaces "Illustrative content…"): "Public sources only: headlines and leads are referenced, never
