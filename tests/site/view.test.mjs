@@ -204,7 +204,7 @@ describe('colour hooks and palette', () => {
   test('the four mechanism fills stay distinct, including under red-green colour-vision deficiency', () => {
     // OKLab distance (x100) between fills, for typical vision and Machado (2009) deuteranopia and
     // protanopia simulations. PRAF violet and awareness indigo once sat at 7.5 / 2.6 / 1.3; the
-    // weakest pair now is fuchsia vs violet under protanopia (4.1). Labels and rail positions carry
+    // candidate issue moved from fuchsia to a deep teal (2026-10-03), held about 13 apart from the KRI cyan by lightness as well as hue. Labels and rail positions carry
     // the meaning regardless (WCAG 1.4.1); this guards against hues drifting back together.
     const lin = (h) => hex(h).map((c) => { const v = c / 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; });
     const lab = ([r, g, b]) => {

@@ -95,7 +95,7 @@
    (~277): it stays clear of the navy-to-indigo brand accents and of PRAF violet (~293), and its
    lighter fill keeps it apart from violet under red-green colour-vision deficiency too. */
 [data-mech="candidate_issue"] {
-  --m-text: #A21CAF; --m-fill: #C026D3; --m-tint: #FDF4FF; --m-edge: #F5D0FE; --m-line: #E160F4; --m-wash: #FEFAFF;
+  --m-text: #115E59; --m-fill: #0B7268; --m-tint: #F0FDFA; --m-edge: #A3E7DD; --m-line: #2FA294; --m-wash: #F5FCFB;
 }
 [data-mech="kri_kpi"] {
   --m-text: #0E7490; --m-fill: #0891B2; --m-tint: #EEFBFE; --m-edge: #A5F3FC; --m-line: #0EA5C6; --m-wash: #F6FFFF;

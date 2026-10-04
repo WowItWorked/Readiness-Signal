@@ -275,7 +275,7 @@ stay as above; the visual layer changes:
 - Rounded surfaces (cards 16 px, panels 12 px, controls 10 px, chips and filter buttons as pills) with soft
   shadows in place of hard rules; a navy-to-indigo masthead gradient with a faint decorative texture.
 - Each mechanism has a categorical hue used on its tag, rail, board column, mix strip and expanded panels:
-  Candidate issue fuchsia, KRI / KPI cyan, PRAF coverage violet, Awareness only blue-indigo (kept clearly apart from the violet and from the brand indigo). Hues stay outside red,
+  Candidate issue deep teal, KRI / KPI cyan, PRAF coverage violet, Awareness only blue-indigo (kept clearly apart from the violet and from the brand indigo). Hues stay outside red,
   amber and green so colour never reads as severity or safety; awareness only carries the same weight as the
   others. The brand green remains emphasis only.
 - Text meets WCAG AA on every background; animation respects `prefers-reduced-motion`; no monospace.
