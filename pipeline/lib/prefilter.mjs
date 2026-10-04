@@ -2,9 +2,10 @@
 // The lexicon and every weight live in lexicon.mjs; this module only applies them.
 
 import {
-  ADVERSARY_SUBJECT, AUTHORITY_HOSTS, CAPS, CLASS_PROFILE, DOMAIN_CAP, DOMAIN_QUALIFY, DOMAIN_TERMS, DOMAIN_TOTAL_CAP,
-  ENTERPRISE_TERMS, EVENT_URL_SEGMENTS, HIGH_VOLUME_HOSTS, KEV_ANNOUNCEMENT, LEAD_FACTOR, LEXICON_VERSION, MARKETING_PATTERNS,
-  MATERIALITY_GROUPS, NOISE, PROFILES, ROUNDUP_PATTERNS, SECTOR_TERMS, STANDARD_PATH_SEGMENTS, WEIGHTS,
+  ADVERSARY_SUBJECT, AUTHORITY_HOSTS, AUTHORITY_SUBJECT, BARE_ID_HEADLINE, CAPS, CLASS_PROFILE, DOMAIN_CAP, DOMAIN_GATED_GROUPS, DOMAIN_QUALIFY,
+  DOMAIN_TERMS, DOMAIN_TOTAL_CAP, ENTERPRISE_TERMS, EVENT_URL_SEGMENTS, HIGH_VOLUME_HOSTS, KEV_ANNOUNCEMENT, LEAD_FACTOR,
+  LEXICON_VERSION, MARKETING_PATTERNS, MATERIALITY_GROUPS, NOISE, NON_TECH_PRUDENTIAL, PROFILES, ROUNDUP_PATTERNS, SECTOR_TERMS,
+  STANDARD_PATH_SEGMENTS, TECH_CONTENT, WEIGHTS,
 } from './lexicon.mjs';
 import { DOMAINS } from './enums.mjs';
 import { findInstitutions } from './institutions.mjs';
@@ -46,6 +47,8 @@ const C = {
   sector: compileTiers(SECTOR_TERMS),
   enterprise: compileTiers(ENTERPRISE_TERMS),
   noise: Object.fromEntries(Object.entries(NOISE).map(([k, tiers]) => [k, compileTiers(tiers)])),
+  prudential: NON_TECH_PRUDENTIAL.map(compileTerm),
+  techContent: TECH_CONTENT.map(compileTerm),
 };
 
 export function normaliseText(s) {
@@ -54,6 +57,17 @@ export function normaliseText(s) {
     .replace(/[‘’‛]/g, "'")
     .replace(/[“”‟]/g, '"')
     .replace(/[‐-–]/g, '-');
+}
+
+/**
+ * Headline and lead as scored. A headline that is only an instrument identifier ("SR 26-2",
+ * BARE_ID_HEADLINE) carries its title in the lead, so the lead is scored as part of the headline.
+ */
+export function scoredText(candidate) {
+  const title = normaliseText(candidate.headline);
+  const lead = normaliseText(candidate.lead);
+  if (lead && BARE_ID_HEADLINE.test(title)) return { title: `${title}: ${lead}`, lead: '' };
+  return { title, lead };
 }
 
 const onHost = (hosts, list) => hosts.some((h) => list.some((x) => h === x || h.endsWith(`.${x}`)));
@@ -123,8 +137,7 @@ const round1 = (n) => Math.round(n * 10) / 10;
 /** Score one candidate. Pure. */
 export function scoreCandidate(candidate, profileName = 'standard') {
   const profile = PROFILES[profileName] ?? PROFILES.standard;
-  const title = normaliseText(candidate.headline);
-  const lead = normaliseText(candidate.lead);
+  const { title, lead } = scoredText(candidate);
   const matched = {};
   const domainScores = {};
   let strongInTitle = false;
@@ -144,6 +157,8 @@ export function scoreCandidate(candidate, profileName = 'standard') {
 
   let materiality = 0;
   for (const [group, tiers] of Object.entries(C.materiality)) {
+    // formal-instrument vocabulary never lifts an off-domain candidate (DOMAIN_GATED_GROUPS)
+    if (!domains.length && DOMAIN_GATED_GROUPS.includes(group)) continue;
     let best = 0;
     let bestId = null;
     for (const { weight, terms } of tiers) {
@@ -199,6 +214,26 @@ export function scoreCandidate(candidate, profileName = 'standard') {
   };
 }
 
+/**
+ * Off domain despite a qualifying domain: risk_quantification is the only qualifying domain, no
+ * other domain has more than a weak (generic) term, the headline or lead uses prudential or
+ * accounting vocabulary (capital, liquidity, stress-test capital, accounting, deposit insurance,
+ * resolution, climate: NON_TECH_PRUDENTIAL) and nothing in TECH_CONTENT (operational risk, loss
+ * data, technology, ICT, cloud, ...). FILTER.md §3.3: market, credit and liquidity risk modelling
+ * are outside the seven domains. Returns the matched term or null.
+ */
+export function nonTechPrudential(candidate, scored) {
+  if (candidate.kev) return null;
+  if (scored.domains.length !== 1 || scored.domains[0] !== 'risk_quantification') return null;
+  const { title, lead } = scoredText(candidate);
+  for (const d of DOMAINS) {
+    if (d !== 'risk_quantification' && collectHits(C.domains[d], title, lead).some((h) => h.tier !== 'weak')) return null;
+  }
+  const hit = (t) => t.re.test(title) || (lead && t.re.test(lead));
+  if (C.techContent.some(hit)) return null;
+  return C.prudential.find(hit)?.id ?? null;
+}
+
 /** The event-listing URL path segment of a candidate URL, or null (EVENT_URL_SEGMENTS). */
 export function eventUrlSegment(url) {
   let path;
@@ -228,6 +263,8 @@ export function outrightDrop(candidate, profileName, { hasKevSource = false } = 
     // "Hackers launch ...", "Ransomware gang raises ..." describe adversaries, not vendors.
     const always = name === 'sponsored' || name === 'webinar';
     if (!always && ADVERSARY_SUBJECT.test(title.slice(0, m.index))) continue;
+    // "Fed announces final rule ... for service providers": an authority's instrument, not a launch.
+    if ((name === 'product launch' || name === 'now available') && AUTHORITY_SUBJECT.test(title.slice(0, m.index))) continue;
     return { reason: 'marketing', detail: name };
   }
   return null;
@@ -284,6 +321,12 @@ export function runPrefilter(candidates, { sources = new Map(), hasKevSource } =
     if (!s.domains.length) {
       counts.off_domain++;
       dropped.push({ ...base, reason: 'off_domain', score: s.score, detail: null });
+      continue;
+    }
+    const prudential = nonTechPrudential(c, s);
+    if (prudential) {
+      counts.off_domain++;
+      dropped.push({ ...base, reason: 'off_domain', score: s.score, detail: `risk_quantification only, no technology content (${prudential})` });
       continue;
     }
     const verdict = passRule(c, s, profile);

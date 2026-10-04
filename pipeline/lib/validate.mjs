@@ -334,6 +334,11 @@ const ADVICE = rx(`${B}(should|must|ought\\s+to|be\\s+aware|it\\s+is\\s+(?:impor
 const MONTH_EVENT = /(?<![\p{L}\p{N}])[Tt]he\s+(January|February|March|April|May|June|July|August|September|October|November|December)(?:\s+\d{4})?\s+[\p{L}-]+/u;
 // FILTER 7.2 rule 4: a claim resting on a single source attributes it ("..., Microsoft says").
 const CLAIM_ATTRIBUTION = rx(`${B}(says?|said|warns?|warned|reports?|reported|expects?|plans?|estimates?|estimated|forecasts?|according\\s+to|told|tells|proposes?|proposed|testified|stated|states|announced|announces|argued|argues|wrote|writes|found|finds|disclosed|discloses|confirmed|confirms|claims?|claimed|counts?|counted|records?|recorded|lists?|listed|publish(?:es|ed)|describes?|described|notes?|noted|admits?|admitted|acknowledges?|acknowledged|asks?|asked|urges?|urged|calls?\\s+(?:for|on)|called\\s+(?:for|on)|signals?|signalled|signaled|outlines?|outlined|survey(?:ed|s)?)${E}`);
+// FILTER 7.2 rule 10: a formal rule or exam notice is its issuer's own act, so the issuer as subject
+// with an instrument verb ("The PRA adopts ...", "Two agencies require ...", "... will examine")
+// needs no further attribution. Accepted only for a regulator-class source: formal instruments are
+// always regulator class (FILTER 2.2), and the verbs prove nothing about another class's claim.
+const INSTRUMENT_ATTRIBUTION = rx(`${B}(requires?|sets?|adopts?|issues?|withdraws?|rescinds?|finali[sz]es?|will\\s+(?:examine|assess|review))${E}`);
 const PRIMARY_DOCUMENT_CLASSES = Object.freeze(['regulator', 'standards_body', 'vendor_threat_research', 'research_analysis']);
 // FILTER 7.5 rule 7: a question whose content is whether a fixed version is installed is patch
 // management (C6), never a candidate_issue question.
@@ -501,7 +506,9 @@ export function styleIssues(item) {
     // which the claim must not present as settled fact. A single news or trade source is that
     // publication's own reporting and is left to the agent.
     const only = Array.isArray(item?.sources) && item.sources.length === 1 ? item.sources[0] : null;
-    if (only && PRIMARY_DOCUMENT_CLASSES.includes(only.source_class ?? item.source_class) && !CLAIM_ATTRIBUTION.test(c)) {
+    const onlyClass = only ? only.source_class ?? item.source_class : null;
+    if (only && PRIMARY_DOCUMENT_CLASSES.includes(onlyClass) && !CLAIM_ATTRIBUTION.test(c)
+      && !(onlyClass === 'regulator' && INSTRUMENT_ATTRIBUTION.test(c))) {
       add('FILTER 7.2', 'claim', 'rests on one primary document (its issuer\'s own account) with no attribution verb; attribute it ("..., the provider says")', false);
     }
   }
@@ -1069,8 +1076,8 @@ export function parseReasonCodes(filterText) {
 
 /**
  * The FILTER.md §8.2 Element column: Map code -> the first element ID it names ("G7", "E2", "C6",
- * "R3b"), or null where it names a procedure ("§6.2", "§5.3, §5.7", "RUNBOOK"). Null when the
- * table cannot be found.
+ * "R3b", "R3f"), or null where it names a procedure ("§6.2", "§5.3, §5.7", "RUNBOOK"). Null when
+ * the table cannot be found.
  */
 export function parseReasonCodeElements(filterText) {
   if (typeof filterText !== 'string') return null;
@@ -1085,7 +1092,11 @@ export function parseReasonCodeElements(filterText) {
 /**
  * FILTER.md §4.3 and §8.4: codes that may carry NEAR only with this knob (a knob-controlled gate,
  * M2 for a resurfacing story, the C6 loosening step, a standard setter while rt_standard_setters
- * is none). Every other gate and dedup code is never NEAR.
+ * is none, a formal instrument first issued just outside max_event_age_days). Every other gate
+ * and dedup code is never NEAR. GL_FORMAL_RULE (G5) is recorded only while formal_instrument_scope
+ * is "none" (FORMAL_INSTRUMENT_SCOPES), so its NEAR is the step to "new_in_regulatory_trajectory";
+ * RT_INSTRUMENT_NOT_NEW (R3f) is never NEAR for a reminder, restatement, correction, extension or
+ * re-publication, only as "NEAR R3f/max_event_age_days" (FILTER.md §4.4.5, §8.3).
  */
 export const NEAR_KNOB_REQUIRED = Object.freeze({
   GL_FORMAL_RULE: { element: 'G5', knob: 'formal_instrument_scope' },
@@ -1095,7 +1106,42 @@ export const NEAR_KNOB_REQUIRED = Object.freeze({
   DD_SAME_STORY: { element: 'M2', knob: 'm2_min_scope_factor' },
   CS_ROUTINE_VULN: { element: 'C6', knob: 'cs_routine_vuln_exceptions' },
   RT_JURISDICTION: { element: 'R2', knob: 'rt_standard_setters' },
+  RT_INSTRUMENT_NOT_NEW: { element: 'R3f', knob: 'max_event_age_days' },
 });
+
+/**
+ * thresholds.json formal_instrument_scope (owner decision 2026-10-03), tightest first:
+ *   none                          G5 drops every formal instrument and exam notice (GL_FORMAL_RULE);
+ *   new_in_regulatory_trajectory  launch: a newly issued one is tested in RT (RT_PASS_FORMAL_RULE,
+ *                                 RT_PASS_EXAM_NOTICE; RT_INSTRUMENT_NOT_NEW for a reminder,
+ *                                 restatement, correction, extension or re-publication);
+ *   new_any_section               it may also be tested under EV or CS on its facts.
+ * gate: GL_FORMAL_RULE is the code for a formal instrument; rt: the RT formal-instrument codes apply.
+ */
+export const FORMAL_INSTRUMENT_SCOPES = Object.freeze({
+  none: Object.freeze({ gate: true, rt: false }),
+  new_in_regulatory_trajectory: Object.freeze({ gate: false, rt: true }),
+  new_any_section: Object.freeze({ gate: false, rt: true }),
+});
+
+/** Codes for a formal instrument or exam notice tested in RT (FILTER.md §8.2). */
+export const RT_FORMAL_INSTRUMENT_CODES = Object.freeze(['RT_PASS_FORMAL_RULE', 'RT_PASS_EXAM_NOTICE', 'RT_INSTRUMENT_NOT_NEW']);
+
+/**
+ * A judgment's reason code against formal_instrument_scope: a message, or null when they agree or
+ * the scope is unknown. GL_FORMAL_RULE only at "none"; the RT formal-instrument codes never at "none".
+ */
+export function formalScopeIssue(code, scope) {
+  const s = Object.hasOwn(FORMAL_INSTRUMENT_SCOPES, String(scope)) ? FORMAL_INSTRUMENT_SCOPES[scope] : null;
+  if (!s || typeof code !== 'string') return null;
+  if (code === 'GL_FORMAL_RULE' && !s.gate) {
+    return `GL_FORMAL_RULE is recorded only while formal_instrument_scope is "none" (now "${scope}"); a formal rule or exam notice, or a notice about one, takes the formal-instrument path in regulatory_trajectory (R1, R1f, R2, R3f, R4f, R5; FILTER 4.4.5)`;
+  }
+  if (RT_FORMAL_INSTRUMENT_CODES.includes(code) && !s.rt) {
+    return `${code} applies only while formal_instrument_scope is not "none" (now "${scope}": a formal rule or exam notice drops at G5 as GL_FORMAL_RULE)`;
+  }
+  return null;
+}
 
 /** Whether a thresholds.json knob's `element` text covers element ID `el` ("E2a" covers E2 and E2a). */
 function knobCovers(knobElement, el) {
@@ -1419,6 +1465,9 @@ function nearMarkerIssues(code, el, knob, { reasonElements = null, knobs = null 
  *     RT_JURISDICTION); a knob exists and controls the element (with knobs, from thresholds.mjs
  *     knobs()); "[alt EV:<element>[/<knob>]]" or "[alt CS:<element>[/<knob>]]" last, naming the
  *     other section.
+ *   - §8.3 invariant 9 (with knobs): GL_FORMAL_RULE only while formal_instrument_scope is
+ *     "none"; RT_PASS_FORMAL_RULE, RT_PASS_EXAM_NOTICE and RT_INSTRUMENT_NOT_NEW never then
+ *     (formalScopeIssue).
  * @param {{candidates?: object[], archiveItems?: object[], reasonElements?: Map<string,string|null>|null, knobs?: Map<string,{element: string}>|null, filterText?: string|null}} ctx
  */
 export function decisionStyleIssues(decisions, { candidates = [], archiveItems = [], reasonElements = null, knobs = null, filterText = null } = {}) {
@@ -1483,9 +1532,14 @@ export function decisionStyleIssues(decisions, { candidates = [], archiveItems =
     const hype = firstMatch(HYPE, text);
     if (hype) add('FILTER V9', at, `${field}: hype word ${quote(hype)}`);
   };
+  const formalScope = knobs instanceof Map ? knobs.get('formal_instrument_scope')?.value : undefined;
   judgments.forEach((j, i) => {
-    if (!isObj(j) || typeof j.reason !== 'string') return;
+    if (!isObj(j)) return;
     const a = `decisions.judgments[${i}]${typeof j.candidate_id === 'string' ? ` (${j.candidate_id})` : ''}`;
+    // FILTER.md §8.3 invariant 9: the formal-instrument codes follow formal_instrument_scope
+    const scopeIssue = formalScopeIssue(j.reason_code, formalScope);
+    if (scopeIssue) add('FILTER 8.3', a, `reason_code: ${scopeIssue}`);
+    if (typeof j.reason !== 'string') return;
     voice(a, 'reason', j.reason);
     if (NEAR_RE.test(j.reason)) {
       const head = REASON_HEAD_RE.exec(j.reason);

@@ -1,7 +1,7 @@
 # FILTER.md: Readiness Signal selection standard
 
 **Status:** binding. Every scheduled live run (06:00, 10:00, 14:00 and 18:00 ET) applies it to every stage-1 survivor.
-**Version:** 1 (launch; revised before the first run). **Threshold level:** read from `pipeline/thresholds.json` (`level`) at the start of every run.
+**Version:** 1 (launch; revised before the first run, including the owner decision of 2026-10-03 that admits newly issued formal rules and exam notices, §4.4.5 and §11, and the clarifications from its calibration of 2026-10-04: §3.3, §4.4.2, §10 #93–#96). **Threshold level:** read from `pipeline/thresholds.json` (`level`) at the start of every run.
 **Owner:** changed only by the owner, by commit. The routine agent never edits this file, `pipeline/thresholds.json`, `pipeline/RUNBOOK.md`, the lexicon or the source registry during a run.
 **Scope:** live collection only. This is **not** the backfill standard and is never applied to a historical pass (`pipeline/BACKFILL.md`).
 **Other files:** `SPEC.md` governs schemas, paths and process; `pipeline/RUNBOOK.md` governs run steps; this file governs judgment. If this file and `SPEC.md` appear to conflict, apply the stricter reading and add `FILTER-SPEC conflict: <phrase>` to the run notes. The launch choices in §11 that are stricter than SPEC (for example V4) are deliberate, not conflicts, and are never noted.
@@ -23,9 +23,9 @@ Conventions:
 1. **Cluster.** Group this run's survivors that report the same story. Judge each cluster once, on the union of its evidence, and pick the lead (§5.2).
 2. **G1 domain.** Nothing within the seven domains → `GL_OFF_DOMAIN` (§3.3, §3.4).
 3. **Published story?** It resurfaces an archive item with no M1–M6 fact → `DD_SAME_STORY`, `section_tested: null`, and every cluster member gets its own `DD_SAME_STORY` judgment (§5.2(5a), §5.3). A *different* event that repeats a published shift is not a duplicate: test it (§5.1).
-4. **Gates G2–G11** in order. The first failure gives the code; `section_tested: null` (§3.4).
-5. **Route** (§4.1). RT form → test RT only. Otherwise test EV, then CS; if both fail, record the primary route and the other section's first failed element as `[alt …]`.
-6. **Test every element** of the section: EV E1–E5 (§4.2); CS C1–C6, vulnerability rule first (§4.3); RT R1–R5 and X1–X6 (§4.4). Unknown is not met (D1); borderline is drop (D5). The first failed element in ID order gives the code (§8.2). `NEAR`, and a knob on `NEAR` or `[alt …]`, only under §8.4. Two frequent cases: an actor adopting established techniques fails C1, never `NEAR C5`; and C5 Branch A's window runs from the first admissible establishment of the change (an earlier study of the same metric counts), while a later report inside that window still meets C5 (§4.3, D2).
+4. **Gates G2–G11** in order. The first failure gives the code; `section_tested: null` (§3.4). G5 applies only while `formal_instrument_scope` is `none`.
+5. **Route** (§4.1). RT form → test RT only. RT form includes a formal rule or exam notice, and a notice that only reminds of, restates, corrects, extends or re-publishes one (§4.4.2). Otherwise test EV, then CS; if both fail, record the primary route and the other section's first failed element as `[alt …]`.
+6. **Test every element** of the section: EV E1–E5 (§4.2); CS C1–C6, vulnerability rule first (§4.3); RT R1–R5 and X1–X6 (§4.4), or for a formal instrument R1, R1f, R2, R3f, R4f and R5 (§4.4.5). A formal instrument is tested for newness, not direction: a reminder, restatement, correction, extension or re-publication fails R3f (`RT_INSTRUMENT_NOT_NEW`), never R3. Unknown is not met (D1); borderline is drop (D5). The first failed element in ID order gives the code (§8.2). `NEAR`, and a knob on `NEAR` or `[alt …]`, only under §8.4. Two frequent cases: an actor adopting established techniques fails C1, never `NEAR C5`; and C5 Branch A's window runs from the first admissible establishment of the change (an earlier study of the same metric counts), while a later report inside that window still meets C5 (§4.3, D2).
 7. **Before any pass,** search the whole archive (§5.6). A match is a material update or `DD_SAME_STORY` (§5.4, §5.5).
 8. **Mechanism.** The first guard that holds, in the order `praf_coverage`, `candidate_issue`, `kri_kpi`, `awareness_only` (§6.2). None → `GL_NO_MECHANISM`.
 9. **Sources.** Cite only candidates in this run's `candidates.json` (in an owner replay, only pages published before its window closed). Register a page found by search with `add-manual.mjs --extra` before citing it. A search-result summary is never evidence (§2.7.5).
@@ -80,7 +80,7 @@ Otherwise it is dropped. These rules apply throughout:
 
 At `level: "high"`:
 
-1. Every knob in `pipeline/thresholds.json` holds its launch value (§9.3), which is its strictest value. §11 lists every launch choice that goes beyond the brief's literal text, with its knob. The agent never changes a knob and never applies a value other than the file's.
+1. Every knob in `pipeline/thresholds.json` holds its launch value (§9.3), which is its strictest value except where the build owner set the launch value by decision and left a tightening step (`cs_branch_a_requires_assumption`, `formal_instrument_scope`; §11). §11 lists every launch choice that goes beyond the brief's literal text, with its knob. The agent never changes a knob and never applies a value other than the file's.
 2. Every required element in §4 applies. None is waived for any source, topic or level of prominence.
 3. Section choice is mechanical (§4.1). There is no section shopping.
 4. The `candidate_issue` guard (§6.4) applies in full, and doubt resolves away from `candidate_issue`.
@@ -99,7 +99,7 @@ At `level: "high"`:
 
 - **A1. No catch-up.** A silent day, a silent week or an empty section never lowers the bar.
 - **A2. No momentum.** A topic that produced items before is no more likely to pass now. Judge each candidate on its own evidence.
-- **A3. No self-precedent.** Earlier runs' decisions are not precedent, except through dedup and novelty checks against the archive (§5, C5, R3). Precedent lives only in §10.
+- **A3. No self-precedent.** Earlier runs' decisions are not precedent, except through dedup and novelty checks against the archive (§5, C5, R3, R3f). Precedent lives only in §10.
 - **A4. No section filling.** Never pass an item because a section is empty.
 - **A5. No re-labelling.** Section choice follows §4.1 only.
 - **A6. No story splitting.** One story yields at most one item. A breach does not become both a fraud item and a cyber item (§5.7).
@@ -121,20 +121,20 @@ The order is the checklist in §0. Two points of order matter:
 ### 2.1 The six source classes (the brief's definitions; additions in italics)
 
 - **news:** primary reporting from named publications. Headline and lead level only.
-- **regulator:** supervisors, central banks, legislatures. Speeches, testimony, consultation papers, supervisory statements.
+- **regulator:** supervisors, central banks, legislatures. Speeches, testimony, consultation papers, supervisory statements. *Final rules, guidance and exam notices (owner decision, §11).*
 - **standards_body:** NIST, ISO, FSB, BIS, CPMI, IOSCO and equivalents. *Standards, frameworks, consultation drafts.*
 - **industry_trade:** FS-ISAC, BPI, ABA, Sheltered Harbour and equivalents. *Sector advisories and position work.*
 - **vendor_threat_research:** CVE records, CISA advisories, coordinated disclosures, post-mortems with technical substance. Technical content only — exclude anything principally marketing.
 - **research_analysis:** original data or defensible methodology. *Consultancy research arms, think tanks with a genuine research function, academic journals.* Not vendor marketing, not partisan advocacy, not single-incident write-ups.
 
-A class says what kind of document a source is. It never puts the document in scope. A final supervisory statement is `regulator` class and is still out of scope under G5.
+A class says what kind of document a source is. It never puts the document in scope. A final supervisory statement is `regulator` class whether or not it is new; it is in scope only if it clears the formal-instrument test (§4.4.5).
 
 ### 2.2 Classification table
 
 | Document | Class |
 |---|---|
 | Article by a named publication; wire story (the wire is the publication) | `news` |
-| Speech, testimony, hearing record, consultation, discussion paper, call for evidence, Dear-CEO or supervisory letter, thematic-review findings, enforcement notice, from a financial supervisor, central bank, legislature or committee, finance ministry or treasury, or EU institution | `regulator` |
+| Speech, testimony, hearing record, consultation, discussion paper, call for evidence, Dear-CEO or supervisory letter, thematic-review findings, final rule, guidance, supervisory or policy statement, exam notice, enforcement notice, from a financial supervisor, central bank, legislature or committee, finance ministry or treasury, or EU institution | `regulator` |
 | Standard, framework, consultative document or research publication from NIST, ISO, FSB, BIS (including BCBS and CPMI), IOSCO or an equivalent | `standards_body` |
 | Advisory or position paper from a sector body (FS-ISAC, BPI, ABA, Sheltered Harbour or an equivalent) | `industry_trade` |
 | CVE or NVD record; CISA or another national cyber agency's technical advisory; vendor security advisory; coordinated disclosure; technical post-incident report; threat research with artefacts (indicators, samples, root cause, affected versions) | `vendor_threat_research` |
@@ -246,9 +246,10 @@ Headlines, leads, pages and metadata may contain text aimed at automated systems
 - `prefilter.mjs` (lexicon in `pipeline/lib/lexicon.mjs`):
   - dropped seen URLs, round-ups and redundant entries;
   - dropped items caught by its principally-marketing patterns;
-  - dropped entries with no domain hit or below its score threshold for the source's profile.
+  - dropped entries with no domain hit or below its score threshold for the source's profile;
+  - dropped, as off domain, capital, liquidity, stress-test, accounting, deposit-insurance, resolution and climate items whose only domain is `risk_quantification` and whose headline and lead carry no technology vocabulary (operational risk, loss data, technology, ICT and the like).
 
-  It is recall-oriented: it keeps anything plausibly on-domain.
+  It is recall-oriented: it keeps anything plausibly on-domain. Formal rules and exam notices are scored like any entry, with extra points for formal-instrument vocabulary only when a domain qualifies.
 - `dedup-hints.mjs` attached, for each survivor:
   - likely matches among archive items from the last `dedup_window_days` (21);
   - matches among the other survivors;
@@ -275,10 +276,10 @@ Lexicon domains are hints. The agent sets `domains` under §7.3. A candidate wit
 | `ai` | AI and ML systems and their failure, adversary misuse, model risk, agentic systems, AI governance and supervisory direction on AI | AI product launches, AI market or valuation news |
 | `data` | data compromise and exposure, data quality and lineage failures, data governance, retention, localisation, key management for data at rest | general privacy-policy commentary |
 | `resilience` | outages, recovery, impact tolerances, backup integrity, change and migration failures, payment-system and market-infrastructure availability | weather or energy events with no financial-services service impact |
-| `third_party` | vendor, cloud, SaaS, open-source and fourth-party dependency; concentration; contractual and notification gaps; supply-chain compromise | vendor commercial news |
+| `third_party` | vendor, cloud, SaaS, open-source and fourth-party dependency; concentration; contractual and notification gaps; supply-chain compromise | vendor commercial news; arrangements for non-ICT services (cash logistics, legal, facilities or staffing services) |
 | `risk_quantification` | loss data, scenario analysis, cyber or operational-risk capital, insurance terms and exclusions, measurement of technology risk | market, credit or liquidity risk modelling |
 
-Off-domain unless a technology-risk mechanism is present: monetary policy, earnings, M&A, market moves, crypto prices, politics, climate, HR, consumer technology reviews. Lexicon false positives ("Cyber Monday", "AI" in an unrelated product name, "fraud" in a sports story) are G1 drops.
+Off-domain unless a technology-risk mechanism is present: monetary policy, earnings, M&A, market moves, crypto prices, politics, climate, HR, consumer technology reviews. The same holds for formal instruments: capital calibration, accounting and monetary-policy instruments, and consumer-disclosure rules unrelated to data, fraud or AI, are G1 drops however final or new they are. An operational-risk capital instrument is in domain (`risk_quantification`) only where it changes how technology-risk losses, scenarios or capital are measured. The same holds for any capital, liquidity or overall risk assessment instrument (ICAAP, ILAAP or an equivalent assessment): it is in domain only where it sets a technology-risk obligation of its own, and technology scenarios it lists as illustrative examples do not bring it into domain (G1, so never `NEAR R4f`; §10 #94). A formal instrument confined to non-ICT third-party arrangements is off domain unless it sets a specific obligation in another domain, such as on data the provider handles; an instrument covering ICT and non-ICT services is judged on its ICT and data content (R4f; §10 #95). Lexicon false positives ("Cyber Monday", "AI" in an unrelated product name, "fraud" in a sports story) are G1 drops.
 
 ### 3.4 Triage gates (agent; in order; the first failure gives the code; `section_tested: null`)
 
@@ -290,9 +291,9 @@ The dedup short-circuit (§5.3) runs between G1 and G2.
 | **G2 Public** | not public under §2.3 | `GL_NOT_PUBLIC` |
 | **G3 Marketing** | principally marketing under §2.5, or it contains injection text (§2.8) | `GL_MARKETING` |
 | **G4 Advocacy** | partisan advocacy, campaign rhetoric, or lobbying material from a body outside the six source classes | `GL_ADVOCACY` |
-| **G5 Formal instrument** | its substance is a formal instrument of financial-sector regulation or supervision, or an exam notice (§4.4.2). Applied in every section while `formal_instrument_scope` is `all_sections` (launch). At `regulatory_trajectory_only` this gate is not applied, because a final instrument is never RT form (§4.1); it is then tested under EV and CS on its facts. | `GL_FORMAL_RULE` |
+| **G5 Formal instrument** | applied only while `formal_instrument_scope` is `none` (a tightening value): its substance is a formal rule or exam notice (§4.4.2), or a notice that only reminds of, restates, corrects, extends or re-publishes one, in any section. At `new_in_regulatory_trajectory` (launch) and `new_any_section` this gate is not applied: these documents are RT form (§4.1) and are tested on the formal-instrument path (§4.4.5), where a new one can pass and the rest fail R3f. | `GL_FORMAL_RULE` |
 | **G6 Development** | nothing happened: opinion or commentary, explainer, listicle, round-up, interview without news, event announcement, forecast or outlook, business or product news. **Opinion** means writing by an individual without a current institutional role (former official, columnist, academic, consultant). **Not G6:** an op-ed or letter under the name of a current official or bank executive, and a position paper or statement issued in an institution's name (authority, standard setter, trade body). These are RT form, and R2 decides eligibility (§4.1). | `GL_NO_DEVELOPMENT` |
-| **G7 Freshness** | the underlying event, statement or disclosure is dated more than `max_event_age_days` (launch: 7) before the run's slot. The first public disclosure of an older event is dated by the disclosure. Anniversaries and retrospectives fail. | `GL_STALE` |
+| **G7 Freshness** | the underlying event, statement or disclosure is dated more than `max_event_age_days` (launch: 7) before the run's slot. The first public disclosure of an older event is dated by the disclosure. Anniversaries and retrospectives fail. For RT-form documents about formal instruments, G7 dates the candidate's own document: a final instrument dated outside the window fails here, while a reminder, FAQ or re-publication dated inside it passes G7 and the instrument's own date is judged by R3f (§4.4.5). | `GL_STALE` |
 | **G8 Verifiability** | the substance rests only on an aggregator, a leak-site post, an anonymous forum or social post, or unnamed sources ("people familiar with the matter"), without confirmation by the affected party or an authority; or no original publication can be identified. While `unnamed_source_reporting` is `two_independent_outlets`, unnamed-source reporting passes G8 when at least 2 independent named publications report it from their own sourcing. | `GL_UNVERIFIABLE` |
 | **G9 Research standard** | presented as research, or a vendor statistics study (§2.9), and fails RA1–RA6 (§2.6) | `GL_RESEARCH_EXCLUDED` |
 | **G10 Institution position** | its value rests on characterising one institution's internal control, exposure, maturity or remediation position. Examples: a rating or analyst view of one bank's cyber maturity; a bank announcing its own security programme; an enforcement action whose order describes deficiencies only in general terms. Bank-executive statements skip G10 and are tested under R3b (§4.4.4). | `GL_INSTITUTION_POSITION` |
@@ -314,11 +315,12 @@ The dedup short-circuit (§5.3) runs between G1 and G2.
    - a consultation-stage document, discussion paper, call for input, legislative proposal or committee report;
    - a supervisory letter, thematic-review finding, or statement of supervisory concern or intent;
    - a position paper or statement issued in an institution's name (authority, standard setter, trade body);
-   - a bank executive's public statement about sector direction (§4.4.4).
+   - a bank executive's public statement about sector direction (§4.4.4);
+   - while `formal_instrument_scope` is not `none`: a formal rule or exam notice (§4.4.2), or a notice that only reminds of, restates, corrects, extends or re-publishes an instrument or a consultation. These are tested on the formal-instrument path (§4.4.5), not for direction.
 
-   Eligibility is tested inside RT by R1, R2 and X1, so an ineligible issuer or speaker drops with an RT code (`RT_JURISDICTION`, `RT_SPEAKER_INELIGIBLE` or `RT_INSTRUMENT_INELIGIBLE`). RT candidates are tested **only** under RT; nothing falls back into or out of RT.
+   Eligibility is tested inside RT by R1, R1f, R2 and X1, so an ineligible issuer, speaker or instrument drops with an RT code (`RT_JURISDICTION`, `RT_SPEAKER_INELIGIBLE` or `RT_INSTRUMENT_INELIGIBLE`). RT candidates are tested **only** under RT; nothing falls back into or out of RT. One exception, at `formal_instrument_scope` `new_any_section` only: a new formal instrument (R3f held) that fails RT is then tested under EV and CS on its facts (step 2); the section that passes is recorded, and if neither passes the RT code is recorded.
 
-   **Never RT form, whoever issues it:** a disclosure of an event (an outage, a breach, a loss); an advisory, alert or emergency directive (evidence for EV E2d or E2e, or for CS); an enforcement action (E2d or CS); a final instrument or exam notice (G5); a research publication (G9, then EV or CS).
+   **Never RT form, whoever issues it:** a disclosure of an event (an outage, a breach, a loss); an advisory, alert or emergency directive (evidence for EV E2d or E2e, or for CS); an enforcement action, including a consent order or penalty addressed to one firm (E2d or CS; it is never a rule, R1f); a research publication (G9, then EV or CS).
 2. **Otherwise, test Executive Visibility (EV) and Capability & Control Shift (CS).**
    - If EV passes, the section is EV. Prominence is the rarer and more time-sensitive property, and the mechanism tag still carries any control implication.
    - Otherwise, if CS passes, the section is CS.
@@ -448,44 +450,73 @@ Two branches:
 
 ### 4.4 Section 3: Regulatory & Executive Trajectory (RT)
 
-**Entry test (site copy):** "Is this an early, soft signal — a speech, testimony, consultation or supervisory direction in the US, UK or EU, or a public statement by a leading bank executive — of where things are heading? Formal rules and exam notices are out of scope."
+**Entry test (site copy):** "Is this a signal of where regulators or executives are heading — a speech, testimony, consultation or supervisory direction in the US, UK or EU, a public statement by a leading bank executive, or a newly issued formal rule or exam notice? Reminders and restatements of existing rules do not count."
 
-Soft signals only. **This section going empty is acceptable and expected.** Most candidates fail it.
+Two kinds of signal: soft signals of direction (R1–R5, §4.4.3; bank executives §4.4.4), and newly issued formal rules and exam notices (owner decision 2026-10-03, §4.4.5). **This section going empty is acceptable and expected.** Most candidates fail it.
 
 #### 4.4.1 R1: in-scope instruments
 
-The test throughout is whether the direction is **not yet fixed by an adopted text**.
+For soft signals, the test is whether the direction is **not yet fixed by an adopted text**. A text that fixes it is a formal instrument, tested on its own path (§4.4.5).
 
 | In scope | Conditions |
 |---|---|
 | Speeches, op-eds and letters by eligible officials | published by the authority, or reported with substance by a named publication |
 | Testimony before a legislative committee; members' statements in official proceedings; committee reports | official proceedings only, not press releases or media interviews |
 | Consultation-stage documents: consultation papers, discussion papers, calls for evidence or input, requests for information or comment, proposed rules | only where they propose **new** policy whose substance is not already fixed by adopted legislation. Consultations on implementing measures count only while `rt_implementing_consultations` is `true`, and then only when they set a choice the adopted (Level 1) text leaves open. |
-| Supervisory direction: Dear-CEO and supervisory letters, published thematic-review findings, public statements of supervisory concern or intent | the document signals or escalates direction without itself finalising requirements |
+| Supervisory direction: Dear-CEO and supervisory letters, published thematic-review findings, public statements of supervisory concern or intent | the document signals or escalates direction without itself finalising requirements. A letter that sets expectations firms must meet, or states what examiners will assess, is a formal instrument (§4.4.2) |
 | Legislative proposals | EU: Commission proposals, Parliament committee reports, Council positions. UK: government bills at introduction. US: bills only at the stage `rt_us_bills` allows (launch `committee_action`: a committee hearing or markup on the bill). |
 | Global financial standard setters (FSB, BCBS, CPMI, IOSCO, IAIS and other BIS-hosted committees) | as `rt_standard_setters` allows. Launch `consultations`: consultative documents and calls for input only. At `consultations_and_principal_speeches`, also speeches by their chairs and secretaries-general. Their meeting releases, reports, work programmes and statements of intent are not RT instruments at either value. |
 | US, UK and EU national cyber, technology-standards and AI authorities (for example NIST, CISA, the National Cyber Director's office, NCSC, ENISA, the EU AI Office) | only while `rt_cyber_agencies` is `true` (launch `false`): consultation drafts and statements of policy direction on technology or controls widely used in financial services. Their advisories and directives are evidence for EV and CS, never RT. |
 | Public statements by leading bank executives | §4.4.4 |
+| Formal rules and exam notices (§4.4.2), and notices that only remind of, restate, correct, extend or re-publish an instrument or a consultation | while `formal_instrument_scope` is not `none`; tested on the formal-instrument path (§4.4.5), where R1f, R3f and R4f replace R3 and R4 |
 
-Procedural notices (deadline extensions, meeting calendars), annual reports that restate positions, and media interviews outside official proceedings fail R1. Under `rt_standard_setters` `none` (a tightening option), `standards_body` sources could publish only through CS, which in practice is almost never; that is why the launch value is `consultations` (§11).
+Meeting calendars, annual reports that restate positions, and media interviews outside official proceedings fail R1. Comment-period and deadline extensions are notices about an instrument or consultation: they fail R3f (`RT_INSTRUMENT_NOT_NEW`, §4.4.5), not R1. Under `rt_standard_setters` `none` (a tightening option), `standards_body` sources could publish only through CS, which in practice is almost never; that is why the launch value is `consultations` (§11).
 
-#### 4.4.2 Formal instruments (G5, `GL_FORMAL_RULE`)
+#### 4.4.2 Formal rules and exam notices (owner decision 2026-10-03; knob `formal_instrument_scope`)
 
-Out of scope in RT always (the brief), and in every section while `formal_instrument_scope` is `all_sections` (launch):
-- final rules and regulations; adopted legislation;
-- final guidance, and final supervisory or policy statements that set expectations firms must meet;
-- delegated and implementing acts, and technical standards implementing adopted legislation, **including consultations on them** while `rt_implementing_consultations` is `false`;
-- reporting templates; Q&As, FAQs and interpretive letters on existing rules;
-- effective-date and compliance-date notices;
-- **exam notices**: examination priorities, manuals and procedures, and announcements of horizontal or targeted reviews.
+The brief put formal rules and exam notices out of scope as "covered elsewhere". The owner's decision of 2026-10-03 overrides that line: a **newly issued** formal rule or exam notice is in scope in this section, and reminders and restatements of existing rules are not (§11.1 #2). Each knob value:
+- `new_in_regulatory_trajectory` (launch): the documents below are RT form (§4.1) and are tested on the formal-instrument path (§4.4.5). G5 is not applied.
+- `new_any_section` (loosening): as at launch; in addition, a new formal instrument (R3f held) that fails RT is tested under EV and CS on its facts (§4.1).
+- `none` (tightening only; the earlier launch setting): G5 drops every document below, new or not, in every section (`GL_FORMAL_RULE`).
 
-Enforcement actions are never RT. They are admitted only for the facts they disclose, under E2d or CS, and never with the firm named. A national cyber agency's emergency directive is not a G5 instrument; it is evidence (E2d, M4).
+**Formal rules** (pass code `RT_PASS_FORMAL_RULE`), in final form:
+- final rules, interim final rules and final regulations; enacted legislation;
+- delegated and implementing acts, and regulatory and implementing technical standards (RTS, ITS), as adopted; reporting templates count as part of the instrument that mandates them;
+- final guidelines and guidance; supervisory statements; policy statements;
+- binding circulars, and industry letters (Dear-CEO and similar) that set expectations firms must meet.
+
+**Exam notices** (pass code `RT_PASS_EXAM_NOTICE`):
+- examination procedures, and examination handbook booklets or material updates of them;
+- published examination priorities or plans;
+- supervisory letters announcing what examiners will assess, including announcements of horizontal or targeted reviews.
+
+A document is classed by what it does, not by its title. A "statement" or "guidance note" that sets expectations firms must meet is a formal rule. A letter that states what examiners will assess is an exam notice. A letter that signals concern or intent without doing either is supervisory direction (§4.4.1), tested for direction under R3. Two frequent cases:
+- **Published priorities.** Examination or supervisory priorities that tell examiners or supervisors what to look at in firms (annual examination priorities, a priorities letter to firms, an EU Union Strategic Supervisory Priority, a supervisory examination programme) are exam notices, however general: focus areas with no examination content fail R4f (§10 #7), and priorities are never tested for direction under R3. Only technology-risk content that is new or changed from the issuer's earlier priorities can meet R4f (§4.4.5). An authority's work programme or business plan, which sets out the authority's own activities rather than what supervisors will look at in firms, is not an exam notice; it is a statement of intent, tested under R1–R5.
+- **Review findings.** Thematic or multi-firm review findings, including their "firms should" passages, are supervisory direction (§4.4.1), tested under R3, unless the issuer presents them as guidance firms must follow (for example as finalised guidance), which makes them a formal rule.
+
+**Notices about an instrument** are RT form too and take the same path, where they fail R3f (`RT_INSTRUMENT_NOT_NEW`) unless the instrument itself is new (§4.4.5):
+- effective-date and compliance-date reminders;
+- re-publication: an already-released text published in an official journal or register, a consolidated version, a translation, or a re-issue that rescinds and replaces an instrument with materially the same requirements or procedures (restructured, re-referenced to another framework, or renumbered; §10 #93);
+- FAQs, Q&As, compliance guides and interpretive material that restate an existing instrument without new expectations;
+- technical or conforming corrections;
+- comment-period and deadline extensions, of an instrument or of a consultation;
+- re-announcements: a speech, press release or summary about an instrument already issued.
+
+**New, not a notice:** an amending or replacing instrument that changes obligations or examination procedures; an FAQ or interpretation that sets an expectation the instrument did not contain; the rescission or withdrawal of a technology-risk instrument without a replacement of the same substance (it changes obligations); a final instrument that finalises a published consultation, changed or not. For an amending or replacing instrument, R4f looks only at what it changes (§4.4.5).
+
+**Not formal instruments:**
+- consultations, proposals and drafts, including consultations on implementing measures: soft signals under R1, where `rt_implementing_consultations` decides the latter;
+- enforcement actions, including a consent order or penalty addressed to one firm: never RT. They are admitted only for the facts they disclose, under E2d or CS, and never with the firm named;
+- a national cyber agency's emergency directive or binding order: evidence (E2d, M4), never RT;
+- a global standard setter's final standards or principles, and a cyber, technology-standards or AI authority's rules: not admitted on the formal path at any knob value (R2, §4.4.5).
 
 #### 4.4.3 Required elements for authority signals (R1–R5)
 
+These elements test soft signals. A formal rule or exam notice, or a notice about one, uses R1, R2 and R5 from this list with R1f, R3f and R4f in place of R3 and R4 (§4.4.5).
+
 - **R1. Instrument** in the table in §4.4.1, at a stage it admits.
 - **R2. Eligible issuer and speaker.**
-  - **Issuer.** Eligible, fixed by the brief: a US, UK or EU financial supervisor, central bank, legislature or committee, finance ministry or treasury, EU institution, European Supervisory Authority, ECB Banking Supervision, or an EU member state's competent authority. Eligible as knobs allow: global financial standard setters (`rt_standard_setters`, for the instruments R1 admits) and US, UK and EU national cyber, technology-standards and AI authorities (`rt_cyber_agencies`). Codes:
+  - **Issuer.** Eligible, fixed by the brief: a US, UK or EU financial supervisor (a US state financial regulator, such as a state banking or financial services department, is a US financial supervisor), central bank, legislature or committee, finance ministry or treasury, EU institution, European Supervisory Authority, ECB Banking Supervision, or an EU member state's competent authority. Eligible as knobs allow: global financial standard setters (`rt_standard_setters`, for the instruments R1 admits) and US, UK and EU national cyber, technology-standards and AI authorities (`rt_cyber_agencies`). Codes:
     - an authority outside the US, UK and EU, or a global standard setter while `rt_standard_setters` is `none` → `RT_JURISDICTION`;
     - a US, UK or EU authority of an ineligible type (for example a cyber agency while `rt_cyber_agencies` is `false`), a trade body or another non-authority → `RT_SPEAKER_INELIGIBLE`;
     - an eligible issuer's instrument that R1 does not admit (for example a standard setter's meeting release) → `RT_INSTRUMENT_INELIGIBLE`.
@@ -500,7 +531,7 @@ Enforcement actions are never RT. They are admitted only for the facts they disc
   - an escalation in emphasis or tolerance;
   - a novel framing that redefines an existing expectation.
 
-  Restating an established position fails ("cyber is a top risk", "AI brings opportunities and risks", "firms must comply with the resilience regime"). So does a request for information that only asks questions and signals no direction, and an official repeating, at a new venue, a signal already in the archive (cite its id).
+  Restating an established position fails ("cyber is a top risk", "AI brings opportunities and risks", "firms must comply with the resilience regime"). So does a request for information that only asks questions and signals no direction, and an official repeating, at a new venue, a signal already in the archive (cite its id). R3 is never applied to a formal rule or exam notice: it is tested for newness under R3f (§4.4.5), and `RT_NO_DIRECTION` is never its code.
 - **R4. Specificity.** The signal names a specific technology-risk topic within the seven domains **and** a specific expected behaviour, concern or intended action.
 - **R5. Verifiable substance.** The substance is established from a public primary text, or from named publications' headlines and leads that state it. If the substance is unclear, R5 fails; if it is unclear because it sits behind a paywall, use `GL_PAYWALL_INSUFFICIENT`.
 
@@ -531,7 +562,29 @@ The brief admits public statements by leading bank executives as trajectory sign
 - **X5. Not evidence.** A bank executive's statement is never evidence about any institution's control position, including the speaker's.
 - **X6. Sources.** List the reporting by named publications (`news`), or the legislature's hearing page for testimony (`regulator`), registered with `--extra` if it is not a candidate (§2.7.5). Do not list the bank's own pages (§2.2).
 
-**Codes.** Drops: `RT_INSTRUMENT_INELIGIBLE` (R1), `RT_JURISDICTION` (R2 issuer outside the scope), `RT_SPEAKER_INELIGIBLE` (R2 issuer type or speaker, including trade bodies, non-financial authorities while not admitted, and non-qualifying banks), `RT_NO_DIRECTION` (R3), `RT_EXEC_OWN_POSITION` (R3b), `RT_NOT_SPECIFIC` (R4), `RT_SUBSTANCE_UNVERIFIED` (R5). Passes: `RT_PASS_SPEECH`, `RT_PASS_TESTIMONY`, `RT_PASS_CONSULTATION` (consultation-stage document or legislative proposal), `RT_PASS_SUPERVISORY_DIRECTION` (letter, thematic findings, statement of concern or intent), `RT_PASS_BANK_EXECUTIVE`.
+#### 4.4.5 Formal-instrument test (R1, R1f, R2, R3f, R4f, R5)
+
+Applies to the documents in §4.4.2 while `formal_instrument_scope` is not `none`. The owner's four elements are (a) eligible issuer, R2 unchanged; (b) new, R3f, which replaces R3; (c) technology-risk substance, R4f, which replaces R4; (d) breadth, R1f. R1 and R5 apply as for every RT candidate. Test in ID order (R1, R1f, R2, R3f, R4f, R5); the first failed element gives the code.
+
+**PASS requires all of:**
+
+- **R1. Instrument.** The document is a formal rule or exam notice listed in §4.4.2, or a notice about one.
+- **R1f. Breadth.** The instrument applies to a class of institutions: all firms of a type, size or activity, or all firms using a technology, service or provider. An instrument addressed to one named firm (an individual permission, waiver, modification or direction) fails R1f with `RT_INSTRUMENT_INELIGIBLE`. An enforcement action is never RT form (§4.1): it is tested under EV (E2d) or CS on the facts it discloses.
+- **R2. Eligible issuer,** unchanged (§4.4.3): a US, UK or EU financial supervisor (including a US state financial regulator), central bank, legislature or committee, finance ministry or treasury, EU institution, European Supervisory Authority, ECB Banking Supervision, or an EU member state's competent authority. No speaker tier applies, because the authority issues the document. A knob-eligible issuer is admitted only for the instruments its R1 row lists, and none of them is a formal instrument. So a global standard setter's final standards, or a cyber, technology-standards or AI authority's rule, fail R2 while the knob does not admit the issuer (`RT_JURISDICTION` for a standard setter at `rt_standard_setters` `none`; `RT_SPEAKER_INELIGIBLE` for an agency at `rt_cyber_agencies` `false`), and fail as an instrument R1 does not admit when it does (`RT_INSTRUMENT_INELIGIBLE`, as in R2's third bullet). An authority outside the US, UK and EU: `RT_JURISDICTION`.
+- **R3f. New.** All of:
+  - the candidate reports the instrument's **first issuance in final form** (for an exam notice, its first publication), meaning the issuer's first public release of the final text: an agency's release of an approved final rule (its later publication in a federal register or official journal is re-publication); the adoption of a delegated or implementing act or technical standard; for legislation, the step that makes the text law (signature, royal assent, or the last co-legislator's adoption of an EU act);
+  - that first issuance is dated no more than `max_event_age_days` before the run's slot;
+  - the instrument is not already an archive item. A candidate about an archived instrument is a same-story question (§5.1, §5.3), settled before this test.
+
+  A notice about an instrument (§4.4.2) fails R3f unless the instrument itself is new: its first issuance in final form is within `max_event_age_days` of the slot and it is not an archive item. Then the story is the instrument, and the issuer's first release is cited as `sources[0]` (§2.7.1), registered with `--extra` if it is not a candidate. Restating an earlier **instrument** fails R3f. Codifying established **practice** in a new instrument meets it; its mechanism is then usually `awareness_only` (§6.9). The issue date and the instrument's history are facts read on the issuer's page (D2); the reason cites them with the archive search: `R3f new (issued <date>; archive: none)`.
+- **R4f. Technology-risk substance.** The instrument changes what institutions must do, document, test, report or disclose, or how they will be examined, on technology risk in at least one of the seven domains, and states it with specific content: the obligation, expectation or examination procedure itself (a notification trigger and deadline, a classification threshold, a testing requirement, what examiners will review). A generic reference ("sound risk management, including cyber"), a list of focus areas with no stated expectation or examination content, or incidental technology content (a definition, a cross-reference) fails R4f with `RT_NOT_SPECIFIC`. For an amending or replacing instrument, and for priorities that carry over earlier priorities, only the content it adds or changes counts: carried-over requirements, procedures or focus areas are not a change. An instrument with no technology-risk content at all never reaches this test: it drops at G1 (`GL_OFF_DOMAIN`, §3.3).
+- **R5. Verifiable substance,** unchanged (§4.4.3): established from the instrument's public text or the issuer's release, or from named publications' headlines and leads that state it.
+
+**Not new is never near.** For a reminder, re-publication, restating FAQ or guide, technical correction, extension or re-announcement of an instrument that is not itself new, record `RT_INSTRUMENT_NOT_NEW`, do not assess R4f or R5, and do not mark `NEAR`: the owner's decision fixes these out of scope. One exception: when the only reason R3f fails is that the instrument's first issuance falls outside `max_event_age_days` but within its next loosening step, and R1, R1f, R2, R4f and R5 hold, mark `NEAR R3f/max_event_age_days`. R1f and R4f are fixed elements: a drop that fails only one of them is `NEAR R1f` or `NEAR R4f` (§8.4).
+
+**Pass reason** (§8.4), for example: `R1 final rule; R1f all supervised banks; R2 two US banking agencies; R3f new (issued <date>; archive: none); R4f 24h notice on disruption; R5 rule text public | candidate_issue CI1-5: control = notification trigger`.
+
+**Codes (all of §4.4).** Drops: `RT_INSTRUMENT_INELIGIBLE` (R1, including R1f), `RT_JURISDICTION` (R2 issuer outside the scope), `RT_SPEAKER_INELIGIBLE` (R2 issuer type or speaker, including trade bodies, non-financial authorities while not admitted, and non-qualifying banks), `RT_NO_DIRECTION` (R3, soft signals only), `RT_EXEC_OWN_POSITION` (R3b), `RT_INSTRUMENT_NOT_NEW` (R3f), `RT_NOT_SPECIFIC` (R4, or R4f for a formal instrument), `RT_SUBSTANCE_UNVERIFIED` (R5). Passes: `RT_PASS_SPEECH`, `RT_PASS_TESTIMONY`, `RT_PASS_CONSULTATION` (consultation-stage document or legislative proposal), `RT_PASS_SUPERVISORY_DIRECTION` (letter, thematic findings, statement of concern or intent), `RT_PASS_BANK_EXECUTIVE`, `RT_PASS_FORMAL_RULE` (a new formal rule), `RT_PASS_EXAM_NOTICE` (a new exam notice).
 
 ### 4.5 Gaming patterns to recognise
 
@@ -541,7 +594,8 @@ The brief admits public statements by leading bank executives as trajectory sign
 - **Recycled stories.** A "new report" that re-tells old incidents, a renamed old CVE, or a technique rebranded by a vendor: G7, C5 or §5.
 - **Wire saturation.** Thirty outlets carrying one wire story are one outlet for E3.
 - **Hearing theatre.** A legislator's press release about a hearing is not testimony. Only the official proceeding counts.
-- **Formal rules in soft clothing.** A "statement" or "guidance note" that finalises expectations is G5, whatever it is called.
+- **Formal rules in soft clothing.** A "statement" or "guidance note" that finalises expectations is a formal rule, whatever it is called: it is tested for newness under R3f, not for direction under R3 (§4.4.2).
+- **Reminders in new clothing.** "New rules take effect", a register or journal publication, a compliance guide or a "clarification" reports an instrument already issued. Find its first issuance in final form before R3f; if that is outside the window or in the archive, nothing new happened.
 
 ---
 
@@ -551,6 +605,7 @@ The brief admits public statements by leading bank executives as trajectory sign
 
 - **Story:** one underlying event, document or statement, such as one breach, one outage, one disclosure, one speech or one consultation.
 - **Same story:** candidates or items reporting the same underlying event, document or statement (same actors, same occurrence, same time frame), or reporting on another's primary source. Follow-ups, analysis, explainers and commentary are the same story.
+- **Formal instruments:** the story is the instrument. Its coverage, re-publication, reminders, restating FAQs and guides, technical corrections and extensions are the same story. An amending instrument that changes obligations is a different story.
 - **Different story:** a distinct event or document. That includes a different event that re-demonstrates a capability shift or trajectory signal already in the archive: a second victim of a published technique, or an official repeating a published signal at a new venue. A different story is never short-circuited; it is tested from G2 and must clear the bar on its own:
   - in CS it fails C5 (`CS_NOT_NEW`, citing the archive id);
   - in RT it fails R3 (`RT_NO_DIRECTION`, citing the archive id);
@@ -587,11 +642,12 @@ A resurfacing story becomes a candidate for a **new** item only if it contains a
   - the affected population, loss or duration grows by at least a factor of `m2_min_scope_factor` (launch: 2) **and** crosses an E2 floor that was not met before; or
   - the event spreads to a new class of entity (one bank to a payment scheme; one provider to its downstream customers).
 - **M3. Exploitation status change.** Demonstrated becomes exploited in the wild; targeted becomes mass exploitation; or the patch or mitigation is shown to be ineffective or bypassed.
-- **M4. Official status advance.** Either:
-  - a speech's stated intention becomes a published consultation-stage document; or
+- **M4. Official status advance.** Any of:
+  - a speech's stated intention becomes a published consultation-stage document;
+  - a published speech's or testimony's stated intention, or a published consultation-stage document or legislative proposal, is issued as a final formal instrument (§4.4.2), while `formal_instrument_scope` is not `none`. The update is tested on the formal-instrument path (§4.4.5), and R3f's archive bullet does not count the earlier item against it;
   - an authority issues a penalty, restriction or emergency directive about a published incident.
 
-  A consultation becoming a final rule is **not** an update; it is out of scope (G5).
+  At `formal_instrument_scope` `none`, a consultation becoming a final rule is **not** an update; it drops at G5.
 - **M5. Threat-model change.** Attribution or actor information that changes the control implications: insider involvement confirmed, destructive intent confirmed, or a third party confirmed as the entry point.
 - **M6. Correction.** Public confirmation that a material fact in a published item was wrong, in a way that changes its mechanism, question or consequence.
 
@@ -602,7 +658,8 @@ A resurfacing story becomes a candidate for a **new** item only if it contains a
 - "investigation ongoing", an authority opening an inquiry, hearings scheduled but not held;
 - new indicators for the same campaign without a new capability;
 - the same speech covered elsewhere;
-- consultation deadlines approaching or closing.
+- consultation deadlines approaching, closing or extended;
+- for a published formal instrument: its effective or compliance date arriving, its re-publication, and reminders, restating FAQs or guides, technical corrections or extensions (§4.4.2).
 
 ### 5.5 Rules for update items
 
@@ -715,6 +772,16 @@ Not `candidate_issue`:
 | `praf_coverage` | asks whether the framework represents the risk (P1) as such | "Where/If [the framework does not represent the risk], [consequence of it going unassessed]" | `null` |
 | `awareness_only` | `null` | `null` | required (§7.7) |
 
+### 6.9 Formal rules and exam notices
+
+A new formal instrument (§4.4.5) gets its mechanism like any item: the §6.2 order and every guard apply unchanged, and doubt still resolves away from `candidate_issue`. How the guards read for an instrument:
+
+- **`candidate_issue`** only when a specific control can be named whose current design is plausibly non-compliant with a specific new requirement, and one question resolves it. CI1 names the control in common use. CI2 is the gap between that design and the requirement, in one clause, taken from the instrument's text. CI3 holds where the non-compliant design is plausibly common because the requirement goes beyond an earlier expectation, a product default or documented practice (cite the basis). CI4 is the resolving question. CI5 holds only for a requirement this instrument introduces, not one carried over from an earlier instrument. "Is the organisation compliant?" names no control and fails CI1.
+- **`kri_kpi`** is typical for a new reporting, notification or measurement duty. K1 is the quantity the duty makes the organisation measure (incidents classified within the required time, notifications filed against a deadline); K4 is met by the instrument.
+- **`praf_coverage`** is typical where the instrument regulates a risk category for the first time. P1–P4 still apply in full: the instrument naming the risk meets P4, and P3 still needs a new event type or pathway.
+- **`awareness_only`** fits an instrument that codifies established practice (AW2: its expectations match what earlier guidance or common frameworks already describe) or removes an obligation (AW3: a policy-level removal that no institution-level control alters). The rationale names the earlier expectation the instrument matches, never anyone's compliance with it (§7.7).
+- Validation questions and issue statements name the requirement's content in category form (a 24-hour notification trigger, a major-incident threshold, a tested exit plan). They never name the instrument's title, number, date or issuer, and they stay generic and institution-neutral (§7.5 rule 7, §7.6).
+
 ---
 
 ## 7. Writing rules
@@ -761,6 +828,7 @@ Not `candidate_issue`:
 7. For an update item, state the new fact, not the old story.
 8. No headline constructions: no colon labels ("Appliance zero-day: what it means"), no verbless label ("New guidance from the PRA on operational resilience"), no opening What, Why or How, and no "what … means", "highlights", "sheds light", "raises concerns", "raises questions", "underscores" or "spotlights".
 9. A claim stating how many institutions have, lack or do something names the source and its method ("…, a survey of 200 lenders finds"); otherwise it is a sector-level position (V5).
+10. **Formal rules and exam notices** (§4.4.5): the issuer is the subject, in the present tense ("requires", "sets", "adopts", "withdraws", "will examine"), and the claim states what the instrument requires and of which class of institutions, in category form ("banks", "EU financial entities", "insurers"). An issuer stating its own requirement needs no further attribution: the instrument is the issuer's act, not its account of an event. State the new requirement, never only that a document was published, and never a reminder as news; dates of effect appear only as the instrument states them.
 
 | Bad | Why | Good |
 |---|---|---|
@@ -768,6 +836,7 @@ Not `candidate_issue`:
 | "AI threats keep growing." | no specific fact | "An AI developer says it disrupted a largely autonomous intrusion campaign against about 30 organisations." |
 | "[Bank]'s lax help-desk controls let attackers bypass MFA." | names and characterises an institution | "Attackers persuaded an IT help desk to reset staff MFA, then halted operations for 10 days." |
 | "Our MFA assumptions may not hold." | first person, hedge, no fact | — |
+| "Banking agencies publish final rule on cyber incident reporting." | says that an instrument exists, not what it requires or of whom | "Two US banking agencies now require banks to report disruptive cyber incidents within 24 hours." |
 
 ### 7.3 `domains`
 
@@ -805,6 +874,7 @@ Good: a deepfaked payment instruction is `["fraud", "ai"]`. Bad: `["ai", "fraud"
 
    The `kri_kpi` indicator counts the organisation's own systems, services, transactions, providers or exposures ("newly known-exploited vulnerabilities on the organisation's internet-facing systems, against the number remediated"); an external population count (all exploited vulnerabilities worldwide) is its data source (K2), never the indicator, because a "yes" to measuring it settles nothing about the organisation.
 7. **Generic:** the question makes sense at an institution untouched by the development. Never refer to the reader's own incident, finding, supervisor or remediation ("its lead supervisor requested", "after the September intrusion"). Never refer to the development, its date or its victim ("following the 30 September outage", "unlike the UK lender", "exposure to the [vendor] token theft"), and never presuppose a weakness ("its own weaknesses"). Prefer the class of system to a vendor product ("internet-facing email security gateways", not "[Product] appliances"); name a product only when the item is about that product, and then ask whether it is in use before asking about its state. A question whose only content is whether a fixed version is installed ("older than version 2.16.1.0") is patch management (C6), never a `candidate_issue` question: the control is what a fixed version does not settle. Rule 7 applies to the issue statement too (§7.6).
+8. **Formal rules and exam notices** (§6.9): ask whether the control or indicator meets the requirement's specific content, stated in category form ("Does the incident escalation procedure start the regulatory notification clock when a significant disruption is identified, not only once data compromise is confirmed?"). Never ask whether the organisation complies with, has reviewed, or is ready for the instrument, and never name its title, number, date or issuer (rules 4 and 7).
 
 | Bad | Why |
 |---|---|
@@ -829,6 +899,7 @@ Good (candidate_issue): "Does authorisation of high-value payments require confi
 6. The consequence is a specific harm: unauthorised payment, undetected compromise, breach of impact tolerance, unassessed loss. V1–V5 and §7.5 rule 7 apply.
 7. The conditional clause names the control and its failure mode; it never restates the answer ("If the answer is no", "If not,", "Where unknown,").
 8. The consequence clause after the comma has at least 5 words and names a harm; "increased risk", "heightened risk", "may be inadequate", "exposure", "significant exposure", "problems", "issues" and "impact" are not harms. Never compare with the story's institution ("the loss the affected bank suffered") or with the sector ("as is common across the sector").
+9. For a formal rule or exam notice, the consequence names what goes wrong and which obligation is missed, and how (a reportable incident notified after the deadline, a major incident left unclassified, an untested exit plan relied on in a provider failure). "Non-compliance", "regulatory risk" or "supervisory criticism" alone is not a harm.
 
 | Bad | Why |
 |---|---|
@@ -846,6 +917,7 @@ Good: "Where passkey-enrolled customers can still complete login through SMS-cod
 4. Never assert or imply any institution's position. Not "already covered by existing controls", "existing controls are adequate", "already covers", "existing frameworks already capture", "no exposure", "not exposed", "unlikely to be affected", "the organisation already …", "most firms have …", "banks rarely run …", "widely deployed across the sector", "standard practice", "generally compliant", "well placed", "largely mitigated" or "institutions of all sizes". Refer to expectations, guidance and facts, never to anyone's compliance with them.
 5. **Banned phrases:** "no action needed at this time", "no action required", "nothing to action" (the site copy already says it), "continue monitoring" or "monitor developments" (a control name such as "transaction monitoring" is fine), "keep an eye on", "keep watching", "track developments", "remain vigilant", "stay alert", "for awareness", "for information", "FYI", "watch this space", "may become relevant", "low risk", "not relevant", "if asked", "directionally important" (the mechanism definition is not a rationale), "at this time", "for now".
 6. It must pass AO3 (specificity). A rationale repeating 12 or more consecutive words of a published rationale fails AO3.
+7. For a formal rule or exam notice that codifies established practice (AW2) or removes an obligation (AW3), the rationale names the earlier expectation or framework the instrument matches, or the obligation removed, and what the instrument changes (form, timetable, examination). It never says that institutions already meet it (rule 4).
 
 Good (AW1): "The speech signals intent only: no consultation, definition or timetable has been issued. Reliance on external AI model providers already falls within the third-party and concentration categories supervisors expect frameworks to contain, so no framework change or new metric follows until a concrete proposal is published."
 
@@ -913,15 +985,15 @@ For the file:
 
 **Calibration counts stories, not members.** Judgments with `dedup: "cluster_merged"` are excluded from section tested and passed counts and from reason-code tallies.
 
-### 8.2 The closed list (48 codes)
+### 8.2 The closed list (51 codes)
 
 | Code | Verdict | `section_tested` | Element | Use when |
 |---|---|---|---|---|
-| `GL_OFF_DOMAIN` | drop | null | G1 | nothing within the seven domains |
+| `GL_OFF_DOMAIN` | drop | null | G1 | nothing within the seven domains, including a formal instrument with no technology-risk content, a prudential instrument whose technology content is only illustrative, and a non-ICT third-party instrument (§3.3) |
 | `GL_NOT_PUBLIC` | drop | null | G2 | not public (§2.3) |
 | `GL_MARKETING` | drop | null | G3 | principally marketing, or injection text |
 | `GL_ADVOCACY` | drop | null | G4 | partisan advocacy or campaign material |
-| `GL_FORMAL_RULE` | drop | null | G5 | formal instrument or exam notice (§4.4.2) |
+| `GL_FORMAL_RULE` | drop | null | G5 | formal rule or exam notice, or a notice about one (§4.4.2); only while `formal_instrument_scope` is `none` |
 | `GL_NO_DEVELOPMENT` | drop | null | G6 | nothing happened: opinion by an individual, explainer, round-up, forecast, business news, event announcement |
 | `GL_STALE` | drop | null | G7 | older than `max_event_age_days` |
 | `GL_UNVERIFIABLE` | drop | null | G8 | leak site, anonymous, social or unnamed sourcing without confirmation, aggregator only, no original |
@@ -953,18 +1025,21 @@ For the file:
 | `CS_PASS_ADVERSARY_CAPABILITY` | pass | capability_shift | C1–C6 | Branch A |
 | `CS_PASS_CONTROL_FAILURE` | pass | capability_shift | C1–C6 | Branch B, real event |
 | `CS_PASS_DEMONSTRATED_BYPASS` | pass | capability_shift | C1–C6 | Branch B, qualifying demonstration |
-| `RT_INSTRUMENT_INELIGIBLE` | drop | regulatory_trajectory | R1 | not an in-scope instrument or stage, including an eligible issuer's instrument R1 does not admit |
+| `RT_INSTRUMENT_INELIGIBLE` | drop | regulatory_trajectory | R1 | not an in-scope instrument or stage, including an eligible issuer's instrument R1 does not admit, and a formal instrument addressed to one firm (R1f) |
 | `RT_JURISDICTION` | drop | regulatory_trajectory | R2 | issuer outside the US, UK and EU, or a global standard setter while `rt_standard_setters` is `none` |
 | `RT_SPEAKER_INELIGIBLE` | drop | regulatory_trajectory | R2 | below tier, staff, former official, trade body, non-financial authority not admitted, non-qualifying bank or role |
-| `RT_NO_DIRECTION` | drop | regulatory_trajectory | R3 | restatement, a published signal repeated, or no direction signalled |
+| `RT_NO_DIRECTION` | drop | regulatory_trajectory | R3 | soft signals only: restatement, a published signal repeated, or no direction signalled |
 | `RT_EXEC_OWN_POSITION` | drop | regulatory_trajectory | R3b | statement about the speaker's own institution |
-| `RT_NOT_SPECIFIC` | drop | regulatory_trajectory | R4 | no specific topic and behaviour |
+| `RT_INSTRUMENT_NOT_NEW` | drop | regulatory_trajectory | R3f | formal rule or exam notice that is not new: a reminder, restatement, correction, extension or re-publication, or an instrument first issued in final form more than `max_event_age_days` before the run (§4.4.5) |
+| `RT_NOT_SPECIFIC` | drop | regulatory_trajectory | R4 | no specific topic and behaviour; for a formal instrument, no specific technology-risk obligation or examination content (R4f) |
 | `RT_SUBSTANCE_UNVERIFIED` | drop | regulatory_trajectory | R5 | substance not verifiable |
 | `RT_PASS_SPEECH` | pass | regulatory_trajectory | R1–R5 | speech, or an op-ed or open letter by an eligible official |
 | `RT_PASS_TESTIMONY` | pass | regulatory_trajectory | R1–R5 | testimony or official proceedings |
 | `RT_PASS_CONSULTATION` | pass | regulatory_trajectory | R1–R5 | consultation-stage document or legislative proposal |
 | `RT_PASS_SUPERVISORY_DIRECTION` | pass | regulatory_trajectory | R1–R5 | letter, thematic findings, statement of concern or intent |
 | `RT_PASS_BANK_EXECUTIVE` | pass | regulatory_trajectory | R1–R5, X1–X6 | leading bank executive |
+| `RT_PASS_FORMAL_RULE` | pass | regulatory_trajectory | R1, R1f, R2, R3f, R4f, R5 | newly issued formal rule (§4.4.2, §4.4.5) |
+| `RT_PASS_EXAM_NOTICE` | pass | regulatory_trajectory | R1, R1f, R2, R3f, R4f, R5 | newly issued exam notice (§4.4.2, §4.4.5) |
 
 The sample code `CS_ASSUMPTION_INVALIDATED` in SPEC §5 is illustrative only and is not in this list. Its meaning is `CS_PASS_CONTROL_FAILURE`.
 
@@ -980,6 +1055,8 @@ The sample code `CS_ASSUMPTION_INVALIDATED` in SPEC §5 is illustrative only and
 6. `dedup: "cluster_merged"` implies `match_id` is the `candidate_id` of a judgment in the same file whose `dedup` is not `cluster_merged`, with the same verdict, code, `section_tested` and `draft_index`, and a reason beginning `cluster member of ` (§5.2).
 7. `dedup: "new"` implies `match_id: null`.
 8. `draft_index` is an integer if and only if the verdict is pass.
+9. `GL_FORMAL_RULE` appears only while `formal_instrument_scope` is `none`; `RT_PASS_FORMAL_RULE`, `RT_PASS_EXAM_NOTICE` and `RT_INSTRUMENT_NOT_NEW` appear only while it is not `none` (`pipeline/thresholds.json`).
+10. A reason with the code `RT_INSTRUMENT_NOT_NEW` carries `NEAR` only as `NEAR R3f/max_event_age_days` (§4.4.5).
 
 ### 8.4 The `reason` line
 
@@ -997,7 +1074,8 @@ reason := [ "[M" 1-6 "] " ] [ "NEAR " element [ "/" knob ] ": " ] text [ " [alt 
   - **Vulnerabilities:** `CS_ROUTINE_VULN` is `NEAR` only as `NEAR C6/cs_routine_vuln_exceptions`, under §4.3's vulnerability rule. A patch that exists, or mass exploitation that is not shown, means no `NEAR`. When the flaw was exploited before any patch existed, the reason records the check: `pre-patch <n> days, <targeted|mass>` and, if mass, `C1–C5: <first failed element, or held>` (for example `C6: pre-patch 24 days, targeted; mass exploitation only after the patch`).
   - **Branch A:** at launch (`cs_branch_a_requires_assumption` `false`) C3 does not decide a Branch A verdict, so a Branch A drop is never `NEAR C3`. If the knob is ever set to `true`, a Branch A drop that fails only C3 is `NEAR C3/cs_branch_a_requires_assumption`. A Branch B drop that fails only C3 is `NEAR C3`, a fixed element.
   - **Jurisdiction:** `RT_JURISDICTION` is never `NEAR`, because the brief fixes the US, UK and EU scope. The one exception is `NEAR R2/rt_standard_setters`, for a global standard setter while that knob is `none`.
-  - **Gate and dedup drops are never `NEAR`** (every `GL_` code, `GL_NO_MECHANISM` and `GL_NOT_JUDGED` included), with one exception: a knob-controlled gate (G5 `formal_instrument_scope`, G7 `max_event_age_days`, G8 `unnamed_source_reporting`, G9 `research_require_sample`) or M2 (`m2_min_scope_factor`) that fails only on its knob value and would clear at the next step, written `NEAR G7/max_event_age_days: …`. The section tests were not run; the review judges them (§9.5).
+  - **Formal instruments** (§4.4.5): R1f and R4f are fixed elements, written `NEAR R1f` (code `RT_INSTRUMENT_INELIGIBLE`) and `NEAR R4f` (code `RT_NOT_SPECIFIC`). `RT_INSTRUMENT_NOT_NEW` is `NEAR` only as `NEAR R3f/max_event_age_days`, when the instrument's first issuance is older than `max_event_age_days` but within its next step and every other element holds; a reminder, restatement, correction, extension or re-publication of an older instrument is never `NEAR`. `formal_instrument_scope` changes a route, not an element, so no section-drop `NEAR` or `[alt …]` marker carries it; its loosening evidence is in §9.6.
+  - **Gate and dedup drops are never `NEAR`** (every `GL_` code, `GL_NO_MECHANISM` and `GL_NOT_JUDGED` included), with one exception: a knob-controlled gate (G5 `formal_instrument_scope`, only at `none`; G7 `max_event_age_days`; G8 `unnamed_source_reporting`; G9 `research_require_sample`) or M2 (`m2_min_scope_factor`) that fails only on its knob value and would clear at the next step, written `NEAR G7/max_event_age_days: …`. For G5 that means a new formal instrument that the next step (`new_in_regulatory_trajectory`) would test in RT; a notice about an older instrument is not `NEAR`. The section tests were not run; the review judges them (§9.5).
 - **`[alt …]`** (§4.1): an EV or CS drop names the other section's first failed element, last in the reason. Add `/knob` only when that element is the only one the other section failed (every other element of it assessed and established), it is knob-controlled, and the candidate would pass it at the knob's next step: `[alt EV:E3/ev_min_general_outlets]`. Calibration counts it with the `NEAR` markers (§9.6(a)).
 - **Gate drop:** the gate ID and a short factual phrase: `G6 opinion column, no new facts`.
 - **Dedup drop:** the match and why it is not a material update: `same outage as RS-261002-1000-01; new outlet, no M fact`.
@@ -1043,12 +1121,12 @@ The mechanism distribution is logged so that over-application of `candidate_issu
 
 ### 9.3 Knobs: what each one changes
 
-Each loosening step is one step per review, applied by the owner. Launch values are the strictest values.
+Each loosening step is one step per review, applied by the owner. Launch values are the strictest values, except the two the build owner set by decision, each of which keeps a tightening value: `cs_branch_a_requires_assumption` (`true`) and `formal_instrument_scope` (`none`).
 
 | Knob | Element | Launch (`high`) | Loosening steps | How the test changes |
 |---|---|---|---|---|
-| `max_event_age_days` | G7, C5 Branch B, E3 recency | 7 | 14 | admits events that surface late |
-| `formal_instrument_scope` | G5 | `all_sections` | `regulatory_trajectory_only` | final instruments and exam notices stay out of RT but are tested under EV and CS on their facts |
+| `max_event_age_days` | G7, C5 Branch B, E3 recency, R3f window | 7 | 14 | admits events that surface late, and formal instruments first issued up to 14 days before the run |
+| `formal_instrument_scope` | G5; §4.1 route | `new_in_regulatory_trajectory` (owner decision; G5 not applied, formal instruments tested in RT, §4.4.5) | `new_any_section`; tightening only: `none` | `new_any_section`: a new formal instrument (R3f held) that fails RT is also tested under EV and CS on its facts. `none`: G5 drops every formal instrument, exam notice and notice about one, in every section (`GL_FORMAL_RULE`) |
 | `unnamed_source_reporting` | G8 | `requires_confirmation` | `two_independent_outlets` | unnamed-source reporting passes G8 when 2 independent named publications report it from their own sourcing |
 | `research_require_sample` | G9 (RA3) | true | false | methodology-only research needs no disclosed sample |
 | `ev_min_general_outlets` | E3 | 2 | 1, then 0 | at 1, one general or business outlet plus one other independent outlet suffices; at 0, national or international trade press suffices, never local press or security and technology trade press alone |
@@ -1075,7 +1153,7 @@ Each loosening step is one step per review, applied by the owner. Launch values 
 | `rt_speaker_tier` | R2 | `principal` | `executive_director` | adds UK executive directors, US division directors, ECB directors general and equivalents |
 | `rt_standard_setters` | R1, R2 | `consultations` | `consultations_and_principal_speeches` | adds speeches by standard setters' chairs and secretaries-general |
 | `rt_cyber_agencies` | R2 | false | true | admits US, UK and EU cyber, technology-standards and AI authorities' consultation drafts and policy direction |
-| `rt_implementing_consultations` | R1, G5 | false | true | admits consultations on implementing measures that set a choice the Level 1 text leaves open |
+| `rt_implementing_consultations` | R1 | false | true | admits consultations on implementing measures that set a choice the Level 1 text leaves open; the adopted measures are formal instruments at every value (§4.4.2) |
 | `rt_us_bills` | R1 | `committee_action` | `leadership_sponsored` | admits bills introduced by a committee chair or ranking member |
 | `rt_bank_exec_scope` | R2b (X1) | `gsib_extended` | `domestic_systemic` | adds the same roles at domestic systemically important banks |
 | `claims_may_name_institutions` | V4 | false | true | the claim alone may name an organisation as the subject of a reported event or statement (SPEC §1.3) |
@@ -1086,7 +1164,8 @@ Each loosening step is one step per review, applied by the owner. Launch values 
 Changing any of these requires the owner to issue a new version of this file (§9.6 gives the evidence route):
 - D1–D6 and A1–A10;
 - the source rules (§2), including public, paywall, marketing, citation and search rules, apart from `unnamed_source_reporting` and `research_require_sample`;
-- the exclusion of final instruments and exam notices from RT (the brief), and the US, UK and EU jurisdiction scope for authorities;
+- the formal-instrument test (§4.4.5): R1f, R3f's definition of new (apart from its `max_event_age_days` window) and R4f, and the list of what is not new (§4.4.2); `formal_instrument_scope` changes only where formal instruments are tested, never these elements;
+- the US, UK and EU jurisdiction scope for authorities;
 - E1 apart from `ev_survey_evidence_admissible`; E4 limbs a–d; E5;
 - C2's exclusion of speculative evidence; C3 for Branch B; C4;
 - R3, R4, R5, R3b and X2–X6 (X1 changes only through `rt_bank_exec_scope`);
@@ -1101,7 +1180,7 @@ Window: the first 28 scheduled runs (seven days).
 
 1. **Run `npm run calibration`** over the window and record: items per day, silent-run and failed-run rates, tested and passed counts by section, mechanism distribution (warning when `candidate_issue` exceeds `candidate_issue_share_warn`), reason-code tallies by section, and `S1-GAP` notes. Near-misses: the report counts `NEAR` reasons by element and knob (`[M#] NEAR` included), knob-bearing `[alt …]` markers, and the stories near each knob, which is the count §9.6(a) uses; and, as prominently, the stories near each fixed element (`NEAR` with no knob), which is the count the fixed-element route uses. A window whose near-misses are all on fixed elements gives the knob route nothing to act on: review those stories under the fixed-element route rather than reading the silence as evidence about any knob.
 2. **Precision.** Rate every published item: Keep; Wrong section; Wrong mechanism; Should not have passed (name the element); Writing defect (name the rule).
-3. **Recall.** Rate every `NEAR` drop, plus a random sample of other stage-2 drops: 10% of each section's drops, minimum 20 (all if fewer). Rate each: Correct drop, or Should have passed (name the element that was too strict). For a gate `NEAR` (§8.4), also judge whether the section test would have passed.
+3. **Recall.** Rate every `NEAR` drop, plus a random sample of other stage-2 drops: 10% of each section's drops, minimum 20 (all if fewer). Rate each: Correct drop, or Should have passed (name the element that was too strict). For a gate `NEAR` (§8.4), also judge whether the section test would have passed. Also rate every RT drop of a new formal instrument (R3f held): would it have cleared EV or CS on its facts? These ratings are the evidence for `formal_instrument_scope` (§9.6), which no marker carries.
 4. **Mechanism audit.** Re-test every `candidate_issue` against CI1–CI5, every `kri_kpi` against K1–K4, every `praf_coverage` against P1–P4, and every `awareness_only` rationale against AO1–AO3.
 5. **Dedup audit.** Review every `DD_SAME_STORY`, material update and cluster, and every `CS_NOT_NEW` or `RT_NO_DIRECTION` that cites an archive id. Look for duplicates published, missed updates, split clusters and story splitting.
 6. **Neutrality audit.** Read the generated text, source headlines, reasons and notes for breaches the lint cannot catch: positioning words, named financial institutions, unique descriptors, evaluative language about any institution, sector-level position statements. Fix findings by tightening §7 wording. This audit, not NEAR counts, decides `claims_may_name_institutions`.
@@ -1121,6 +1200,8 @@ Window: the first 28 scheduled runs (seven days).
 **Tighten** a knob one step, or clarify a fixed element with a new §10 precedent, when at least 2 published items in a section were rated "should not have passed" with a shared element or root cause.
 
 **Fixed elements.** When at least 3 distinct stories in the window were dropped `NEAR` the same fixed element (§9.4) and the owner rated at least two-thirds of them "should have passed", the review records a proposed amendment of that element. The owner decides and issues a new version of this file. A §10 precedent may clarify a fixed element in either direction.
+
+**Route knob.** `formal_instrument_scope` changes a route, not an element, so no marker carries it, and this rule replaces (a) and (b) for it. It moves from `new_in_regulatory_trajectory` to `new_any_section` only when at least 3 distinct new formal instruments (R3f held) dropped in RT in the window, the owner rated at least two-thirds of them as clearing EV or CS on their facts (§9.5 step 3), and (c)–(e) hold. It tightens to `none` under the tightening rule above, when at least 2 published formal-instrument items are rated "should not have passed" with a shared element or root cause.
 
 **Writing knob.** `claims_may_name_institutions` changes only on the neutrality audit (§9.5 step 6) and the owner's reading of the hard constraint, never on NEAR counts.
 
@@ -1143,9 +1224,9 @@ All candidates are fictional composites. Bracketed roles stand in for names. Non
 | 3 | Opinion column: boards must take AI seriously | DROP | — | — | `GL_NO_DEVELOPMENT` | G6 |
 | 4 | Ransomware group's leak site lists an insurer; the insurer says it is investigating | DROP | — | — | `GL_UNVERIFIABLE` | G8: leak-site claim, no confirmation. A later confirmation is judged then as a new story. |
 | 5 | Paywalled outlet: "Supervisors weigh cyber stress tests for banks"; the lead names no authority or timetable; no public primary source found | DROP | regulatory_trajectory | — | `GL_PAYWALL_INSUFFICIENT` | R2 and R5 not establishable; the article was never opened (NP2) |
-| 6 | UK authority publishes a final policy statement on outsourcing and third-party risk | DROP | — | — | `GL_FORMAL_RULE` | G5: final guidance, though `regulator` class |
-| 7 | US securities regulator's examination division publishes annual priorities including cyber and AI | DROP | — | — | `GL_FORMAL_RULE` | G5: exam notice |
-| 8 | EU authority consults on draft technical standards for incident-report templates under an adopted regulation | DROP | — | — | `GL_FORMAL_RULE` | G5: implementing measure while `rt_implementing_consultations` is `false`; templates fix no open policy choice in any case |
+| 6 | UK authority publishes a final policy statement on outsourcing and third-party risk, issued 2 days before the run; its expectations codify practice that existing outsourcing guidelines already describe | PASS | regulatory_trajectory | awareness_only | `RT_PASS_FORMAL_RULE` | Formal path (§4.4.5): R1 policy statement; R1f all firms the authority supervises; R2 UK authority; R3f new (issued 2 days before; archive: none); R4f register, notification and exit-plan expectations; R5 text public. AW2: codifies established practice (§6.9). Restating an earlier *instrument* would fail R3f. At `formal_instrument_scope` `none`: `GL_FORMAL_RULE`. |
+| 7 | US securities regulator's examination division publishes annual priorities that list cybersecurity and AI among focus areas, without saying what examiners will assess | DROP | regulatory_trajectory | — | `RT_NOT_SPECIFIC` | Exam notice (published priorities): R1, R1f, R2, R3f (this year's priorities, first published) and R5 hold; R4f fails: focus areas only, no examination content. `NEAR R4f`. Contrast #78. At `none`: `GL_FORMAL_RULE`. |
+| 8 | EU authority consults on draft technical standards for incident-report templates under an adopted regulation | DROP | regulatory_trajectory | — | `RT_INSTRUMENT_INELIGIBLE` | R1: a consultation on an implementing measure, admitted only while `rt_implementing_consultations` is `true`; templates fix no open policy choice in any case, so not NEAR. A consultation is never a formal instrument; the adopted standards would take the formal path (#81). |
 | 9 | Ratings vendor ranks named banks' cyber maturity | DROP | — | — | `GL_INSTITUTION_POSITION` | G10 (also marketing) |
 | 10 | Supervisor fines a bank $40m for inadequate technology risk management; the order describes deficiencies only in general terms | DROP | — | — | `GL_INSTITUTION_POSITION` | G10: no transferable mechanism disclosed |
 | 11 | "One year on" retrospective on last year's payments outage | DROP | — | — | `GL_STALE` | G7 |
@@ -1212,6 +1293,28 @@ All candidates are fictional composites. Bracketed roles stand in for names. Non
 | 72 | A national technology-standards authority publishes, for public comment, an initial draft white paper on protections against a long-known attack class | DROP | regulatory_trajectory | — | `RT_SPEAKER_INELIGIBLE` | RT form: a consultation draft, whoever issues it (§4.1), so it is never tested under CS. R2: a technology-standards authority while `rt_cyber_agencies` is `false`. R3 also fails (a long-known attack class, no direction change), so not NEAR. |
 | 73 | Threat research with artefacts: a tracked state-linked actor now delivers its malware through password-protected archives, signed installers and masqueraded scheduled tasks, each long documented for other actors; over 100 organisations targeted, a few financial | DROP | capability_shift | — | `CS_NO_SPECIFIC_CHANGE` | C1: established techniques, new user (§4.3); nothing adversaries could not already do. Not `NEAR C5`: C1 is the first failed element, so C5 never decides it. `[alt EV:E2]`. Contrast #30, where the kit itself does something new. |
 | 74 | A large vendor's telemetry study (method, sample and period disclosed) reports exploited vulnerabilities per month up by about two-thirds on the previous year; a smaller tracker had published a comparable rise five months earlier | DROP | capability_shift | — | `CS_NOT_NEW` | RA1–RA6 met; C1, C2 and C4 hold. C5: a re-measurement is dated from the earlier admissible study (§4.3), here outside even the 90-day step, so not NEAR. The novelty search covered the metric and its trackers, not only the study's framing, and the reason names the earlier study (D2). |
+| 75 | Two US federal banking agencies issue a final rule, released 1 day before the run, requiring banks to notify them within 24 hours of a computer-security incident that materially disrupts or is likely to disrupt operations | PASS | regulatory_trajectory | candidate_issue | `RT_PASS_FORMAL_RULE` | R1 final rule; R1f all supervised banks; R2 eligible US issuers; R3f new (issued 1 day before; archive: none); R4f trigger on disruption, not on confirmed data compromise, with a 24-hour clock; R5 rule text public. CI1 incident escalation and regulatory notification; CI2 a trigger keyed to confirmed data compromise misses the disruption trigger; CI3 basis a: earlier notification duties keyed on data breach; CI5 the trigger is new (§6.9). |
+| 76 | A US agency's notice reminds firms that its cyber-incident reporting rule, issued 18 months earlier, takes effect at the end of the month | DROP | regulatory_trajectory | — | `RT_INSTRUMENT_NOT_NEW` | Formal path. G7 dates the notice, which is in the window; R3f fails: an effective-date reminder (§4.4.2). R4f and R5 not assessed; never NEAR. Had the rule been an archive item, the notice would be `DD_SAME_STORY` (#91). |
+| 77 | A UK authority publishes FAQs on its operational-resilience rules that restate the existing requirements on impact tolerances and mapping; no new expectation | DROP | regulatory_trajectory | — | `RT_INSTRUMENT_NOT_NEW` | R3f: an FAQ restating an existing instrument. An answer that set a new expectation would be a new instrument and meet R3f. Never NEAR. |
+| 78 | Three US federal banking agencies jointly publish a new examination handbook booklet on third-party risk: examiners will review whether management identifies, measures and reports concentration of critical services on single providers and their subcontractors | PASS | regulatory_trajectory | kri_kpi | `RT_PASS_EXAM_NOTICE` | R1 exam notice (handbook booklet); R1f all supervised institutions; R2 eligible US issuers; R3f first publication (archive: none); R4f states what examiners will review; R5 booklet public. T2: concentration is a quantity. K1: share of critical services relying on one provider or subcontractor with no tested alternative. Contrast #7. |
+| 79 | Banking agencies issue a final rule recalibrating trading-book capital requirements for large banks; no technology-risk content | DROP | — | — | `GL_OFF_DOMAIN` | G1: capital calibration (§3.3), so the formal path is never reached, however final or new the rule. A lexicon hit on "operational risk" changes nothing. |
+| 80 | A US banking agency's consent order against one bank imposes a $60m penalty after a vendor platform migration left its fraud-screening rules switched off for five months; the order discloses the mechanism; wire and two national papers | PASS | executive_visibility | awareness_only | `EV_PASS_OFFICIAL_ACTION` | Not RT form: an order addressed to one firm is enforcement, never a rule (§4.1, R1f), so EV, then CS. E1 order; E2d $60m with the mechanism disclosed; E3 wire + 2 nationals; E4b platform migrations are common (C3 basis b); E5 would a detective control left off after a migration be noticed? CI5 fails (T3: controls dropped in migrations are an established failure mode). AW2 and AW4. The item never names the bank (V4). |
+| 81 | EU final regulatory technical standards under DORA, adopted 3 days before the run, set criteria and materiality thresholds for classifying ICT-related incidents as major | PASS | regulatory_trajectory | kri_kpi | `RT_PASS_FORMAL_RULE` | R1 RTS in final form; R1f all financial entities in scope; R2 EU institution; R3f new (adopted 3 days before; archive: none; the later journal publication is re-publication, #82); R4f classification criteria and thresholds; R5 text public. A new measurement duty (§6.9). K1: share of ICT incidents classified against the major-incident criteria within the time the standards allow. Contrast #8. |
+| 82 | An official journal publishes final technical standards adopted five weeks earlier; the adoption was never an item | DROP | regulatory_trajectory | — | `RT_INSTRUMENT_NOT_NEW` | G7 dates the journal entry (in the window); R3f: re-publication, and the first issuance (the adoption) is outside even the 14-day step, so not NEAR. Had the adoption been inside the window, the instrument would be new and its release `sources[0]` (§4.4.5). |
+| 83 | A UK authority's final supervisory statement on cloud exit planning, issued 11 days before the run, is first collected now | DROP | — | — | `GL_STALE` | G7: the statement itself is dated 11 days before the slot. `NEAR G7/max_event_age_days`: it would clear G7 at 14 days. Section tests not run (§8.4). |
+| 84 | A federal register publishes today a final rule that its issuing agency released 10 days before the run; the release itself was never collected | DROP | regulatory_trajectory | — | `RT_INSTRUMENT_NOT_NEW` | G7 dates the register entry (today). R3f: the first issuance is 10 days before the slot. `NEAR R3f/max_event_age_days` because R1, R1f, R2, R4f and R5 hold and the release would be new at 14 days. Contrast #83, where the instrument's own document is the candidate. |
+| 85 | An EU supervisory authority extends the comment period on its consultation on AI governance expectations by four weeks | DROP | regulatory_trajectory | — | `RT_INSTRUMENT_NOT_NEW` | R3f: an extension is a notice about a consultation (§4.4.2), not R1. Never NEAR. If the consultation were an item, the extension would be `DD_SAME_STORY` (§5.4). |
+| 86 | A US banking agency issues final standards for AI agents that initiate payments for customers; its consultation was never an item, and the testimony in #47 is | PASS | regulatory_trajectory | praf_coverage | `RT_PASS_FORMAL_RULE` | `[M4]`, `update_of` = #47's item, the latest in its chain: a stated intention issued as a final instrument (§5.4). R1, R1f, R2, R3f (the instrument itself is not in the archive) and R5 hold; R4f duties for agent-initiated payments. A newly regulated risk category (§6.9): P4 met by the instrument; P2 and P3 as in item D. |
+| 87 | A US banking agency rescinds, with immediate effect and no replacement, its guidance requiring supervised banks to notify it before using public blockchains in payment activities; the rescission was issued 2 days before the run | PASS | regulatory_trajectory | awareness_only | `RT_PASS_FORMAL_RULE` | R3f: the rescission of a technology-risk instrument is new, because it changes obligations (§4.4.2). R4f the prior-notice duty removed. AW3: a policy-level removal; no institution-level control, metric or framework gap follows from an obligation ceasing. |
+| 88 | A global standard setter publishes final principles on operational resilience for AI-dependent services | DROP | regulatory_trajectory | — | `RT_INSTRUMENT_INELIGIBLE` | R2 admits standard setters only for the consultative documents their R1 row lists; final standards are an instrument R1 does not admit (§4.4.5). No knob step admits them, so not NEAR. |
+| 89 | A national cyber agency issues a final rule requiring critical-infrastructure entities, financial firms among them, to report cyber incidents within 72 hours | DROP | regulatory_trajectory | — | `RT_SPEAKER_INELIGIBLE` | R2: a cyber agency while `rt_cyber_agencies` is `false`. Not NEAR: at `true` its R1 row admits only consultation drafts and statements of direction. At `formal_instrument_scope` `new_any_section` it would also be tested under EV and CS on its facts (§4.1). |
+| 90 | A final rule on corporate governance requires boards to oversee risk management, naming cyber risk once, with no further technology content | DROP | regulatory_trajectory | — | `RT_NOT_SPECIFIC` | G1 holds (cyber is named); R4f fails: a generic reference changes nothing institutions must do, test, report or disclose on technology risk. `NEAR R4f` when every other element holds. |
+| 91 | A US agency reminds banks that the incident-notification rule in #75, an archive item, takes effect next month | DROP | — | — | `DD_SAME_STORY` | The instrument is the story (§5.1): a reminder resurfaces it with no M fact (§5.4), so short-circuit before any test. Contrast #76. |
+| 92 | A UK authority publishes a direction modifying one named firm's operational-resilience reporting deadlines | DROP | regulatory_trajectory | — | `RT_INSTRUMENT_INELIGIBLE` | R1f: addressed to one firm, not a class (§4.4.5). Not an enforcement action, so not E2d either. Reasons and notes never name the firm (V4). |
+| 93 | A US banking agency re-issues its cybersecurity examination work program, restructured around a newer framework version, and rescinds the earlier bulletin; the release says the procedures themselves are unchanged | DROP | regulatory_trajectory | — | `RT_INSTRUMENT_NOT_NEW` | Exam notice. R3f: a re-issue that rescinds and replaces with materially the same procedures is re-publication (§4.4.2), not a rescission that changes obligations (contrast #87). R4f and R5 not assessed; never NEAR. Had it added or changed procedures it would be new, and R4f would judge only the change. |
+| 94 | A UK authority issues final guidance on the overall risk assessment of cryptoasset firms; among illustrative stress scenarios it lists a cyber attack and the theft of private keys, with no expectation specific to them | DROP | — | — | `GL_OFF_DOMAIN` | G1: a prudential risk-assessment instrument is in domain only where it sets a technology-risk obligation of its own, and illustrative scenarios do not (§3.3); the formal path is never reached, so never `NEAR R4f`. Contrast #90: outside the prudential class a named technology risk passes G1 and R4f decides. |
+| 95 | An EU supervisory authority issues final guidelines on third-party arrangements for non-ICT services supporting critical functions, such as cash logistics and legal services; ICT services are left to another regulation | DROP | — | — | `GL_OFF_DOMAIN` | G1: non-ICT third-party arrangements are not technology risk (§3.3). Had the guidelines set a specific obligation on data the provider handles, G1 would hold and R4f would judge that content alone. |
+| 96 | An EU supervisory authority sets a new strategic supervisory priority for national supervisors from the next cycle, naming AI and tokenisation as focus areas, with no stated expectation or examination content | DROP | regulatory_trajectory | — | `RT_NOT_SPECIFIC` | Published priorities are an exam notice (§4.4.2), never tested for direction under R3. R1, R1f, R2, R3f (first published; archive: none) and R5 hold; R4f fails: focus areas only. `NEAR R4f`. As #7. |
 
 ### 10.2 Model items (fictional; URLs are placeholders)
 
@@ -1353,15 +1456,15 @@ Reason: `R1 testimony; R2b G-SIB CEO (X1); R3b sector call: platforms share scam
 
 ## 11. Launch choices beyond the brief
 
-The brief fixes the three entry tests, the four mechanisms, the six source classes, the hard constraints, and the instruction to set all thresholds deliberately high at launch and loosen them after a first-week calibration review. The rules below go **beyond the brief's literal text**: each is this standard's choice of how to make a test checkable at a high bar. Every one has a knob in `pipeline/thresholds.json`, set at launch to its strictest value. The owner reviews this list at the first-week calibration (§9.5 step 7); loosening follows §9.6. The agent applies the knobs as set and never cites this section to argue a pass.
+The brief fixes the three entry tests, the four mechanisms, the six source classes, the hard constraints, and the instruction to set all thresholds deliberately high at launch and loosen them after a first-week calibration review. The rules below go **beyond the brief's literal text**: each is this standard's choice of how to make a test checkable at a high bar, except the owner decisions marked as such, which depart from the brief's text on the build owner's instruction. Every one has a knob in `pipeline/thresholds.json`, set at launch to its strictest value except where an owner decision set it (#2, #11). The owner reviews this list at the first-week calibration (§9.5 step 7); loosening follows §9.6. The agent applies the knobs as set and never cites this section to argue a pass.
 
 ### 11.1 Choices with a knob
 
 | # | Launch choice (element) | What the brief says | Knob: launch → loosening steps | What loosening does |
 |---|---|---|---|---|
-| 1 | Events, statements and disclosures older than 7 days drop; also limits C5 Branch B and E3 reporting (G7) | nothing on age | `max_event_age_days`: 7 → 14 | admits developments that surface late. Evidence: `NEAR G7/max_event_age_days` |
-| 2 | Formal instruments and exam notices excluded in every section, not only RT (G5) | out of scope for the trajectory section, "covered elsewhere" | `formal_instrument_scope`: `all_sections` → `regulatory_trajectory_only` | a final instrument is tested under EV and CS on its facts (it rarely clears them); RT still excludes it |
-| 3 | Consultations on implementing measures (Level 2 and 3) excluded (G5, R1) | lists "consultation papers" without qualification | `rt_implementing_consultations`: false → true | such consultations count when they set a choice the Level 1 text leaves open |
+| 1 | Events, statements and disclosures older than 7 days drop; also limits C5 Branch B, E3 reporting and the window in which a formal instrument counts as new (G7, R3f) | nothing on age | `max_event_age_days`: 7 → 14 | admits developments that surface late. Evidence: `NEAR G7/max_event_age_days`, `NEAR R3f/max_event_age_days` |
+| 2 | **Owner decision (2026-10-03).** Newly issued formal rules and exam notices are in scope in Regulatory & Executive Trajectory, tested on the formal-instrument path (R1, R1f, R2, R3f, R4f, R5; §4.4.5); reminders, restatements, corrections, extensions and re-publications are not new (`RT_INSTRUMENT_NOT_NEW`). G5 is not applied at launch. This departs from the brief's text on the owner's instruction, and the site's entry test says so | "Formal rules and exam notices are covered elsewhere and are out of scope" | `formal_instrument_scope`: launch `new_in_regulatory_trajectory` → loosening `new_any_section`; tightening only `none` (the earlier launch setting: excluded in every section at G5, `GL_FORMAL_RULE`) | `new_any_section` also tests a new formal instrument (R3f held) under EV and CS on its facts when it fails RT. Evidence: the owner's ratings of formal-instrument RT drops in which R3f held (§9.5 step 3, §9.6); no marker carries this knob |
+| 3 | Consultations on implementing measures (Level 2 and 3) excluded (R1); the adopted measures are formal instruments (§4.4.2) | lists "consultation papers" without qualification | `rt_implementing_consultations`: false → true | such consultations count when they set a choice the Level 1 text leaves open |
 | 4 | Reporting resting on unnamed sources fails G8 unless confirmed | news is "primary reporting from named publications" | `unnamed_source_reporting`: `requires_confirmation` → `two_independent_outlets` | two independent named publications with their own sourcing suffice |
 | 5 | research_analysis needs a disclosed sample as well as data or method (RA3) | "original data or defensible methodology" | `research_require_sample`: true → false | methodology-only work is admissible without a sample |
 | 6 | EV requires a dated event; surveys and trend data are never events (E1) | the EV test is the executive question | `ev_survey_evidence_admissible`: false → true | a survey meeting RA1–RA6 with 300 or more financial-services respondents counts as an event |
@@ -1393,6 +1496,7 @@ These turn the brief's own words into checkable elements. They change only throu
 | E5 sub-criteria (recognisable, owner role, answerable in days); E4 limbs a–d | "a credible 'what are we doing about this' question … unprompted" |
 | C3 for Branch B, C4 breadth, C5 Branch B novelty | "a control failed … in a way that invalidates an assumption others rely on" |
 | R3 direction change, R4 specificity, R5 verifiable substance | "soft signals" of "where things are heading" |
+| R1f breadth, R3f newness (first issuance in final form, apart from its `max_event_age_days` window) and the not-new list, R4f technology-risk substance | the owner's decision of 2026-10-03: "a newly issued formal rule or exam notice"; "reminders and restatements of existing rules do not count" |
 | R3b and X2–X6: only a bank executive's sector-direction statements count | the hard constraint on institutions' positions |
 | G10 and V1–V11 (except V4's claim scope) | the hard constraints |
 | CI1–CI5 (including the CI5 reminder test), K4, P3, AO1–AO3, and `GL_NO_MECHANISM` | "reserve candidate_issue for items where a specific control weakness can actually be articulated"; awareness_only "is not a fallback" |

@@ -83,12 +83,17 @@ Layer 2, FILTER.md rules that publish.mjs only warns about (errors here; warning
     reason; the NEAR element is the element of the recorded code (FILTER.md 8.2); gate and dedup
     codes are never NEAR except a knob-controlled gate (G5, G7, G8, G9) or M2 with its knob;
     CS_ROUTINE_VULN only as "NEAR C6/cs_routine_vuln_exceptions", RT_JURISDICTION only as "NEAR
-    R2/rt_standard_setters"; a knob named in a NEAR or "[alt ...]" marker exists in
-    thresholds.json and controls that element; an "[alt ...]" marker naming a knob follows an EV
-    or CS drop and names the other section
+    R2/rt_standard_setters", RT_INSTRUMENT_NOT_NEW only as "NEAR R3f/max_event_age_days"; a knob
+    named in a NEAR or "[alt ...]" marker exists in thresholds.json and controls that element; an
+    "[alt ...]" marker naming a knob follows an EV or CS drop and names the other section
+  - formal instruments (8.3 invariant 9, thresholds.json formal_instrument_scope): GL_FORMAL_RULE
+    only while the scope is "none"; RT_PASS_FORMAL_RULE, RT_PASS_EXAM_NOTICE and
+    RT_INSTRUMENT_NOT_NEW only while it is "new_in_regulatory_trajectory" (launch) or
+    "new_any_section"
 Warnings only (heuristics): a source published after a replay's window closed (candidates.json
 window.replay; FILTER 2.7.5(e)); a claim resting on one primary document (regulator, standards
-body, vendor or research source) with no attribution verb (7.2); advice in an interpretation,
+body, vendor or research source) with no attribution verb (7.2; for a regulator source an issuer's
+instrument verb such as "requires", "sets", "adopts" or "will examine" counts, rule 10); advice in an interpretation,
 including "has to be" and "needs to be", and an interpretation relying on a month-dated event the
 claim never introduces ("The June cut-off ...") (7.4); a candidate_issue question that only checks
 for a version ("older than 2.16.1.0") (7.5); quotation marks (V8), "sophisticated" (V9), American spelling (V10),

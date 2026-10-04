@@ -238,9 +238,11 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   Escape and outside click; visible focus.
 - Section entry tests (report headers): 1 "Could a director or executive credibly ask 'what are we doing about
   this?' unprompted?" 2 "Has adversary capability changed, or has a control failed somewhere in a way that
-  invalidates an assumption others rely on?" 3 "Is this an early, soft signal — a speech, testimony,
-  consultation or supervisory direction in the US, UK or EU, or a public statement by a leading bank executive —
-  of where things are heading? Formal rules and exam notices are out of scope."
+  invalidates an assumption others rely on?" 3 "Is this a signal of where regulators or executives are
+  heading — a speech, testimony, consultation or supervisory direction in the US, UK or EU, a public statement by a
+  leading bank executive, or a newly issued formal rule or exam notice? Reminders and restatements of existing rules
+  do not count." (Owner decision 2026-10-03: new formal rules and exam notices are in scope in this section; the
+  brief had excluded formal rules and exam notices as "covered elsewhere".)
 
 ### 7.3 About page copy (institution-neutral rewrite of the design)
 

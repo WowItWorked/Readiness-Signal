@@ -113,15 +113,26 @@ export function urlExcluder(source) {
 const MAX_DATE_SAMPLES = 2;
 
 /**
- * Sources whose feed re-dates old documents, so the publication date is read from the entry URL
- * when the URL carries one. EIOPA news pages end "-YYYY-MM-DD_en" and its feed re-issues old
- * pages under the current date (a risk dashboard from July surfacing as today's news).
+ * Sources whose entry URL carries the publication date more reliably than the feed, so the date
+ * is read from the URL (as a calendar date) when the URL carries one:
+ * - EIOPA news pages end "-YYYY-MM-DD_en" and its feed re-issues old pages under the current date
+ *   (a risk dashboard from July surfacing as today's news).
+ * - Federal Register documents (the fedreg-* sources) live at /documents/YYYY/MM/DD/<number>/...,
+ *   the issue date, while the feed's pubDate is midnight ET of that date (sent as 04:00 GMT), hours
+ *   before the issue goes online. Compared as a timestamp, an entry fell before the window of every
+ *   run after 06:05 (a 10:05 window opens at 00:05), so only the 06:05 run could collect it; as a
+ *   calendar date it is in the window for every run that day.
  */
 export const URL_DATE_RULES = Object.freeze([
   {
     id: 'eiopa-news',
     applies: (source) => source?.id === 'eiopa-news' || /(?:^|\.)eiopa\.europa\.eu$/i.test(hostOf(source?.url) ?? ''),
     re: /-(\d{4})-(\d{2})-(\d{2})_[a-z]{2}(?=$|[/?#])/,
+  },
+  {
+    id: 'federal-register',
+    applies: (source) => /(?:^|\.)federalregister\.gov$/i.test(hostOf(source?.url) ?? ''),
+    re: /^\/documents\/(\d{4})\/(\d{2})\/(\d{2})\//,
   },
 ]);
 

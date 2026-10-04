@@ -258,7 +258,8 @@ test('url: the Azure status history anchor is the entry identity; other fragment
 // ---------------------------------------------------------------- stage 1 and calibration
 
 test('stage 1: a hack with a stated loss is strong in a headline, so the strict profile admits it', () => {
-  assert.equal(LEXICON_VERSION, '2026-10-02.5');
+  // the loss group arrived in 2026-10-02.5; later versions keep it
+  assert.ok(LEXICON_VERSION >= '2026-10-02.5', LEXICON_VERSION);
   const c = makeCandidate({ url: 'https://news.example.com/exchange-hack', headline: "Zentrix 'not expecting to recover a lot' from $388 million hack, CEO says" });
   const s = scoreCandidate(c, 'strict');
   assert.equal(s.strong_in_title, true);

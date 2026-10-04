@@ -133,6 +133,19 @@
       "notes": "FCA's only feed: category parameters redirect to the same feed. Carries press releases, speeches, statements and news stories (crypto gateway, fraud, Consumer Duty). Consultation papers are announced here but not fed directly. pubDate is non-RFC ('Friday, October 2, 2026 - 11:58') and needs custom parsing."
     },
     {
+      "id": "fca-publications",
+      "publication": "Financial Conduct Authority",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.fca.org.uk/publications/rss.xml",
+      "paywalled": false,
+      "region": "UK",
+      "notes": "Feed: FCA publications, all types. Added for the owner decision of 2026-10-03 (new formal rules in RT). Carries policy statements (PS), finalised guidance (FG), consultation papers (CP), guidance consultations (GC), feedback statements, multi-firm reviews and good-and-poor-practice findings (e.g. the money-mule review), and research. Statistics and dashboard pages under /data/ are excluded at fetch (exclude_url_patterns): market and service statistics, not instruments (5 of 20 items on 2026-10-03). fca-news carries press releases and speeches, not these documents; a PS or FG announced in both forms a cluster. Type parameters are ignored (same feed). 20 items cover about 3 to 4 weeks. pubDate is non-RFC ('Friday, October 2, 2026 - 10:31'), as in fca-news.",
+      "exclude_url_patterns": [
+        "fca.org.uk/data/"
+      ]
+    },
+    {
       "id": "hmt-policy-consultations",
       "publication": "HM Treasury",
       "source_class": "regulator",
@@ -193,6 +206,16 @@
       "notes": "Speeches by Board members, covering supervision, payments, AI and stablecoins (e.g. Waller, 'Payments in the Age of AI Agents'; Bowman on regulatory modernisation). About 15 items over 5 weeks. pubDate is wrapped in CDATA, so strip it before parsing."
     },
     {
+      "id": "fed-sr-letters",
+      "publication": "Federal Reserve",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.federalreserve.gov/feeds/bankinginfo-rss.xml",
+      "paywalled": false,
+      "region": "US",
+      "notes": "Feed: Board 'SR and CA letters, manuals' (Supervision and Regulation and Consumer Affairs letters, supervision manuals). Added for the owner decision of 2026-10-03 (new formal guidance and exam notices in RT). The Fed's channel for supervisory guidance and examination letters (e.g. SR 26-2 revised model risk management guidance, SR 26-3 fraud-related information sharing, SR 26-6 FAQs on verifiable digital credentials under the CIP rule), many of which get no press release in fed-press-bcreg. Headlines are bare letter numbers ('SR 26-6'): the subject is in the lead. Old letters reappear with a new date when revised, superseded or rescinded; a rescission of a technology-risk letter counts as new, a re-dating or restatement does not. 15 items, low volume."
+    },
+    {
       "id": "fed-testimony",
       "publication": "Federal Reserve",
       "source_class": "regulator",
@@ -201,6 +224,76 @@
       "paywalled": false,
       "region": "US",
       "notes": "Congressional testimony, mainly the Vice Chair for Supervision's 'Supervision and Regulation' testimony and Monetary Policy Reports. Low volume and high signal on supervisory direction. One item has a malformed date that parses to 1899, so guard date parsing."
+    },
+    {
+      "id": "fedreg-cfpb-final-rules",
+      "publication": "Consumer Financial Protection Bureau",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bagencies%5D%5B%5D=consumer-financial-protection-bureau&conditions%5Btype%5D%5B%5D=RULE",
+      "paywalled": false,
+      "region": "US",
+      "notes": "Feed: Federal Register API RSS, documents of type RULE from the CFPB. Relevant for open-banking and data rules (section 1033, Financial Data Transparency Act data standards) and fraud-related Regulation E changes; threshold adjustments and lending rules are off-domain. Often empty: 0 items in the 30-day window on 2026-10-03, last rule 2026-06-25 (FR API). The rules shared by every fedreg-* source are in the notes of fedreg-occ-final-rules."
+    },
+    {
+      "id": "fedreg-fdic-final-rules",
+      "publication": "FDIC",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bagencies%5D%5B%5D=federal-deposit-insurance-corporation&conditions%5Btype%5D%5B%5D=RULE",
+      "paywalled": false,
+      "region": "US",
+      "notes": "Feed: Federal Register API RSS, documents of type RULE from the FDIC. Mostly joint banking-agency rules and deposit-insurance rules; the FDIC usually also issues a Financial Institution Letter (fdic-fils). The rules shared by every fedreg-* source are in the notes of fedreg-occ-final-rules."
+    },
+    {
+      "id": "fedreg-fed-final-rules",
+      "publication": "Federal Reserve",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bagencies%5D%5B%5D=federal-reserve-system&conditions%5Btype%5D%5B%5D=RULE",
+      "paywalled": false,
+      "region": "US",
+      "notes": "Feed: Federal Register API RSS, documents of type RULE from the Federal Reserve Board. Carries amendments to the Board's Regulations (A, D, LL, YY and others), capital and stress-test rules (off-domain) and joint banking-agency rules. The adoption is usually announced earlier in fed-press-bcreg. The rules shared by every fedreg-* source are in the notes of fedreg-occ-final-rules."
+    },
+    {
+      "id": "fedreg-fincen-final-rules",
+      "publication": "FinCEN",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bagencies%5D%5B%5D=financial-crimes-enforcement-network&conditions%5Btype%5D%5B%5D=RULE",
+      "paywalled": false,
+      "region": "US",
+      "notes": "Feed: Federal Register API RSS, documents of type RULE from FinCEN. The only FinCEN feed in the registry (fincen-news-releases is a page source). Carries AML/CFT program and reporting rules, special measures and geographic targeting orders. A special measure or order aimed at one named institution is enforcement-like, never an RT instrument. The rules shared by every fedreg-* source are in the notes of fedreg-occ-final-rules."
+    },
+    {
+      "id": "fedreg-ncua-final-rules",
+      "publication": "National Credit Union Administration",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bagencies%5D%5B%5D=national-credit-union-administration&conditions%5Btype%5D%5B%5D=RULE",
+      "paywalled": false,
+      "region": "US",
+      "notes": "Feed: Federal Register API RSS, documents of type RULE from the NCUA. The only NCUA source in the registry: credit-union rules (e.g. cyber incident notification, third-party servicing). Rules arrive in batches after board meetings, so the feed is often empty: 0 items in the 30-day window on 2026-10-03, last batch 2026-08-06 (FR API). The rules shared by every fedreg-* source are in the notes of fedreg-occ-final-rules."
+    },
+    {
+      "id": "fedreg-occ-final-rules",
+      "publication": "Office of the Comptroller of the Currency",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bagencies%5D%5B%5D=comptroller-of-the-currency&conditions%5Btype%5D%5B%5D=RULE",
+      "paywalled": false,
+      "region": "US",
+      "notes": "Feed: Federal Register API RSS, documents of type RULE from the OCC. Added for the owner decision of 2026-10-03 (new formal rules in RT). Rules shared by every fedreg-* source: (1) type RULE carries final and interim final rules, and also corrections ('; Correction'), effective- or compliance-date delays and extensions, which are not new instruments. (2) The feed always spans the last 30 days; a few items a month per agency. (3) Links are federalregister.gov document pages, the public primary text, and are citable; publication is the issuing agency's common name (FILTER 7.8), never 'Federal Register', the journal that prints it. (4) A joint rule carries the same URL in each issuing agency's fedreg feed (also_in). (5) Federal Register publication often follows the agency's own adoption release by days or weeks; if that release is already in the archive or this run, the Federal Register entry is the same instrument, not new. (6) pubDate is midnight ET of the issue date (sent as 04:00 GMT), hours before the issue goes online, so fetch dates each entry from its URL (/documents/YYYY/MM/DD/) as a calendar date (collect.mjs URL_DATE_RULES) and every run that day collects it. (7) When registering a federalregister.gov page with add-manual.mjs --extra, pass the issuing agency as publication: host matching would otherwise borrow the label of the first fedreg-* source in this file."
+    },
+    {
+      "id": "fedreg-sec-final-rules",
+      "publication": "U.S. Securities and Exchange Commission",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bagencies%5D%5B%5D=securities-and-exchange-commission&conditions%5Btype%5D%5B%5D=RULE",
+      "paywalled": false,
+      "region": "US",
+      "notes": "Feed: Federal Register API RSS, documents of type RULE from the SEC. The SEC's own RSS page points to the Federal Register for rules. Relevant for Regulation S-P, Regulation SCI, cyber disclosure and market-infrastructure resilience rules; quorum, fee and Form PF compliance-date items are noise. The adoption is usually announced earlier in sec-press-releases. The rules shared by every fedreg-* source are in the notes of fedreg-occ-final-rules."
     },
     {
       "id": "fincen-news-releases",
@@ -251,6 +344,16 @@
       "paywalled": false,
       "region": "US",
       "notes": "OCC news releases, including the Comptroller's remarks and statements (the OCC has no separate speeches feed). Some routine noise (CRA evaluations, trading revenue), but it carries policy and enforcement direction."
+    },
+    {
+      "id": "sec-press-releases",
+      "publication": "U.S. Securities and Exchange Commission",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.sec.gov/news/pressreleases.rss",
+      "paywalled": false,
+      "region": "US",
+      "notes": "Feed: SEC press releases. Added for the owner decision of 2026-10-03 (new formal rules and exam notices in RT): final-rule adoptions are announced here days or weeks before Federal Register publication (fedreg-sec-final-rules), and Division of Examinations notices appear here and not in sec-speeches-statements (e.g. 'SEC's Division of Examinations Announces New Exam Handbook', 2026-10-01; the annual examination priorities). About half the items are individual enforcement cases: facts for EV E2d only, never RT, and the firm is never named. Also carries proposals, exemptive relief and roundtable notices. 25 items cover about 6 weeks. The SEC accepted the declared UA."
     },
     {
       "id": "sec-speeches-statements",

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Tunable knobs for the selection standard in pipeline/FILTER.md (section 9). The routine agent reads this file at the start of every run, applies each knob's 'value', copies 'level' into decisions.json as threshold_level, and never edits it. Only the owner changes it, after a calibration review, one step per knob per review (FILTER.md 9.6). Fields named 'description', 'element', 'launch' and 'loosening_steps' are documentation; only 'value' is applied. FILTER.md section 11 lists every launch choice that goes beyond the owner's brief, each with its knob here.",
+  "description": "Tunable knobs for the selection standard in pipeline/FILTER.md (section 9). The routine agent reads this file at the start of every run, applies each knob's 'value', copies 'level' into decisions.json as threshold_level, and never edits it. Only the owner changes it, after a calibration review, one step per knob per review (FILTER.md 9.6). Fields named 'description', 'element', 'launch', 'loosening_steps' and 'tightening_steps' are documentation; only 'value' is applied. FILTER.md section 11 lists every launch choice that goes beyond the owner's brief, each with its knob here.",
   "level": "high",
   "level_description": "Overall posture label recorded in every run record. One of high, medium, low. Stays 'high' until the owner judges the overall posture has changed; individual knob changes are tracked by 'revision' and 'changelog'.",
   "revision": 1,
@@ -9,7 +9,7 @@
       "revision": 1,
       "date": null,
       "level": "high",
-      "change": "Launch values. All thresholds deliberately high; to be reviewed after the first 28 scheduled runs (FILTER.md 9.5). Set before the first run: rt_standard_setters launches at consultations and rt_bank_exec_scope at gsib_extended (any G-SIB), because the stricter values substituted a different test for the brief's; every other launch choice beyond the brief has its own knob at its strictest value (FILTER.md 11).",
+      "change": "Launch values. All thresholds deliberately high; to be reviewed after the first 28 scheduled runs (FILTER.md 9.5). Set before the first run: rt_standard_setters launches at consultations and rt_bank_exec_scope at gsib_extended (any G-SIB), because the stricter values substituted a different test for the brief's. Owner decision 2026-10-03, also before the first run: formal_instrument_scope launches at new_in_regulatory_trajectory (newly issued formal rules and exam notices are in scope in regulatory_trajectory; reminders and restatements are not new), overriding the brief's exclusion; the earlier all-sections exclusion is kept as the tightening value none. Every other launch choice beyond the brief has its own knob at its strictest value (FILTER.md 11).",
       "evidence": null
     }
   ],
@@ -23,17 +23,18 @@
     "description": "Gate and source knobs that apply before any section test.",
     "max_event_age_days": {
       "value": 7,
-      "element": "G7, C5 Branch B, E3 recency",
+      "element": "G7, C5 Branch B, E3 recency, R3f window",
       "launch": 7,
       "loosening_steps": [14],
-      "description": "Drop (GL_STALE) when the underlying event, statement or disclosure is dated more than this many days before the run's slot. Also the recency limit for a Branch B control failure (C5) and for reporting counted towards E3."
+      "description": "Drop (GL_STALE) when the underlying event, statement or disclosure is dated more than this many days before the run's slot. Also the recency limit for a Branch B control failure (C5) and for reporting counted towards E3, and the window within which a formal rule or exam notice must have been first issued in final form to be new (R3f, FILTER.md 4.4.5; RT_INSTRUMENT_NOT_NEW, NEAR R3f/max_event_age_days)."
     },
     "formal_instrument_scope": {
-      "value": "all_sections",
-      "element": "G5",
-      "launch": "all_sections",
-      "loosening_steps": ["regulatory_trajectory_only"],
-      "description": "all_sections: formal instruments and exam notices (FILTER.md 4.4.2) are dropped at G5 whatever section they might reach. regulatory_trajectory_only: the exclusion is applied as the brief states it, to the trajectory section only; a final instrument is never RT form (FILTER.md 4.1) and is tested under EV and CS on its facts, which it rarely clears."
+      "value": "new_in_regulatory_trajectory",
+      "element": "G5; FILTER.md 4.1 routing of formal rules and exam notices",
+      "launch": "new_in_regulatory_trajectory",
+      "loosening_steps": ["new_any_section"],
+      "tightening_steps": ["none"],
+      "description": "Owner decision 2026-10-03 (FILTER.md 4.4.2 and 11.1 #2), overriding the brief's line that formal rules and exam notices are covered elsewhere and out of scope. new_in_regulatory_trajectory (launch): G5 is not applied; formal rules and exam notices, and notices about them, are RT form (FILTER.md 4.1) and are tested in regulatory_trajectory on the formal-instrument path (FILTER.md 4.4.5: R1, R1f, R2, R3f, R4f, R5). A newly issued one can pass (RT_PASS_FORMAL_RULE, RT_PASS_EXAM_NOTICE); a reminder, restatement, correction, extension or re-publication fails R3f (RT_INSTRUMENT_NOT_NEW). new_any_section (loosening): in addition, a new formal instrument (R3f held) that fails RT is tested under EV and CS on its facts. none (tightening only; the earlier launch setting): G5 drops every formal rule, exam notice and notice about one, in every section (GL_FORMAL_RULE). The knob changes a route, not an element, so no NEAR or [alt] marker carries it except NEAR G5/formal_instrument_scope at none; loosening evidence is the owner's rating of formal-instrument RT drops (FILTER.md 9.5 step 3, 9.6). Consultations on implementing measures are judged under R1 and rt_implementing_consultations at every value."
     },
     "unnamed_source_reporting": {
       "value": "requires_confirmation",
@@ -205,7 +206,7 @@
     }
   },
   "regulatory_trajectory": {
-    "description": "Section 3 entry test: an early, soft signal (speech, testimony, consultation or supervisory direction in the US, UK or EU, or a public statement by a leading bank executive). Formal rules and exam notices are out of scope. R1-R5 must all hold (FILTER.md 4.4); empty is expected. Fixed, never knobs: the US, UK and EU jurisdiction scope for authorities, R3, R4, R5, R3b and the exclusion of final instruments and exam notices from this section.",
+    "description": "Section 3 entry test: a signal of where regulators or executives are heading (a speech, testimony, consultation or supervisory direction in the US, UK or EU, a public statement by a leading bank executive, or a newly issued formal rule or exam notice); reminders and restatements of existing rules do not count. Soft signals need R1-R5 (FILTER.md 4.4.3; bank executives 4.4.4); formal rules and exam notices need R1, R1f, R2, R3f, R4f and R5 (FILTER.md 4.4.5; scope set by formal_instrument_scope). Empty is expected. Fixed, never knobs: the US, UK and EU jurisdiction scope for authorities, R3, R4, R5, R3b, and the formal-instrument elements R1f, R3f (apart from its max_event_age_days window) and R4f.",
     "rt_speaker_tier": {
       "value": "principal",
       "element": "R2",
@@ -229,10 +230,10 @@
     },
     "rt_implementing_consultations": {
       "value": false,
-      "element": "R1, G5",
+      "element": "R1",
       "launch": false,
       "loosening_steps": [true],
-      "description": "When true, consultations on implementing measures (delegated and implementing acts, technical standards under adopted legislation) count as RT instruments when they set a choice the adopted (Level 1) text leaves open. When false, they are G5 formal instruments."
+      "description": "When true, consultations on implementing measures (delegated and implementing acts, technical standards under adopted legislation) count as RT instruments when they set a choice the adopted (Level 1) text leaves open. When false, they fail R1 (RT_INSTRUMENT_INELIGIBLE). A consultation is never a formal instrument; the adopted measure is one at every value (FILTER.md 4.4.2), tested on the formal-instrument path while formal_instrument_scope is not none."
     },
     "rt_us_bills": {
       "value": "committee_action",

@@ -10,8 +10,10 @@
 // listed as manual. Date problems are counted per source and listed in fetch-report.json
 // `date_warnings` (and printed as "warn" lines): entries with an implausible date (e.g. 1899) are
 // skipped; entries whose date text cannot be parsed are kept as undated, so the window does not
-// apply to them until the parser learns the format. Feeds that re-date old documents (EIOPA; see
-// collect.mjs URL_DATE_RULES) are dated from the entry URL instead ("re-dated from the URL"); feeds
+// apply to them until the parser learns the format. Feeds whose entry URL carries a more reliable
+// date (EIOPA, which re-dates old documents; the Federal Register, whose pubDate is midnight before
+// the issue goes online; see collect.mjs URL_DATE_RULES) are dated from the entry URL as a calendar
+// date instead ("re-dated from the URL" when it differs from the feed date); feeds
 // that repost older documents under a new date (BIS speeches; LEAD_DATE_RULES) keep their feed date
 // and are listed in date_warnings with the date the lead states.
 // Replay (--now given; RUNBOOK §C): no entry dated after --now is kept (live runs allow
