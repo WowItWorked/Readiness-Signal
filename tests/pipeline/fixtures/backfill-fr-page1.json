@@ -1,0 +1,39 @@
+{
+  "description": "FICTIONAL TEST FIXTURE shaped like a Federal Register API documents.json page (final rules, agency query). Document numbers and titles are invented.",
+  "count": 5,
+  "total_pages": 2,
+  "next_page_url": "__BASE__/api/v1/documents.json?page=2",
+  "results": [
+    {
+      "title": "Fictional Joint Rule on Operational Resilience Testing",
+      "type": "Rule",
+      "abstract": "The agencies are adopting a final rule that requires covered firms to test the recovery of critical operations against severe but plausible scenarios at least annually and to report material test failures to their supervisor within thirty days of the test, as described in this fictional fixture abstract which runs long enough to be cut. A second sentence adds further words so that the lead is cut at sixty words exactly as the collector does for live feeds.",
+      "html_url": "https://www.federalregister.gov/documents/2026/01/05/2026-90001/fictional-joint-rule-on-operational-resilience-testing",
+      "publication_date": "2026-01-05",
+      "document_number": "2026-90001",
+      "agencies": [
+        { "raw_name": "DEPARTMENT OF THE TREASURY", "name": "Treasury Department", "slug": "treasury-department" },
+        { "raw_name": "Comptroller of the Currency", "name": "Comptroller of the Currency", "slug": "comptroller-of-the-currency" },
+        { "raw_name": "FEDERAL RESERVE SYSTEM", "name": "Federal Reserve System", "slug": "federal-reserve-system" }
+      ]
+    },
+    {
+      "title": "Fictional Amendment to Regulation Example: Incident Notification Timing",
+      "type": "Rule",
+      "abstract": "The Board is amending a fictional regulation to shorten an incident notification deadline.",
+      "html_url": "https://www.federalregister.gov/documents/2026/01/31/2026-90002/fictional-amendment-to-regulation-example-incident-notification-timing",
+      "publication_date": "2026-01-31",
+      "document_number": "2026-90002",
+      "agencies": [ { "raw_name": "FEDERAL RESERVE SYSTEM", "name": "Federal Reserve System", "slug": "federal-reserve-system" } ]
+    },
+    {
+      "title": "Fictional Proposed Rule That Must Be Skipped",
+      "type": "Proposed Rule",
+      "abstract": "A proposed rule in a RULE query is skipped defensively.",
+      "html_url": "https://www.federalregister.gov/documents/2026/01/12/2026-90003/fictional-proposed-rule",
+      "publication_date": "2026-01-12",
+      "document_number": "2026-90003",
+      "agencies": [ { "name": "Federal Reserve System", "slug": "federal-reserve-system" } ]
+    }
+  ]
+}

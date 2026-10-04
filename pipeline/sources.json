@@ -553,7 +553,7 @@
       "url": "https://www.ukfinance.org.uk/news-and-insight/press-release",
       "paywalled": false,
       "region": "UK",
-      "notes": "Page source: UK Finance has no usable feed. Its /rss.xml is an all-content feed (people profiles, events) that crowds out press releases. Essential for UK fraud data (Annual Fraud Report, APP reimbursement), tokenised deposits, and payments trends. Akamai returns 403 to a spoofed browser UA but allows the ReadinessSignal UA, so never use browser-UA fallback here. Newest entry is dated 24 Sep 2026."
+      "notes": "Page source: UK Finance has no usable feed. Its /rss.xml is an all-content feed (people profiles, events) that crowds out press releases. Essential for UK fraud data (Annual Fraud Report, APP reimbursement), tokenised deposits, and payments trends. Akamai allows the honest ReadinessSignal UA, the only user agent the pipeline sends. Newest entry is dated 24 Sep 2026."
     },
     {
       "id": "aba-bankingjournal-cybersecurity",

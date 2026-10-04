@@ -1,0 +1,15 @@
+{
+  "title": "FICTIONAL TEST FIXTURE shaped like the CISA Known Exploited Vulnerabilities catalogue (backfill month filter)",
+  "catalogVersion": "2026.02.03",
+  "dateReleased": "2026-02-03T15:00:00.000Z",
+  "count": 7,
+  "vulnerabilities": [
+    { "cveID": "CVE-2025-91230", "vendorProject": "Examplesoft", "product": "Edge Gateway", "vulnerabilityName": "Examplesoft Edge Gateway Authentication Bypass Vulnerability", "dateAdded": "2025-12-31", "shortDescription": "Examplesoft Edge Gateway contains an authentication bypass vulnerability.", "requiredAction": "Apply mitigations per vendor instructions.", "dueDate": "2026-01-21", "knownRansomwareCampaignUse": "Unknown", "notes": "", "cwes": ["CWE-287"] },
+    { "cveID": "CVE-2026-91001", "vendorProject": "Examplesoft", "product": "Mail Relay", "vulnerabilityName": "Examplesoft Mail Relay Command Injection Vulnerability", "dateAdded": "2026-01-01", "shortDescription": "Examplesoft Mail Relay contains a command injection vulnerability that allows an unauthenticated attacker to run commands.", "requiredAction": "Apply mitigations per vendor instructions.", "dueDate": "2026-01-22", "knownRansomwareCampaignUse": "Known", "notes": "", "cwes": ["CWE-78"] },
+    { "cveID": "CVE-2026-91002", "vendorProject": "Widgetcorp", "product": "File Share", "vulnerabilityName": "Widgetcorp File Share Path Traversal Vulnerability", "dateAdded": "2026-01-15", "shortDescription": "Widgetcorp File Share contains a path traversal vulnerability.", "requiredAction": "Apply mitigations per vendor instructions.", "dueDate": "2026-02-05", "knownRansomwareCampaignUse": "Unknown", "notes": "", "cwes": ["CWE-22"] },
+    { "cveID": "cve-2026-91003", "vendorProject": "Widgetcorp", "product": "VPN Concentrator", "vulnerabilityName": "Widgetcorp VPN Concentrator Out-of-Bounds Write Vulnerability", "dateAdded": "2026-01-31", "shortDescription": "Widgetcorp VPN Concentrator contains an out-of-bounds write vulnerability.", "requiredAction": "Apply mitigations per vendor instructions.", "dueDate": "2026-02-21", "knownRansomwareCampaignUse": "Unknown", "notes": "", "cwes": ["CWE-787"] },
+    { "cveID": "CVE-2026-91004", "vendorProject": "Widgetcorp", "product": "Router", "vulnerabilityName": "Widgetcorp Router Hard-coded Credentials Vulnerability", "dateAdded": "2026-02-01", "shortDescription": "Widgetcorp Router contains hard-coded credentials.", "requiredAction": "Apply mitigations per vendor instructions.", "dueDate": "2026-02-22", "knownRansomwareCampaignUse": "Unknown", "notes": "", "cwes": ["CWE-798"] },
+    { "cveID": "not-a-cve", "vendorProject": "Broken", "product": "Entry", "vulnerabilityName": "Malformed id", "dateAdded": "2026-01-10", "shortDescription": "Malformed.", "dueDate": "2026-01-31" },
+    { "cveID": "CVE-2026-91005", "vendorProject": "Broken", "product": "Entry", "vulnerabilityName": "Malformed date", "dateAdded": "January 12, 2026", "shortDescription": "Malformed date.", "dueDate": "2026-02-02" }
+  ]
+}

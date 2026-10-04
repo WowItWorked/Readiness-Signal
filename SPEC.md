@@ -154,9 +154,15 @@ illustrative only). Funnel counts: `stage2_pass` counts stories (pass judgments 
 cluster members); `dedup_dropped` counts same-story drops plus cluster members.
 Failure mode: if fewer than half of sources respond, record a `failed` run and publish nothing.
 
-Backfill is a **separate job** governed by rules not yet supplied. It is not built here and must
-not be run. `pipeline/BACKFILL.md` is a stub that says so. The data model and site already
-support `backfilled: true`.
+Backfill is a **separate job**. The brief's own backfill rules were truncated and never supplied; on
+2026-10-04 the owner instructed the build to follow best practice, recorded as the binding procedure
+in `pipeline/BACKFILL.md`: the live selection standard applied as of each development's date, one
+month and the owner-named sections per pass, every source URL checked live, and writes only through
+`node pipeline/scripts/backfill.mjs` (`collect`, `add`, `verify-urls`, `publish`). Backfilled items
+carry `backfilled: true`, create no run records, and never count as editions. The live routine never
+runs the backfill. No fetcher in the pipeline impersonates a browser or works around an access wall:
+every request carries the honest `ReadinessSignal/1.0` user agent, and a walled page is simply not
+collected or not verified.
 
 ## 6. Validation and lint (`pipeline/lib/validate.mjs`, used by publish, validate and CI)
 

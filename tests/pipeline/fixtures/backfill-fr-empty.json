@@ -1,0 +1,5 @@
+{
+  "description": "FICTIONAL TEST FIXTURE: a Federal Register API response with no documents (the API omits results).",
+  "count": 0,
+  "total_pages": 0
+}

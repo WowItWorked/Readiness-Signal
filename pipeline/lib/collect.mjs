@@ -1,13 +1,20 @@
-// Collection: HTTP fetch with timeout/concurrency/403 retry, feed + CISA KEV -> candidates,
-// window and seen marking. Used by scripts/fetch.mjs and scripts/add-manual.mjs.
+// Collection: HTTP fetch with timeout/concurrency and one honest retry, feed + CISA KEV ->
+// candidates, window and seen marking. Used by scripts/fetch.mjs and scripts/add-manual.mjs.
+//
+// Honest access (SPEC §5): every request carries USER_AGENT and nothing else. The pipeline never
+// impersonates a browser, never retries under another identity and never works around a bot check
+// or access wall; a source that refuses the project user agent is reported failed, not bypassed.
 
 import { parseFeed, leadWordsFor, makeLead, collapseWhitespace } from './feed.mjs';
 import { candidateId, hostOf, normaliseUrl } from './url.mjs';
 import { etDateString, etWallToDate, toEtIso } from './time.mjs';
 
+/** The only user agent the pipeline sends. */
 export const USER_AGENT = 'ReadinessSignal/1.0 (+https://emergingtechrisk.com/Readiness-Signal/)';
-export const BROWSER_USER_AGENT =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36';
+/** Statuses retried once, with the same USER_AGENT, after any Retry-After. */
+export const RETRY_STATUSES = Object.freeze([403, 429, 503]);
+/** A Retry-After before the one retry is honoured up to this long. */
+export const MAX_RETRY_AFTER_MS = 10000;
 export const DEFAULT_TIMEOUT_MS = 15000;
 export const DEFAULT_CONCURRENCY = 8;
 export const MAX_DATELESS_PER_SOURCE = 20;
@@ -42,32 +49,54 @@ export function defaultSince(runsDoc, now) {
   return { since: start, basis: `previous successful run ${prev.run_id} started_at − 6 h` };
 }
 
-async function httpGet(url, { userAgent, timeoutMs, accept, fetchImpl = fetch }) {
+async function httpGet(url, { timeoutMs, accept, fetchImpl = fetch }) {
   const res = await fetchImpl(url, {
-    headers: { 'user-agent': userAgent, accept, 'accept-language': 'en-GB,en;q=0.9' },
+    headers: { 'user-agent': USER_AGENT, accept, 'accept-language': 'en-GB,en;q=0.9' },
     redirect: 'follow',
     signal: AbortSignal.timeout(timeoutMs),
   });
+  const retryAfter = res.headers.get('retry-after');
   const len = Number(res.headers.get('content-length') || 0);
   if (len > MAX_BODY_BYTES) {
     try { await res.body?.cancel(); } catch { /* ignore */ }
-    return { status: res.status, ok: false, text: '', tooLarge: true, finalUrl: res.url };
+    return { status: res.status, ok: false, text: '', tooLarge: true, finalUrl: res.url, retryAfter };
   }
   const text = await res.text();
-  return { status: res.status, ok: res.ok, text: text.length > MAX_BODY_BYTES ? '' : text, tooLarge: text.length > MAX_BODY_BYTES, finalUrl: res.url };
+  return { status: res.status, ok: res.ok, text: text.length > MAX_BODY_BYTES ? '' : text, tooLarge: text.length > MAX_BODY_BYTES, finalUrl: res.url, retryAfter };
 }
 
-/** GET with the project UA; on 403 retry once with a standard browser UA. */
-export async function fetchWithRetry(url, { timeoutMs = DEFAULT_TIMEOUT_MS, accept = ACCEPT.feed, fetchImpl } = {}) {
-  const started = Date.now();
-  let retried = false;
-  let res = await httpGet(url, { userAgent: USER_AGENT, timeoutMs, accept, fetchImpl });
-  if (res.status === 403) {
-    retried = true;
-    res = await httpGet(url, { userAgent: BROWSER_USER_AGENT, timeoutMs, accept, fetchImpl });
-  }
-  return { ...res, retried, elapsed_ms: Date.now() - started };
+/** Milliseconds a Retry-After header asks for (seconds or an HTTP date), or 0. */
+export function retryAfterMs(value, now = Date.now()) {
+  const v = String(value ?? '').trim();
+  if (!v) return 0;
+  if (/^\d+$/.test(v)) return Number(v) * 1000;
+  const t = Date.parse(v);
+  return Number.isFinite(t) ? Math.max(0, t - now) : 0;
 }
+
+export const sleep = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
+
+/**
+ * GET with USER_AGENT (the only user agent the pipeline sends). On 403, 429 or 503 it waits for
+ * any Retry-After (at most maxRetryAfterMs) and retries once with the same user agent; it never
+ * changes identity. `retried` says a retry was made; `retry_status` is the status that caused it
+ * and `retry_wait_ms` the wait before it.
+ */
+export async function fetchWithRetry(url, { timeoutMs = DEFAULT_TIMEOUT_MS, accept = ACCEPT.feed, fetchImpl, maxRetryAfterMs = MAX_RETRY_AFTER_MS } = {}) {
+  const started = Date.now();
+  let res = await httpGet(url, { timeoutMs, accept, fetchImpl });
+  let retry = null;
+  if (RETRY_STATUSES.includes(res.status)) {
+    const wait = Math.min(retryAfterMs(res.retryAfter), maxRetryAfterMs);
+    retry = { status: res.status, wait };
+    if (wait > 0) await sleep(wait);
+    res = await httpGet(url, { timeoutMs, accept, fetchImpl });
+  }
+  return { ...res, retried: Boolean(retry), retry_status: retry?.status ?? null, retry_wait_ms: retry?.wait ?? 0, elapsed_ms: Date.now() - started };
+}
+
+/** ' (retried once after HTTP <status>)' when a fetch was retried (same user agent), else ''. */
+export const retryNote = (res) => (res?.retried ? ` (retried once after HTTP ${res.retry_status})` : '');
 
 export async function mapPool(items, concurrency, fn) {
   const results = new Array(items.length);
@@ -364,7 +393,9 @@ export async function collectSource(source, { since, now, timeoutMs, fetchImpl, 
     url: source.url,
     status: 'failed',
     http_status: null,
-    retried_with_browser_ua: false,
+    // a 403/429/503 retried once with the same project user agent (never another one)
+    retried: false,
+    retry_status: null,
     format: null,
     entries: 0,
     in_window: 0,
@@ -393,10 +424,11 @@ export async function collectSource(source, { since, now, timeoutMs, fetchImpl, 
       fetchImpl,
     });
     report.http_status = res.status;
-    report.retried_with_browser_ua = res.retried;
+    report.retried = res.retried;
+    report.retry_status = res.retry_status;
     report.elapsed_ms = res.elapsed_ms;
     if (res.tooLarge) throw new Error('response larger than 15 MB');
-    if (!res.ok) throw new Error(`HTTP ${res.status}${res.retried ? ' (after browser-UA retry)' : ''}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}${retryNote(res)}`);
     let result;
     if (source.type === 'cisa-kev') {
       let json;

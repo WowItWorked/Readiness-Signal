@@ -11,5 +11,6 @@ Read `SPEC.md` before changing anything; it is the build contract. Hard rules:
 - No monospace type anywhere. Sans with tabular numerals instead.
 - The archive (`docs/data/archive.json`) and run log (`docs/data/runs.json`) are append-only.
   Only `pipeline/scripts/publish.mjs` writes them.
-- The backfill pass is not built and must not be run (`pipeline/BACKFILL.md`).
+- Backfill passes follow `pipeline/BACKFILL.md` (binding) and write only through
+  `pipeline/scripts/backfill.mjs publish`; run a pass only when the owner asks for that month.
 - `.design-handoff/` is local design reference; never commit it or copy its sample content.

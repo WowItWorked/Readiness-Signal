@@ -5,6 +5,11 @@
 //        [--timeout-ms 15000] [--concurrency 8] [--only id,id] [--allow-http]
 //        [--sources F] [--runs F] [--seen F] [--work-dir D]
 //
+// Every request carries the honest project user agent (collect.mjs USER_AGENT) and no other: a
+// 403, 429 or 503 is retried once with the same user agent after any Retry-After (at most 10 s),
+// and a source that still refuses it, or answers with a bot check or access wall instead of a
+// feed, is reported failed, never worked around. fetch-report.json records per source `retried`
+// and `retry_status` (the status that caused the retry).
 // Writes <work-dir>/<run_id>/candidates.json and fetch-report.json. Marks each candidate with
 // `seen` from seen.json (it does not write seen.json; publish.mjs does). `page` sources are
 // listed as manual. Date problems are counted per source and listed in fetch-report.json
@@ -146,7 +151,7 @@ runMain(async () => {
     const extra = r.status === 'ok'
       ? `${r.format}, ${r.entries} entries, ${r.in_window} in window, ${r.unseen} unseen${r.dateless ? `, ${r.dateless} undated` : ''}${r.future_dated ? `, ${r.future_dated} future-dated skipped` : ''}${r.bad_date ? `, ${r.bad_date} bad dates skipped` : ''}${r.excluded ? `, ${r.excluded} excluded by URL pattern` : ''}${r.redated ? `, ${r.redated} re-dated from the URL` : ''}${r.reposted ? `, ${r.reposted} repost(s) of older documents` : ''}`
       : r.status === 'manual' ? 'read manually (page)' : r.error;
-    log(`  ${r.status.padEnd(6)} ${r.id}${r.retried_with_browser_ua ? ' [403 → retried with browser UA]' : ''}: ${extra}`);
+    log(`  ${r.status.padEnd(6)} ${r.id}${r.retried ? ` [HTTP ${r.retry_status} → retried once, same user agent]` : ''}: ${extra}`);
   }
   for (const w of dateIssues) log(`warn  ${w}`);
   log(`sources ok ${totals.sources_ok}, failed ${totals.sources_failed}, manual ${totals.sources_manual}; fetched ${totals.fetched}, in window ${totals.in_window} (${totals.undated} undated), unseen ${totals.unseen}`);

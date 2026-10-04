@@ -10,6 +10,7 @@
     "serve": "node scripts/serve.mjs",
     "serve:fixtures": "node scripts/serve.mjs --fixtures",
     "validate": "node pipeline/scripts/validate.mjs",
-    "calibration": "node pipeline/scripts/calibration.mjs"
+    "calibration": "node pipeline/scripts/calibration.mjs",
+    "backfill": "node pipeline/scripts/backfill.mjs"
   }
 }

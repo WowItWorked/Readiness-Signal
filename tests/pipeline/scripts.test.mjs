@@ -6,7 +6,7 @@ import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
-import { BROWSER_USER_AGENT, USER_AGENT } from '../../pipeline/lib/collect.mjs';
+import { USER_AGENT } from '../../pipeline/lib/collect.mjs';
 import { normaliseUrl } from '../../pipeline/lib/url.mjs';
 import { SCRIPTS, fixture, judgment, makeCandidate, makeDraft, makeSurvivor, readJson, rmrf, runScript, tempDir, workspace, writeJson } from './_helpers.mjs';
 
@@ -27,10 +27,12 @@ function runAsync(name, args) {
 
 function startServer() {
   const uas = [];
+  const hits = new Map();
   const server = http.createServer((req, res) => {
     uas.push([req.url, req.headers['user-agent']]);
-    const send = (status, body, type = 'application/xml') => {
-      res.writeHead(status, { 'content-type': type });
+    hits.set(req.url, (hits.get(req.url) ?? 0) + 1);
+    const send = (status, body, type = 'application/xml', headers = {}) => {
+      res.writeHead(status, { 'content-type': type, ...headers });
       res.end(body);
     };
     switch (req.url) {
@@ -39,8 +41,12 @@ function startServer() {
       case '/rdf.xml': return send(200, fixture('rdf.xml'));
       case '/junk.xml': return send(200, fixture('junk-prefix.xml'));
       case '/kev.json': return send(200, fixture('kev.json'), 'application/json');
+      // refuses the project user agent (it would serve a browser): reported failed, never bypassed
       case '/browser-only.xml':
         return req.headers['user-agent'] === USER_AGENT ? send(403, 'Forbidden', 'text/plain') : send(200, fixture('rss2.xml'));
+      // busy once: 503 with Retry-After 1, then the feed (one retry, same user agent)
+      case '/busy-once.xml':
+        return hits.get(req.url) === 1 ? send(503, 'busy', 'text/plain', { 'retry-after': '1' }) : send(200, fixture('rss2.xml'));
       case '/broken.xml': return send(500, 'oops', 'text/plain');
       case '/html': return send(200, '<!doctype html><html><body>not a feed</body></html>', 'text/html');
       case '/slow.xml': setTimeout(() => send(200, fixture('rss2.xml')), 3000); return undefined;
@@ -52,7 +58,7 @@ function startServer() {
 
 const src = (id, url, o = {}) => ({ id, publication: `Example ${id}`, source_class: 'news', type: 'feed', url, paywalled: false, region: 'US', notes: 'fixture', ...o });
 
-test('fetch.mjs: formats, 403 browser-UA retry, failures, timeout, KEV, manual pages, seen, in-run duplicates', async () => {
+test('fetch.mjs: formats, honest user agent only, one same-agent retry, failures, timeout, KEV, manual pages, seen, in-run duplicates', async () => {
   const { server, base, uas } = await startServer();
   const dir = tempDir();
   try {
@@ -67,6 +73,7 @@ test('fetch.mjs: formats, 403 browser-UA retry, failures, timeout, KEV, manual p
         src('association', `${base}/junk.xml`, { source_class: 'industry_trade' }),
         src('kev', `${base}/kev.json`, { type: 'cisa-kev', source_class: 'vendor_threat_research', publication: 'CISA' }),
         src('picky', `${base}/browser-only.xml`, { paywalled: true, lead_words: 10 }),
+        src('busy', `${base}/busy-once.xml`, { paywalled: true, lead_words: 10 }),
         src('broken', `${base}/broken.xml`),
         src('not-a-feed', `${base}/html`),
         src('slow', `${base}/slow.xml`),
@@ -88,8 +95,14 @@ test('fetch.mjs: formats, 403 browser-UA retry, failures, timeout, KEV, manual p
     assert.equal(by['central-bank'].format, 'rdf');
     assert.equal(by.association.status, 'ok');
     assert.equal(by.kev.format, 'kev-json');
-    assert.equal(by.picky.status, 'ok');
-    assert.equal(by.picky.retried_with_browser_ua, true);
+    // a source refusing the project user agent is retried once with the same agent, then fails
+    assert.deepEqual([by.picky.status, by.picky.http_status, by.picky.retried, by.picky.retry_status], ['failed', 403, true, 403]);
+    assert.equal(by.picky.error, 'HTTP 403 (retried once after HTTP 403)');
+    assert.equal('retried_with_browser_ua' in by.picky, false);
+    // 503 + Retry-After: waited for, then one retry with the same agent
+    assert.deepEqual([by.busy.status, by.busy.http_status, by.busy.retried, by.busy.retry_status], ['ok', 200, true, 503]);
+    assert.ok(by.busy.elapsed_ms >= 900, `waited ${by.busy.elapsed_ms} ms`);
+    assert.deepEqual([by.wire.retried, by.wire.retry_status], [false, null]);
     assert.equal(by.broken.status, 'failed');
     assert.match(by.broken.error, /HTTP 500/);
     assert.match(by['not-a-feed'].error, /not a recognised feed/);
@@ -97,11 +110,14 @@ test('fetch.mjs: formats, 403 browser-UA retry, failures, timeout, KEV, manual p
     assert.equal(by['speeches-page'].status, 'manual');
     assert.equal(by.disabled, undefined);
     assert.equal(report.manual[0].id, 'speeches-page');
-    assert.deepEqual([report.totals.sources_ok, report.totals.sources_failed, report.totals.sources_manual], [7, 3, 1]);
+    assert.deepEqual([report.totals.sources_ok, report.totals.sources_failed, report.totals.sources_manual], [7, 4, 1]);
     assert.equal(report.healthy, true);
     assert.equal(report.user_agent, USER_AGENT);
-    assert.ok(uas.some(([u, ua]) => u === '/browser-only.xml' && ua === BROWSER_USER_AGENT));
-    assert.ok(uas.filter(([u]) => u === '/rss2.xml').every(([, ua]) => ua === USER_AGENT));
+    // every request carried the honest project user agent; never anything else
+    assert.ok(uas.length > 0 && uas.every(([, ua]) => ua === USER_AGENT), JSON.stringify(uas.filter(([, ua]) => ua !== USER_AGENT)));
+    assert.equal(uas.filter(([u]) => u === '/browser-only.xml').length, 2, 'one retry, same agent');
+    assert.equal(uas.filter(([u]) => u === '/busy-once.xml').length, 2);
+    assert.match(r.stderr, /picky \[HTTP 403 → retried once, same user agent\]: HTTP 403/);
 
     const cand = readJson(path.join(work, '2026-10-02-1400', 'candidates.json')).candidates;
     const kev = cand.filter((c) => c.kev);
@@ -117,7 +133,7 @@ test('fetch.mjs: formats, 403 browser-UA retry, failures, timeout, KEV, manual p
     // the same URL from two feeds is one candidate with also_in
     const gw = cand.filter((c) => c.url_normalised === 'https://news.example.com/2026/10/gateway-zero-day');
     assert.equal(gw.length, 1);
-    assert.deepEqual(gw[0].also_in.sort(), ['picky', 'wire-mirror']);
+    assert.deepEqual(gw[0].also_in.sort(), ['busy', 'wire-mirror']);
     // seen marking
     assert.equal(cand.find((c) => c.url_normalised === 'https://research.example.org/notes/2026/updated-only').seen, true);
     // never a full body

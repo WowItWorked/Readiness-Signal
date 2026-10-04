@@ -1,0 +1,33 @@
+{
+  "description": "FICTIONAL TEST FIXTURE: second page of a Federal Register API documents.json response. Document numbers and titles are invented.",
+  "count": 5,
+  "total_pages": 2,
+  "results": [
+    {
+      "title": "Fictional Rule Published After the Window",
+      "type": "Rule",
+      "abstract": "Outside the month; skipped defensively.",
+      "html_url": "https://www.federalregister.gov/documents/2026/02/02/2026-90004/fictional-rule-after-the-window",
+      "publication_date": "2026-02-02",
+      "document_number": "2026-90004",
+      "agencies": [ { "name": "Federal Reserve System", "slug": "federal-reserve-system" } ]
+    },
+    {
+      "title": "Fictional Rule Without A Link",
+      "type": "Rule",
+      "abstract": "No html_url: invalid.",
+      "publication_date": "2026-01-20",
+      "document_number": "2026-90005",
+      "agencies": [ { "name": "Federal Reserve System", "slug": "federal-reserve-system" } ]
+    },
+    {
+      "title": "Fictional Technical Correction to Recordkeeping Rule",
+      "type": "Rule",
+      "abstract": null,
+      "html_url": "https://www.federalregister.gov/documents/2026/01/20/2026-90006/fictional-technical-correction",
+      "publication_date": "2026-01-20",
+      "document_number": "2026-90006",
+      "agencies": [ { "raw_name": "Unlisted Agency" }, { "name": "Federal Reserve System", "slug": "federal-reserve-system" } ]
+    }
+  ]
+}

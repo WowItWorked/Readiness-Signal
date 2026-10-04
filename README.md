@@ -89,7 +89,9 @@ gives the review procedure and the evidence each knob needs before it is loosene
 
 ## Backfill
 
-The historical backfill (2026-01-01 to the build date) is a **separate job** with its own
-binding rules. Those rules have not been supplied, so the job is not built
-([`pipeline/BACKFILL.md`](pipeline/BACKFILL.md)). The data model and site already support
-`backfilled: true` items: they are labelled on the site and never counted as editions.
+The historical backfill is a **separate job**, run one month at a time when the owner asks, under
+the binding procedure in [`pipeline/BACKFILL.md`](pipeline/BACKFILL.md): the live selection standard
+judged as of each development's date, every source URL checked live, and writes only through
+`node pipeline/scripts/backfill.mjs` (`collect`, `add`, `verify-urls`, `publish`). Backfilled items
+are labelled on the site, create no run records and never count as editions. Each pass leaves an
+audit log of every candidate's judgment in `pipeline/logs/backfill/`.
