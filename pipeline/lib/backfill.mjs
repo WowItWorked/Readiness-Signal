@@ -589,11 +589,12 @@ const wordTotal = (s) => (collapseWhitespace(s) ? collapseWhitespace(s).split(' 
  * Validate entries an agent found (publisher archive pages, search, feeds) and turn them into
  * candidates. Every field is checked; a disallowed host (aggregator, cache, wrapper, social) is
  * refused; a date outside the window is refused unless allowOutside and later than the window (a
- * corroborating later source, flagged outside_window: true); paywalled leads are cut to 30 words,
+ * corroborating later source, flagged outside_window: true), or allowBackground and earlier (an
+ * outlet on the story's earlier record, FILTER §5.8/§5.9, flagged outside_window and background); paywalled leads are cut to 30 words,
  * others to the registry's lead_words (default 60).
  * @returns {{ candidates: object[], errors: string[], notices: string[] }}
  */
-export function prepareAddEntries(entries, { sources = [], window: w, allowOutside = false, seenDoc = null }) {
+export function prepareAddEntries(entries, { sources = [], window: w, allowOutside = false, allowBackground = false, seenDoc = null }) {
   const errors = [];
   const notices = [];
   const candidates = [];
@@ -645,6 +646,7 @@ export function prepareAddEntries(entries, { sources = [], window: w, allowOutsi
       date = etDateString(instant);
     } else err(`.published: ${quote(e.published)} is neither "YYYY-MM-DD" nor ISO 8601 with an offset`);
     let outside = false;
+    let background = false;
     if (precision) {
       // a date-only source counts as 18:00 ET that day (§4), also against a window ended early
       const [py, pm, pd] = date.split('-').map(Number);
@@ -652,7 +654,12 @@ export function prepareAddEntries(entries, { sources = [], window: w, allowOutsi
       if (!instantInWindow(counted, w)) {
         const later = counted.getTime() >= w.end.getTime();
         const what = `published ${e.published} is outside the ${w.key} window (${w.since} to ${w.until} ET)`;
-        if (!later) err(`.published: ${what}; a development first made public before the window is dropped BF_OUT_OF_WINDOW and is not registered`);
+        if (!later && allowBackground) {
+          // FILTER §5.8(1)(v), §5.9(1)(iv): an earlier outlet on the story's record, listed for
+          // prominence only (outside_window and background: never primary, never judged, no timestamp)
+          outside = true;
+          background = true;
+        } else if (!later) err(`.published: ${what}; a development first made public before the window is dropped BF_OUT_OF_WINDOW and is not registered (an earlier outlet on the story's record may be registered with --allow-background, FILTER §5.8 and §5.9)`);
         else if (!allowOutside) err(`.published: ${what}; a development first made public after the window is dropped BF_OUT_OF_WINDOW; a later source that only confirms facts stated at the time may be registered with --allow-outside`);
         else outside = true;
       }
@@ -685,6 +692,7 @@ export function prepareAddEntries(entries, { sources = [], window: w, allowOutsi
       date_missing: false,
       discovery_mode: e.discovery_mode,
       outside_window: outside,
+      ...(background ? { background: true } : {}),
       ...(typeof e.notes === 'string' && e.notes.trim() ? { notes: collapseWhitespace(e.notes) } : {}),
       ...(reg?.tier && e.source_class === 'news' ? { tier: reg.tier } : {}),
       also_in: [],
@@ -2007,7 +2015,7 @@ export function planPublish(ctx) {
     (Array.isArray(item?.sources) ? item.sources : []).forEach((s, k) => {
       const c = isObj(s) ? candByNorm.get(normaliseUrl(s.url)) : null;
       const pub = c ? publicationInstant(c) : null;
-      if (pub && pub.instant.getTime() < w.start.getTime()) v.error(`decisions.items[${i}].sources[${k}]`, `published ${describePub(pub)}, before the ${w.key} window: a development first made public before the window is dropped BF_OUT_OF_WINDOW`);
+      if (pub && pub.instant.getTime() < w.start.getTime() && c.background !== true) v.error(`decisions.items[${i}].sources[${k}]`, `published ${describePub(pub)}, before the ${w.key} window: a development first made public before the window is dropped BF_OUT_OF_WINDOW`);
     });
   });
 

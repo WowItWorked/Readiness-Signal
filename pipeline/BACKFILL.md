@@ -81,6 +81,11 @@ primary source; never an aggregator, cache, AMP page or social post (FILTER §2.
 collector records the URL, publication, source class, the headline verbatim, a verbatim lead of at most
 `lead_words` (paywalled: 30), the publication date (and time if stated), and the discovery mode.
 
+An outlet on a story's earlier record, dated before the window, may be registered with `add
+--allow-background` only to count towards prominence under FILTER §5.8 and §5.9: it is flagged
+`outside_window` and `background`, is never the primary source, is never judged, and never sets the
+item's timestamp.
+
 ## 4. Timestamp and id
 
 - **Timestamp** = the first edition slot (06:00, 10:00, 14:00, 18:00 ET) at or after the earliest

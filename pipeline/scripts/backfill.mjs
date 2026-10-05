@@ -62,7 +62,7 @@ collect [--only kev,federal-register] [--timeout-ms 30000] [--concurrency 4]
   other agencies go to also_in) and writes <work>/collect-report.json. Re-running is safe.
   --kev-url and --fr-api-url replace the catalogue and API addresses (tests and mirrors).
 
-add --file F [--allow-outside]
+add --file F [--allow-outside] [--allow-background]
   Registers candidates found by agents on publishers' archive pages, by search or in feeds.
   F is a JSON array (or { "candidates": [...] }) of
     { "url": "https://<the original publication's own page>",
@@ -79,7 +79,10 @@ add --file F [--allow-outside]
   post (use the original publication's URL), and a date outside the window (a date only counts
   as 18:00 ET, also against an until). --allow-outside admits dates after the window only, for
   later sources that confirm facts stated at the time
-  (flagged outside_window: true; never the primary source, never judged pass). Leads are cut
+  (flagged outside_window: true; never the primary source, never judged pass). --allow-background
+  admits dates before the window, for outlets on a story's earlier record counted towards prominence
+  under FILTER §5.8 and §5.9 (flagged outside_window and background: true; never primary, never
+  judged, never setting the timestamp). Leads are cut
   to 30 words when paywalled (forced for paywalled publications), else to the registry's
   lead_words (default 60). An entry whose URL normalises to a registered candidate is not
   added again (its candidate_id is printed). stdout lists every candidate_id.
@@ -152,6 +155,7 @@ const OPTIONS = {
   'allow-http': { type: 'boolean' },
   file: { type: 'string' },
   'allow-outside': { type: 'boolean' },
+  'allow-background': { type: 'boolean' },
   candidates: { type: 'boolean' },
   url: { type: 'string', multiple: true },
   'dry-run': { type: 'boolean' },
@@ -161,7 +165,7 @@ const OPTIONS = {
 };
 const SUBCOMMAND_OPTIONS = {
   collect: ['only', 'timeout-ms', 'concurrency', 'kev-url', 'fr-api-url', 'allow-http'],
-  add: ['file', 'allow-outside'],
+  add: ['file', 'allow-outside', 'allow-background'],
   'verify-urls': ['file', 'candidates', 'url', 'concurrency', 'timeout-ms', 'allow-http'],
   publish: ['dry-run', 'append-missing', 'rejudge', 'sections', 'concurrency', 'timeout-ms'],
 };
@@ -328,7 +332,7 @@ async function cmdAdd({ values, paths, now, w, wf }) {
   const entries = Array.isArray(input) ? input : input?.candidates;
   const sources = loadRegistry(paths.sources, false);
   const seen = readJson(paths.seen, { schema_version: 1, urls: {} });
-  const { candidates, errors, notices } = prepareAddEntries(entries, { sources, window: w, allowOutside: Boolean(values['allow-outside']), seenDoc: seen });
+  const { candidates, errors, notices } = prepareAddEntries(entries, { sources, window: w, allowOutside: Boolean(values['allow-outside']), allowBackground: Boolean(values['allow-background']), seenDoc: seen });
   for (const n of notices) log(`note  ${n}`);
   if (errors.length) {
     for (const e of errors) log(`ERROR ${e}`);
