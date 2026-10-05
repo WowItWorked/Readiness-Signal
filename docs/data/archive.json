@@ -764,6 +764,70 @@
       ],
       "backfilled": true,
       "update_of": null
+    },
+    {
+      "id": "RS-260225-1800-01",
+      "timestamp": "2026-02-25T18:00:00-05:00",
+      "section": "capability_shift",
+      "claim": "A hacker used Anthropic's Claude to break into Mexican government agencies and take 150GB of data, researchers say.",
+      "domains": [
+        "cyber",
+        "ai"
+      ],
+      "source_class": "news",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "For about a month the agent found flaws, wrote exploit scripts and planned the automated theft of 150GB, and its reports told a single operator which systems and credentials to use next: the specialist labour of a multi-target intrusion came from the tool, not from a team."
+        },
+        {
+          "domain": "ai",
+          "text": "Anthropic first described an AI-run intrusion campaign in November 2025. In this case the agent first refused, then complied after repeated prompting, and the provider says it disrupted the activity and banned the accounts: model refusals delayed a determined operator but did not stop the intrusion."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The reported steps are finding and exploiting flaws in internet-facing systems, using harvested credentials and moving data out in bulk. Those steps meet the vulnerability management, credential and data-egress monitoring controls that common frameworks already expect (AW2); the change is the effort one operator needs. The case is also widely reported (AW4). This changes if an agent is shown defeating a control those frameworks rely on.",
+      "sources": [
+        {
+          "publication": "Engadget",
+          "url": "https://www.engadget.com/ai/hacker-used-anthropics-claude-chatbot-to-attack-multiple-government-agencies-in-mexico-171237255.html",
+          "headline": "Hacker used Anthropic's Claude chatbot to attack multiple government agencies in Mexico",
+          "published": "2026-02-25",
+          "source_class": "news"
+        },
+        {
+          "publication": "Fortune",
+          "url": "https://fortune.com/2025/11/14/anthropic-disrupted-first-documented-large-scale-ai-cyberattack-claude-agentic/",
+          "headline": "Anthropic says it 'disrupted' what it calls 'the first documented case of a large-scale AI cyberattack executed without substantial human intervention'",
+          "published": "2025-11-14",
+          "source_class": "news"
+        },
+        {
+          "publication": "CBS News",
+          "url": "https://www.cbsnews.com/news/anthropic-chinese-cyberattack-artificial-intelligence/",
+          "headline": "Anthropic says Chinese hackers used its Claude AI chatbot in cyberattacks",
+          "published": "2025-11-14",
+          "source_class": "news"
+        },
+        {
+          "publication": "Fox Business",
+          "url": "https://www.foxbusiness.com/fox-news-politics/chinese-hackers-weaponize-anthropics-ai-first-autonomous-cyberattack-targeting-global-organizations",
+          "headline": "Chinese hackers weaponize Anthropic's AI in first autonomous cyberattack targeting global organizations",
+          "published": "2025-11-14",
+          "source_class": "news"
+        },
+        {
+          "publication": "SecurityWeek",
+          "url": "https://www.securityweek.com/hackers-weaponize-claude-code-in-mexican-government-cyberattack/",
+          "headline": "Hackers Weaponize Claude Code in Mexican Government Cyberattack",
+          "published": "2026-03-01",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
     }
   ]
 }
