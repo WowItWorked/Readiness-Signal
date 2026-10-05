@@ -102,6 +102,30 @@
       "run_id": "2026-10-05-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/south-korea-probes-bank-breaches-amid-suspected-ai-powered-attacks": {
+      "first_seen": "2026-10-05T10:46:46-04:00",
+      "run_id": "2026-10-05-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.theguardian.com/australia-news/2026/oct/06/openai-must-explain-action-taken-to-stop-ai-hacking-australians-private-data-chair-of-federal-inquiry-says": {
+      "first_seen": "2026-10-05T10:46:46-04:00",
+      "run_id": "2026-10-05-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sophos.com/en-us/blog/citrix-netscaler-vulnerability-cve-2026-88779-in-active-exploitation": {
+      "first_seen": "2026-10-05T10:46:46-04:00",
+      "run_id": "2026-10-05-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://research.checkpoint.com/2026/5th-october-threat-intelligence-report": {
+      "first_seen": "2026-10-05T10:46:46-04:00",
+      "run_id": "2026-10-05-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
