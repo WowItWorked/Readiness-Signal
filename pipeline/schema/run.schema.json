@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://emergingtechrisk.com/readiness-signal/schema/run.schema.json",
+  "$id": "https://emergingtechrisk.com/Readiness-Signal/schema/run.schema.json",
   "title": "Readiness Signal run record",
   "description": "One record per scheduled run in docs/data/runs.json (SPEC §3.3), written by publish.mjs whether the run published, was silent or failed. Documentation only: validation (including cross-checks against the archive) is in pipeline/lib/validate.mjs.",
   "type": "object",

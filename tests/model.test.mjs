@@ -426,7 +426,7 @@ describe('item detail and email', () => {
 
   test('mailto body: candidate issue', () => {
     const it = data.byId.get('RS-261002-1400-01');
-    const body = M.mailBody(it, 'https://example.org/readiness-signal/#RS-261002-1400-01');
+    const body = M.mailBody(it, 'https://example.org/Readiness-Signal/#RS-261002-1400-01');
     const lines = body.split('\r\n');
     assert.equal(lines[0], it.claim);
     assert.deepEqual(lines.slice(2, 5), ['Mechanism: Candidate issue', 'Section: Executive Visibility', 'Domains: Resilience, Third party']);
@@ -435,7 +435,7 @@ describe('item detail and email', () => {
     assert.ok(lines.includes('If the answer is no or unknown, consider this language:'));
     assert.ok(lines.includes(`“${it.candidate_issue_statement}”`));
     assert.ok(lines.includes('- Example Wire: Bank apps go dark as cloud sign-in service fails https://example.com/example-wire/technology/'));
-    assert.equal(lines.at(-1), 'Permalink: https://example.org/readiness-signal/#RS-261002-1400-01');
+    assert.equal(lines.at(-1), 'Permalink: https://example.org/Readiness-Signal/#RS-261002-1400-01');
     assert.ok(!body.includes('Why awareness only'));
     assert.ok(!/If asked/i.test(body));
   });
@@ -468,7 +468,7 @@ describe('item detail and email', () => {
       candidate_issue_statement: `Where ${words(34, 'monitr')}, ${words(35, 'effect')}.`,
       sources: [1, 2, 3, 4].map((k) => ({ publication: `Publication number ${k}`, url: longUrl(k), headline: 'H'.repeat(200) })),
     })] }, { runs: [] }).items[0];
-    const link = 'https://emergingtechrisk.com/readiness-signal/#RS-261001-1800-09';
+    const link = 'https://emergingtechrisk.com/Readiness-Signal/#RS-261001-1800-09';
     assert.ok(encodeURIComponent(M.mailBody(big, link)).length > M.MAILTO_BUDGET, 'the untrimmed body is over budget');
     const href = M.mailtoHref(big, link);
     assert.ok(href.length <= M.MAILTO_BUDGET, `mailto is ${href.length} chars`);

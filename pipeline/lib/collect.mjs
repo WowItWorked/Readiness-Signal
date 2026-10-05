@@ -10,7 +10,7 @@ import { candidateId, hostOf, normaliseUrl } from './url.mjs';
 import { etDateString, etWallToDate, toEtIso } from './time.mjs';
 
 /** The only user agent the pipeline sends. */
-export const USER_AGENT = 'ReadinessSignal/1.0 (+https://emergingtechrisk.com/readiness-signal/)';
+export const USER_AGENT = 'ReadinessSignal/1.0 (+https://emergingtechrisk.com/Readiness-Signal/)';
 /** Statuses retried once, with the same USER_AGENT, after any Retry-After. */
 export const RETRY_STATUSES = Object.freeze([403, 429, 503]);
 /** A Retry-After before the one retry is honoured up to this long. */

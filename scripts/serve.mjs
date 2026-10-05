@@ -3,7 +3,7 @@
 //
 //   node scripts/serve.mjs [--port 8148] [--fixtures]
 //
-// Serves /docs under /readiness-signal/ (GitHub Pages sub-path emulation) and redirects / there.
+// Serves /docs under /Readiness-Signal/ (GitHub Pages sub-path emulation) and redirects / there.
 // --fixtures answers data/archive.json and data/runs.json from tests/fixtures/ inside this server
 // only; nothing is copied into /docs and the site has no fixture-loading code.
 
@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const DOCS = join(ROOT, 'docs');
 const FIXTURES = join(ROOT, 'tests', 'fixtures');
-const BASE = '/readiness-signal/';
+const BASE = '/Readiness-Signal/';
 const DEFAULT_PORT = 8148;
 
 export const MIME = Object.freeze({
@@ -96,7 +96,7 @@ export function createHandler(opts = {}) {
       if (path.includes('\0')) return send(res, 400, 'Bad request\n');
       if (path === '/' || path === '/index.html') return redirect(res, BASE);
       if (path === BASE.slice(0, -1)) return redirect(res, BASE + url.search);
-      if (!path.startsWith(BASE)) return send(res, 404, 'Not found. The site is served under /readiness-signal/\n');
+      if (!path.startsWith(BASE)) return send(res, 404, 'Not found. The site is served under /Readiness-Signal/\n');
 
       let rel = path.slice(BASE.length);
       if (rel === '' || rel.endsWith('/')) rel += 'index.html';

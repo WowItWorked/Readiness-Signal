@@ -9,7 +9,7 @@ import * as V from '../../docs/assets/view.js';
 
 const fixture = (name) => JSON.parse(readFileSync(new URL(`../fixtures/${name}`, import.meta.url), 'utf8'));
 const NOW = new Date('2026-10-02T15:00:00-04:00');
-const BASE = 'https://emergingtechrisk.com/readiness-signal/';
+const BASE = 'https://emergingtechrisk.com/Readiness-Signal/';
 const data = M.prepare(fixture('archive.json'), fixture('runs.json'));
 const empty = M.prepare({ items: [] }, { runs: [] });
 const ui = (patch = {}) => ({ ...M.defaultUi(NOW), ...patch });

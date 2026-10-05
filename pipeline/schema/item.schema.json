@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://emergingtechrisk.com/readiness-signal/schema/item.schema.json",
+  "$id": "https://emergingtechrisk.com/Readiness-Signal/schema/item.schema.json",
   "title": "Readiness Signal archive item",
   "description": "One published item in docs/data/archive.json (SPEC §3.2). Documentation only: validation is implemented in pipeline/lib/validate.mjs, which also applies the SPEC §6 lint (first-person voice, institution names, word limits, verbatim guard) that JSON Schema cannot express.",
   "type": "object",

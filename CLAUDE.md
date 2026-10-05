@@ -4,7 +4,7 @@ Read `SPEC.md` before changing anything; it is the build contract. Hard rules:
 
 - Fully static site in `/docs` (GitHub Pages, branch `main`, folder `/docs`). No backend, no
   storage APIs (`localStorage`, `sessionStorage`, IndexedDB, cookies), no runtime CDN scripts.
-  Relative URLs only — the site is served under `/readiness-signal/`.
+  Relative URLs only — the site is served under `/Readiness-Signal/`.
 - Public sources only; paywalled publications are headline-and-lead reference only.
 - No generated text may state or imply any specific financial institution's position. No
   first-person voice in generated fields. Validation questions and issue language are generic.

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://emergingtechrisk.com/readiness-signal/schema/sources.schema.json",
+  "$id": "https://emergingtechrisk.com/Readiness-Signal/schema/sources.schema.json",
   "title": "Readiness Signal source registry (pipeline/sources.json)",
   "description": "Public sources the pipeline collects from. Documentation only: validated in code by pipeline/lib/sources.mjs (unknown keys are warnings, not errors).",
   "type": "object",

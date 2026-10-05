@@ -32,9 +32,9 @@ when nothing clears. Items are append-only; editions never overwrite.
 
 ## 2. Hosting
 
-- Repo `WowItWorked/readiness-signal`, GitHub Pages **deploy from branch `main`, folder `/docs`**.
+- Repo `WowItWorked/Readiness-Signal`, GitHub Pages **deploy from branch `main`, folder `/docs`**.
 - Served as a project sub-site of the user site (CNAME `emergingtechrisk.com`):
-  `https://emergingtechrisk.com/readiness-signal/`. **All URLs in the site are relative**
+  `https://emergingtechrisk.com/Readiness-Signal/`. **All URLs in the site are relative**
   (`data/archive.json`, `assets/app.js`) so it works under any base path. No CNAME file in
   this repo. `docs/.nojekyll` present.
 - No build step. Plain ES modules, no framework, no runtime CDN scripts. Google Fonts only
@@ -293,7 +293,7 @@ stay as above; the visual layer changes:
 ## 8. Tests and tooling
 
 - `npm test` → `node --test` over `tests/**/*.test.mjs` (model logic, pipeline libs/scripts with fixtures).
-- `npm run serve` → `node scripts/serve.mjs` serves `/docs` at `http://localhost:8148/readiness-signal/`
+- `npm run serve` → `node scripts/serve.mjs` serves `/docs` at `http://localhost:8148/Readiness-Signal/`
   (sub-path emulation). `--fixtures` substitutes `tests/fixtures/archive.json` and `runs.json` for
   `data/*.json` **in the server only** — no fixture-loading code exists in the site.
 - `npm run validate` → `node pipeline/scripts/validate.mjs`.
