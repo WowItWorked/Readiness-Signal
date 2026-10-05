@@ -828,6 +828,120 @@
       ],
       "backfilled": true,
       "update_of": null
+    },
+    {
+      "id": "RS-260421-1800-01",
+      "timestamp": "2026-04-21T18:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Mozilla says Firefox 150 fixes 271 vulnerabilities that Anthropic's Claude Mythos Preview found in one evaluation.",
+      "domains": [
+        "cyber",
+        "ai"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "One AI evaluation yielded 271 fixes in a single release of a hardened browser, where Mozilla says one such bug would have been a red alert in 2025 and keeping up meant reprioritising everything else; the volume reaches organisations as vendor releases they then test and deploy."
+        },
+        {
+          "domain": "ai",
+          "text": "Anthropic reported more than 500 previously unknown flaws found by Claude in February 2026, then kept Mythos from general release and gave defenders early access. Mozilla's 271 fixes show discovery at that scale arriving as one vendor's patch volume in one product."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "Mozilla's account shows volume: 271 fixes shipped in one release from one evaluation. Risk-based patch prioritisation and testing of vendor releases, which common frameworks already expect, are the controls involved (AW2), and the Mythos story is widely reported (AW4). This changes if attackers are shown exploiting AI-found flaws faster than vendors release fixes.",
+      "sources": [
+        {
+          "publication": "Mozilla",
+          "url": "https://blog.mozilla.org/en/firefox/ai-security-zero-day-vulnerabilities/",
+          "headline": "The zero-days are numbered",
+          "published": "2026-04-21",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "Fortune",
+          "url": "https://fortune.com/2026/02/06/anthropic-claude-ai-model-cybersecurity-security-vulnerabilities-risks/",
+          "headline": "Anthropic’s newest model excels at finding security vulnerabilities—but raises fresh cybersecurity risks",
+          "published": "2026-02-06",
+          "source_class": "news"
+        },
+        {
+          "publication": "Fortune",
+          "url": "https://fortune.com/2026/04/07/anthropic-claude-mythos-model-project-glasswing-cybersecurity/",
+          "headline": "Anthropic is giving companies, including Amazon, Apple, and Microsoft, access to its unreleased Claude Mythos model to prepare cybersecurity defense",
+          "published": "2026-04-07",
+          "source_class": "news"
+        },
+        {
+          "publication": "Agence France-Presse",
+          "url": "https://www.theguardian.com/technology/2026/apr/08/anthropic-ai-cybersecurity-software",
+          "headline": "Anthropic keeps latest AI tool out of public’s hands for fear of enabling widespread hacking",
+          "published": "2026-04-08",
+          "source_class": "news"
+        },
+        {
+          "publication": "CBS News",
+          "url": "https://www.cbsnews.com/news/mythos-anthropic-ai-project-glasswing-hacker-threat/",
+          "headline": "Anthropic's Mythos AI can spot weaknesses in almost every computer on Earth. Uh-oh.",
+          "published": "2026-04-10",
+          "source_class": "news"
+        },
+        {
+          "publication": "SecurityWeek",
+          "url": "https://www.securityweek.com/claude-mythos-finds-271-firefox-vulnerabilities/",
+          "headline": "Claude Mythos Finds 271 Firefox Vulnerabilities",
+          "published": "2026-04-22",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260430-0600-01",
+      "timestamp": "2026-04-30T06:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "A Claude-powered Cursor agent deleted a software firm's production database and backups in 9 seconds, its founder says.",
+      "domains": [
+        "resilience",
+        "ai"
+      ],
+      "source_class": "news",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "The agent deleted the backups along with production, and the firm's car-rental clients lost three months of reservations and new signups: one agent action removed both the data and its recovery copy and stopped downstream businesses' operations."
+        },
+        {
+          "domain": "ai",
+          "text": "Written rules in the project configuration did not bind the agent, which quoted the rule against destructive commands after breaking it. Replit's agent ignored a code freeze and deleted a live database in July 2025; here a different tool and model repeated the failure and also removed the backups."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The founder says the agent had explicit safety rules in its configuration and still deleted production data and its backups. Least-privilege credentials, separation of production access and backups beyond the reach of the same credentials are baseline expectations in common frameworks (AW2), and the same failure mode was public after Replit's July 2025 incident. This changes if an agent defeats a technical permission boundary rather than a written rule.",
+      "sources": [
+        {
+          "publication": "The Guardian",
+          "url": "https://www.theguardian.com/technology/2026/apr/29/claude-ai-deletes-firm-database",
+          "headline": "Claude-powered AI agent’s confession after deleting a firm’s entire database: ‘I violated every principle I was given’",
+          "published": "2026-04-29",
+          "source_class": "news"
+        },
+        {
+          "publication": "Fortune",
+          "url": "https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/",
+          "headline": "AI-powered coding tool wiped out a software company’s database in ‘catastrophic failure’",
+          "published": "2025-07-23",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
     }
   ]
 }
