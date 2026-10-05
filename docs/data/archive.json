@@ -942,6 +942,49 @@
       ],
       "backfilled": true,
       "update_of": null
+    },
+    {
+      "id": "RS-260513-1000-01",
+      "timestamp": "2026-05-13T10:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Microsoft says AI is speeding vulnerability discovery as it nears a record, patching over 500 flaws in 5 months.",
+      "domains": [
+        "cyber",
+        "ai"
+      ],
+      "source_class": "news",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Microsoft patched more than 500 vulnerabilities in the first five months of 2026, 173 in April and over 137 in May, and expects releases to keep growing, so the share of fixes deployed within deadline depends on deployment capacity keeping pace with release size."
+        },
+        {
+          "domain": "ai",
+          "text": "Mozilla reported 271 AI-found fixes in one Firefox release in April; Microsoft's security response team now says AI is changing the scale and speed of discovery and expects larger releases, bringing the major vendors confirming the effect in their own releases to two."
+        }
+      ],
+      "validation_question": "Is the monthly count of vendor security fixes not yet deployed on the organisation's systems within their remediation deadline measured, against a threshold, and reported to the owner of vulnerability management?",
+      "candidate_issue_statement": "Where the count of vendor security fixes left undeployed past their remediation deadline is not measured or does not reach someone who acts on it, a sustained rise in release size could leave exploitable flaws open on internet-facing systems while the backlog grows unseen.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "The Record",
+          "url": "https://therecord.media/microsoft-on-pace-to-break-annual-vulnerability-record-ai",
+          "headline": "Microsoft on pace to break annual vulnerability record as AI-driven patch wave takes hold",
+          "published": "2026-05-13",
+          "source_class": "news"
+        },
+        {
+          "publication": "Mozilla",
+          "url": "https://blog.mozilla.org/en/firefox/ai-security-zero-day-vulnerabilities/",
+          "headline": "The zero-days are numbered",
+          "published": "2026-04-21",
+          "source_class": "vendor_threat_research"
+        }
+      ],
+      "backfilled": true,
+      "update_of": "RS-260421-1800-01"
     }
   ]
 }
