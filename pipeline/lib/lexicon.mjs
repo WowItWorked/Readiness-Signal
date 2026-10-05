@@ -118,7 +118,17 @@
 // source, the 2026-09-30 to 10-02 dry runs) the change added that one survivor and nothing else; a
 // supervisor's speech titled "Digital innovation: ..." with no technology term in its lead stays
 // dropped.
-export const LEXICON_VERSION = '2026-10-04.1';
+// 2026-10-05.1: AI systems acting without authorisation, and vendor shutdown instructions. The first
+// live run (2026-10-05-0600) lost an AI developer's agents reaching 100+ organisations' systems (8
+// entries, scores 3-9, no survivor) and a file-transfer vendor telling customers to power its
+// platform down (9.5 < 10). Added: cyber strong 'unauthori* access' and access-without-authorisation
+// phrasing; cyber medium break-in verbs; ai strong 'misaligned model*', 'rogue ai', 'rogue agent*',
+// 'agentic hack*'; resilience strong a vendor telling customers to power, shut or take a product
+// down; 'orgs' in the scale count; break-in, accessed and probing verbs in the capability group;
+// 'without authori*', 'misaligned' and 'rogue' in the control_failure group. On 2,079 stored
+// candidates (the 0600 run and every backfill window) survivors 863 -> 872, none removed; every
+// addition is on the agent-intrusion story, the vendor shutdown, or a rogue-provider MFA flaw.
+export const LEXICON_VERSION = '2026-10-05.1';
 
 export const WEIGHTS = Object.freeze({ strong: 3, medium: 2, weak: 1 });
 export const LEAD_FACTOR = 0.5;
@@ -175,6 +185,8 @@ export const DOMAIN_TERMS = {
       'privilege escalation', 'session hijack*', 'mfa bypass', 'credential stuffing', 'credential theft',
       'token theft', 'stolen credentials', 'initial access broker*', 'spyware', 'rootkit*', 'bootkit*',
       'arbitrary code execution', 'code execution',
+      // access without authorisation, whoever the actor (a person, malware or an AI system)
+      'unauthori* access', 're:\\b(?:accessed|access(?:ing)?|entered|reached)\\b[^.;:]{0,60}\\bwithout (?:authori[sz]ation|permission)\\b',
       // a hack or theft stated with its amount ("$388 million hack", "hackers stole $25m"): strong
       // in a headline, so the strict profile of general and business press admits it (FILTER E2c)
       're:(?:[$£€]|\\b(?:usd|eur|gbp|us\\$))\\s?\\d[\\d.,]*\\s?(?:million|billion|bn|m|b)\\s+(?:crypto\\s+|cryptocurrency\\s+|exchange\\s+)?(?:hack|heist|theft)\\b',
@@ -188,6 +200,7 @@ export const DOMAIN_TERMS = {
       'identity provider*', 'single sign-on', 'cs:SSO', 'oauth', 'service principal*', 'privileged access',
       'active directory', 'credentials', 'cs:MFA', 'multi-factor', 'insider threat*', 'post-quantum',
       'quantum computing', 'cryptographic*', 'certificate authorit*', 'dns hijack*', 'unpatched',
+      'break in', 'breaks in', 'broke into', 'break into', 'breaking into', 'break-in*',
       'path traversal', 'sql injection', 'code injection', 'deserialization', 'cyber',
       // vocabulary of supervisory instruments and exam material (FFIEC "Information Security"
       // booklet, DORA "ICT risk management framework", NIST token-protection guidelines)
@@ -222,11 +235,12 @@ export const DOMAIN_TERMS = {
       'frontier model*', 'foundation model*', 'ai act', 'ai safety', 'ai model*', 'autonomous agent*',
       'cs:MCP', 'model context protocol', 'chatbot*', 'ai system*', 'ai risk*', 'ai governance',
       'computer-use agent*', 'coding agent*', 'artificial intelligence', 'machine learning',
+      'misaligned model*', 'misaligned ai', 'rogue ai', 'rogue agent*', 'rogue model*', 'agentic hack*', 'ai agent hack*',
     ],
     medium: [
       'cs:AI', 'chatgpt', 'openai', 'anthropic', 'cs:Claude', 'cs:Gemini', 'copilot', 're:\\bGPT(?:-\\d[\\w.]*)?\\b',
       'hallucinat*', 'automated decision*', 'model risk', 'adversarial', 'shadow ai', 'custom gpts',
-      'neural network*', 'training data',
+      'neural network*', 'training data', 'misalign*',
     ],
     // generic supervisory wording for AI and other new technology ("new supervisory priority on
     // digital innovation ... oversee the use of new technologies"); weak, so never enough alone
@@ -257,6 +271,7 @@ export const DOMAIN_TERMS = {
       'jamming', 'multi-region', 'multiple regions', 'cross-region', 'several regions', 'connectivity issue*',
       'connectivity loss', 'loss of connectivity', 'network connectivity', 'service degradation',
       'degraded performance', 'post-incident review*', 'post-incident report*', 'root cause analysis',
+      're:\\b(?:told|tells|tell|urg(?:es|ed)|advis(?:es|ed)|instruct(?:s|ed)|ask(?:s|ed)|warn(?:s|ed))\\b[^.;:]{0,20}\\bcustomers\\b[^.;:]{0,15}\\bto\\s+(?:power|shut|take|turn)(?:\\s+\\w+){0,4}?\\s+(?:down|off|offline)\\b',
     ],
     medium: [
       'disruption*', 'disrupted', 'resilien*', 'continuity', 'recovery', 'restore*', 'backup*', 'failover',
@@ -264,7 +279,7 @@ export const DOMAIN_TERMS = {
       'power grid', 'telecom*', 'data cent*', 'availability', 'crash*', 'offline', 'halted', 'destructive',
       'shutdown', 'shut down', 'connectivity', 'degraded', 'degradation', 'post-incident', 'root cause',
       'status page', 'expressroute', 'availability zone*', 'intermittent', 'increased latency',
-      'request failures', 'interrupted',
+      'request failures', 'interrupted', 'power down', 'powered down', 'powering down', 'power off', 'take offline', 'taken offline',
       // incident-reporting duties in supervisory instruments (DORA major ICT-related incidents,
       // US computer-security incident notification)
       'ict-related incident*', 'ict incident*', 'incident reporting', 'incident notification*',
@@ -324,7 +339,7 @@ export const MATERIALITY_GROUPS = {
     3: ['re:\\b\\d[\\d.,]*\\+?\\s?(?:million|billion|m|bn)\\s+(?:people|customers|users|records|accounts|individuals|patients|members|clients|citizens|consumers|cardholders|victims)\\b',
       'global outage', 'worldwide outage'],
     2: ['re:(?:[$£€]|\\b(?:usd|eur|gbp|us\\$))\\s?\\d[\\d.,]*\\s?(?:million|billion|bn|m|b)\\b', 'millions of', 'billions',
-      'widespread', 're:\\b\\d{2,}[\\d,]*\\+?\\s+(?:organi[sz]ations|companies|firms|banks|victims|customers|entities|institutions|packages|repositories|servers|devices|instances|hosts|websites|sites|endpoints|apps|accounts|tenants)\\b',
+      'widespread', 're:\\b\\d{2,}[\\d,]*\\+?\\s+(?:organi[sz]ations|orgs|companies|firms|banks|victims|customers|entities|institutions|packages|repositories|servers|devices|instances|hosts|websites|sites|endpoints|apps|accounts|tenants)\\b',
       'thousands of'],
     1: ['hundreds of', 'mass', 'worldwide', 'globally', 'sector-wide', 'industry-wide'],
   },
@@ -356,7 +371,7 @@ export const MATERIALITY_GROUPS = {
   },
   // Adversary capability shift: AI used offensively.
   capability: {
-    2: ['re:\\b(?:AI|LLMs?|agentic|autonomous|AI agents?)\\b[^.;:]{0,60}\\b(?:hack(?:ed|ing|s)?|attack(?:ed|s|ing)?|exploit(?:ed|s|ing)?|breach(?:ed|es)?|phish(?:ed|ing)?|intrusions?|sql injection|ransomware|malware)\\b',
+    2: ['re:\\b(?:AI|LLMs?|agentic|autonomous|AI agents?)\\b[^.;:]{0,60}\\b(?:hack(?:ed|ing|s)?|attack(?:ed|s|ing)?|exploit(?:ed|s|ing)?|breach(?:ed|es)?|phish(?:ed|ing)?|intrusions?|sql injection|ransomware|malware|break(?:s|ing)? in(?:to)?|broke into|accessed|probed|probing)\\b',
       're:\\b(?:hack(?:ers?|ing)?|attackers?|threat actors?|criminals?|scammers?|fraudsters?)\\b[^.;:]{0,60}\\b(?:use|uses|used|using|abuse|abuses|abused|deploy|deploys|weaponi[sz]e\\w*|turn|turns)\\b[^.;:]{0,30}\\b(?:AI|LLMs?|ChatGPT|GPTs?|Gemini|Claude|deepfakes?|agents?)\\b'],
   },
   // A control failed in a way others rely on.
@@ -364,7 +379,7 @@ export const MATERIALITY_GROUPS = {
     2: ['re:\\bbypass(?:es|ed|ing)?\\b[^.;:]{0,40}\\b(?:controls?|guardrails?|safeguards?|restrictions?|mfa|multi-factor|authentication|detection|sandbox|edr|waf|filters?)\\b',
       'went undetected', 'undetected for', 'failed to detect', 'evade* detection', 'despite existing defen*',
       'despite mfa', 'unauthori* actions', 'unauthori* transactions', 'control failure*', 'controls failed',
-      'guardrail-free', 'without consent'],
+      'guardrail-free', 'without consent', 'without authori*', 'unauthori* access', 'misaligned', 'rogue'],
   },
   soft_signal: {
     2: ['speech', 'remarks', 'testimony', 'testif*', 'hearing', 'consultation*', 'discussion paper',

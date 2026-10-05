@@ -1,7 +1,7 @@
 # FILTER.md: Readiness Signal selection standard
 
 **Status:** binding. Every scheduled live run (06:00, 10:00, 14:00 and 18:00 ET) applies it to every stage-1 survivor.
-**Version:** 1 (launch; revised before the first run, including the owner decision of 2026-10-03 that admits newly issued formal rules and exam notices, §4.4.5 and §11, and the clarifications from its calibration of 2026-10-04: §3.3, §4.4.2, §10 #93–#96). **Threshold level:** read from `pipeline/thresholds.json` (`level`) at the start of every run.
+**Version:** 1 (launch; revised before the first run, including the owner decision of 2026-10-03 that admits newly issued formal rules and exam notices, §4.4.5 and §11, and the clarifications from its calibration of 2026-10-04: §3.3, §4.4.2, §10 #93–#96; and the owner decision of 2026-10-05 on material developments in stories never published: §5.8, §4.3 C5 "Updates", §10 #97–#99, §11.2). **Threshold level:** read from `pipeline/thresholds.json` (`level`) at the start of every run.
 **Owner:** changed only by the owner, by commit. The routine agent never edits this file, `pipeline/thresholds.json`, `pipeline/RUNBOOK.md`, the lexicon or the source registry during a run.
 **Scope:** live collection only. This is **not** the backfill standard and is never applied to a historical pass (`pipeline/BACKFILL.md`).
 **Other files:** `SPEC.md` governs schemas, paths and process; `pipeline/RUNBOOK.md` governs run steps; this file governs judgment. If this file and `SPEC.md` appear to conflict, apply the stricter reading and add `FILTER-SPEC conflict: <phrase>` to the run notes. The launch choices in §11 that are stricter than SPEC (for example V4) are deliberate, not conflicts, and are never noted.
@@ -22,7 +22,7 @@ Conventions:
 
 1. **Cluster.** Group this run's survivors that report the same story. Judge each cluster once, on the union of its evidence, and pick the lead (§5.2).
 2. **G1 domain.** Nothing within the seven domains → `GL_OFF_DOMAIN` (§3.3, §3.4).
-3. **Published story?** It resurfaces an archive item with no M1–M6 fact → `DD_SAME_STORY`, `section_tested: null`, and every cluster member gets its own `DD_SAME_STORY` judgment (§5.2(5a), §5.3). A *different* event that repeats a published shift is not a duplicate: test it (§5.1).
+3. **Published story?** It resurfaces an archive item with no M1–M6 fact → `DD_SAME_STORY`, `section_tested: null`, and every cluster member gets its own `DD_SAME_STORY` judgment (§5.2(5a), §5.3). A *different* event that repeats a published shift is not a duplicate: test it (§5.1). A story never published that resurfaces with a new M1–M5 fact is tested under §5.8.
 4. **Gates G2–G11** in order. The first failure gives the code; `section_tested: null` (§3.4). G5 applies only while `formal_instrument_scope` is `none`.
 5. **Route** (§4.1). RT form → test RT only. RT form includes a formal rule or exam notice, and a notice that only reminds of, restates, corrects, extends or re-publishes one (§4.4.2). Otherwise test EV, then CS; if both fail, record the primary route and the other section's first failed element as `[alt …]`.
 6. **Test every element** of the section: EV E1–E5 (§4.2); CS C1–C6, vulnerability rule first (§4.3); RT R1–R5 and X1–X6 (§4.4), or for a formal instrument R1, R1f, R2, R3f, R4f and R5 (§4.4.5). A formal instrument is tested for newness, not direction: a reminder, restatement, correction, extension or re-publication fails R3f (`RT_INSTRUMENT_NOT_NEW`), never R3. Unknown is not met (D1); borderline is drop (D5). The first failed element in ID order gives the code (§8.2). `NEAR`, and a knob on `NEAR` or `[alt …]`, only under §8.4. Two frequent cases: an actor adopting established techniques fails C1, never `NEAR C5`; and C5 Branch A's window runs from the first admissible establishment of the change (an earlier study of the same metric counts), while a later report inside that window still meets C5 (§4.3, D2).
@@ -435,6 +435,7 @@ Two branches:
   - **Branch B:** the failure occurred or was first disclosed within `max_event_age_days`, and it is the first public evidence that this control, as commonly implemented, fails this way. Repeat failures of a control already known to fail this way fail C5.
 
   A different event that re-demonstrates a capability shift or control failure already in the archive fails C5 (`CS_NOT_NEW`); cite the archive id in the reason (§5.1).
+  - **Updates.** For a material-update item (§5.5) and a material development in a story never published (§5.8), C5 is met when the M-type fact was first public within `max_event_age_days` and is not already in the archive. The age of the original capability or failure does not decide C5 for an update; C1–C4 and C6 still apply to the development as reported.
 - **C6. Not routine** (vulnerabilities only; otherwise write `C6 n/a`). Active exploitation or a known-exploited listing alone is routine. At least one exception in `cs_routine_vuln_exceptions` must hold. Launch set:
   - `persistence`: a named party with artefacts shows the attacker's implant or access surviving the vendor's full prescribed remediation for a compromised device (patch or upgrade **and** the vendor's clean-up, reset or reimage steps). Generic advice that patching does not evict an attacker already present is standard post-compromise guidance and does not meet this exception;
   - `security_control_negated`: the flaw negates the security function of an identity or authentication control (identity provider, MFA, privileged access management, HSM or KMS, certificate authority) across tenants or deployments;
@@ -663,7 +664,7 @@ A resurfacing story becomes a candidate for a **new** item only if it contains a
 
 ### 5.5 Rules for update items
 
-1. The update must **itself clear the full test of its own section**. Its section may differ from the original's: an EV outage followed by an M1 root cause usually goes to CS. If it fails, drop it with the section's code, `dedup: "material_update"` and `match_id` = the earlier item's id.
+1. The update must **itself clear the full test of its own section**. Its section may differ from the original's: an EV outage followed by an M1 root cause usually goes to CS. If it fails, drop it with the section's code, `dedup: "material_update"` and `match_id` = the earlier item's id. In CS, C5 is read as §4.3 C5 "Updates" states. A story with no archive item follows §5.8.
 2. `update_of` is the id of the **most recent** published item in the story's chain.
 3. The claim states the new fact, not the old story.
 4. The reason begins `[M#] ` (§8.4).
@@ -677,6 +678,25 @@ The dedup hints cover only the last `dedup_window_days`. Before finalising **eve
 ### 5.7 One story, one item
 
 A story produces at most one item, in one section, with one mechanism. A later candidate offering a different angle on a published story (the fraud implications of a published breach; the third-party angle of a published outage) is `DD_SAME_STORY` unless it carries an M-type fact.
+
+### 5.8 Material developments in stories never published (owner decision 2026-10-05)
+
+A story with no archive item can still surface through a later material development, so an impactful story never becomes unreachable because its first appearance did not clear the bar.
+
+1. **When it applies.** All of these hold:
+   - (i) the candidate reports a story whose earlier public record predates this run, and no archive item covers that story (§5.6 search);
+   - (ii) the candidate carries a fact of one of the types M1–M5 (§5.4), measured against the story's earlier public record instead of a published item (M6 needs a published item and never applies here);
+   - (iii) that fact was first made public no more than `max_event_age_days` before the run's slot;
+   - (iv) the story's earlier public record began no more than 180 days before the run's slot;
+   - (v) the story is **impactful**: its cumulative public record, counted across every development and including this run's outlets, meets E3 (§4.2) at the current knob values, counted from opened pages and listed as sources for a pass (§2.7.5(c), (d)). The E3 recency limit (§2.7.5(e)) applies to the outlets that report the M-type fact; earlier outlets count towards the story's prominence and are listed as background sources.
+2. **Never material**, as in §5.4: new outlets, commentary, analysis, an authority opening an inquiry, subpoenas and information demands, hearings scheduled, lawsuits filed, apologies, count revisions below `m2_min_scope_factor`, and new indicators without a new capability.
+3. **How it is tested.** The candidate is tested from G2 like any story, with these readings:
+   - **G7 and C5** date the M-type fact, not the original event (§4.3 C5 "Updates"). The reason cites the original's first public date: `C5 new M2 fact (original public <date>; archive: none)`.
+   - **EV** judges the story's cumulative confirmed state on the date of the M-type fact (for example, scope grown to a floor not met before).
+   - Every other element applies unchanged. Fixed exclusions stand: E2f never counts research or evaluation runs (§4.2), and C1's established-technique rule still applies to a new actor.
+4. **Recording.** `dedup: "new"`, `match_id: null`, `update_of: null` (there is no item to point to). The reason opens with the basis, then the elements, for example `M2 unpublished original (public 20 Jul): one platform to 100+ organisations; C1 …`. The `[M#]` prefix stays reserved for archive matches (§8.3(5)). If (i)–(v) do not all hold, the candidate is judged as any other story.
+5. **Writing.** The claim states the new fact, never the old story (§7.2 rule 7). An interpretation entry may summarise the earlier record in one clause, from sources listed on the item. Pages of the earlier record may be registered with `--extra` and listed as background sources (§2.7.5(e)).
+6. **One item per story** still holds (§5.7). Once an item publishes under this rule, it is the story's anchor, and later developments follow §5.3–§5.5.
 
 ---
 
@@ -1315,6 +1335,9 @@ All candidates are fictional composites. Bracketed roles stand in for names. Non
 | 94 | A UK authority issues final guidance on the overall risk assessment of cryptoasset firms; among illustrative stress scenarios it lists a cyber attack and the theft of private keys, with no expectation specific to them | DROP | — | — | `GL_OFF_DOMAIN` | G1: a prudential risk-assessment instrument is in domain only where it sets a technology-risk obligation of its own, and illustrative scenarios do not (§3.3); the formal path is never reached, so never `NEAR R4f`. Contrast #90: outside the prudential class a named technology risk passes G1 and R4f decides. |
 | 95 | An EU supervisory authority issues final guidelines on third-party arrangements for non-ICT services supporting critical functions, such as cash logistics and legal services; ICT services are left to another regulation | DROP | — | — | `GL_OFF_DOMAIN` | G1: non-ICT third-party arrangements are not technology risk (§3.3). Had the guidelines set a specific obligation on data the provider handles, G1 would hold and R4f would judge that content alone. |
 | 96 | An EU supervisory authority sets a new strategic supervisory priority for national supervisors from the next cycle, naming AI and tokenisation as focus areas, with no stated expectation or examination content | DROP | regulatory_trajectory | — | `RT_NOT_SPECIFIC` | Published priorities are an exam notice (§4.4.2), never tested for direction under R3. R1, R1f, R2, R3f (first published; archive: none) and R5 hold; R4f fails: focus areas only. `NEAR R4f`. As #7. |
+| 97 | Ten weeks after an AI developer's evaluation agents breached one AI platform (never an item; a wire and two national papers covered it then), the developer confirms its agents also reached more than 100 unrelated organisations, government sites among them, and hid their activity; a national paper and a wire report the confirmation | PASS if C1–C4 hold on the facts | capability_shift | §6.2 decides | `CS_PASS_ADVERSARY_CAPABILITY` | §5.8: no archive item; M2 (one platform to many organisations of a new class) and M5 (concealment confirmed), both first public in the window; record began within 180 days; E3 met cumulatively. C5 dates the M facts (§4.3 C5 "Updates"). EV fails E2: no financial institution affected, and E2f never counts evaluation runs. If C1 finds nothing adversaries could not already do, drop `CS_NO_SPECIFIC_CHANGE`. |
+| 98 | A state attorney general demands records from the developer in #97 | DROP | — | — | `GL_NO_DEVELOPMENT` (`DD_SAME_STORY` once #97 is an item) | §5.8(2): an information demand or subpoena is never material. |
+| 99 | Eight months after a widely covered intrusion at a SaaS provider that was never an item, the provider confirms that its attackers also took signing keys | Judged as any story | as §4.1 routes it | — | the section's code | §5.8(1)(iv): the record began more than 180 days before the slot, so §5.8 does not apply; the new disclosure is tested on its own facts, and a Branch A change dates from the original's establishment (C5). |
 
 ### 10.2 Model items (fictional; URLs are placeholders)
 
@@ -1501,6 +1524,7 @@ These turn the brief's own words into checkable elements. They change only throu
 | G10 and V1–V11 (except V4's claim scope) | the hard constraints |
 | CI1–CI5 (including the CI5 reminder test), K4, P3, AO1–AO3, and `GL_NO_MECHANISM` | "reserve candidate_issue for items where a specific control weakness can actually be articulated"; awareness_only "is not a fallback" |
 | §5: whole-archive same-story check, M1–M6 (apart from M2's factor), one story one item | the owner's dedup decision and "one story … does not produce multiple entries" |
+| **Owner decision (2026-10-05).** §5.8: a material development (M1–M5, first public within `max_event_age_days`) in a story never published, whose record began within 180 days and meets E3 cumulatively, is tested with C5 and G7 dating the new fact; §4.3 C5 "Updates" | the owner's instruction that material updates to impactful stories are surfaced as updates even when the original is older than the novelty window |
 
 ---
 
