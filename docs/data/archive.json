@@ -1607,6 +1607,49 @@
       ],
       "backfilled": true,
       "update_of": "RS-260919-0600-01"
+    },
+    {
+      "id": "RS-261002-1800-01",
+      "timestamp": "2026-10-02T18:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Korea's Financial Security Institute says a Chinese AI penetration-testing tool was used in data breaches at major banks.",
+      "domains": [
+        "cyber",
+        "ai"
+      ],
+      "source_class": "news",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Investigators traced attack addresses and server logs from the first reported breach and found the tool; sharing those addresses across the sector surfaced more victims, two savings banks are also under investigation, and the regulator plans to recommend an audit of employee-facing systems."
+        },
+        {
+          "domain": "ai",
+          "text": "The institute says a hacker used the open-source autonomous testing tool and that the AI did not act without human involvement; after Mexico, Hugging Face and the Spanish notification, this is the chain's fourth case and the first an authority confirms at banks."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The institute says a hacker drove an open-source AI testing tool against bank systems, with no autonomous action, and the regulator's response, an audit of employee-facing systems, points to exposure and access controls that common frameworks already expect (AW2). The case is the first in this chain at banks and is drawing national coverage (AW4). This changes if the investigation names a control the tool defeated.",
+      "sources": [
+        {
+          "publication": "The Herald Business",
+          "url": "https://biz.heraldcorp.com/article/10892497",
+          "headline": "Exclusive: Chinese AI tool ARTEX used in wave of bank hacks, probe finds",
+          "published": "2026-10-03",
+          "source_class": "news"
+        },
+        {
+          "publication": "Agencia Española de Protección de Datos",
+          "url": "https://www.aepd.es/prensa-y-comunicacion/blog/primera-notiviacion-brecha-datos-personales-causada-por-ataque-ejecutado-mediante-agente-ia",
+          "headline": "Primera notificación de una brecha de datos personales causada por un ataque ejecutado mediante un agente de IA",
+          "published": "2026-09-14",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": "RS-260914-1800-01"
     }
   ]
 }
