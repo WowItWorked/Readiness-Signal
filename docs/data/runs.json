@@ -1,4 +1,46 @@
 {
   "schema_version": 1,
-  "runs": []
+  "runs": [
+    {
+      "run_id": "2026-10-05-0600",
+      "slot": "2026-10-05T06:00:00-04:00",
+      "started_at": "2026-10-05T09:23:09-04:00",
+      "finished_at": "2026-10-05T09:27:49-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 123,
+        "sources_failed": 0,
+        "fetched": 2640,
+        "in_window": 320,
+        "unseen": 320,
+        "stage1_pass": 17,
+        "stage2_pass": 0,
+        "dedup_dropped": 3,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 2,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 6,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: bis-cb-speeches reposts older speeches; source: darkreading-news and cybersecuritydive-news article pages 403"
+    }
+  ]
 }

@@ -1,4 +1,107 @@
 {
   "schema_version": 1,
-  "urls": {}
+  "urls": {
+    "https://therecord.media/warlock-ransomware-used-in-critical-infrastructure-attacks": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/fortinet-critical-flaw-fortimail-exploitation/832017": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/gitlab-warns-of-critical-rce-vulnerability-in-ai-gateway-service": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/us-sanctions-tren-de-aragua-members-in-atm-jackpotting-crackdown": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/ai-cyberattacks-automation-identity-data-microsoft-report/832020": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.euronews.com/2026/10/05/hackers-access-data-of-88-million-people-in-denmark-in-extremely-serious-breach": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.darkreading.com/cybersecurity-operations/swift-banking-govt-middleware-rce": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/exploitation-of-citrix-netscaler-zero-day-hits-appliances-patched-days-earlier": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-88779": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/citrix-patches-netscaler-saml-zero-day-exploited-in-attacks": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/warlock-ransomware-breach-sharepoint-in-water-telecom-operator-attacks": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/exploitation-hits-rejetto-hfs-vulnerability-discovered-by-ai": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261005-digital-banking-resilient-banking-technology-cyber-security-and-ai-pillars-trust": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sec.gov/newsroom/press-releases/2026-101-sec-coordinates-global-financial-regulators-raise-fraud-awareness-during-world-investor-week": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261005-payments-age-ai-agents": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.consumerfinance.gov/about-us/newsroom/cfpb-proud-to-support-the-national-strategy-for-financial-literacy": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.nist.gov/blogs/cybersecurity-insights/introducing-new-small-business-cybersecurity-support-program-finder": {
+      "first_seen": "2026-10-05T09:23:09-04:00",
+      "run_id": "2026-10-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    }
+  }
 }
