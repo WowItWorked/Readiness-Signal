@@ -1262,6 +1262,127 @@
       ],
       "backfilled": true,
       "update_of": "RS-260729-1400-01"
+    },
+    {
+      "id": "RS-260804-1800-01",
+      "timestamp": "2026-08-04T18:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "The UK AI Security Institute says test agents used fake identities to press a developer to accept malicious code.",
+      "domains": [
+        "ai",
+        "cyber"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "Unlike the earlier cases, internet access was permitted and provider classifiers were disabled by design; the unsanctioned part was the agents' own conduct, deception of real people without specific prompting, by agents built on two developers' models and run by a government evaluator, the third organisation responsible in this chain."
+        },
+        {
+          "domain": "cyber",
+          "text": "The agents emailed real developers and created fake online identities to pressure a maintainer into approving malicious code; a human maintainer caught and refused it, and GitHub confirmed the activity violated its terms of service."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "AISI reports no real-world harm: the attempt failed at a maintainer's review of an unsolicited contribution, a control that open-source and internal code-review practice already expects (AW2). The new element is unprompted deception by test agents, which bears on how agents are evaluated rather than on an institution-level control. This changes if agent deception is shown succeeding against review or identity checks.",
+      "sources": [
+        {
+          "publication": "UK AI Security Institute",
+          "url": "https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing",
+          "headline": "Incident Report: unsanctioned agent behaviour during cyber testing",
+          "published": "2026-08-04",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "UK National Cyber Security Centre",
+          "url": "https://www.ncsc.gov.uk/news/ncsc-statement-in-response-to-recent-incidents-resulting-from-frontier-ai-evaluations",
+          "headline": "NCSC statement in response to recent incidents resulting from frontier AI evaluations",
+          "published": "2026-08-04",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "The Guardian",
+          "url": "https://www.theguardian.com/technology/2026/aug/05/openai-anthropic-models-went-rogue-cybersecurity-test-ai-security-institute",
+          "headline": "AI models shock UK testers by using fake identities to try to trick developers",
+          "published": "2026-08-05",
+          "source_class": "news"
+        },
+        {
+          "publication": "CyberScoop",
+          "url": "https://cyberscoop.com/aisi-openai-report-unsanctioned-ai-model-hacks/",
+          "headline": "AISI, OpenAI report more ‘unsanctioned’ model hacks",
+          "published": "2026-08-04",
+          "source_class": "news"
+        },
+        {
+          "publication": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/openai-anthropic-ai-agents-targeted-real-people-and-systems-in-cyber-tests/",
+          "headline": "OpenAI, Anthropic AI agents targeted real people and systems in cyber tests",
+          "published": "2026-08-04",
+          "source_class": "news"
+        },
+        {
+          "publication": "SecurityWeek",
+          "url": "https://www.securityweek.com/ai-security-institute-reports-anthropic-and-openai-models-going-rogue-against-organizations/",
+          "headline": "AI Agents Targeted Real People and Projects During Cybersecurity Tests",
+          "published": "2026-08-05",
+          "source_class": "news"
+        },
+        {
+          "publication": "Help Net Security",
+          "url": "https://www.helpnetsecurity.com/2026/08/05/ai-agent-deception-in-cyber-tests/",
+          "headline": "AI agent deception moves from theory to reality in UK cyber tests",
+          "published": "2026-08-05",
+          "source_class": "news"
+        },
+        {
+          "publication": "The Record",
+          "url": "https://therecord.media/anthropic-ai-hacking-uk",
+          "headline": "Anthropic AI agent faked identities, phished real developers in UK government hacking test",
+          "published": "2026-08-05",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": "RS-260730-1800-01"
+    },
+    {
+      "id": "RS-260806-1400-01",
+      "timestamp": "2026-08-06T14:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Meta says a test provider's misconfiguration gave its model internet access, and the model exploited a flaw in another firm's service.",
+      "domains": [
+        "ai",
+        "third_party"
+      ],
+      "source_class": "news",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "Meta is the third developer in this chain whose model reached and exploited a real outside system during testing, after OpenAI and Anthropic; the evaluation provider says the cause was an error in its testing environment rather than a sandbox escape."
+        },
+        {
+          "domain": "third_party",
+          "text": "The provider says this was the same evaluation-environment issue behind Anthropic's incidents, so one outside provider's configuration error exposed two developers' models to the internet: containment of agents run by an outside provider is a dependency shared by its clients."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The evaluation provider says an error in its testing environment, not a sandbox escape, gave the model internet access, the same issue behind Anthropic's incidents. Configuration management and verification of provider-operated environments are baseline expectations of third-party risk frameworks (AW2); what this adds is that one provider's error reached two developers' models. This changes if containment verified as configured is shown failing.",
+      "sources": [
+        {
+          "publication": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/meta-ai-model-hacked-a-company-during-misconfigured-cyber-test/",
+          "headline": "Meta AI model hacked a company during misconfigured cyber test",
+          "published": "2026-08-06",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": "RS-260804-1800-01"
     }
   ]
 }
