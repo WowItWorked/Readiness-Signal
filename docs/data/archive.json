@@ -1650,6 +1650,47 @@
       ],
       "backfilled": true,
       "update_of": "RS-260914-1800-01"
+    },
+    {
+      "id": "RS-261004-0600-01",
+      "timestamp": "2026-10-04T06:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Korean regulators say attacks believed to use AI reached 7 banks and finance firms, partly via lookups without identity checks.",
+      "domains": [
+        "cyber",
+        "data",
+        "ai"
+      ],
+      "source_class": "news",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Authorities found inquiry services built to return loan application records and corporate representative details without identity verification, and staff services exposed by absent mobile access controls or unpatched web flaws; they ordered sector-wide audits, with banks and card firms to finish their checks first."
+        },
+        {
+          "domain": "data",
+          "text": "No customer-facing services were disrupted and no losses were reported, but records retrievable without identity checks were open to an attacker cycling through addresses in eight countries, with the same addresses found at seven firms."
+        },
+        {
+          "domain": "ai",
+          "text": "Investigators believe one actor used AI tools to attack many institutions at once; the chain's confirmed financial-sector victims rose from the major banks reported two days earlier to seven banks and finance firms."
+        }
+      ],
+      "validation_question": "Do all services that return customer or application records, including those built for staff or intermediaries, require identity verification before returning any record?",
+      "candidate_issue_statement": "Where services that return customer or application records do not verify identity before responding, an automated attacker can retrieve records at scale through ordinary queries, exposing personal data without breaching any other control.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "The Herald Business",
+          "url": "https://biz.heraldcorp.com/article/10892955",
+          "headline": "Hacking wave hits financial sector, with same IP found across multiple firms",
+          "published": "2026-10-04",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": "RS-261002-1800-01"
     }
   ]
 }
