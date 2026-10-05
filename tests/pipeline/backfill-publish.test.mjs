@@ -327,14 +327,16 @@ test('a second publish for the month is refused; --append-missing adds only new 
 test('--rejudge judges a logged drop again after a FILTER.md revision; published items and plain runs are refused', () => {
   const s = scenario();
   const bgSrc = bc('https://news.example.com/2025/12/plugin-signing-default', onDate('2025-12-10'), { publication: 'Example Daily', source_class: 'news', outside_window: true, background: true, headline: 'Plug-in signing optional by default' });
-  const ws = bfWorkspace({ candidates: s.candidates, decisions: s.decisions, routes: { ...s.routes, ...routesFor([bgSrc]) } });
+  // an in-window background outlet dated before the development never sets the timestamp
+  const bgIn = bc('https://news.example.com/2026/01/plugin-signing-coverage', onDate('2026-01-03'), { publication: 'Example Daily', source_class: 'news', outside_window: false, background: true, headline: 'Plug-in signing coverage' });
+  const ws = bfWorkspace({ candidates: s.candidates, decisions: s.decisions, routes: { ...s.routes, ...routesFor([bgSrc, bgIn]) } });
   try {
     assert.equal(publish(ws).status, 0);
     const afterFirst = ws.bytes();
     const logFirst = fs.readFileSync(ws.logFile, 'utf8');
-    writeJson(path.join(ws.work, 'candidates.json'), { schema_version: 1, month: '2026-01', window: windowDoc(W), generated_at: NOW, candidates: [...s.candidates, bgSrc] });
+    writeJson(path.join(ws.work, 'candidates.json'), { schema_version: 1, month: '2026-01', window: windowDoc(W), generated_at: NOW, candidates: [...s.candidates, bgSrc, bgIn] });
     const dec = structuredClone(s.decisions);
-    dec.items.push(makeDraft([s.dropD, bgSrc], {
+    dec.items.push(makeDraft([s.dropD, bgSrc, bgIn], {
       claim: 'A vendor patch removed a default that let unsigned plug-ins load, researchers report.',
       domains: ['cyber'],
       interpretation: [{ domain: 'cyber', text: 'Plug-in signing was optional by default, so hosts relying on vendor defaults accepted unsigned code until the patch.' }],
@@ -366,12 +368,12 @@ test('--rejudge judges a logged drop again after a FILTER.md revision; published
     assert.ok(log.startsWith(logFirst), 'the audit log is appended to');
     const newRows = log.slice(logFirst.length).trim().split('\n').map((l) => JSON.parse(l));
     assert.deepEqual(newRows.map((x) => [x.candidate_id, x.verdict, x.rejudged, x.previous_reason_code, x.item_id]),
-      [[s.dropD.candidate_id, 'pass', true, 'CS_NO_SPECIFIC_CHANGE', 'RS-260108-1800-01'], [bgSrc.candidate_id, null, undefined, undefined, 'RS-260108-1800-01']]);
+      [[s.dropD.candidate_id, 'pass', true, 'CS_NO_SPECIFIC_CHANGE', 'RS-260108-1800-01'], [bgSrc.candidate_id, null, undefined, undefined, 'RS-260108-1800-01'], [bgIn.candidate_id, null, undefined, undefined, 'RS-260108-1800-01']]);
     assert.equal(newRows[1].reason, 'not judged; cited as a source');
     const added = readJson(ws.archive).items;
     assert.equal(added.length, 5);
     // a background source stays on the item but never sets its timestamp
-    assert.deepEqual(added[4].sources.map((x) => x.url), [s.dropD.url, bgSrc.url]);
+    assert.deepEqual(added[4].sources.map((x) => x.url), [s.dropD.url, bgSrc.url, bgIn.url]);
     assert.equal(added[4].timestamp, '2026-01-08T18:00:00-05:00');
     assert.equal(fs.readFileSync(ws.runs, 'utf8'), afterFirst.runs);
     assert.equal(fs.readFileSync(ws.seen, 'utf8'), afterFirst.seen);
@@ -859,6 +861,18 @@ test('add: validates the file, refuses it whole on any error, registers ids, ded
     assert.equal(bg.status, 0, bg.stderr);
     assert.equal(bg.json.added[0].outside_window, true);
     assert.equal(readJson(path.join(ws.work, 'candidates.json')).candidates.find((c) => c.url.includes('/2025/12/')).background, true);
+    // an in-window outlet registered with --allow-background is background but inside the window
+    writeJson(file, [{ ...good, url: 'https://news.example.com/2026/01/coverage', publication: 'Example News', source_class: 'news', published: '2026-01-10' }]);
+    const bgIn = runScript('backfill', ['add', ...ws.flags, '--now', NOW, '--file', file, '--allow-background']);
+    assert.equal(bgIn.status, 0, bgIn.stderr);
+    const inRec = readJson(path.join(ws.work, 'candidates.json')).candidates.find((c) => c.url.includes('/2026/01/coverage'));
+    assert.deepEqual([inRec.background, inRec.outside_window], [true, false]);
+    // re-adding an already-registered candidate with --allow-background re-flags it
+    writeJson(file, [good]);
+    const reflag = runScript('backfill', ['add', ...ws.flags, '--now', NOW, '--file', file, '--allow-background']);
+    assert.equal(reflag.status, 0, reflag.stderr);
+    assert.match(reflag.stderr, /marked background \(already registered\)/);
+    assert.equal(readJson(path.join(ws.work, 'candidates.json')).candidates.find((c) => c.url === good.url).background, true);
     // a CMS midnight stamp is the date written (LOW-11)
     writeJson(file, [{ ...good, url: 'https://research.example.com/2026/01/new-year', published: '2026-01-01T00:00:00Z' }]);
     const midnight = runScript('backfill', ['add', ...ws.flags, '--now', NOW, '--file', file]);

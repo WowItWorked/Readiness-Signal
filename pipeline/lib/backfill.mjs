@@ -307,7 +307,7 @@ export function itemTiming(item, candByNorm, w) {
       issues.push(`sources[${k}]: candidate ${c.candidate_id} has no usable publication date`);
       return;
     }
-    const inside = c.outside_window !== true && instantInWindow(pub.instant, w);
+    const inside = c.outside_window !== true && c.background !== true && instantInWindow(pub.instant, w);
     considered.push({ k, c, pub, inside });
   });
   const primary = considered.find((x) => x.k === 0);
@@ -558,9 +558,14 @@ export function mergeCandidates(existing, incoming) {
   for (const c of existing) byId.set(c.candidate_id, { ...c, also_in: Array.isArray(c.also_in) ? [...c.also_in] : [] });
   const added = [];
   const already = [];
+  const marked = [];
   for (const c of incoming) {
     const prev = byId.get(c.candidate_id);
     if (prev) {
+      if (c.background === true && prev.background !== true) {
+        prev.background = true;
+        marked.push(c.candidate_id);
+      }
       const tag = c.found_in ?? c.source_id ?? c.publication;
       if (tag && tag !== (prev.found_in ?? prev.source_id ?? prev.publication) && !prev.also_in.includes(tag)) prev.also_in.push(tag);
       already.push({ candidate_id: c.candidate_id, url: c.url, publication: prev.publication });
@@ -570,7 +575,7 @@ export function mergeCandidates(existing, incoming) {
     byId.set(c.candidate_id, rec);
     added.push(rec);
   }
-  return { candidates: [...byId.values()], added, already };
+  return { candidates: [...byId.values()], added, already, marked };
 }
 
 /** A fresh candidates.json for the pass. */
@@ -665,6 +670,9 @@ export function prepareAddEntries(entries, { sources = [], window: w, allowOutsi
       }
     }
     if (errors.length > before) return undefined;
+    // FILTER §5.8(1)(v), §5.9(1)(iv): with --allow-background every entry is an outlet on the story's
+    // record counted for prominence only, inside the window as well as before it
+    if (allowBackground) background = true;
 
     const reg = sourceForUrl(sources, e.url);
     const forced = Boolean(reg?.paywalled) || Boolean(paywalledOnSite(sources, e.url)) || isKnownPaywalled(e.url);
@@ -1795,6 +1803,7 @@ export function planPublish(ctx) {
     if (code === 'BF_SECTION_EXCLUDED' && st !== null && inPass(st)) v.error(a, `section_tested: BF_SECTION_EXCLUDED names a section outside the pass (or null), not ${st}`);
     if (code === 'BF_OUT_OF_WINDOW' && st !== null) v.error(a, 'section_tested: BF_OUT_OF_WINDOW requires null');
     const c = candById.get(j.candidate_id);
+    if (c?.background === true && j.verdict === 'pass') v.error(a, `verdict: ${j.candidate_id} was registered as background (--allow-background); it only counts towards prominence and is never judged pass`);
     if (c?.outside_window === true && j.verdict === 'pass') v.error(a, `verdict: ${j.candidate_id} was registered outside the window (outside_window); it can only corroborate an in-window source, or be dropped BF_OUT_OF_WINDOW`);
   });
   items.forEach((item, i) => {
@@ -2032,7 +2041,7 @@ export function planPublish(ctx) {
     }
   }
   const notJudgedSet = new Set(notJudged);
-  const unjudged = candidates.filter((c) => notJudgedSet.has(c.candidate_id) && !cited.has(c.candidate_id) && c.outside_window !== true && !priorRows.has(c.candidate_id));
+  const unjudged = candidates.filter((c) => notJudgedSet.has(c.candidate_id) && !cited.has(c.candidate_id) && c.outside_window !== true && c.background !== true && !priorRows.has(c.candidate_id));
   if (unjudged.length) {
     v.error('decisions.judgments', `${unjudged.length} registered in-window candidate(s) not judged: ${unjudged.slice(0, 10).map((c) => c.candidate_id).join(', ')}${unjudged.length > 10 ? ', ...' : ''}; every candidate is judged, and the default verdict is DROP with its reason code (BACKFILL.md §2)`);
   }

@@ -80,9 +80,10 @@ add --file F [--allow-outside] [--allow-background]
   as 18:00 ET, also against an until). --allow-outside admits dates after the window only, for
   later sources that confirm facts stated at the time
   (flagged outside_window: true; never the primary source, never judged pass). --allow-background
-  admits dates before the window, for outlets on a story's earlier record counted towards prominence
-  under FILTER §5.8 and §5.9 (flagged outside_window and background: true; never primary, never
-  judged, never setting the timestamp). Leads are cut
+  registers outlets on a story's record counted towards prominence under FILTER §5.8 and §5.9, dated
+  before the window or inside it: each is flagged background: true (and outside_window when before
+  the window), is never primary, never judged pass, needs no judgment and never sets the timestamp;
+  an already-registered candidate in the file is re-flagged background. Leads are cut
   to 30 words when paywalled (forced for paywalled publications), else to the registry's
   lead_words (default 60). An entry whose URL normalises to a registered candidate is not
   added again (its candidate_id is printed). stdout lists every candidate_id.
@@ -350,6 +351,7 @@ async function cmdAdd({ values, paths, now, w, wf }) {
     firstSeen.add(r.candidate_id);
   }
   for (const r of registered) log(`  ${r.candidate_id}  ${r.status.padEnd(19)}${r.outside_window ? ' (outside window)' : ''} ${r.url}`);
+  if (merged.marked?.length) log(`marked background (already registered): ${merged.marked.join(', ')}`);
   log(`added ${merged.added.length}, already registered ${registered.length - merged.added.length}; ${merged.candidates.length} candidate(s) in ${wf.candidates}`);
   out({
     ...passFields(w),
