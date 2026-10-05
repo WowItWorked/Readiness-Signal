@@ -6,7 +6,7 @@ bar. Each item carries exactly one mechanism that says what it wants from the re
 candidate issue, a KRI/KPI, PRAF coverage, or awareness only. When nothing clears, the run is
 silent.
 
-Live: <https://emergingtechrisk.com/Readiness-Signal/>
+Live: <https://emergingtechrisk.com/readiness-signal/>
 
 ## How it works
 
@@ -63,7 +63,7 @@ npm test
 npm run serve:fixtures
 ```
 
-Then open <http://localhost:8148/Readiness-Signal/>. This serves the site with the
+Then open <http://localhost:8148/readiness-signal/>. This serves the site with the
 **fictional** fixture data in `tests/fixtures/`, swapped in by the local server only. The
 fixtures are never deployed. `npm run serve` serves the real `docs/data`.
 

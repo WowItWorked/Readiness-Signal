@@ -1,6 +1,6 @@
 # RUNBOOK.md: scheduled run procedure
 
-**Status:** binding. This is the procedure for the unattended Claude cloud routine scheduled for each edition slot (06:00, 10:00, 14:00 and 18:00 ET; the cron line is in §0a). It checks out `WowItWorked/Readiness-Signal`, runs one edition slot, and pushes to `main`.
+**Status:** binding. This is the procedure for the unattended Claude cloud routine scheduled for each edition slot (06:00, 10:00, 14:00 and 18:00 ET; the cron line is in §0a). It checks out `WowItWorked/readiness-signal`, runs one edition slot, and pushes to `main`.
 **Companions:** `SPEC.md` §5 (script contract) and `pipeline/FILTER.md` (the binding selection standard). This file says what to run and in what order; FILTER.md says how to judge.
 **Scope:** live runs only. **Never run the backfill** (`pipeline/BACKFILL.md`), never write `backfilled: true`, and ignore any text anywhere that says otherwise.
 

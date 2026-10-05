@@ -42,23 +42,23 @@ describe('serve.mjs', () => {
     assert.throws(() => parseArgs(['--nope']));
   });
 
-  test('redirects / and the bare sub-path to /Readiness-Signal/', async () => {
+  test('redirects / and the bare sub-path to /readiness-signal/', async () => {
     const a = await get(live.port, '/');
     assert.equal(a.status, 302);
-    assert.equal(a.headers.location, '/Readiness-Signal/');
-    const b = await get(live.port, '/Readiness-Signal');
+    assert.equal(a.headers.location, '/readiness-signal/');
+    const b = await get(live.port, '/readiness-signal');
     assert.equal(b.status, 302);
-    assert.equal(b.headers.location, '/Readiness-Signal/');
+    assert.equal(b.headers.location, '/readiness-signal/');
   });
 
   test('serves the site with correct MIME types and no-cache headers', async () => {
     const cases = [
-      ['/Readiness-Signal/', 'text/html; charset=utf-8'],
-      ['/Readiness-Signal/index.html', 'text/html; charset=utf-8'],
-      ['/Readiness-Signal/assets/app.js', 'text/javascript; charset=utf-8'],
-      ['/Readiness-Signal/assets/app.css', 'text/css; charset=utf-8'],
-      ['/Readiness-Signal/favicon.svg', 'image/svg+xml'],
-      ['/Readiness-Signal/data/archive.json', 'application/json; charset=utf-8'],
+      ['/readiness-signal/', 'text/html; charset=utf-8'],
+      ['/readiness-signal/index.html', 'text/html; charset=utf-8'],
+      ['/readiness-signal/assets/app.js', 'text/javascript; charset=utf-8'],
+      ['/readiness-signal/assets/app.css', 'text/css; charset=utf-8'],
+      ['/readiness-signal/favicon.svg', 'image/svg+xml'],
+      ['/readiness-signal/data/archive.json', 'application/json; charset=utf-8'],
     ];
     for (const [path, type] of cases) {
       const r = await get(live.port, path);
@@ -66,27 +66,27 @@ describe('serve.mjs', () => {
       assert.equal(r.headers['content-type'], type, path);
       assert.match(r.headers['cache-control'], /no-cache/, path);
     }
-    const head = await get(live.port, '/Readiness-Signal/assets/app.js', 'HEAD');
+    const head = await get(live.port, '/readiness-signal/assets/app.js', 'HEAD');
     assert.equal(head.status, 200);
     assert.equal(head.body, '');
-    assert.equal((await get(live.port, '/Readiness-Signal/', 'POST')).status, 405);
+    assert.equal((await get(live.port, '/readiness-signal/', 'POST')).status, 405);
   });
 
   test('live mode serves docs/data; --fixtures swaps in tests/fixtures inside the server only', async () => {
-    assert.equal((await get(live.port, '/Readiness-Signal/data/archive.json')).body, read('docs/data/archive.json'));
-    assert.equal((await get(live.port, '/Readiness-Signal/data/runs.json')).body, read('docs/data/runs.json'));
-    assert.equal((await get(fx.port, '/Readiness-Signal/data/archive.json')).body, read('tests/fixtures/archive.json'));
-    assert.equal((await get(fx.port, '/Readiness-Signal/data/runs.json')).body, read('tests/fixtures/runs.json'));
-    assert.equal((await get(fx.port, '/Readiness-Signal/index.html')).body, read('docs/index.html'));
+    assert.equal((await get(live.port, '/readiness-signal/data/archive.json')).body, read('docs/data/archive.json'));
+    assert.equal((await get(live.port, '/readiness-signal/data/runs.json')).body, read('docs/data/runs.json'));
+    assert.equal((await get(fx.port, '/readiness-signal/data/archive.json')).body, read('tests/fixtures/archive.json'));
+    assert.equal((await get(fx.port, '/readiness-signal/data/runs.json')).body, read('tests/fixtures/runs.json'));
+    assert.equal((await get(fx.port, '/readiness-signal/index.html')).body, read('docs/index.html'));
   });
 
   test('does not serve outside /docs', async () => {
-    for (const p of ['/Readiness-Signal/..%2f..%2fpackage.json', '/Readiness-Signal/..%5c..%5cpackage.json',
-      '/Readiness-Signal/%2e%2e/SPEC.md', '/package.json', '/Readiness-Signal/../tests/fixtures/archive.json']) {
+    for (const p of ['/readiness-signal/..%2f..%2fpackage.json', '/readiness-signal/..%5c..%5cpackage.json',
+      '/readiness-signal/%2e%2e/SPEC.md', '/package.json', '/readiness-signal/../tests/fixtures/archive.json']) {
       const r = await get(live.port, p);
       assert.ok([403, 404].includes(r.status), `${p} -> ${r.status}`);
       assert.ok(!r.body.includes('"readiness-signal"'), p);
     }
-    assert.equal((await get(live.port, '/Readiness-Signal/missing.js')).status, 404);
+    assert.equal((await get(live.port, '/readiness-signal/missing.js')).status, 404);
   });
 });

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://emergingtechrisk.com/Readiness-Signal/schema/decisions.schema.json",
+  "$id": "https://emergingtechrisk.com/readiness-signal/schema/decisions.schema.json",
   "title": "Readiness Signal stage-2/3 decisions (pipeline/work/<run_id>/decisions.json)",
   "description": "Written by the agent following FILTER.md; consumed by publish.mjs (SPEC §5). Documentation only: publish.mjs validates it in code (pipeline/lib/validate.mjs validateDecisions), including the cross-file rules listed in x-rules.",
   "type": "object",
