@@ -216,6 +216,483 @@
       ],
       "backfilled": true,
       "update_of": null
+    },
+    {
+      "id": "RS-260318-1800-01",
+      "timestamp": "2026-03-18T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "UK regulators set incident-reporting thresholds for firms and require annual material third-party registers from March 2027.",
+      "domains": [
+        "resilience",
+        "third_party"
+      ],
+      "source_class": "regulator",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "From March 2027 an incident is reported on one form completed in phases: the PRA expects the initial phase within 24 hours of a firm's determination that the incident meets its threshold and the closing update within 30 working days of resolution, making the recorded time of that determination the reference point for judging timeliness."
+        },
+        {
+          "domain": "third_party",
+          "text": "Notification is due before a firm enters into or significantly changes a material third-party arrangement, which places the materiality assessment of a planned arrangement ahead of entry; the annual register of those arrangements gives the PRA, FCA and Bank of England a recurring cross-firm view of any concentrated use of the same providers."
+        },
+        {
+          "domain": "data",
+          "text": "The incident definition covers an operational disruption that affects the confidentiality, integrity, availability or authenticity of information or data belonging to or about external end users, not only one that interrupts their service, so a disruption that compromises that data without any service outage still meets the definition and is assessed against the reporting threshold."
+        }
+      ],
+      "validation_question": "Is the time from deciding an operational incident meets a regulatory reporting threshold to filing the initial report measured, against a 24-hour limit, and reported to the operational resilience owner?",
+      "candidate_issue_statement": "If the time between judging an operational incident reportable and filing the initial regulatory report is not measured against a 24-hour limit and reported to the operational resilience owner, reportable incidents can be notified after the expected window without the delay being seen until a supervisor raises it.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Prudential Regulation Authority",
+          "url": "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/march/operational-incident-and-third-party-reporting-policy-statement",
+          "headline": "PS7/26 – Operational resilience: Operational incident and third-party reporting",
+          "published": "2026-03-18",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "Prudential Regulation Authority",
+          "url": "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/march/operational-resilience-incident-reporting-supervisory-statement",
+          "headline": "SS1/26 – Operational resilience: Incident reporting",
+          "published": "2026-03-18",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "Financial Conduct Authority",
+          "url": "https://www.fca.org.uk/publications/policy-statements/ps26-2-operational-incident-third-party-reporting",
+          "headline": "PS26/2: Operational incident and third party reporting",
+          "published": "2026-03-18",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "Financial Conduct Authority",
+          "url": "https://www.fca.org.uk/news/news-stories/fca-confirms-new-incident-and-third-party-rules-bolster-resilience",
+          "headline": "FCA confirms new incident and third party rules to bolster resilience",
+          "published": "2026-03-18",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "Bank of England",
+          "url": "https://www.bankofengland.co.uk/paper/2026/ps/operational-resilience-operational-incident-and-outsourcing-and-third-party-reporting-for-fmis",
+          "headline": "Operational resilience: operational incident and outsourcing and third-party reporting for FMIs",
+          "published": "2026-03-18",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260417-1800-01",
+      "timestamp": "2026-04-17T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "US banking agencies replace banks' model risk guidance and exclude generative and agentic AI from it.",
+      "domains": [
+        "ai"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "The revised principles on validation, monitoring and vendor products do not reach generative or agentic AI models, and the 2011 text they supersede is withdrawn, so interagency model risk guidance sets no testing expectation for those models. The agencies' stated next step on them is a planned request for information on AI use, including generative and agentic AI."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The agencies withdraw the 2011 model risk guidance and the 2021 statement on model risk in anti-money-laundering compliance systems, and the Comptroller rescinds its Handbook booklet. The replacement principles disclaim enforceable standards, centre on banking organisations above $30bn and leave generative and agentic AI out of scope. No institution-level control alters these policy-level removals and rescoping. This changes if the agencies' planned AI information request yields proposed expectations.",
+      "sources": [
+        {
+          "publication": "Office of the Comptroller of the Currency",
+          "url": "https://www.occ.gov/news-issuances/news-releases/2026/nr-occ-2026-29.html",
+          "headline": "OCC Issues Updated Model Risk Management Guidance",
+          "published": "2026-04-17",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "Board of Governors of the Federal Reserve System",
+          "url": "https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm",
+          "headline": "SR 26-2: Revised Guidance on Model Risk Management",
+          "published": "2026-04-17",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "Federal Deposit Insurance Corporation",
+          "url": "https://www.fdic.gov/news/financial-institution-letters/2026/agencies-revise-interagency-model-risk-management-guidance",
+          "headline": "Agencies Revise the Interagency Model Risk Management Guidance",
+          "published": "2026-04-17",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "ABA Banking Journal",
+          "url": "https://bankingjournal.aba.com/2026/04/banking-agencies-issue-revised-risk-management-model-guidance/",
+          "headline": "Banking agencies issue revised risk management model guidance",
+          "published": "2026-04-17",
+          "source_class": "industry_trade"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260513-1800-01",
+      "timestamp": "2026-05-13T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "ECB supervision vice-chair, citing Anthropic's Mythos model, tells euro area banks to fix minor flaws immediately.",
+      "domains": [
+        "cyber",
+        "resilience"
+      ],
+      "source_class": "regulator",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Severity-tiered patching assumes low-rated flaws seldom repay an attacker's effort. The ECB's supervision vice-chair says Anthropic's Mythos Preview model can chain such flaws into serious attacks and turn patches into exploits within hours, so flaws once left to longer patch cycles become as time-critical as high-severity ones."
+        },
+        {
+          "domain": "resilience",
+          "text": "The ECB's supervision vice-chair tells banks to revise operational resilience plans for a higher probability of severe disruption, noting that critical infrastructure banks rely on may itself be attacked. Disruption scenarios calibrated on earlier frequency assumptions now sit against a supervisor's explicit statement that those odds have risen."
+        },
+        {
+          "domain": "ai",
+          "text": "The ECB's supervision vice-chair says euro area banks' lack of access to Anthropic's Mythos Preview is no excuse for inaction and asks banks to hunt for flaws, minor ones included, with existing AI tools, so defensive AI use moves from an innovation choice to something a senior supervisor publicly asks of banks."
+        }
+      ],
+      "validation_question": "Is the time taken to remediate lower-severity vulnerabilities on internet-facing systems measured, against a target as short as that for critical flaws, and reported to the chief information security officer?",
+      "candidate_issue_statement": "If the time to remediate lower-severity vulnerabilities on internet-facing systems is not measured against a target as short as that for critical flaws, or the measure does not reach the chief information security officer, minor flaws left to longer patch cycles can be chained into an intrusion on those systems before anyone able to accelerate remediation sees the backlog.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "ECB Banking Supervision",
+          "url": "https://www.bankingsupervision.europa.eu/press/interviews/date/2026/html/ssm.in260513~cb8e1269c5.en.html",
+          "headline": "“Market fragmentation is banks’ real constraint”",
+          "published": "2026-05-13",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260514-1800-01",
+      "timestamp": "2026-05-14T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "A Bank of England policymaker says 2026 sector exercises will simulate a global cloud-provider disruption.",
+      "domains": [
+        "third_party",
+        "resilience"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "third_party",
+          "text": "The Bank of England's cyber and operational resilience stress test moves from financial infrastructure, a retail payments scheme in 2022 and firms' connection to a wholesale settlement system in 2024, to a provider outside the financial sector: outcomes of a global cloud service provider disruption will inform the Financial Policy Committee's tolerance for disruption to vital services."
+        },
+        {
+          "domain": "resilience",
+          "text": "A global disruption at one cloud service provider is a scenario in which failover to that provider's other regions offers no recovery route; the same scenario runs in the market-wide simulation of about 40 systemically important firms and infrastructures and in the voluntary desk-based stress test, whose thematic findings the Financial Policy Committee will publish in summer 2027."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The speech sets a test scenario, not a requirement: the stress test is voluntary and desk-based, and the existing UK expectation that important business services stay within impact tolerances under severe but plausible disruption is unchanged. No new control, metric or framework category follows from the scenario choice. This changes if the Financial Policy Committee's thematic findings, due in summer 2027, set expectations on substituting a failed cloud provider.",
+      "sources": [
+        {
+          "publication": "Bank of England",
+          "url": "https://www.bankofengland.co.uk/speech/2026/may/liz-oakes-speech-and-panel-at-the-kpmg-and-fitch-ratings-london-banking-summit",
+          "headline": "Operational resilience in a rapidly changing world − speech by Liz Oakes",
+          "published": "2026-05-14",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260603-1800-01",
+      "timestamp": "2026-06-03T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "ECB supervisors will send all supervised banks a Dear-CEO letter on frontier-AI cyber threats, vice-chair says.",
+      "domains": [
+        "cyber",
+        "ai"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Because the speech says frontier models appear able to help turn released patches into exploits quickly, the interval between a vendor fix and its deployment becomes an exposure window, including at cloud, telecoms and other infrastructure providers, where the speech warns a flaw in one widely used infrastructure could more readily escalate into sector-wide disruption."
+        },
+        {
+          "domain": "ai",
+          "text": "Supervisory attention to AI here concerns attackers' use of frontier models rather than banks' own AI systems, so AI risk oversight extends from governing in-house models to the capability those models give adversaries: the speech says they can chain small flaws into serious attacks and may cut the cost of exploiting them by orders of magnitude."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The keynote announces a Dear-CEO letter, described only as asking banks to act proactively on system robustness and security, and later targeted follow-up with individual banks. It sets no specific expectation or deadline, and the areas it names (timely patching, management-body ownership, third-party monitoring, information sharing) are general, leaving no requirement to test a control or indicator against. This changes when the letter sets specific expectations or dates.",
+      "sources": [
+        {
+          "publication": "ECB Banking Supervision",
+          "url": "https://www.bankingsupervision.europa.eu/press/speeches/date/2026/html/ssm.sp260603~255bec155b.en.html",
+          "headline": "Strengthening operational resilience for the age of AI",
+          "published": "2026-06-03",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260610-0600-01",
+      "timestamp": "2026-06-10T06:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "The Financial Stability Board proposes 12 sound practices for financial institutions' AI adoption, including agent oversight.",
+      "domains": [
+        "ai",
+        "third_party",
+        "cyber"
+      ],
+      "source_class": "standards_body",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "AI agents would become an oversight object in their own right: among agentic AI oversight steps, the FSB's draft lists logging agents' key intermediate steps and the tools and data they reach, to flag possible scope creep such as querying databases beyond the task, and, as agent use grows, treating agents as synthetic employees under human-resources controls."
+        },
+        {
+          "domain": "third_party",
+          "text": "Dependency mapping would reach past contracted AI vendors: exposures to third-party AI providers and the wider AI supply chain would be recorded in AI inventories and third-party registers, contracts could cover monitoring of AI that providers embed in non-AI critical services, and high-materiality, high-risk uses would carry exit strategies such as an alternative provider or manual continuation."
+        },
+        {
+          "domain": "cyber",
+          "text": "Patch cadence would be judged against AI-driven exploitation: institutions would assess whether patching keeps pace with exploitation windows compressed by AI reconnaissance, consider virtual patching where fixes lag, and add AI cyber scenarios to tests and exercises; phishing-resistant MFA and least privilege for agents are named as mitigants against advanced models."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The FSB's 12 practices are a consultation-stage menu, open for comment until 22 July 2026, that the FSB says is not intended to set an international standard; its cyber and third-party practices adapt existing resilience, cyber and third-party publications. A non-binding menu sets no requirement to test a control, metric or framework against. This changes if a supervisor adopts the final practices, due in October 2026, as examination expectations.",
+      "sources": [
+        {
+          "publication": "Financial Stability Board",
+          "url": "https://www.fsb.org/2026/06/fsb-consults-on-sound-practices-for-the-responsible-adoption-of-artificial-intelligence-ai/",
+          "headline": "FSB consults on sound practices for the responsible adoption of artificial intelligence (AI)",
+          "published": "2026-06-10",
+          "source_class": "standards_body"
+        },
+        {
+          "publication": "Financial Stability Board",
+          "url": "https://www.fsb.org/2026/06/sound-practices-for-responsible-adoption-of-artificial-intelligence-ai-consultation-report/",
+          "headline": "Sound Practices for Responsible Adoption of Artificial Intelligence (AI): Consultation report",
+          "published": "2026-06-10",
+          "source_class": "standards_body"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260616-1000-01",
+      "timestamp": "2026-06-16T10:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "DragonForce ransomware attackers routed backdoor command traffic through Microsoft Teams relays, Symantec reports.",
+      "domains": [
+        "cyber"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Monitoring that judges outbound traffic by destination cannot tell a command channel relayed through Teams from real Teams use: Symantec says security products see only connections to legitimate Teams servers. Detection rests on the host, on which process opens Teams relay sessions; in this intrusion the backdoor ran inside a legitimate DbgView64.exe process, installed after the ransomware was deployed."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "Symantec reports a backdoor, installed after DragonForce ransomware was deployed, that took an anonymous Teams visitor token and ran its command channel through Microsoft's TURN relays, so network security products see only traffic to legitimate Teams servers. The channel still needs code running on a compromised host, the target of the endpoint malware detection common frameworks already expect. This changes if the technique is shown evading endpoint detection.",
+      "sources": [
+        {
+          "publication": "Symantec",
+          "url": "https://www.security.com/threat-intelligence/dragonforce-msteams-backdoor",
+          "headline": "Hidden in Teams: DragonForce Attackers Weaponize Microsoft Teams Relays to Stay Hidden",
+          "published": "2026-06-16",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/ransomware-gang-abuses-microsoft-teams-relays-to-hide-malicious-traffic/",
+          "headline": "Ransomware gang abuses Microsoft Teams relays to hide malicious traffic",
+          "published": "2026-06-16",
+          "source_class": "news"
+        },
+        {
+          "publication": "Help Net Security",
+          "url": "https://www.helpnetsecurity.com/2026/06/16/dragonforce-microsoft-teams-malware-backdoor-turn/",
+          "headline": "Cybercriminals mask malicious communications through Microsoft Teams relays",
+          "published": "2026-06-16",
+          "source_class": "news"
+        },
+        {
+          "publication": "The Register",
+          "url": "https://www.theregister.com/cyber-crime/2026/06/16/crooks-found-a-new-way-to-collaborate-using-teams-by-hiding-command-and-control-traffic/5256296",
+          "headline": "Crooks found a new way to collaborate using Teams – by hiding command-and-control traffic",
+          "published": "2026-06-16",
+          "source_class": "news"
+        },
+        {
+          "publication": "SecurityWeek",
+          "url": "https://www.securityweek.com/microsoft-teams-relay-servers-abused-in-dragonforce-ransomware-attack/",
+          "headline": "Microsoft Teams Relay Servers Abused in DragonForce Ransomware Attack",
+          "published": "2026-06-17",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260630-1800-01",
+      "timestamp": "2026-06-30T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "A Bank of England deputy governor asks whether key firms need mandatory separate fail-over or bare-metal rebuilds.",
+      "domains": [
+        "resilience",
+        "cyber"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "Recovery of core systems is being treated as a candidate for a system-level backstop, by analogy with deposit insurance and bail-in for financial failure: the speech weighs completely separate fail-over, rapid rebuild of compromised core systems from scratch, and one institution taking over another's basic functions, as in a programme Ukraine launched in 2022."
+        },
+        {
+          "domain": "cyber",
+          "text": "Frontier AI cyber capability is the stated driver: the speech says AI is surfacing many vulnerabilities that need patching, that patching itself can disrupt operations, and calls for authorities to assign higher likelihood to several firms disrupted at once and to strengthen stress testing of that impact in advance, moving correlated cyber disruption from tail case towards planning assumption."
+        },
+        {
+          "domain": "ai",
+          "text": "Model-level safeguards are not relied on to keep frontier AI cyber capability from attackers: the speech notes open-source models may trail leading closed models by 4 to 8 months and that their safeguards can be breached, and, on the urgency of patching, cites Five Eyes cyber agency heads saying the timeline is months, not years."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The recovery options are posed as questions, not proposals: the speech publishes no consultation, definition of key firms, recovery standard or timetable for separate fail-over, bare-metal rebuild or cross-firm substitution of basic functions. With no requirement text to test a recovery design against, no control, metric or framework change follows. This changes if UK authorities consult on recovery requirements for core systems or name the firms in scope.",
+      "sources": [
+        {
+          "publication": "Bank of England",
+          "url": "https://www.bankofengland.co.uk/speech/2026/june/sarah-breeden-panel-at-the-european-central-bank-forum-on-central-banking-2026",
+          "headline": "Agents of change − speech by Sarah Breeden",
+          "published": "2026-06-30",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260707-1800-01",
+      "timestamp": "2026-07-07T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "The ECB expects significant institutions to file AI cyber-threat action plans by 31 October 2026.",
+      "domains": [
+        "cyber",
+        "third_party",
+        "risk_quantification"
+      ],
+      "source_class": "regulator",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "The ECB treats AI-generated exploits as a lasting shift in attacker tempo rather than a single-tool event, so patch timelines built for the old gap between a flaw's discovery and its exploitation no longer hold for perimeter and internet-facing assets, third-party and open-source components included, which the ECB's letter puts first in remediation."
+        },
+        {
+          "domain": "third_party",
+          "text": "Faster fix cycles at vendors and open-source projects cut exposure on provider-run services only when providers deploy the fixes; the ECB's letter places providers' readiness to disclose and patch flaws faster within supply-chain assurance and links rapid emergency remediation to contract terms and service levels."
+        },
+        {
+          "domain": "risk_quantification",
+          "text": "Risk appetite tolerances calibrated to historical patch volumes can understate exposure once fix volumes rise; the ECB's letter asks for metrics and tolerance thresholds tied to patching frequency, adding a volume dimension to ICT risk measurement alongside time-to-patch."
+        }
+      ],
+      "validation_question": "Is the number of security patches for internet-facing systems left undeployed past their target date measured at least monthly, against a risk-appetite threshold, and reported to the ICT risk owner?",
+      "candidate_issue_statement": "If the number of security patches for internet-facing systems left undeployed past their target date is not measured at least monthly against a risk-appetite threshold and reported to the ICT risk owner, a rise in patch volume can leave exploitable internet-facing systems unpatched beyond target unseen by the role that can add remediation capacity, and any risk-appetite tolerance for patching cannot be shown to be monitored.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "ECB Banking Supervision",
+          "url": "https://www.bankingsupervision.europa.eu/press/letterstobanks/shared/pdf/2026/ssm.2026_letter_on_AI_enabled_cybersecurity_threats.en.pdf",
+          "headline": "Addressing AI-enabled cybersecurity threats",
+          "published": "2026-07-07",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "American Banker",
+          "url": "https://www.americanbanker.com/news/ecb-tells-banks-fix-ai-cyber-gaps-by-oct-31",
+          "headline": "ECB tells banks: Fix AI cyber gaps by Oct. 31",
+          "published": "2026-07-07",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": "RS-260603-1800-01"
+    },
+    {
+      "id": "RS-260910-1800-01",
+      "timestamp": "2026-09-10T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "New York's financial regulator expects regulated firms' cyber risk assessments to identify single points of failure.",
+      "domains": [
+        "third_party",
+        "cyber"
+      ],
+      "source_class": "regulator",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "third_party",
+          "text": "Ratings of each provider by criticality, data sensitivity and connectivity can all look acceptable while several critical functions sit on one cloud, software or managed-service dependency. The regulator's guidance says shared reliance of this kind may collectively create cyber risk, so it expects risk assessments to gauge concentration across providers, not only rate each one alone."
+        },
+        {
+          "domain": "cyber",
+          "text": "A cyber scenario scoped to one system understates an event at a shared component, which can reach several systems at once. The regulator's guidance asks risk assessments to trace how a cybersecurity event at one dependency could affect other information systems and critical business functions, and to track remediation and residual-risk changes in a risk register or similar record."
+        }
+      ],
+      "validation_question": "Is the number of critical business functions relying on each shared provider, platform or infrastructure component measured, against a threshold, and reported to the chief information security officer?",
+      "candidate_issue_statement": "If no indicator counts the critical business functions relying on each shared provider, platform or infrastructure component, or the count has no threshold or reaches no one who acts, one compromised or failed dependency can halt several critical functions at once through a concentration that went unseen between risk assessments.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "New York State Department of Financial Services",
+          "url": "https://www.dfs.ny.gov/industry_guidance/industry_letters/il20260910-cyber-risk-assessment",
+          "headline": "Guidance on How to Conduct and Use Risk Assessments Required by the DFS Cybersecurity Regulation",
+          "published": "2026-09-10",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "New York State Department of Financial Services",
+          "url": "https://www.dfs.ny.gov/reports_and_publications/press_releases/pr20260910",
+          "headline": "DFS Issues New Cybersecurity Guidance on Risk Assessments for Financial Services Entities",
+          "published": "2026-09-10",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "American Banker",
+          "url": "https://www.americanbanker.com/news/new-york-tells-banks-to-find-their-single-points-of-failure",
+          "headline": "New York tells banks to find their single points of failure",
+          "published": "2026-09-11",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
     }
   ]
 }
