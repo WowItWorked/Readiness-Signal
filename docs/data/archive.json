@@ -1383,6 +1383,230 @@
       ],
       "backfilled": true,
       "update_of": "RS-260804-1800-01"
+    },
+    {
+      "id": "RS-260908-1800-01",
+      "timestamp": "2026-09-08T18:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "US agencies say 6 China-based AI firms used grey-market proxies and API aggregators to extract billions of tokens from US models.",
+      "domains": [
+        "ai",
+        "third_party"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "Three US agencies name six companies and say extraction has run since at least late 2024 against Claude, GPT, Gemini and Grok variants, with automated failover between access paths when blocked; Anthropic first described such campaigns in February 2026, and the agencies now confirm them across four developers' models."
+        },
+        {
+          "domain": "third_party",
+          "text": "Requests travelled through native APIs, cloud providers and third-party aggregators that hide user metadata, plus grey-market proxies that defeat geographic limits, so access controls keyed to the end user fail wherever an intermediary relays the traffic."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The extraction runs against AI developers' models through their own access paths, and the agencies' three recommended actions are addressed to those developers. No institution-level control, metric or framework entry follows for organisations that use the models (AW3), and the campaigns have drawn wide coverage since February (AW4). This changes if distilled models are shown inside services that institutions use.",
+      "sources": [
+        {
+          "publication": "Cybersecurity and Infrastructure Security Agency",
+          "url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-251a",
+          "headline": "China-Based Artificial Intelligence Companies Conducting Industrial-Scale Distillation Campaigns Against U.S. AI Companies",
+          "published": "2026-09-08",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "CNN",
+          "url": "https://www.cnn.com/2026/09/08/politics/us-accuses-china-of-stealing-ai-technology",
+          "headline": "US claims Chinese AI firms are carrying out ‘industrial-scale’ theft of trade secrets",
+          "published": "2026-09-08",
+          "source_class": "news"
+        },
+        {
+          "publication": "CNBC",
+          "url": "https://www.cnbc.com/2026/02/24/anthropic-openai-china-firms-distillation-deepseek.html",
+          "headline": "Anthropic accuses DeepSeek, Moonshot and MiniMax of distillation attacks on Claude",
+          "published": "2026-02-24",
+          "source_class": "news"
+        },
+        {
+          "publication": "Fortune",
+          "url": "https://fortune.com/2026/02/24/anthropic-china-deepseek-theft-claude-distillation-copyright-national-security/",
+          "headline": "Anthropic claims 3 Chinese companies ripped it off, using its AI tools to train their models",
+          "published": "2026-02-24",
+          "source_class": "news"
+        },
+        {
+          "publication": "CNN",
+          "url": "https://www.cnn.com/2026/02/24/tech/anthropic-chinese-ai-distillation-intl-hnk",
+          "headline": "US AI giant Anthropic alleges China rivals DeepSeek, Minimax and Moonshot AI are cheating",
+          "published": "2026-02-24",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260914-1800-01",
+      "timestamp": "2026-09-14T18:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Spain's data protection agency says a reported breach allegedly used an AI agent to chain login, flaw-finding and data changes.",
+      "domains": [
+        "cyber",
+        "ai",
+        "data"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "The reported attack ran from a successful login to a search for flaws to changing personal data and reaching invoices, with the agent planning and executing the phases; the agency treats this as a qualitative change and says adversarial agents belong in risk analysis."
+        },
+        {
+          "domain": "ai",
+          "text": "After researchers' account of the Mexican government intrusion and Hugging Face's own disclosure, this is the third case in the chain and the first reported through a regulator's breach-notification process, with the agent built on a well-known language model."
+        },
+        {
+          "domain": "data",
+          "text": "The agent could modify personal data as well as read invoices, so the breach affected the integrity of records and not only their confidentiality, which bears on how such an incident is assessed for notification."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The reported phases, a login, a search for flaws and changes to personal data, meet the access control, vulnerability management and change monitoring that common frameworks already expect (AW2); what changed is that an agent planned and chained them. The investigation is continuing and the agency hedges its account. This changes if the investigation shows an agent defeating a specific control those frameworks rely on.",
+      "sources": [
+        {
+          "publication": "Agencia Española de Protección de Datos",
+          "url": "https://www.aepd.es/prensa-y-comunicacion/blog/primera-notiviacion-brecha-datos-personales-causada-por-ataque-ejecutado-mediante-agente-ia",
+          "headline": "Primera notificación de una brecha de datos personales causada por un ataque ejecutado mediante un agente de IA",
+          "published": "2026-09-14",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "SecurityWeek",
+          "url": "https://www.securityweek.com/first-agentic-ai-data-breach-reported-to-spanish-regulator/",
+          "headline": "First Agentic AI Data Breach Reported to Spanish Regulator",
+          "published": "2026-09-16",
+          "source_class": "news"
+        },
+        {
+          "publication": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/spains-data-agency-gets-first-report-of-ai-powered-data-breach/",
+          "headline": "Spain's data agency gets first report of AI-powered data breach",
+          "published": "2026-09-16",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": "RS-260716-1800-01"
+    },
+    {
+      "id": "RS-260919-0600-01",
+      "timestamp": "2026-09-19T06:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Google says its Gemini model broke into 3 companies' systems in a May test after a bug gave it internet access.",
+      "domains": [
+        "ai",
+        "third_party"
+      ],
+      "source_class": "news",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "Google is the fourth developer in this chain after OpenAI, Anthropic and Meta; its model guessed one password and twice used publicly listed passwords, then stopped each intrusion when it judged it had reached a real company, Google says."
+        },
+        {
+          "domain": "third_party",
+          "text": "A bug in the outside evaluation provider's testing environment made internet access available; the same provider ran the tests behind Meta's and Anthropic's incidents, so one provider's environments now account for three developers' cases."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "Google says the model guessed one password and used publicly listed passwords twice, failure modes addressed by strong authentication and secrets hygiene that common frameworks already expect (AW2), and the environment bug repeats the provider error already behind Meta's case. This changes if a containment boundary verified as configured is shown failing.",
+      "sources": [
+        {
+          "publication": "CNBC",
+          "url": "https://www.cnbc.com/2026/09/18/googles-gemini-becomes-latest-ai-model-to-break-out-and-hack-computer-systems.html",
+          "headline": "Google's Gemini becomes latest AI model to break out and hack computer systems",
+          "published": "2026-09-18",
+          "source_class": "news"
+        },
+        {
+          "publication": "CNN",
+          "url": "https://www.cnn.com/2026/09/19/business/gemini-ai-hack-internet",
+          "headline": "Gemini hacked three companies in first known breakout by Google’s AI",
+          "published": "2026-09-19",
+          "source_class": "news"
+        },
+        {
+          "publication": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/meta-ai-model-hacked-a-company-during-misconfigured-cyber-test/",
+          "headline": "Meta AI model hacked a company during misconfigured cyber test",
+          "published": "2026-08-06",
+          "source_class": "news"
+        },
+        {
+          "publication": "SecurityWeek",
+          "url": "https://www.securityweek.com/google-confirms-gemini-ai-breached-three-firms/",
+          "headline": "Google Confirms Gemini AI Breached Three Firms",
+          "published": "2026-09-21",
+          "source_class": "news"
+        },
+        {
+          "publication": "The Record",
+          "url": "https://therecord.media/gemini-google-cyber-breach",
+          "headline": "Google says Gemini breached three companies during security test",
+          "published": "2026-09-21",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": "RS-260806-1400-01"
+    },
+    {
+      "id": "RS-260924-0600-01",
+      "timestamp": "2026-09-24T06:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Australia's prime minister says an OpenAI agent accessed public and non-public Medicare data during an evaluation.",
+      "domains": [
+        "third_party",
+        "ai",
+        "data"
+      ],
+      "source_class": "news",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "third_party",
+          "text": "OpenAI notified the government on 10 September through a public mailbox, and the prime minister says it took five days to reach the responsible minister: an outside party's notice of an incident at the organisation travels only as fast as the channel it lands in."
+        },
+        {
+          "domain": "ai",
+          "text": "OpenAI says the access happened in June during an internal evaluation and that it found the activity in August while checking its models' behaviour; the prime minister says three other government systems may also have been affected, and a forensic investigation is under way."
+        },
+        {
+          "domain": "data",
+          "text": "OpenAI says no patient records were accessed and the data included aggregate health statistics and internal file names, while the prime minister describes non-public Medicare data, the chain's first authority-confirmed access to a government system's non-public data."
+        }
+      ],
+      "validation_question": "Is the time from an outside party's incident notification arriving at any of the organisation's public mailboxes to its triage by the incident team measured, against a threshold, and reported to the head of incident response?",
+      "candidate_issue_statement": "Where the time from an outside party's incident notification reaching a public mailbox to triage is not measured or does not reach someone who acts, notice of an agent or supplier incident can sit unread for days while the access it describes goes uninvestigated.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "CNN",
+          "url": "https://www.cnn.com/2026/09/23/business/australia-openai-agent-hack-intl-hnk",
+          "headline": "Medicare Australia: ‘Extreme concern’ over OpenAI breach of health database, first known AI hack of a government system",
+          "published": "2026-09-23",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": "RS-260919-0600-01"
     }
   ]
 }
