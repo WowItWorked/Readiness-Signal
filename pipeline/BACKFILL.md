@@ -135,6 +135,10 @@ writes backfilled items. It:
 - refuses to run twice for the same pass key (the archive already holds backfilled items in that
   pass's window, or its audit log exists) unless `--append-missing` is given, which only adds items
   whose ids are new; another month's or day's pass neither blocks it nor is blocked by it;
+- with `--append-missing --rejudge <candidate_ids>`, and only after the owner revises FILTER.md, judges
+  again the named candidates whose logged judgment was a drop (never a candidate of a published item):
+  their earlier audit rows stay, and the new rows are appended with `rejudged: true` and the previous
+  code. Owner instruction 2026-10-05: re-judge the 2026-10-01 AI-agent cluster under FILTER §5.8–§5.10;
 - never touches `docs/data/runs.json` or `pipeline/state/seen.json`; `--dry-run` writes nothing.
 
 Backfill-only reason codes: `BF_SECTION_EXCLUDED`, `BF_OUT_OF_WINDOW`, `BF_URL_UNVERIFIED`. All other

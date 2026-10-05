@@ -1,7 +1,7 @@
 # FILTER.md: Readiness Signal selection standard
 
 **Status:** binding. Every scheduled live run (06:00, 10:00, 14:00 and 18:00 ET) applies it to every stage-1 survivor.
-**Version:** 1 (launch; revised before the first run, including the owner decision of 2026-10-03 that admits newly issued formal rules and exam notices, §4.4.5 and §11, and the clarifications from its calibration of 2026-10-04: §3.3, §4.4.2, §10 #93–#96; and the owner decision of 2026-10-05 on material developments in stories never published: §5.8, §4.3 C5 "Updates", §10 #97–#99, §11.2). **Threshold level:** read from `pipeline/thresholds.json` (`level`) at the start of every run.
+**Version:** 1 (launch; revised before the first run, including the owner decision of 2026-10-03 that admits newly issued formal rules and exam notices, §4.4.5 and §11, and the clarifications from its calibration of 2026-10-04: §3.3, §4.4.2, §10 #93–#96; and the owner decision of 2026-10-05 on material developments in stories never published: §5.8–§5.10, §4.3 C5 "Updates", §10 #97–#103, §11.2). **Threshold level:** read from `pipeline/thresholds.json` (`level`) at the start of every run.
 **Owner:** changed only by the owner, by commit. The routine agent never edits this file, `pipeline/thresholds.json`, `pipeline/RUNBOOK.md`, the lexicon or the source registry during a run.
 **Scope:** live collection only. This is **not** the backfill standard and is never applied to a historical pass (`pipeline/BACKFILL.md`).
 **Other files:** `SPEC.md` governs schemas, paths and process; `pipeline/RUNBOOK.md` governs run steps; this file governs judgment. If this file and `SPEC.md` appear to conflict, apply the stricter reading and add `FILTER-SPEC conflict: <phrase>` to the run notes. The launch choices in §11 that are stricter than SPEC (for example V4) are deliberate, not conflicts, and are never noted.
@@ -22,7 +22,7 @@ Conventions:
 
 1. **Cluster.** Group this run's survivors that report the same story. Judge each cluster once, on the union of its evidence, and pick the lead (§5.2).
 2. **G1 domain.** Nothing within the seven domains → `GL_OFF_DOMAIN` (§3.3, §3.4).
-3. **Published story?** It resurfaces an archive item with no M1–M6 fact → `DD_SAME_STORY`, `section_tested: null`, and every cluster member gets its own `DD_SAME_STORY` judgment (§5.2(5a), §5.3). A *different* event that repeats a published shift is not a duplicate: test it (§5.1). A story never published that resurfaces with a new M1–M5 fact is tested under §5.8.
+3. **Published story?** It resurfaces an archive item with no M1–M6 fact → `DD_SAME_STORY`, `section_tested: null`, and every cluster member gets its own `DD_SAME_STORY` judgment (§5.2(5a), §5.3). A *different* event that repeats a published shift is not a duplicate: test it (§5.1). A story never published that resurfaces with a new M1–M5 fact is tested under §5.8; a shift missing from the archive under §5.9; a confirmed new count or extent on an archived shift or story is a trend update (§5.10).
 4. **Gates G2–G11** in order. The first failure gives the code; `section_tested: null` (§3.4). G5 applies only while `formal_instrument_scope` is `none`.
 5. **Route** (§4.1). RT form → test RT only. RT form includes a formal rule or exam notice, and a notice that only reminds of, restates, corrects, extends or re-publishes one (§4.4.2). Otherwise test EV, then CS; if both fail, record the primary route and the other section's first failed element as `[alt …]`.
 6. **Test every element** of the section: EV E1–E5 (§4.2); CS C1–C6, vulnerability rule first (§4.3); RT R1–R5 and X1–X6 (§4.4), or for a formal instrument R1, R1f, R2, R3f, R4f and R5 (§4.4.5). A formal instrument is tested for newness, not direction: a reminder, restatement, correction, extension or re-publication fails R3f (`RT_INSTRUMENT_NOT_NEW`), never R3. Unknown is not met (D1); borderline is drop (D5). The first failed element in ID order gives the code (§8.2). `NEAR`, and a knob on `NEAR` or `[alt …]`, only under §8.4. Two frequent cases: an actor adopting established techniques fails C1, never `NEAR C5`; and C5 Branch A's window runs from the first admissible establishment of the change (an earlier study of the same metric counts), while a later report inside that window still meets C5 (§4.3, D2).
@@ -434,7 +434,7 @@ Two branches:
     Being the first report is not required: a candidate reporting a change first established inside the window, and not in the archive, meets C5. A study that re-measures a change another admissible study already reported (same direction, comparable magnitude) is dated from the earlier study, which the reason names (D2). When the first establishment is older than `cs_novelty_window_days` but within its next loosening step, and every other element holds, the drop is `NEAR C5/cs_novelty_window_days` (§8.4).
   - **Branch B:** the failure occurred or was first disclosed within `max_event_age_days`, and it is the first public evidence that this control, as commonly implemented, fails this way. Repeat failures of a control already known to fail this way fail C5.
 
-  A different event that re-demonstrates a capability shift or control failure already in the archive fails C5 (`CS_NOT_NEW`); cite the archive id in the reason (§5.1).
+  A different event that re-demonstrates a capability shift or control failure already in the archive fails C5 (`CS_NOT_NEW`); cite the archive id in the reason (§5.1). Two owner exceptions (2026-10-05): a confirmed trend data point publishes as an M2 update (§5.10), and a shift the archive does not represent at all meets C5 by the archive gap (§5.9).
   - **Updates.** For a material-update item (§5.5) and a material development in a story never published (§5.8), C5 is met when the M-type fact was first public within `max_event_age_days` and is not already in the archive. The age of the original capability or failure does not decide C5 for an update; C1–C4 and C6 still apply to the development as reported.
 - **C6. Not routine** (vulnerabilities only; otherwise write `C6 n/a`). Active exploitation or a known-exploited listing alone is routine. At least one exception in `cs_routine_vuln_exceptions` must hold. Launch set:
   - `persistence`: a named party with artefacts shows the attacker's implant or access surviving the vendor's full prescribed remediation for a compromised device (patch or upgrade **and** the vendor's clean-up, reset or reimage steps). Generic advice that patching does not evict an attacker already present is standard post-compromise guidance and does not meet this exception;
@@ -608,7 +608,7 @@ Applies to the documents in §4.4.2 while `formal_instrument_scope` is not `none
 - **Same story:** candidates or items reporting the same underlying event, document or statement (same actors, same occurrence, same time frame), or reporting on another's primary source. Follow-ups, analysis, explainers and commentary are the same story.
 - **Formal instruments:** the story is the instrument. Its coverage, re-publication, reminders, restating FAQs and guides, technical corrections and extensions are the same story. An amending instrument that changes obligations is a different story.
 - **Different story:** a distinct event or document. That includes a different event that re-demonstrates a capability shift or trajectory signal already in the archive: a second victim of a published technique, or an official repeating a published signal at a new venue. A different story is never short-circuited; it is tested from G2 and must clear the bar on its own:
-  - in CS it fails C5 (`CS_NOT_NEW`, citing the archive id);
+  - in CS it fails C5 (`CS_NOT_NEW`, citing the archive id), unless it is a trend data point (§5.10), which publishes as an M2 update;
   - in RT it fails R3 (`RT_NO_DIRECTION`, citing the archive id);
   - in EV it is judged on E1–E5 like any event.
 
@@ -641,7 +641,8 @@ A resurfacing story becomes a candidate for a **new** item only if it contains a
 - **M1. Mechanism disclosed.** The root cause or technique of a published incident becomes public for the first time, and it differs from anything the published item stated. A full root-cause report that confirms the already-stated mechanism is not M1.
 - **M2. Scope step-change.** Either:
   - the affected population, loss or duration grows by at least a factor of `m2_min_scope_factor` (launch: 2) **and** crosses an E2 floor that was not met before; or
-  - the event spreads to a new class of entity (one bank to a payment scheme; one provider to its downstream customers).
+  - the event spreads to a new class of entity (one bank to a payment scheme; one provider to its downstream customers); or
+  - a trend data point under §5.10: a confirmed new count of organisations responsible or affected, or a confirmed new extent of impact, without the factor or floor above.
 - **M3. Exploitation status change.** Demonstrated becomes exploited in the wild; targeted becomes mass exploitation; or the patch or mitigation is shown to be ineffective or bypassed.
 - **M4. Official status advance.** Any of:
   - a speech's stated intention becomes a published consultation-stage document;
@@ -654,7 +655,7 @@ A resurfacing story becomes a candidate for a **new** item only if it contains a
 
 **Never material (always `DD_SAME_STORY`):**
 - new outlets, commentary, expert quotes and analysis;
-- counts revised by less than `m2_min_scope_factor`, or without crossing a new floor;
+- counts revised by less than `m2_min_scope_factor`, or without crossing a new floor, unless the revision is a confirmed trend data point (§5.10);
 - apologies, executive resignations, stock moves, service credits, lawsuits filed;
 - "investigation ongoing", an authority opening an inquiry, hearings scheduled but not held;
 - new indicators for the same campaign without a new capability;
@@ -697,6 +698,39 @@ A story with no archive item can still surface through a later material developm
 4. **Recording.** `dedup: "new"`, `match_id: null`, `update_of: null` (there is no item to point to). The reason opens with the basis, then the elements, for example `M2 unpublished original (public 20 Jul): one platform to 100+ organisations; C1 …`. The `[M#]` prefix stays reserved for archive matches (§8.3(5)). If (i)–(v) do not all hold, the candidate is judged as any other story.
 5. **Writing.** The claim states the new fact, never the old story (§7.2 rule 7). An interpretation entry may summarise the earlier record in one clause, from sources listed on the item. Pages of the earlier record may be registered with `--extra` and listed as background sources (§2.7.5(e)).
 6. **One item per story** still holds (§5.7). Once an item publishes under this rule, it is the story's anchor, and later developments follow §5.3–§5.5.
+
+### 5.9 Shifts missing from the archive (owner decision 2026-10-05)
+
+The archive is the reader's record of the year's capability shifts and control failures. A shift the archive does not yet represent is surfaced by its next fresh development, even when it was first established before the novelty window.
+
+1. **When it applies.** All of these hold:
+   - (i) the candidate's development is a fresh instance (G7) of a capability shift (Branch A) or control failure (Branch B), and no archive item represents that shift: search the archive for the shift itself (the technique, capability or failed control), not only the story (§5.6);
+   - (ii) the shift was first publicly established, by evidence admissible under C2, no more than 365 days before the run's slot;
+   - (iii) this development is itself admissible under C2 (observed, or demonstrated as the knobs allow);
+   - (iv) the shift is **impactful**: its cumulative public record (this development and earlier ones) meets E3 (§4.2), counted from opened pages and listed as sources for a pass (§2.7.5(c), (d)); the E3 recency limit applies to the outlets reporting this development, and earlier outlets are listed as background sources.
+2. **How it is tested.** §4.1 applies as usual (EV first, then CS). In CS:
+   - C5 is met by the archive gap: `C5 archive gap (first established <date>, <publisher>; archive: none)`.
+   - C1 states before → now against the state before the shift's first establishment. The established-technique rule (§4.3 C1) still applies to techniques established before that date, and to a shift older than 365 days.
+   - C2, C3 (Branch B), C4 and C6 apply unchanged.
+3. **Recording.** `dedup: "new"`, `match_id: null`; the reason begins `archive gap: `.
+4. **Writing.** The claim states this development. One interpretation entry says when the shift was first established and that this development shows it recurring, from sources listed on the item.
+5. **One gap item per shift.** Once it publishes, the shift is in the archive: a later instance is a different story (§5.1) and can publish only as a trend data point (§5.10).
+
+### 5.10 Trend data points: concentration and depth (owner decision 2026-10-05)
+
+Once a shift or a story is in the archive, later confirmed facts that show its concentration or its depth growing are published as linked updates, so the archive records the trend.
+
+1. **A trend data point** is a new public fact, confirmed by an affected or responsible party, a victim or an authority, that does one of:
+   - **(a) Concentration:** adds at least one distinct organisation to the confirmed count of organisations responsible for or affected by the shift or story, stated as n → n+1 or more (another frontier AI developer confirming its agents did the same; another provider or market infrastructure failing the same way; another institution confirming the same campaign reached it);
+   - **(b) Depth:** gives the first confirmed account, by a victim or an authority, of an extent of impact the archive's items did not state, or a larger one: non-public data or systems reached, records or customers affected, duration, or loss.
+2. **Where it applies.** To a further fact about an archived story, and to a different event that re-demonstrates an archived shift (where §5.1 would otherwise give `CS_NOT_NEW`).
+3. **Never a trend data point:** counts or extents asserted only by vendors, analysts, researchers or unnamed sources without confirmation by an affected or responsible party, a victim or an authority; estimates; commentary; a count or extent the archive already states; and Regulatory Trajectory signals (an official repeating a published signal stays `RT_NO_DIRECTION`).
+4. **How it is tested.** A trend data point is an M2 material update (§5.4 M2, third bullet): `dedup: "material_update"`, `match_id` and `update_of` the most recent item in the chain (§5.5(2)), reason beginning `[M2] trend: `. It must clear its section (§5.5(1)):
+   - EV as usual;
+   - in CS, C1 is met by the concentration or depth change stated as before → now; C2 by the confirmation in (1); C3 is not required; C4 as for the archived item; C5 by §4.3 C5 "Updates"; C6 applies only if the new fact is a vulnerability.
+5. **Mechanism.** §6.2 as usual; a count or an extent is a quantity, so T2 normally points to `kri_kpi`.
+6. **Writing.** The claim states the new count or extent ("A second AI developer says …", "The victim says 1.2m records …"). An interpretation entry states the running count or extent across the chain, from listed sources.
+7. **Volume.** At most one trend item per chain per run (§5.5(5)): several new facts in one run make one item.
 
 ---
 
@@ -1253,7 +1287,7 @@ All candidates are fictional composites. Bracketed roles stand in for names. Non
 | 12 | 9.8-scored flaw in a widely used open-source library; patch available; no proof of concept; no exploitation | DROP | capability_shift | — | `CS_ROUTINE_VULN` | C6 first: no exception. Wide coverage changes nothing. |
 | 13 | Known-exploited listing plus security press: pre-authentication code execution in a widely used VPN appliance, exploited in the wild; patch available | DROP | capability_shift | — | `CS_ROUTINE_VULN` | C6 first: no exception. Not NEAR: a patch exists, so no step admits it, and C1–C5 were not assessed. |
 | 14 | One run: a national cyber agency's advisory, the vendor's advisory and three security outlets (two collected; the vendor advisory found by search and registered with `--extra`). Implants on the same appliance class survive patching and factory reset. | PASS | capability_shift | candidate_issue | `CS_PASS_CONTROL_FAILURE` | One cluster, one item, five sources, the agency advisory first. EV fails E3 (security press only). C3 basis b: patch-and-reset remediation. C6 `persistence`: implants survive the full prescribed clean-up. CI1: compromise remediation for edge appliances. |
-| 15 | Two days after #14: an outlet reports the same implant at another organisation | DROP | capability_shift | — | `CS_NOT_NEW` | A different event, so tested from G2, never short-circuited. C5: the failure is already in the archive (cite #14's item id). |
+| 15 | Two days after #14: an outlet reports the same implant at another organisation | DROP | capability_shift | — | `CS_NOT_NEW` | A different event, so tested from G2, never short-circuited. C5: the failure is already in the archive (cite #14's item id). If the other organisation or an authority confirms it, it is a trend data point instead (§5.10; #101). |
 | 16 | 12 days after #14: attackers bypass the vendor's mitigation; a national cyber agency orders affected appliances disconnected; wire and two national papers | PASS | executive_visibility | candidate_issue | `EV_PASS_OFFICIAL_ACTION` | `[M3]`, `update_of` = #14's item. EV now passes (E2d emergency directive, E3 met), so EV is the section (§4.1). CI2: mitigation bypassed. |
 | 17 | Wire and two national business dailies: a nine-hour regional outage at a major cloud provider disrupted payment apps at several banks | PASS | executive_visibility | kri_kpi | `EV_PASS_DISRUPTION` | Full item B. CI fails CI5 (regional outage is an anticipated failure mode, T3); concentration is a quantity (T2). |
 | 18 | Next run: four outlets publish lessons-learned pieces on #17; the provider says the root cause is under investigation | DROP | — | — | `DD_SAME_STORY` | Commentary; short-circuit. All four are one cluster, and each gets its own `DD_SAME_STORY` judgment (§5.2(5a)). |
@@ -1269,7 +1303,7 @@ All candidates are fictional composites. Bracketed roles stand in for names. Non
 | 28 | Preprint: a voice clone fools an open-source speaker-verification model in the lab | DROP | capability_shift | — | `CS_SPECULATIVE` | C2 and C4 fail, so not NEAR |
 | 29 | Incident-response firm's dataset (method published, several hundred cases): median time from disclosure to exploitation of edge-device flaws fell below 2 days | PASS | capability_shift | kri_kpi | `CS_PASS_ADVERSARY_CAPABILITY` | RA1–RA6 met. C3 basis d: patch windows measured in weeks. T6: population evidence, so K, not CI. K1: days from disclosure to mitigation of internet-facing critical flaws, compared with observed time to exploitation. |
 | 30 | Threat research with artefacts: phishing kits force passkey-enrolled users onto SMS or password fallback; seen against customers of several banks | PASS | capability_shift | candidate_issue | `CS_PASS_ADVERSARY_CAPABILITY` | Full item A |
-| 31 | Two days after #30: an outlet reports the same kit against another bank's customers | DROP | capability_shift | — | `CS_NOT_NEW` | A different event, tested from G2. C5: the technique is already in the archive (cite #30's item id). |
+| 31 | Two days after #30: an outlet reports the same kit against another bank's customers | DROP | capability_shift | — | `CS_NOT_NEW` | A different event, tested from G2. C5: the technique is already in the archive (cite #30's item id). Confirmed by the bank or an authority, it would be a trend data point (§5.10; #101). |
 | 32 | AI developer's technical report: it disrupted a largely autonomous, AI-orchestrated intrusion campaign against about 30 organisations, some financial; conventional techniques; indicators published | PASS | capability_shift | awareness_only | `CS_PASS_ADVERSARY_CAPABILITY` | C1: operator labour replaced by automation. C3 basis d: campaign tempo limited by operator effort. AW2: the techniques meet the same baseline controls; tempo changed, not the control set. |
 | 33 | A frontier model is released; commentators say it could automate exploit writing; no observed misuse | DROP | capability_shift | — | `CS_SPECULATIVE` | C2 |
 | 34 | Ransomware closes a national retailer's stores for three days; wide general press; mechanism undisclosed | DROP | executive_visibility | — | `EV_BELOW_FLOOR` | E2 fails (no financial institution, FMI or provider disrupted; loss undisclosed) and E4 fails (E4e would hold only at `ev_common_threat_nexus` `true`). Two elements, so not NEAR. `[alt CS:C1]` |
@@ -1338,6 +1372,10 @@ All candidates are fictional composites. Bracketed roles stand in for names. Non
 | 97 | Ten weeks after an AI developer's evaluation agents breached one AI platform (never an item; a wire and two national papers covered it then), the developer confirms its agents also reached more than 100 unrelated organisations, government sites among them, and hid their activity; a national paper and a wire report the confirmation | PASS if C1–C4 hold on the facts | capability_shift | §6.2 decides | `CS_PASS_ADVERSARY_CAPABILITY` | §5.8: no archive item; M2 (one platform to many organisations of a new class) and M5 (concealment confirmed), both first public in the window; record began within 180 days; E3 met cumulatively. C5 dates the M facts (§4.3 C5 "Updates"). EV fails E2: no financial institution affected, and E2f never counts evaluation runs. If C1 finds nothing adversaries could not already do, drop `CS_NO_SPECIFIC_CHANGE`. |
 | 98 | A state attorney general demands records from the developer in #97 | DROP | — | — | `GL_NO_DEVELOPMENT` (`DD_SAME_STORY` once #97 is an item) | §5.8(2): an information demand or subpoena is never material. |
 | 99 | Eight months after a widely covered intrusion at a SaaS provider that was never an item, the provider confirms that its attackers also took signing keys | Judged as any story | as §4.1 routes it | — | the section's code | §5.8(1)(iv): the record began more than 180 days before the slot, so §5.8 does not apply; the new disclosure is tested on its own facts, and a Branch A change dates from the original's establishment (C5). |
+| 100 | An AI developer's evaluation agents, confined to a fetch tool, chained public web services into a working browser and reached staging systems at dozens of external organisations; researchers publish artefacts and the developer notifies affected organisations; a wire and national papers report it. Agent sandbox escape was first shown seven months earlier and no archive item covers it | PASS if C1, C2 and C4 hold | capability_shift | §6.2 decides | `CS_PASS_ADVERSARY_CAPABILITY` | §5.9: archive gap; first established within 365 days; this instance observed (C2 i) and E3 met cumulatively. C5 `archive gap (first established <date>; archive: none)`. C1 against the state before the first escape: contained agents assumed unable to reach arbitrary systems → agents compose permitted tools with public services to escape. |
+| 101 | After #100 is an item, a second AI developer confirms its own agents reached three companies' systems during a security test | PASS if EV or CS clears | capability_shift | `kri_kpi` (T2) | `CS_PASS_ADVERSARY_CAPABILITY` | §5.10(a): concentration 1 → 2 developers, confirmed by the responsible party. `[M2] trend: `, `update_of` = #100's item. C1 is the count change; C5 by C5 "Updates". |
+| 102 | A victim of the activity in #100 says the agents reached non-public records, which no item stated | PASS if its section clears | as §4.1 routes it | §6.2 decides | the section's pass code | §5.10(b): depth confirmed by a victim. `[M2] trend: `, `update_of` = the latest item in the chain. |
+| 103 | A security vendor estimates that agents of five AI developers are probing websites; no developer or victim confirms it | DROP | — | — | `DD_SAME_STORY` (or `CS_NOT_NEW` for a different event) | §5.10(3): a count asserted only by a vendor is never a trend data point. |
 
 ### 10.2 Model items (fictional; URLs are placeholders)
 
@@ -1525,6 +1563,7 @@ These turn the brief's own words into checkable elements. They change only throu
 | CI1–CI5 (including the CI5 reminder test), K4, P3, AO1–AO3, and `GL_NO_MECHANISM` | "reserve candidate_issue for items where a specific control weakness can actually be articulated"; awareness_only "is not a fallback" |
 | §5: whole-archive same-story check, M1–M6 (apart from M2's factor), one story one item | the owner's dedup decision and "one story … does not produce multiple entries" |
 | **Owner decision (2026-10-05).** §5.8: a material development (M1–M5, first public within `max_event_age_days`) in a story never published, whose record began within 180 days and meets E3 cumulatively, is tested with C5 and G7 dating the new fact; §4.3 C5 "Updates" | the owner's instruction that material updates to impactful stories are surfaced as updates even when the original is older than the novelty window |
+| **Owner decision (2026-10-05).** §5.9: a capability shift or control failure first established within 365 days that no archive item represents meets C5 by the archive gap at its next fresh, admissible, E3-prominent development. §5.10: confirmed new counts of organisations responsible or affected, and confirmed new extents of impact, publish as M2 trend updates | the owner's instruction that a shift not yet captured for the year is a materially important data point, and that reported concentration and depth of impact are data points that show trends |
 
 ---
 

@@ -324,6 +324,55 @@ test('a second publish for the month is refused; --append-missing adds only new 
   }
 });
 
+test('--rejudge judges a logged drop again after a FILTER.md revision; published items and plain runs are refused', () => {
+  const s = scenario();
+  const ws = bfWorkspace({ candidates: s.candidates, decisions: s.decisions, routes: s.routes });
+  try {
+    assert.equal(publish(ws).status, 0);
+    const afterFirst = ws.bytes();
+    const logFirst = fs.readFileSync(ws.logFile, 'utf8');
+    const dec = structuredClone(s.decisions);
+    dec.items.push(makeDraft([s.dropD], {
+      claim: 'A vendor patch removed a default that let unsigned plug-ins load, researchers report.',
+      domains: ['cyber'],
+      interpretation: [{ domain: 'cyber', text: 'Plug-in signing was optional by default, so hosts relying on vendor defaults accepted unsigned code until the patch.' }],
+      validation_question: 'Does the organisation enforce signature checks on plug-ins for the affected product rather than relying on its default setting?',
+      candidate_issue_statement: 'Where plug-in signature checks rely on the product default, unsigned plug-ins could load and lead to undetected compromise.',
+    }));
+    const k = dec.judgments.findIndex((j) => j.candidate_id === s.dropD.candidate_id);
+    dec.judgments[k] = judgment(s.dropD, { draft_index: 3 });
+    writeJson(path.join(ws.work, 'decisions.json'), dec);
+    // without --rejudge the logged judgment is skipped and the item is refused
+    const plain = publish(ws, ['--append-missing']);
+    assert.equal(plain.status, 1);
+    assert.match(plain.stderr, /a candidate is judged once per pass/);
+    // --rejudge needs --append-missing
+    const noAppend = publish(ws, ['--rejudge', s.dropD.candidate_id]);
+    assert.equal(noAppend.status, 1);
+    assert.match(noAppend.stderr, /--rejudge needs --append-missing/);
+    // a candidate of a published item is never re-judged
+    const pub = publish(ws, ['--append-missing', '--rejudge', s.csA.candidate_id]);
+    assert.equal(pub.status, 1);
+    assert.match(pub.stderr, /published items are never re-judged/);
+    assert.deepEqual(ws.bytes(), afterFirst);
+    // the logged drop is judged again; earlier rows are kept, the new row is appended and marked
+    const r = publish(ws, ['--append-missing', '--rejudge', s.dropD.candidate_id]);
+    assert.equal(r.status, 0, r.stderr);
+    assert.deepEqual(r.json.items, ['RS-260108-1800-01']);
+    assert.deepEqual(r.json.rejudge, [s.dropD.candidate_id]);
+    const log = fs.readFileSync(ws.logFile, 'utf8');
+    assert.ok(log.startsWith(logFirst), 'the audit log is appended to');
+    const newRows = log.slice(logFirst.length).trim().split('\n').map((l) => JSON.parse(l));
+    assert.deepEqual(newRows.map((x) => [x.candidate_id, x.verdict, x.rejudged, x.previous_reason_code, x.item_id]),
+      [[s.dropD.candidate_id, 'pass', true, 'CS_NO_SPECIFIC_CHANGE', 'RS-260108-1800-01']]);
+    assert.equal(readJson(ws.archive).items.length, 5);
+    assert.equal(fs.readFileSync(ws.runs, 'utf8'), afterFirst.runs);
+    assert.equal(fs.readFileSync(ws.seen, 'utf8'), afterFirst.seen);
+  } finally {
+    rmrf(ws.dir);
+  }
+});
+
 test('publish checks every item source live and trusts no recorded verdict (HIGH-2)', () => {
   const s = scenario();
   const urls = itemUrls(s.decisions);

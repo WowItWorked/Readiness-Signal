@@ -109,7 +109,7 @@ verify-urls [--file F | --candidates | --url U ...] [--concurrency 4] [--timeout
   candidate dropped BF_URL_UNVERIFIED. --file F reads a decisions-shaped file or a JSON list of
   URLs; --candidates checks every registered candidate.
 
-publish [--dry-run] [--append-missing] [--sections a,b] [--concurrency 4] [--timeout-ms 20000]
+publish [--dry-run] [--append-missing] [--rejudge c-...,c-...] [--sections a,b] [--concurrency 4] [--timeout-ms 20000]
   Validates <work>/decisions.json exactly as live publish and the self-check do (schema, every
   FILTER §7 lint rule, verbatim guard against the pass's headlines and leads, institution and
   first-person rules, the FILTER §8.2 codes plus BF_SECTION_EXCLUDED, BF_OUT_OF_WINDOW and
@@ -136,6 +136,9 @@ publish [--dry-run] [--append-missing] [--sections a,b] [--concurrency 4] [--tim
   unless --append-missing: then judgments already logged are skipped, items already published
   are recognised by their primary source, and new items take NN after the slot's existing ids.
   Another month's or day's pass neither blocks it nor is blocked by it.
+  --rejudge c-id,... (with --append-missing): after an owner revision of FILTER.md, judges again the
+  named candidates whose logged judgment was a drop (never a candidate of a published item). Their
+  earlier audit rows are kept; the new rows are appended with rejudged: true and the previous code.
   --dry-run checks and prints everything and writes nothing.`;
 
 const OPTIONS = {
@@ -153,13 +156,14 @@ const OPTIONS = {
   url: { type: 'string', multiple: true },
   'dry-run': { type: 'boolean' },
   'append-missing': { type: 'boolean' },
+  rejudge: { type: 'string' },
   sections: { type: 'string' },
 };
 const SUBCOMMAND_OPTIONS = {
   collect: ['only', 'timeout-ms', 'concurrency', 'kev-url', 'fr-api-url', 'allow-http'],
   add: ['file', 'allow-outside'],
   'verify-urls': ['file', 'candidates', 'url', 'concurrency', 'timeout-ms', 'allow-http'],
-  publish: ['dry-run', 'append-missing', 'sections', 'concurrency', 'timeout-ms'],
+  publish: ['dry-run', 'append-missing', 'rejudge', 'sections', 'concurrency', 'timeout-ms'],
 };
 
 const IS_WINDOWS = process.platform === 'win32';
@@ -418,6 +422,7 @@ async function cmdPublish({ values, paths, now, w, wf }) {
   requireEnded(w, now);
   const dryRun = Boolean(values['dry-run']);
   const appendMissing = Boolean(values['append-missing']);
+  const rejudge = typeof values.rejudge === 'string' ? values.rejudge.split(',').map((x) => x.trim()).filter(Boolean) : [];
   const concurrency = intFlag(values, 'concurrency', 4, 1);
   const timeoutMs = intFlag(values, 'timeout-ms', 20000, 100);
   if (!exists(wf.decisions)) throw new Error(`${wf.decisions} not found`);
@@ -455,7 +460,7 @@ async function cmdPublish({ values, paths, now, w, wf }) {
 
   const plan = planPublish({
     decisions, candidates: candidatesDoc.candidates, archive, runs, urlChecks: liveChecks, urlHistory, auditRows,
-    thresholds, filterText, window: w, sections, now: new Date(), appendMissing,
+    thresholds, filterText, window: w, sections, now: new Date(), appendMissing, rejudge,
   });
   // the checks are a record of the pass whatever the outcome (not on a dry run)
   if (!dryRun && records.length) writeJsonAtomic(wf.urlCheck, checkDoc);
@@ -474,6 +479,7 @@ async function cmdPublish({ values, paths, now, w, wf }) {
     sections,
     dry_run: dryRun,
     append_missing: appendMissing,
+    rejudge,
     items: plan.newItems.map((i) => i.id),
     judged: judged.length,
     passed: judged.filter((r) => r.verdict === 'pass').length,

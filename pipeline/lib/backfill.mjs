@@ -1652,10 +1652,11 @@ const cleanValidatorText = (s) => s
  *   window         passWindow() (monthWindow or dayWindow, `until` applied); sections: the pass's sections
  *   now            the real time, for the age of the URL checks (never --now)
  *   appendMissing  --append-missing
+ *   rejudge        --rejudge: candidate ids whose logged drop is judged again (needs appendMissing)
  * @returns {{ errors, warnings, notices, newItems, nextArchive, logRows, notJudged, skipped, nothingNew }}
  */
 export function planPublish(ctx) {
-  const { candidates = [], archive, runs = null, urlChecks = {}, urlHistory = {}, auditRows = null, thresholds, filterText, window: w, sections, now = new Date(), appendMissing = false } = ctx;
+  const { candidates = [], archive, runs = null, urlChecks = {}, urlHistory = {}, auditRows = null, thresholds, filterText, window: w, sections, now = new Date(), appendMissing = false, rejudge = [] } = ctx;
   const v = new Issues();
   const notices = [];
   const result = (extra = {}) => ({ errors: v.errors, warnings: v.warnings, notices, newItems: [], nextArchive: null, logRows: [], notJudged: [], skipped: { judgments: [], items: [] }, nothingNew: false, ...extra });
@@ -1680,6 +1681,11 @@ export function planPublish(ctx) {
     return result();
   }
 
+  if (Array.isArray(rejudge) && rejudge.length && !appendMissing) {
+    v.error('rejudge', '--rejudge needs --append-missing (it re-judges candidates an earlier publish logged)');
+    return result();
+  }
+
   // ---- 1. one publish per month (BACKFILL.md §6), unless --append-missing
   const archiveItems = Array.isArray(archive?.items) ? archive.items : [];
   const prior = backfilledInWindow(archiveItems, w);
@@ -1693,6 +1699,21 @@ export function planPublish(ctx) {
   const skipped = { judgments: [], items: [] };
   const priorRows = new Map();
   for (const r of auditRows ?? []) if (isObj(r) && typeof r.candidate_id === 'string') priorRows.set(r.candidate_id, r);
+  // ---- 2a. --rejudge (BACKFILL.md §6): after an owner revision of FILTER.md, named candidates whose
+  // logged judgment was a drop are judged again. Their earlier rows stay in the audit log; the new
+  // rows are appended with rejudged: true. A candidate of a published item is never re-judged.
+  const rejudged = new Map();
+  const errorsBeforeRejudge = v.errors.length;
+  for (const id of Array.isArray(rejudge) ? rejudge : []) {
+    const r = priorRows.get(id);
+    if (!appendMissing) v.error('rejudge', '--rejudge needs --append-missing (it re-judges candidates an earlier publish logged)');
+    else if (!r || !['pass', 'drop'].includes(r.verdict)) v.error('rejudge', `${id} has no logged judgment in the ${w.key} pass`);
+    else if (r.verdict !== 'drop' || r.item_id) v.error('rejudge', `${id} belongs to a published item${r.item_id ? ` (${r.item_id})` : ''}; published items are never re-judged (a later fact is a material update)`);
+    else rejudged.set(id, r);
+  }
+  if (v.errors.length > errorsBeforeRejudge) return result();
+  for (const id of rejudged.keys()) priorRows.delete(id);
+  if (rejudged.size) notices.push(`--rejudge: ${rejudged.size} candidate(s) judged again after a FILTER.md revision: ${[...rejudged.keys()].join(', ')}`);
   if (appendMissing && auditRows) {
     const prevJudged = new Set([...priorRows.values()].filter((r) => r.verdict === 'pass' || r.verdict === 'drop').map((r) => r.candidate_id));
     const isPrev = (j) => isObj(j) && prevJudged.has(j.candidate_id);
@@ -2074,6 +2095,10 @@ export function planPublish(ctx) {
       url_check: check(c.url),
       url_check_history: history(c.url),
     };
+    if (rejudged.has(j.candidate_id)) {
+      const prev = rejudged.get(j.candidate_id);
+      Object.assign(row, { rejudged: true, previous_reason_code: prev.reason_code ?? null, previous_reason: prev.reason ?? null });
+    }
     if (itemId && (j.dedup === 'new' || j.dedup === 'material_update')) {
       row.item_sources = items[j.draft_index].sources.map((s) => ({ url: s.url, url_check: check(s.url), url_check_history: history(s.url) }));
     }
