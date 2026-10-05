@@ -42,7 +42,7 @@ test('passSections: the BACKFILL.md §1 table; --sections only narrows it; no pa
   assert.deepEqual(passSections('2026-01'), ['capability_shift', 'regulatory_trajectory']);
   assert.deepEqual([...PASSES['2026-01'].sections], ['capability_shift', 'regulatory_trajectory']);
   assert.equal(requirePass('2026-01'), PASSES['2026-01']);
-  assert.throws(() => requirePass('2025-12'), /no backfill pass is defined for 2025-12 \(BACKFILL\.md §1 lists 2026-01\)/);
+  assert.throws(() => requirePass('2025-12'), /no backfill pass is defined for 2025-12 \(BACKFILL\.md §1 lists 2026-01, 2026-02, .*, 2026-09, 2026-10-01, 2026-10-02, 2026-10-03, 2026-10-04\)/);
   assert.throws(() => passSections('2025-12'), /no backfill pass is defined/);
   assert.throws(() => passSections('2025-12', 'regulatory_trajectory'), /no backfill pass is defined/, 'a flag never creates a pass');
   assert.deepEqual(passSections('2026-01', 'regulatory_trajectory'), ['regulatory_trajectory']);

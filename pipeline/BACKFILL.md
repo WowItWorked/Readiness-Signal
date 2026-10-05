@@ -7,14 +7,40 @@ window rather than inventing a different one.
 
 ## 1. Scope of a pass
 
-A pass covers one calendar month in America/New_York time and the sections the owner names for it.
+A pass covers one calendar month in America/New_York time, or, for the current month, one calendar
+day, and the sections the owner names for it. Its **pass key** is the month (`YYYY-MM`) or the day
+(`YYYY-MM-DD`); the key names the pass's work directory (`pipeline/work/backfill-<key>/`), its
+audit log (`pipeline/logs/backfill/<key>.jsonl`) and its `decisions.json` run id (`backfill-<key>`).
+Day passes exist for the current month, and the last one ends at its `until`: its window ends at that
+edition slot (included), the last slot the backfill covers, and the live routine covers everything
+after it.
 
 | Pass | Window (ET) | Sections | Owner instruction |
 |---|---|---|---|
 | 2026-01 | 2026-01-01 00:00 – 2026-01-31 23:59 | `capability_shift`, `regulatory_trajectory` | 2026-10-04: "January 2026 only … Capability shift and regulatory trajectory only … Verify every source URL is live … do not commit." |
+| 2026-02 | 2026-02-01 00:00 – 2026-02-28 23:59 | `capability_shift`, `regulatory_trajectory` | Year to date (below) |
+| 2026-03 | 2026-03-01 00:00 – 2026-03-31 23:59 | `capability_shift`, `regulatory_trajectory` | Year to date |
+| 2026-04 | 2026-04-01 00:00 – 2026-04-30 23:59 | `capability_shift`, `regulatory_trajectory` | Year to date |
+| 2026-05 | 2026-05-01 00:00 – 2026-05-31 23:59 | `capability_shift`, `regulatory_trajectory` | Year to date |
+| 2026-06 | 2026-06-01 00:00 – 2026-06-30 23:59 | `capability_shift`, `regulatory_trajectory` | Year to date |
+| 2026-07 | 2026-07-01 00:00 – 2026-07-31 23:59 | `capability_shift`, `regulatory_trajectory` | Year to date |
+| 2026-08 | 2026-08-01 00:00 – 2026-08-31 23:59 | `capability_shift`, `regulatory_trajectory` | Year to date |
+| 2026-09 | 2026-09-01 00:00 – 2026-09-30 23:59 | `capability_shift`, `regulatory_trajectory` | Year to date |
+| 2026-10-01 (day) | 2026-10-01 00:00 – 23:59 | `capability_shift`, `regulatory_trajectory` | Year to date |
+| 2026-10-02 (day) | 2026-10-02 00:00 – 23:59 | `capability_shift`, `regulatory_trajectory` | Year to date |
+| 2026-10-03 (day) | 2026-10-03 00:00 – 23:59 | `capability_shift`, `regulatory_trajectory` | Year to date |
+| 2026-10-04 (day) | 2026-10-04 00:00 – 18:00 (`until` 2026-10-04T18:00:00-04:00) | `capability_shift`, `regulatory_trajectory` | Year to date |
 
-A candidate that would qualify only under a section outside the pass is dropped `BF_SECTION_EXCLUDED`
-(it is not re-routed). A development first made public outside the window is dropped `BF_OUT_OF_WINDOW`.
+**Year to date** — owner, 2026-10-04 15:57 ET: "Now run all months sequentially until October and then
+run each day up until today so that nothing is missed from this year on it's first load". The build
+owner set every one of these passes to the 2026-01 pass's sections. The passes are run in key order;
+the 2026-10-04 pass is published only after 18:00 ET that day (real clock), and the live routine takes
+over at 06:05 ET on 2026-10-05 with its own 72-hour window.
+
+The windows never overlap and leave no gap from 2026-01-01 00:00 ET to the last `until`, so each
+backfilled item belongs to exactly one pass. A candidate that would qualify only under a section
+outside the pass is dropped `BF_SECTION_EXCLUDED` (it is not re-routed). A development first made
+public outside the window (for the last day pass, after its `until`) is dropped `BF_OUT_OF_WINDOW`.
 
 ## 2. Selection standard: the live standard, judged as of the date
 
@@ -32,8 +58,10 @@ A candidate that would qualify only under a section outside the pass is dropped 
     the item's slot (§4), not to today.
 - **Dedup within the pass** follows FILTER §5: several outlets on one story make one item with every
   verified outlet as a source; a follow-up is dropped `DD_SAME_STORY` unless it is a material update,
-  which becomes a new item with `update_of` pointing at the earlier backfilled item. A backfilled item
-  never references a live item.
+  which becomes a new item with `update_of` pointing at the earlier backfilled item. The earlier item
+  (for `update_of` and for a `DD_SAME_STORY` match) may belong to this pass or to an earlier pass of any
+  key, named by its id; never to a later pass, and its slot is always strictly earlier than the
+  candidate's own. A backfilled item never references a live item.
 - **No quota.** Whatever clears, publishes; silence for a section is a result.
 
 ## 3. Discovery (how candidates are found)
@@ -60,7 +88,8 @@ collector records the URL, publication, source class, the headline verbatim, a v
   A source with a date but no time counts as published at 18:00 ET that day, so its item takes the
   18:00 slot (never an earlier slot than the source could support). A development published after the
   window's last slot takes that slot only if it is still inside the window; otherwise
-  `BF_OUT_OF_WINDOW`.
+  `BF_OUT_OF_WINDOW`. (A day pass's last slot is 18:00 that day; for the last day pass it is its
+  `until`, and nothing after it is inside the window.)
 - **Id** = `RS-YYMMDD-HHMM-NN` from the slot, `NN` ordered within the slot by section
   (capability_shift before regulatory_trajectory) then mechanism (candidate_issue, kri_kpi,
   praf_coverage, awareness_only), then the primary source's date, as live publish does. Ids never
@@ -92,17 +121,20 @@ final URL, content type, time) is recorded in the pass's audit log.
 
 ## 6. Writing to the archive
 
-Only `node pipeline/scripts/backfill.mjs publish --month YYYY-MM` writes backfilled items. It:
+Only `node pipeline/scripts/backfill.mjs publish --month YYYY-MM` (a day pass: `--day YYYY-MM-DD`)
+writes backfilled items. It:
 
 - validates every item exactly as live publish does (schema, every FILTER §7 lint rule, the verbatim
   guard against captured headlines and leads, institution and first-person rules), plus that every
   source URL passed verification in a check no older than 24 hours;
 - assigns timestamps and ids per §4, sets `backfilled: true`, and appends to `docs/data/archive.json`
   (atomic write; existing items byte-for-byte unchanged);
-- writes the audit log `pipeline/logs/backfill/<YYYY-MM>.jsonl` (one line per candidate: verdict, reason
+- writes the audit log `pipeline/logs/backfill/<key>.jsonl` (one line per candidate: verdict, reason
   code, reason, URL checks, resulting item id);
-- refuses to run twice for the same month (the archive already holds backfilled items for that month)
-  unless `--append-missing` is given, which only adds items whose ids are new;
+- refuses to run before the pass's window has ended (its `until` when it has one);
+- refuses to run twice for the same pass key (the archive already holds backfilled items in that
+  pass's window, or its audit log exists) unless `--append-missing` is given, which only adds items
+  whose ids are new; another month's or day's pass neither blocks it nor is blocked by it;
 - never touches `docs/data/runs.json` or `pipeline/state/seen.json`; `--dry-run` writes nothing.
 
 Backfill-only reason codes: `BF_SECTION_EXCLUDED`, `BF_OUT_OF_WINDOW`, `BF_URL_UNVERIFIED`. All other

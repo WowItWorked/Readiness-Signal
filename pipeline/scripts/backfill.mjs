@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-// Historical backfill pass (pipeline/BACKFILL.md, binding). One calendar month in ET, the sections
-// the owner names for it, the live selection standard judged as of the date.
+// Historical backfill pass (pipeline/BACKFILL.md, binding). One pass key: a calendar month in ET
+// or, for the current month, one calendar day (the last ended early at its `until`); the sections
+// the owner names for it; the live selection standard judged as of the date.
 //
-//   node pipeline/scripts/backfill.mjs <collect|add|verify-urls|publish> --month YYYY-MM [flags]
+//   node pipeline/scripts/backfill.mjs <collect|add|verify-urls|publish> (--month YYYY-MM | --day YYYY-MM-DD) [flags]
 //
 // The only writer of backfilled items (publish). Never writes docs/data/runs.json or
 // pipeline/state/seen.json. See USAGE for every flag.
@@ -19,21 +20,27 @@ import { loadThresholds } from '../lib/thresholds.mjs';
 import { formatEtHuman, toEtIso } from '../lib/time.mjs';
 import { Issues, validateArchive, validateRuns } from '../lib/validate.mjs';
 import {
-  FR_API_URL, PASSES, checkUrls, collectArchives, emptyCandidatesDoc, emptyUrlCheckDoc, expectedChecks, kevSource, markSeen,
-  mergeCandidates, mergeUrlChecks, monthWindow, passSections, planPublish, prepareAddEntries, requirePass, urlsToVerify, windowDoc,
+  FR_API_URL, PASSES, checkUrls, collectArchives, docPassKey, emptyCandidatesDoc, emptyUrlCheckDoc, expectedChecks, kevSource, markSeen,
+  mergeCandidates, mergeUrlChecks, passFields, passSections, passWindow, planPublish, prepareAddEntries, urlsToVerify, windowDoc,
+  windowOpenIssue,
 } from '../lib/backfill.mjs';
 
-const USAGE = `node pipeline/scripts/backfill.mjs <subcommand> --month YYYY-MM [flags]
+const USAGE = `node pipeline/scripts/backfill.mjs <subcommand> (--month YYYY-MM | --day YYYY-MM-DD) [flags]
 
 Historical backfill pass (pipeline/BACKFILL.md, binding). Run a pass only when the owner asks for
-that month: every subcommand refuses a month that BACKFILL.md §1 (PASSES) does not list. Human
+it: every subcommand refuses a pass key that BACKFILL.md §1 (PASSES) does not list. Human
 summary on stderr, JSON on stdout. Exit 0 ok, 1 error, 2 usage error, 3 finished with failures
 (collect: a source failed; verify-urls: a URL is not verified).
 
 Flags every subcommand accepts:
-  --month YYYY-MM   the pass's calendar month in America/New_York time (required)
-  --work-dir D      the pass's work directory (default pipeline/work/backfill-<month>/), holding
+  --month YYYY-MM   a month pass: the calendar month in America/New_York time
+  --day YYYY-MM-DD  a day pass (the current month): one calendar day in America/New_York time,
+                    slots 06:00 to 18:00; a pass with an until (BACKFILL.md §1) ends at that
+                    edition slot, included, and nothing after it is in the window.
+                    Exactly one of --month or --day is required; it is the pass key.
+  --work-dir D      the pass's work directory (default pipeline/work/backfill-<key>/), holding
                     candidates.json, collect-report.json, decisions.json and url-check.json
+                    (each names the pass key in its "month" or "day" field)
   --archive F  --runs F  --seen F  --logs-dir D  --sources F  --filter F  --thresholds F
                     path overrides (tests); runs.json and seen.json are only ever read
   --now ISO         the clock for the window checks (tests only): refused when the subcommand would
@@ -41,12 +48,15 @@ Flags every subcommand accepts:
                     are always stamped with the real time.
   --help
 
+collect, add and publish refuse to run before the pass's window has ended (its until when it
+has one): a backfill covers history only.
+
 collect [--only kev,federal-register] [--timeout-ms 30000] [--concurrency 4]
         [--kev-url URL] [--fr-api-url URL] [--allow-http]
-  Candidates from machine-readable archives for the month (BACKFILL.md §3.1, discovery_mode
-  "archive"): CISA KEV entries whose dateAdded is in the month (the CISA catalogue URL; the
+  Candidates from machine-readable archives for the window (BACKFILL.md §3.1, discovery_mode
+  "archive"): CISA KEV entries whose dateAdded is in the window (the CISA catalogue URL; the
   headline is composed, headline_composed: true) and Federal Register final rules (type RULE)
-  published in the month for every federalregister.gov agency feed in sources.json, through the
+  published in the window for every federalregister.gov agency feed in sources.json, through the
   Federal Register API (paginated; publication = the issuing agency's registry name; class
   regulator). Merges into <work>/candidates.json (deduplicated by normalised URL; a joint rule's
   other agencies go to also_in) and writes <work>/collect-report.json. Re-running is safe.
@@ -66,8 +76,9 @@ add --file F [--allow-outside]
       "notes": "<optional, 500 characters>" }
   Every field is validated; nothing is written if any entry is invalid. Refused: http, an
   aggregator, cache, archive, AMP page, shortener, redirect or mailing-list wrapper or social
-  post (use the original publication's URL), and a date outside the month. --allow-outside
-  admits dates after the month only, for later sources that confirm facts stated at the time
+  post (use the original publication's URL), and a date outside the window (a date only counts
+  as 18:00 ET, also against an until). --allow-outside admits dates after the window only, for
+  later sources that confirm facts stated at the time
   (flagged outside_window: true; never the primary source, never judged pass). Leads are cut
   to 30 words when paywalled (forced for paywalled publications), else to the registry's
   lead_words (default 60). An entry whose URL normalises to a registered candidate is not
@@ -110,22 +121,26 @@ publish [--dry-run] [--append-missing] [--sections a,b] [--concurrency 4] [--tim
   only; a walled page is unverified), and publishes only
   sources verified by those checks (url-check.json is history, never trusted). Timestamp = the
   first slot (06:00, 10:00, 14:00, 18:00 ET) at or after the earliest in-window publication
-  among the item's sources (date only = 18:00 ET); a development published after the month's
-  last slot but inside the month takes that last slot. Ids RS-YYMMDD-HHMM-NN, NN by section,
+  among the item's sources (date only = 18:00 ET); a development published after the window's
+  last slot but inside the window takes that last slot (a day pass: 18:00 that day; nothing
+  after an until is inside). Ids RS-YYMMDD-HHMM-NN, NN by section,
   mechanism, primary source date. Appends backfilled: true items atomically to the archive
   (existing items unchanged; refused if the archive changed while publish ran) and writes
-  <logs-dir>/backfill/<month>.jsonl (one line per judged candidate, then each registered
+  <logs-dir>/backfill/<key>.jsonl (one line per judged candidate, then each registered
   candidate left unjudged, with every URL check of each). decisions.json has the live shape
-  with run_id "backfill-<month>". update_of and a material_update or same_story_dropped match_id
-  may name an earlier backfilled item by its id or by any candidate_id of an item in this batch
-  (or of an earlier publish of the month).
-  Refuses a second publish for a month (backfilled items in the window, or an audit log)
+  with run_id "backfill-<key>". update_of and a material_update or same_story_dropped match_id
+  may name an earlier backfilled item by its id (an item of this pass or of an earlier pass of
+  any key, never of a later pass; its slot strictly earlier) or by any candidate_id of an item
+  in this batch (or of an earlier publish of this pass).
+  Refuses a second publish for a pass key (backfilled items in its window, or its audit log)
   unless --append-missing: then judgments already logged are skipped, items already published
   are recognised by their primary source, and new items take NN after the slot's existing ids.
+  Another month's or day's pass neither blocks it nor is blocked by it.
   --dry-run checks and prints everything and writes nothing.`;
 
 const OPTIONS = {
   month: { type: 'string' },
+  day: { type: 'string' },
   only: { type: 'string' },
   'timeout-ms': { type: 'string' },
   concurrency: { type: 'string' },
@@ -198,15 +213,33 @@ function workFiles(dir) {
   };
 }
 
+/** The pass key a work file names, described for an error message. */
+const describeDocKey = (doc) => {
+  const key = docPassKey(doc);
+  return key === null ? 'no pass key' : `${typeof doc.day === 'string' ? 'day' : 'month'} ${JSON.stringify(key)}`;
+};
+
+/**
+ * A work file must name this pass's key in the pass's own field (month for --month, day for
+ * --day) and no other key: a day pass never reads a month's work files, nor the reverse.
+ */
+function docMatchesPass(doc, w) {
+  if (docPassKey(doc) !== w.key) return false;
+  const other = w.kind === 'day' ? 'month' : 'day';
+  return doc[other] === undefined || doc[other] === null;
+}
+
 function loadCandidatesDoc(file, w, now) {
   const doc = exists(file) ? readJson(file) : emptyCandidatesDoc(w, now);
-  if (doc.month !== w.month) throw new Error(`${file}: month ${JSON.stringify(doc.month)} is not the ${w.month} pass; use the pass's own --work-dir`);
+  if (!docMatchesPass(doc, w)) throw new Error(`${file}: ${describeDocKey(doc)} is not the ${w.key} pass; use the pass's own --work-dir`);
   if (!Array.isArray(doc.candidates)) throw new Error(`${file}: "candidates" must be an array`);
   return doc;
 }
 
+/** BACKFILL.md §6: a backfill covers history only; the window ends at its until when it has one. */
 function requireEnded(w, now) {
-  if (w.end.getTime() > now.getTime()) throw new Error(`the ${w.month} window has not ended (it closes ${w.until} ET); a backfill covers history only`);
+  const issue = windowOpenIssue(w, now);
+  if (issue) throw new Error(issue);
 }
 
 function loadRegistry(file, allowHttp) {
@@ -239,18 +272,18 @@ async function cmdCollect({ values, paths, now, w, wf }) {
   }
   const sources = loadRegistry(paths.sources, allowHttp);
   const seen = readJson(paths.seen, { schema_version: 1, urls: {} });
-  log(`collect ${w.month}: window ${w.since} to ${w.until} ET`);
+  log(`collect ${w.key}: window ${w.since} to ${w.until} ET`);
   const res = await collectArchives({
     sources, window: w, only, timeoutMs, concurrency, kevUrl: values['kev-url'] ?? null, frApiUrl: values['fr-api-url'] ?? FR_API_URL,
   });
   const doc = loadCandidatesDoc(wf.candidates, w, now);
   const inRun = mergeCandidates([], res.candidates.map((c) => markSeen(c, seen)));
   const merged = mergeCandidates(doc.candidates, inRun.candidates);
-  const nextDoc = { ...doc, schema_version: 1, month: w.month, window: windowDoc(w), updated_at: toEtIso(now), candidates: merged.candidates };
+  const nextDoc = { ...doc, schema_version: 1, ...passFields(w), window: windowDoc(w), updated_at: toEtIso(now), candidates: merged.candidates };
   const failed = [res.kev, ...res.federal_register].filter((r) => r && r.status !== 'ok');
   const report = {
     schema_version: 1,
-    month: w.month,
+    ...passFields(w),
     window: windowDoc(w),
     collected_at: toEtIso(new Date()),
     user_agent: USER_AGENT,
@@ -270,10 +303,10 @@ async function cmdCollect({ values, paths, now, w, wf }) {
 
   if (res.kev) {
     const k = res.kev;
-    log(`  ${k.status.padEnd(6)} cisa-kev: ${k.status === 'ok' ? `${k.catalogue_entries} catalogue entries, ${k.in_window} added in ${w.month}` : k.error}`);
+    log(`  ${k.status.padEnd(6)} cisa-kev: ${k.status === 'ok' ? `${k.catalogue_entries} catalogue entries, ${k.in_window} added in ${w.key}` : k.error}`);
   }
   for (const f of res.federal_register) {
-    const extra = f.status === 'ok' ? `${f.in_window} rule(s) in ${w.month} (API count ${f.api_count ?? '?'}, ${f.pages} page(s))` : f.error;
+    const extra = f.status === 'ok' ? `${f.in_window} rule(s) in ${w.key} (API count ${f.api_count ?? '?'}, ${f.pages} page(s))` : f.error;
     log(`  ${f.status.padEnd(6)} ${f.source_id} [${f.slug}]: ${extra}`);
   }
   log(`collected ${report.totals.collected} (${report.totals.duplicates_in_run} joint/duplicate), added ${report.totals.added}, already registered ${report.totals.already_registered}; ${report.totals.candidates} candidate(s) in ${wf.candidates}`);
@@ -299,7 +332,7 @@ async function cmdAdd({ values, paths, now, w, wf }) {
   }
   const doc = loadCandidatesDoc(wf.candidates, w, now);
   const merged = mergeCandidates(doc.candidates, candidates);
-  writeJsonAtomic(wf.candidates, { ...doc, schema_version: 1, month: w.month, window: windowDoc(w), updated_at: toEtIso(now), candidates: merged.candidates });
+  writeJsonAtomic(wf.candidates, { ...doc, schema_version: 1, ...passFields(w), window: windowDoc(w), updated_at: toEtIso(now), candidates: merged.candidates });
   const addedIds = new Set(merged.added.map((c) => c.candidate_id));
   const registered = candidates.map((c) => ({ candidate_id: c.candidate_id, url: c.url, status: addedIds.has(c.candidate_id) ? 'added' : 'already a candidate', outside_window: c.outside_window }));
   // a URL listed twice in one file is added once; report each entry
@@ -311,7 +344,7 @@ async function cmdAdd({ values, paths, now, w, wf }) {
   for (const r of registered) log(`  ${r.candidate_id}  ${r.status.padEnd(19)}${r.outside_window ? ' (outside window)' : ''} ${r.url}`);
   log(`added ${merged.added.length}, already registered ${registered.length - merged.added.length}; ${merged.candidates.length} candidate(s) in ${wf.candidates}`);
   out({
-    month: w.month,
+    ...passFields(w),
     added: merged.added.map((c) => ({ candidate_id: c.candidate_id, url: c.url, publication: c.publication, source_class: c.source_class, paywalled: c.paywalled, published: c.published_date, outside_window: c.outside_window, discovery_mode: c.discovery_mode })),
     registered,
     file: wf.candidates,
@@ -321,11 +354,12 @@ async function cmdAdd({ values, paths, now, w, wf }) {
 
 // ---------------------------------------------------------------- verify-urls
 
-/** url-check.json for the pass (validated month), or an empty one. */
+/** url-check.json for the pass (validated pass key; a file without one is adopted), or an empty one. */
 function loadUrlCheckDoc(file, w) {
   const doc = exists(file) ? readJson(file) : emptyUrlCheckDoc(w);
-  if (doc.month !== undefined && doc.month !== null && doc.month !== w.month) throw new Error(`${file}: month ${JSON.stringify(doc.month)} is not the ${w.month} pass`);
-  return { ...doc, month: w.month };
+  if (docPassKey(doc) !== null && !docMatchesPass(doc, w)) throw new Error(`${file}: ${describeDocKey(doc)} is not the ${w.key} pass`);
+  const { month: _month, day: _day, ...rest } = doc;
+  return { ...rest, ...passFields(w) };
 }
 
 /** Merge checks into url-check.json's history (real clock), logging records it refuses. */
@@ -361,14 +395,14 @@ async function cmdVerify({ values, paths, w, wf }) {
   }
   if (!urls.length) throw new Error(`no URLs to check in ${from}`);
   const sources = exists(paths.sources) ? loadRegistry(paths.sources, allowHttp) : [];
-  log(`verify-urls ${w.month}: checking ${urls.length} URL(s) from ${from} (concurrency ${concurrency}, timeout ${timeoutMs} ms)`);
+  log(`verify-urls ${w.key}: checking ${urls.length} URL(s) from ${from} (concurrency ${concurrency}, timeout ${timeoutMs} ms)`);
   const records = await checkUrls(urls, { concurrency, timeoutMs, allowHttp, kevUrl: kevSource(sources).url, expected: expectedChecks(candidates) });
   const doc = mergeChecks(loadUrlCheckDoc(wf.urlCheck, w), records);
   writeJsonAtomic(wf.urlCheck, doc);
   for (const r of records) log(checkLine(r));
   const failed = records.filter((r) => !r.verified);
   log(`${records.length - failed.length} of ${records.length} verified; wrote ${wf.urlCheck}`);
-  out({ month: w.month, checked: records.length, verified: records.length - failed.length, failed: failed.map((r) => ({ url: r.url, status: r.status, final_url: r.final_url, reason: r.reason })), checks: records, file: wf.urlCheck });
+  out({ ...passFields(w), checked: records.length, verified: records.length - failed.length, failed: failed.map((r) => ({ url: r.url, status: r.status, final_url: r.final_url, reason: r.reason })), checks: records, file: wf.urlCheck });
   return failed.length ? 3 : 0;
 }
 
@@ -377,7 +411,7 @@ async function cmdVerify({ values, paths, w, wf }) {
 async function cmdPublish({ values, paths, now, w, wf }) {
   let sections;
   try {
-    sections = passSections(w.month, values.sections);
+    sections = passSections(w.key, values.sections);
   } catch (err) {
     throw new UsageError(err.message);
   }
@@ -402,7 +436,7 @@ async function cmdPublish({ values, paths, now, w, wf }) {
     printIssues('existing data', pre.result());
     throw new Error('existing archive/runs are invalid; fix them before a backfill publish (run validate.mjs)');
   }
-  const logPath = path.join(paths.logsDir, 'backfill', `${w.month}.jsonl`);
+  const logPath = path.join(paths.logsDir, 'backfill', `${w.key}.jsonl`);
   const logText = textOrNull(logPath);
   const auditRows = logText === null ? null : readJsonl(logPath);
 
@@ -431,12 +465,12 @@ async function cmdPublish({ values, paths, now, w, wf }) {
     throw new Error(`${plan.errors.length} error(s); nothing was written to the archive or the audit log${!dryRun && records.length ? ` (the URL checks were recorded in ${wf.urlCheck})` : ''}`);
   }
   for (const x of plan.warnings) log(`  warn  ${x}`);
-  const pass = PASSES[w.month];
+  const pass = PASSES[w.key];
   const judged = plan.logRows.filter((r) => r.judged);
   const byCode = {};
   for (const r of judged) byCode[r.reason_code] = (byCode[r.reason_code] ?? 0) + 1;
   const summary = {
-    month: w.month,
+    ...passFields(w),
     sections,
     dry_run: dryRun,
     append_missing: appendMissing,
@@ -452,7 +486,7 @@ async function cmdPublish({ values, paths, now, w, wf }) {
     notes: typeof decisions?.notes === 'string' ? decisions.notes : null,
   };
 
-  log(`${dryRun ? 'DRY RUN ' : ''}BACKFILL ${w.month} (${sections.join(', ')}): ${plan.newItems.length} item(s); ${summary.judged} judged (${summary.passed} pass, ${summary.dropped} drop); ${records.length} URL(s) verified live; ${plan.notJudged.length} registered candidate(s) not judged`);
+  log(`${dryRun ? 'DRY RUN ' : ''}BACKFILL ${w.key} (${sections.join(', ')}): ${plan.newItems.length} item(s); ${summary.judged} judged (${summary.passed} pass, ${summary.dropped} drop); ${records.length} URL(s) verified live; ${plan.notJudged.length} registered candidate(s) not judged`);
   for (const it of plan.newItems) log(`  ${it.id}  ${formatEtHuman(it.timestamp)}  ${it.section} / ${it.mechanism}  ${it.claim}`);
   if (plan.notJudged.length) log(`  not judged (cited as sources, outside the window or logged earlier): ${plan.notJudged.slice(0, 12).join(', ')}${plan.notJudged.length > 12 ? `, ... (${plan.notJudged.length} in all)` : ''}`);
   if (plan.nothingNew) {
@@ -499,17 +533,21 @@ runMain(async () => {
   const { values, paths, now } = parseCli(argv.slice(1), OPTIONS, USAGE);
   const allowed = new Set(SUBCOMMAND_OPTIONS[sub]);
   for (const k of Object.keys(OPTIONS)) {
-    if (k !== 'month' && values[k] !== undefined && !allowed.has(k)) throw new UsageError(`--${k} does not apply to ${sub}`);
+    if (k !== 'month' && k !== 'day' && values[k] !== undefined && !allowed.has(k)) throw new UsageError(`--${k} does not apply to ${sub}`);
   }
-  if (!values.month) throw new UsageError(`--month YYYY-MM is required\n\n${USAGE}`);
+  // BACKFILL.md §1: exactly one pass key, a month (--month) or a day of the current month (--day)
+  const keyFlags = ['month', 'day'].filter((k) => values[k] !== undefined);
+  if (keyFlags.length !== 1) {
+    throw new UsageError(`${keyFlags.length ? 'use one of --month or --day, not both' : 'a pass key is required: --month YYYY-MM or --day YYYY-MM-DD'}\n\n${USAGE}`);
+  }
   let w;
   try {
-    w = monthWindow(values.month);
-    requirePass(w.month); // BACKFILL.md §1: only a month the owner has instructed
+    // only a pass the owner has instructed; the window ends at the pass's until when it has one
+    w = passWindow(values[keyFlags[0]], keyFlags[0]);
   } catch (err) {
     throw new UsageError(err.message);
   }
-  const dir = values['work-dir'] ? path.resolve(values['work-dir']) : path.join(DEFAULT_PATHS.workDir, `backfill-${w.month}`);
+  const dir = values['work-dir'] ? path.resolve(values['work-dir']) : path.join(DEFAULT_PATHS.workDir, `backfill-${w.key}`);
   if (values.now !== undefined) {
     if (sub === 'verify-urls') throw new UsageError('--now does not apply to verify-urls: URL checks are always stamped with the real time');
     refuseNowOnRealPaths(sub, paths, dir);

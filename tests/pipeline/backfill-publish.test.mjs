@@ -742,9 +742,12 @@ test('--now is refused where a backfill would write real data; verify-urls never
   }
   const mdir = tempDir('rs-bf-m-');
   try {
-    const months = runScript('backfill', ['collect', '--month', '2026-02', '--work-dir', mdir]);
-    assert.equal(months.status, 2);
-    assert.match(months.stderr, /no backfill pass is defined for 2026-02/);
+    // October has day passes only; a month before January has none
+    for (const month of ['2026-10', '2025-12']) {
+      const months = runScript('backfill', ['collect', '--month', month, '--work-dir', mdir]);
+      assert.equal(months.status, 2, month);
+      assert.match(months.stderr, new RegExp(`no backfill pass is defined for ${month}`), month);
+    }
     assert.deepEqual(fs.readdirSync(mdir), [], 'nothing written');
   } finally {
     rmrf(mdir);

@@ -812,8 +812,9 @@
       "url": "https://www.bankinfosecurity.com/rssFeeds.php?type=articles",
       "paywalled": false,
       "region": "US",
-      "notes": "Published by ISMG (Information Security Media Group). Articles-only ISMG feed: breach roundups, crypto-hack roundups, AI-security and regulatory stories. Items carry no pubDate. The newest date is from the channel pubDate and the top story, so use first-seen time. The feed is network-wide: the GovInfoSecurity articles feed is identical, so do not add it too. Chosen over the /rss-feeds main feed, which mixes in webinars and stale FDIC/FFIEC items. The old feedburner URLs are dead.",
-      "tier": "trade"
+      "notes": "Disabled 2026-10-04: the site answers the honest ReadinessSignal user agent with HTTP 403, and the pipeline never impersonates a browser. Published by ISMG (Information Security Media Group). Articles-only ISMG feed: breach roundups, crypto-hack roundups, AI-security and regulatory stories. Items carry no pubDate. The newest date is from the channel pubDate and the top story, so use first-seen time. The feed is network-wide: the GovInfoSecurity articles feed is identical, so do not add it too. Chosen over the /rss-feeds main feed, which mixes in webinars and stale FDIC/FFIEC items. The old feedburner URLs are dead.",
+      "tier": "trade",
+      "enabled": false
     },
     {
       "id": "bankingdive-news",

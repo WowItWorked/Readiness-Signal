@@ -1,4 +1,5 @@
-// Backfill pass (pipeline/BACKFILL.md, binding): month windows, slots and timestamps (§4), archive
+// Backfill pass (pipeline/BACKFILL.md, binding): pass windows (a month, or a day of the current
+// month, possibly ended early at an `until`), slots and timestamps (§4), archive
 // collection from the CISA KEV catalogue and the Federal Register API (§3.1), candidate
 // registration, live source-URL verification (§5) and the publish planner (§4, §6).
 // Used by pipeline/scripts/backfill.mjs. No dependencies.
@@ -31,16 +32,37 @@ const quote = (s) => JSON.stringify(s);
 
 // ---------------------------------------------------------------- passes (BACKFILL.md §1)
 
+const PASS_SECTIONS = Object.freeze(['capability_shift', 'regulatory_trajectory']);
+// 2026-10-04 15:57 ET; the build owner set the sections to the 2026-01 pass's for every pass
+const YEAR_TO_DATE_INSTRUCTION = '2026-10-04 15:57 ET: "Now run all months sequentially until October and then run each day up until today so that nothing is missed from this year on it\'s first load"; sections as the 2026-01 pass (build owner decision).';
+const yearToDate = (extra = {}) => Object.freeze({ sections: PASS_SECTIONS, instruction: YEAR_TO_DATE_INSTRUCTION, ...extra });
+
 /**
- * The passes the owner has instructed, mirroring the BACKFILL.md §1 table (binding). Every
- * subcommand refuses a month that is not listed; adding a month or a section to a pass is an
+ * The passes the owner has instructed, mirroring the BACKFILL.md §1 table (binding). A pass key is
+ * a calendar month (YYYY-MM, --month) or, for the current month, a calendar day (YYYY-MM-DD,
+ * --day), in America/New_York time. An `until` (ET ISO, an edition slot instant) ends that pass's
+ * window early: the last slot the backfill covers, after which the live routine takes over.
+ * Every subcommand refuses a key that is not listed; adding a pass or a section to a pass is an
  * owner instruction recorded in BACKFILL.md §1 and here together.
  */
 export const PASSES = Object.freeze({
   '2026-01': Object.freeze({
-    sections: Object.freeze(['capability_shift', 'regulatory_trajectory']),
+    sections: PASS_SECTIONS,
     instruction: '2026-10-04: January 2026 only; capability shift and regulatory trajectory only; verify every source URL is live; do not commit.',
   }),
+  '2026-02': yearToDate(),
+  '2026-03': yearToDate(),
+  '2026-04': yearToDate(),
+  '2026-05': yearToDate(),
+  '2026-06': yearToDate(),
+  '2026-07': yearToDate(),
+  '2026-08': yearToDate(),
+  '2026-09': yearToDate(),
+  '2026-10-01': yearToDate(),
+  '2026-10-02': yearToDate(),
+  '2026-10-03': yearToDate(),
+  // the live routine takes over at 06:05 ET on 2026-10-05 with its own 72-hour window
+  '2026-10-04': yearToDate({ until: '2026-10-04T18:00:00-04:00' }),
 });
 
 /** Backfill-only drop codes (BACKFILL.md §6); every other code is FILTER.md §8.2's closed list. */
@@ -57,18 +79,25 @@ const URL_CHECK_FUTURE_TOLERANCE_MS = 5 * 60e3;
 /** BACKFILL.md §4: a source with a date but no time counts as published at 18:00 ET that day. */
 export const DATE_ONLY_HOUR = 18;
 
-/** The PASSES entry for a month. Throws when the owner has not instructed a pass for it. */
-export function requirePass(month) {
-  const pass = PASSES[month];
+/** 'month' for a YYYY-MM key, 'day' for a YYYY-MM-DD key, else null. */
+export function passKind(key) {
+  if (/^\d{4}-\d{2}$/.test(String(key ?? ''))) return 'month';
+  if (/^\d{4}-\d{2}-\d{2}$/.test(String(key ?? ''))) return 'day';
+  return null;
+}
+
+/** The PASSES entry for a pass key (month or day). Throws when the owner has not instructed a pass for it. */
+export function requirePass(key) {
+  const pass = Object.hasOwn(PASSES, key) ? PASSES[key] : null;
   if (!pass) {
-    throw new Error(`no backfill pass is defined for ${month} (BACKFILL.md §1 lists ${Object.keys(PASSES).join(', ')}); run a pass only when the owner asks for that month, and record the instruction in BACKFILL.md §1 and PASSES together`);
+    throw new Error(`no backfill pass is defined for ${key} (BACKFILL.md §1 lists ${Object.keys(PASSES).join(', ')}); run a pass only when the owner asks for that ${passKind(key) ?? 'month or day'}, and record the instruction in BACKFILL.md §1 and PASSES together`);
   }
   return pass;
 }
 
 /**
  * The pass's sections: the PASSES entry, or --sections (comma list) narrowing it to some of its
- * sections. --sections never widens a pass. Throws for a month without a pass.
+ * sections. --sections never widens a pass. Throws for a key without a pass.
  */
 export function passSections(month, sectionsFlag) {
   const pass = requirePass(month);
@@ -86,7 +115,8 @@ export function passSections(month, sectionsFlag) {
 
 /**
  * One calendar month in ET: [start, end) as instants, first and last calendar dates, the first and
- * last edition slots inside it, and the pass id used as decisions.json run_id.
+ * last edition slots inside it, and the pass id used as decisions.json run_id. `key` is the pass
+ * key (the month), `kind` 'month'.
  */
 export function monthWindow(month) {
   const m = /^(\d{4})-(0[1-9]|1[0-2])$/.exec(String(month ?? ''));
@@ -97,6 +127,8 @@ export function monthWindow(month) {
   const start = etWallToDate(year, mon, 1, 0, 0, 0);
   const end = mon === 12 ? etWallToDate(year + 1, 1, 1, 0, 0, 0) : etWallToDate(year, mon + 1, 1, 0, 0, 0);
   return {
+    kind: 'month',
+    key: `${m[1]}-${m[2]}`,
     month: `${m[1]}-${m[2]}`,
     id: `backfill-${m[1]}-${m[2]}`,
     year,
@@ -112,9 +144,86 @@ export function monthWindow(month) {
   };
 }
 
+/**
+ * One calendar day in ET, in the shape of monthWindow: `key` and `day` are the date, `kind` 'day',
+ * the first and last slots 06:00 and 18:00 that day, the pass id "backfill-YYYY-MM-DD".
+ */
+export function dayWindow(day) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(day ?? ''));
+  if (!m || !isIsoDate(String(day))) throw new Error(`--day: ${quote(day ?? '')} is not YYYY-MM-DD`);
+  const [year, mon, d] = [Number(m[1]), Number(m[2]), Number(m[3])];
+  const start = etWallToDate(year, mon, d, 0, 0, 0);
+  const end = etWallToDate(year, mon, d + 1, 0, 0, 0);
+  return {
+    kind: 'day',
+    key: String(day),
+    day: String(day),
+    id: `backfill-${day}`,
+    year,
+    mon,
+    start,
+    end,
+    firstDate: String(day),
+    lastDate: String(day),
+    firstSlot: slotAt(year, mon, d, SLOT_HOURS[0]),
+    lastSlot: slotAt(year, mon, d, SLOT_HOURS[SLOT_HOURS.length - 1]),
+    since: toEtIso(start),
+    until: toEtIso(new Date(end.getTime() - 1000)),
+  };
+}
+
+/**
+ * The window ended early at `until` (ET ISO with offset, an edition slot instant inside the
+ * window): the window includes that instant and nothing after it (end = until + 1 ms, exclusive);
+ * its last slot is that slot and its last date that slot's date. `ends_early` records it.
+ */
+export function windowUntil(w, until) {
+  if (!isEtIso(until)) throw new Error(`until: ${quote(until)} is not an ET ISO timestamp with offset`);
+  const t = new Date(until);
+  if (!(t.getTime() > w.start.getTime() && t.getTime() < w.end.getTime())) throw new Error(`until: ${until} is not inside the ${w.key} window (${w.since} to ${w.until})`);
+  const p = etParts(t);
+  if (!SLOT_HOURS.includes(p.hour) || p.minute !== 0 || p.second !== 0 || t.getUTCMilliseconds() !== 0) {
+    throw new Error(`until: ${until} is not an edition slot (${SLOT_HOURS.map((h) => `${pad2(h)}:00`).join(', ')} ET); a pass ends at the last slot it covers`);
+  }
+  const lastSlot = slotAt(p.year, p.month, p.day, p.hour);
+  return { ...w, end: new Date(t.getTime() + 1), lastDate: lastSlot.date, lastSlot, until: lastSlot.iso, endsEarly: true };
+}
+
+/**
+ * The window of a pass key the owner has instructed (BACKFILL.md §1): a month (YYYY-MM) or a day
+ * (YYYY-MM-DD), ended early at the pass's `until` when it has one. `kind` ('month' | 'day'), when
+ * given, is the flag the key came from: --month takes only a month, --day only a day. Throws for
+ * a malformed key and for a key without a pass.
+ */
+export function passWindow(key, kind = passKind(key) ?? 'month') {
+  const base = kind === 'day' ? dayWindow(key) : monthWindow(key);
+  const pass = requirePass(base.key);
+  return pass.until ? windowUntil(base, pass.until) : base;
+}
+
+/** The pass key as a document field: { month: 'YYYY-MM' } or { day: 'YYYY-MM-DD' }. */
+export const passFields = (w) => ({ [w.kind ?? 'month']: w.key ?? w.month });
+
+/** The pass key a work file or log row names (its day or month field), or null. */
+export function docPassKey(doc) {
+  if (!isObj(doc)) return null;
+  if (typeof doc.day === 'string') return doc.day;
+  return typeof doc.month === 'string' ? doc.month : null;
+}
+
+/**
+ * Why the pass's window has not ended at `now`, or null: a backfill covers history only. The end
+ * is the pass's effective end (its `until` when it has one).
+ */
+export function windowOpenIssue(w, now, { clock = null } = {}) {
+  if (w.end.getTime() <= now.getTime()) return null;
+  const closes = w.endsEarly ? `it ends at ${w.until} ET, the last edition slot this pass covers; the live routine covers what follows` : `it closes ${w.until} ET`;
+  return `the ${w.key} window has not ended (${closes})${clock ? ` at the ${clock} ${toEtIso(now)}` : ''}; a backfill covers history only`;
+}
+
 /** JSON description of a window, as written to candidates.json and the reports. */
 export function windowDoc(w) {
-  return { month: w.month, since: w.since, until: w.until, first_slot: w.firstSlot.iso, last_slot: w.lastSlot.iso };
+  return { ...passFields(w), since: w.since, until: w.until, first_slot: w.firstSlot.iso, last_slot: w.lastSlot.iso, ...(w.endsEarly ? { ends_early: true } : {}) };
 }
 
 export const dateInWindow = (date, w) => isIsoDate(date) && date >= w.firstDate && date <= w.lastDate;
@@ -203,11 +312,11 @@ export function itemTiming(item, candByNorm, w) {
   });
   const primary = considered.find((x) => x.k === 0);
   if (primary && !primary.inside) {
-    issues.push(`sources[0] (${primary.c.candidate_id}, published ${describePub(primary.pub)}) is outside the ${w.month} window; the primary source is the development's own publication inside the window (a development first made public outside it is dropped BF_OUT_OF_WINDOW)`);
+    issues.push(`sources[0] (${primary.c.candidate_id}, published ${describePub(primary.pub)}) is outside the ${w.key} window; the primary source is the development's own publication inside the window (a development first made public outside it is dropped BF_OUT_OF_WINDOW)`);
   }
   const inside = considered.filter((x) => x.inside);
   if (!inside.length) {
-    if (considered.length) issues.push(`no source is published inside the ${w.month} window (${w.since} to ${w.until}); drop it BF_OUT_OF_WINDOW`);
+    if (considered.length) issues.push(`no source is published inside the ${w.key} window (${w.since} to ${w.until}); drop it BF_OUT_OF_WINDOW`);
     return { slot: null, basis: null, issues };
   }
   const earliest = inside.reduce((a, b) => (b.pub.instant < a.pub.instant ? b : a));
@@ -466,7 +575,7 @@ export function mergeCandidates(existing, incoming) {
 
 /** A fresh candidates.json for the pass. */
 export function emptyCandidatesDoc(w, now) {
-  return { schema_version: 1, month: w.month, window: windowDoc(w), generated_at: toEtIso(now), candidates: [] };
+  return { schema_version: 1, ...passFields(w), window: windowDoc(w), generated_at: toEtIso(now), candidates: [] };
 }
 
 // ---------------------------------------------------------------- add (agents' candidates)
@@ -537,10 +646,12 @@ export function prepareAddEntries(entries, { sources = [], window: w, allowOutsi
     } else err(`.published: ${quote(e.published)} is neither "YYYY-MM-DD" nor ISO 8601 with an offset`);
     let outside = false;
     if (precision) {
-      const inside = precision === 'date' ? dateInWindow(date, w) : instantInWindow(instant, w);
-      if (!inside) {
-        const later = precision === 'date' ? date > w.lastDate : instant.getTime() >= w.end.getTime();
-        const what = `published ${e.published} is outside the ${w.month} window (${w.since} to ${w.until} ET)`;
+      // a date-only source counts as 18:00 ET that day (§4), also against a window ended early
+      const [py, pm, pd] = date.split('-').map(Number);
+      const counted = precision === 'date' ? etWallToDate(py, pm, pd, DATE_ONLY_HOUR, 0, 0) : instant;
+      if (!instantInWindow(counted, w)) {
+        const later = counted.getTime() >= w.end.getTime();
+        const what = `published ${e.published} is outside the ${w.key} window (${w.since} to ${w.until} ET)`;
         if (!later) err(`.published: ${what}; a development first made public before the window is dropped BF_OUT_OF_WINDOW and is not registered`);
         else if (!allowOutside) err(`.published: ${what}; a development first made public after the window is dropped BF_OUT_OF_WINDOW; a later source that only confirms facts stated at the time may be registered with --allow-outside`);
         else outside = true;
@@ -1346,7 +1457,7 @@ export function expectedChecks(candidates) {
 }
 
 export function emptyUrlCheckDoc(w) {
-  return { schema_version: 1, month: w.month, updated_at: null, checks: {} };
+  return { schema_version: 1, ...passFields(w), updated_at: null, checks: {} };
 }
 
 /** The fields of a check that go into the audit log and url-check.json history. */
@@ -1421,7 +1532,8 @@ export function mergeUrlChecks(doc, records, now = new Date(), { onIgnored = () 
     if (!valid(key, r)) continue;
     add(key, r, [checkSummary(r)]);
   }
-  return { schema_version: 1, month: doc?.month ?? null, updated_at: toEtIso(now), checks };
+  const key = typeof doc?.day === 'string' ? { day: doc.day } : { month: doc?.month ?? null };
+  return { schema_version: 1, ...key, updated_at: toEtIso(now), checks };
 }
 
 /** Why a verified record does not hold up when its fields are read again, or null. */
@@ -1502,9 +1614,23 @@ export function backfillReasonCodes(filterText) {
 
 const timestampInWindow = (it, w) => typeof it?.timestamp === 'string' && instantInWindow(it.timestamp, w);
 
-/** Existing backfilled items whose timestamps fall in the pass's window. */
+/**
+ * Existing backfilled items whose timestamps fall in the pass's window: that pass key's items
+ * (pass windows never overlap, so another month's or day's items are never counted).
+ */
 export function backfilledInWindow(archiveItems, w) {
   return (archiveItems ?? []).filter((it) => it?.backfilled === true && timestampInWindow(it, w));
+}
+
+/** The key of the pass whose window holds an instant (Date, ms or ISO; PASSES, `until` applied), or null. */
+export function passKeyAt(t) {
+  const ms = t instanceof Date ? t.getTime() : typeof t === 'number' ? t : Date.parse(t);
+  if (!Number.isFinite(ms)) return null;
+  for (const key of Object.keys(PASSES)) {
+    const w = passWindow(key);
+    if (ms >= w.start.getTime() && ms < w.end.getTime()) return key;
+  }
+  return null;
 }
 
 const cleanValidatorText = (s) => s
@@ -1514,16 +1640,16 @@ const cleanValidatorText = (s) => s
 /**
  * Plan a backfill publish: everything BACKFILL.md §6 requires, computed in memory. Never writes.
  * @param {object} ctx
- *   decisions      parsed <work>/decisions.json (run_id "backfill-YYYY-MM")
+ *   decisions      parsed <work>/decisions.json (run_id "backfill-<key>": the month or the day)
  *   candidates     the pass's candidates (candidates.json)
  *   archive        parsed archive.json; runs: parsed runs.json (read only)
  *   urlChecks      the live checks publish just made (normalised URL -> checkUrl record): every
  *                  item source URL and every BF_URL_UNVERIFIED candidate URL
  *   urlHistory     every recorded check per normalised URL (url-check.json history plus the live
  *                  checks), written to the audit log; informational, never gating
- *   auditRows      rows of logs/backfill/<month>.jsonl from earlier publishes, or null
+ *   auditRows      rows of logs/backfill/<key>.jsonl from earlier publishes of this pass, or null
  *   thresholds     loadThresholds() result; filterText: FILTER.md text
- *   window         monthWindow(); sections: the pass's sections
+ *   window         passWindow() (monthWindow or dayWindow, `until` applied); sections: the pass's sections
  *   now            the real time, for the age of the URL checks (never --now)
  *   appendMissing  --append-missing
  * @returns {{ errors, warnings, notices, newItems, nextArchive, logRows, notJudged, skipped, nothingNew }}
@@ -1543,7 +1669,7 @@ export function planPublish(ctx) {
     if (!Array.isArray(raw.items)) v.error('decisions', 'items: must be an array');
     return result();
   }
-  if (raw.run_id !== w.id) v.error('decisions', `run_id: ${quote(raw.run_id)} must be ${quote(w.id)} for the ${w.month} pass`);
+  if (raw.run_id !== w.id) v.error('decisions', `run_id: ${quote(raw.run_id)} must be ${quote(w.id)} for the ${w.key} pass`);
   if (raw.judgments.length === 0) {
     v.error('decisions', 'judgments: empty; a publish records the pass\'s judgments (nothing to publish)');
     return result();
@@ -1558,7 +1684,7 @@ export function planPublish(ctx) {
   const archiveItems = Array.isArray(archive?.items) ? archive.items : [];
   const prior = backfilledInWindow(archiveItems, w);
   if ((prior.length || auditRows) && !appendMissing) {
-    v.error('archive', `the ${w.month} backfill was already published (${prior.length} backfilled item(s) in the window${prior.length ? `: ${prior.slice(0, 5).map((i) => i.id).join(', ')}${prior.length > 5 ? ', ...' : ''}` : ''}${auditRows ? '; audit log present' : ''}); refusing to publish twice. Use --append-missing to add only new items`);
+    v.error('archive', `the ${w.key} backfill was already published (${prior.length} backfilled item(s) in the window${prior.length ? `: ${prior.slice(0, 5).map((i) => i.id).join(', ')}${prior.length > 5 ? ', ...' : ''}` : ''}${auditRows ? '; audit log present' : ''}); refusing to publish twice. Use --append-missing to add only new items`);
     return result();
   }
 
@@ -1583,12 +1709,12 @@ export function planPublish(ctx) {
           skipped.items.push({ draft_index: i, id: done.id });
           skippedIdx.add(i);
         } else {
-          v.error(`decisions.items[${i}]`, `its judgments (${old.map((j) => j.candidate_id).join(', ')}) were logged by an earlier publish of ${w.month}, but no backfilled item has its primary source; a candidate is judged once per pass`);
+          v.error(`decisions.items[${i}]`, `its judgments (${old.map((j) => j.candidate_id).join(', ')}) were logged by an earlier publish of ${w.key}, but no backfilled item has its primary source; a candidate is judged once per pass`);
         }
         return;
       }
       if (old.length) {
-        v.error(`decisions.items[${i}]`, `mixes candidates judged by an earlier publish of ${w.month} (${old.map((j) => j.candidate_id).join(', ')}) with new ones`);
+        v.error(`decisions.items[${i}]`, `mixes candidates judged by an earlier publish of ${w.key} (${old.map((j) => j.candidate_id).join(', ')}) with new ones`);
         return;
       }
       remap.set(i, keepItems.length);
@@ -1609,7 +1735,7 @@ export function planPublish(ctx) {
     decisions = { ...decisions, judgments: keepJudgments, items: keepItems };
     if (skipped.judgments.length) notices.push(`--append-missing: ${skipped.judgments.length} judgment(s) already logged by an earlier publish skipped; ${skipped.items.length} item(s) already published (${skipped.items.map((x) => x.id).join(', ') || 'none'})`);
     if (!keepJudgments.length && !v.errors.length) {
-      notices.push(`--append-missing: nothing new to publish for ${w.month}`);
+      notices.push(`--append-missing: nothing new to publish for ${w.key}`);
       return result({ skipped, nothingNew: true });
     }
   }
@@ -1635,7 +1761,7 @@ export function planPublish(ctx) {
     const st = j.section_tested;
     const code = j.reason_code;
     if (SECTIONS.includes(st) && !inPass(st) && code !== 'BF_SECTION_EXCLUDED') {
-      v.error(a, `section_tested: ${st} is outside the ${w.month} pass (${sections.join(', ')}); a candidate that would qualify only there is dropped BF_SECTION_EXCLUDED, never re-routed`);
+      v.error(a, `section_tested: ${st} is outside the ${w.key} pass (${sections.join(', ')}); a candidate that would qualify only there is dropped BF_SECTION_EXCLUDED, never re-routed`);
     }
     if (code === 'BF_SECTION_EXCLUDED' && st !== null && inPass(st)) v.error(a, `section_tested: BF_SECTION_EXCLUDED names a section outside the pass (or null), not ${st}`);
     if (code === 'BF_OUT_OF_WINDOW' && st !== null) v.error(a, 'section_tested: BF_OUT_OF_WINDOW requires null');
@@ -1644,7 +1770,7 @@ export function planPublish(ctx) {
   });
   items.forEach((item, i) => {
     if (isObj(item) && SECTIONS.includes(item.section) && !inPass(item.section)) {
-      v.error(`decisions.items[${i}]`, `section: ${item.section} is outside the ${w.month} pass (${sections.join(', ')}); drop the story BF_SECTION_EXCLUDED`);
+      v.error(`decisions.items[${i}]`, `section: ${item.section} is outside the ${w.key} pass (${sections.join(', ')}); drop the story BF_SECTION_EXCLUDED`);
     }
   });
 
@@ -1689,7 +1815,9 @@ export function planPublish(ctx) {
     }
   }
 
-  // ---- 6. references to earlier items: an RS id, or a candidate id of this batch or an earlier publish
+  // ---- 6. references to earlier items: an RS id (an item of this batch, of an earlier publish of
+  // this pass, or a backfilled item of an earlier pass, any key), or a candidate id of an item of
+  // this batch or of an earlier publish of this pass. Never an item of a later pass.
   const archiveById = new Map(archiveItems.filter((it) => typeof it?.id === 'string').map((it) => [it.id, it]));
   const batchById = new Map([...idOf].map(([di, id]) => [id, { di, slot: slotOf.get(di) }]));
   const itemOfCand = new Map();
@@ -1706,7 +1834,7 @@ export function planPublish(ctx) {
     }
     const row = priorRows.get(ref);
     if (row && typeof row.item_id === 'string') return row.item_id;
-    v.error(at, `${what}: ${ref} is not a candidate of any item of this batch or of an earlier publish of ${w.month}`);
+    v.error(at, `${what}: ${ref} is not a candidate of any item of this batch or of an earlier publish of ${w.key}; name an item of an earlier pass by its id (RS-YYMMDD-HHMM-NN)`);
     return ref;
   };
   const instantOfRef = (id) => {
@@ -1716,6 +1844,15 @@ export function planPublish(ctx) {
   };
   const isBackfilledRef = (id) => batchById.has(id) || archiveById.get(id)?.backfilled === true;
   const slotIsoOfRef = (id) => (batchById.has(id) ? batchById.get(id).slot.iso : archiveById.get(id)?.timestamp ?? '?');
+  // a backfilled archive item after this pass's window belongs to a later pass (any key)
+  const laterPassOf = (id) => {
+    if (batchById.has(id)) return null;
+    const it = archiveById.get(id);
+    const t = Date.parse(it?.timestamp);
+    if (it?.backfilled !== true || !Number.isFinite(t) || t < w.end.getTime()) return null;
+    return { key: passKeyAt(t) };
+  };
+  const laterPassText = (what, id, later) => `${what}: ${id} (${slotIsoOfRef(id)}) is ${later.key ? `an item of the later ${later.key} pass` : `a backfilled item after the ${w.key} window`}; a pass references only backfilled items of earlier passes or of its own, never a later pass's (BACKFILL.md §2: as of the date, no hindsight)`;
   judgments.forEach((j, i) => {
     if (!isObj(j) || (j.dedup !== 'material_update' && j.dedup !== 'same_story_dropped')) return;
     const a = `decisions.judgments[${i}]${typeof j.candidate_id === 'string' ? ` (${j.candidate_id})` : ''}`;
@@ -1729,7 +1866,9 @@ export function planPublish(ctx) {
     // §2, as of the date: the story this candidate repeats or updates was out before it
     const c = candById.get(j.candidate_id);
     const own = c ? candidateSlot(c, w) : null;
-    if (own && t >= own.slot.instant.getTime()) {
+    const later = laterPassOf(j.match_id);
+    if (later) v.error(a, laterPassText('match_id', j.match_id, later));
+    else if (own && t >= own.slot.instant.getTime()) {
       v.error(a, `match_id: ${j.match_id} (${slotIsoOfRef(j.match_id)}) is not earlier than this candidate's own slot ${own.slot.iso}; the earlier story must precede this candidate (BACKFILL.md §2: as of the date, no hindsight). The first publication of a story is its item; outlets in the same slot are cluster members of it`);
     }
   });
@@ -1743,7 +1882,9 @@ export function planPublish(ctx) {
     if (t === null) return; // validateDecisions: not a published item
     if (!isBackfilledRef(ref)) v.error(a, `update_of: ${ref} is a live item; a backfilled item never references a live item (BACKFILL.md §2)`);
     const mine = slotOf.get(i);
-    if (mine && t >= mine.instant.getTime()) v.error(a, `update_of: ${ref} is not earlier than this item (${mine.iso}); a material update points at an earlier backfilled item`);
+    const later = laterPassOf(ref);
+    if (later) v.error(a, laterPassText('update_of', ref, later));
+    else if (mine && t >= mine.instant.getTime()) v.error(a, `update_of: ${ref} is not earlier than this item (${mine.iso}); a material update points at an earlier backfilled item`);
   });
 
   // ---- 7. the live gate: publish.mjs (validateDecisions) plus selfcheck.mjs's strict layer
@@ -1845,7 +1986,7 @@ export function planPublish(ctx) {
     (Array.isArray(item?.sources) ? item.sources : []).forEach((s, k) => {
       const c = isObj(s) ? candByNorm.get(normaliseUrl(s.url)) : null;
       const pub = c ? publicationInstant(c) : null;
-      if (pub && pub.instant.getTime() < w.start.getTime()) v.error(`decisions.items[${i}].sources[${k}]`, `published ${describePub(pub)}, before the ${w.month} window: a development first made public before the window is dropped BF_OUT_OF_WINDOW`);
+      if (pub && pub.instant.getTime() < w.start.getTime()) v.error(`decisions.items[${i}].sources[${k}]`, `published ${describePub(pub)}, before the ${w.key} window: a development first made public before the window is dropped BF_OUT_OF_WINDOW`);
     });
   });
 
@@ -1906,7 +2047,7 @@ export function planPublish(ctx) {
     return c.published_date ?? null;
   };
   const base = (c) => ({
-    month: w.month,
+    ...passFields(w),
     candidate_id: c.candidate_id,
     url: c.url,
     publication: c.publication,
