@@ -126,6 +126,66 @@
       "run_id": "2026-10-05-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.theregister.com/security/2026/10/05/citrix-netscaler-security-snafus-get-even-worse-amid-more-0-day-reports/5301232": {
+      "first_seen": "2026-10-06T03:33:19-04:00",
+      "run_id": "2026-10-05-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.finextra.com/banners/banner.aspx?opt=ad&baid=8229": {
+      "first_seen": "2026-10-06T03:33:19-04:00",
+      "run_id": "2026-10-05-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/denmark-population-registry-data-breach-affects-88-million-people": {
+      "first_seen": "2026-10-06T03:33:19-04:00",
+      "run_id": "2026-10-05-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/iqvia-fined-78-million-for-failing-to-properly-anonymize-health-data": {
+      "first_seen": "2026-10-06T03:33:19-04:00",
+      "run_id": "2026-10-05-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cyberscoop.com/citrix-netscaler-third-exploited-zero-day-vulnerability": {
+      "first_seen": "2026-10-06T03:33:19-04:00",
+      "run_id": "2026-10-05-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/citrix-patch-third-exploited-flaw-netscaler/832128": {
+      "first_seen": "2026-10-06T03:33:19-04:00",
+      "run_id": "2026-10-05-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://techcrunch.com/2026/10/05/hackers-steal-8-million-citizens-records-from-danish-government-database": {
+      "first_seen": "2026-10-06T03:33:19-04:00",
+      "run_id": "2026-10-05-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.federalreserve.gov/supervisionreg/srletters/SR2607.htm": {
+      "first_seen": "2026-10-06T03:33:19-04:00",
+      "run_id": "2026-10-05-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.pcisecuritystandards.org/the-ai-exchange-innovators-in-payment-security-featuring-coalfire": {
+      "first_seen": "2026-10-06T03:33:19-04:00",
+      "run_id": "2026-10-05-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.banking.senate.gov/newsroom/minority/warren-hawley-press-home-and-auto-insurers-on-surge-in-claims-resolved-without-payment": {
+      "first_seen": "2026-10-06T03:33:19-04:00",
+      "run_id": "2026-10-05-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
