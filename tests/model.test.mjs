@@ -345,7 +345,6 @@ describe('editions and runs', () => {
     const le = M.latestEdition(data);
     assert.equal(M.fmtFull(le.date), 'Fri 2 Oct 2026, 14:00 ET');
     assert.deepEqual(le.items.map((i) => i.id), ['RS-261002-1400-01', 'RS-261002-1400-03', 'RS-261002-1400-02', 'RS-261002-1400-04']);
-    assert.equal(M.mastheadTimes(data).edition, 'Fri 2 Oct 2026, 14:00 ET');
   });
 
   test('fallback without published runs: latest non-backfilled item', () => {
@@ -353,24 +352,30 @@ describe('editions and runs', () => {
     assert.equal(M.latestEdition(d).items[0].id, 'RS-261001-1800-09');
   });
 
-  test('"Last checked" is the latest completed run, silent included; a failed run leaves it', () => {
+  test('"Updated" is the latest completed run, silent included; a failed run leaves it', () => {
     assert.equal(M.fmtFull(M.lastChecked(data)), 'Fri 2 Oct 2026, 14:21 ET');
     const run = (slot, status, fin) => ({ slot: `2026-10-02T${slot}:00-04:00`, status, started_at: `2026-10-02T${slot}:30-04:00`, finished_at: `2026-10-02T${fin}:00-04:00`, items: [] });
     const silent = M.prepare({ items: [] }, { runs: [run('06:00', 'silent', '06:09')] });
-    assert.deepEqual(M.mastheadTimes(silent), { edition: 'None yet', checked: 'Fri 2 Oct 2026, 06:09 ET' });
+    assert.deepEqual(M.mastheadStatus(silent, NOW), { updated: 'Fri 06:09', updatedFull: 'Fri 2 Oct 2026, 06:09 ET', next: '18:00' });
     assert.equal(M.latestEdition(silent), null);
     const failed = M.prepare({ items: [] }, { runs: [run('06:00', 'silent', '06:09'), run('10:00', 'failed', '10:20')] });
-    assert.equal(M.mastheadTimes(failed).checked, 'Fri 2 Oct 2026, 06:09 ET');
+    assert.equal(M.mastheadStatus(failed, NOW).updatedFull, 'Fri 2 Oct 2026, 06:09 ET');
     const onlyFailed = M.prepare({ items: [] }, { runs: [run('10:00', 'failed', '10:20')] });
-    assert.deepEqual(M.mastheadTimes(onlyFailed), { edition: 'None yet', checked: 'Not yet' });
+    assert.deepEqual(M.mastheadStatus(onlyFailed, NOW), { updated: null, updatedFull: null, next: '18:00' });
   });
 
-  test('a silent run moves "Last checked" and leaves "Last edition" alone', () => {
-    const before = M.mastheadTimes(data);
+  test('a silent run moves "Updated"', () => {
     const next = { ...RAW_RUNS, runs: [...RAW_RUNS.runs, { run_id: '2026-10-02-1800', slot: '2026-10-02T18:00:00-04:00', started_at: '2026-10-02T18:05:00-04:00', finished_at: '2026-10-02T18:31:00-04:00', status: 'silent', items: [] }] };
-    const after = M.mastheadTimes(M.prepare(RAW_ARCHIVE, next));
-    assert.equal(after.edition, before.edition);
-    assert.equal(after.checked, 'Fri 2 Oct 2026, 18:31 ET');
+    const after = M.mastheadStatus(M.prepare(RAW_ARCHIVE, next), new Date('2026-10-02T18:40:00-04:00'));
+    assert.deepEqual(after, { updated: 'Fri 18:31', updatedFull: 'Fri 2 Oct 2026, 18:31 ET', next: 'Sat 06:00' });
+  });
+
+  test('the next slot: later the same ET day, else the next morning, across the clock change', () => {
+    const at = (s) => M.nextSlot(new Date(s));
+    assert.equal(at('2026-10-02T05:59:00-04:00'), '06:00');
+    assert.equal(at('2026-10-02T10:00:00-04:00'), '14:00', 'a slot that is due now is not next');
+    assert.equal(at('2026-10-02T18:00:01-04:00'), 'Sat 06:00');
+    assert.equal(at('2026-10-31T19:00:00-04:00'), 'Sun 06:00', 'the first slot after EDT ends is 06:00 EST');
   });
 
   test('run counts per window; silent and failed are not editions', () => {
@@ -400,7 +405,7 @@ describe('dashboard analysis', () => {
     assert.equal(building.figure, '2');
     assert.equal(building.text, 'developments in one thread since 21 Sep 2026');
     assert.equal(building.sub, '2 of them in the last 30 days.');
-    assert.equal(building.item.id, 'RS-261002-1400-02');
+    assert.ok(!('item' in building), 'no pointer to an item: the newest items are listed below the brief');
     const recentFrom = +NOW - 90 * DAY;
     const recent = data.items.filter((i) => i.ts >= recentFrom);
     const prior = data.items.filter((i) => i.ts >= recentFrom - 90 * DAY && i.ts < recentFrom);
@@ -552,7 +557,7 @@ describe('report and archive: the dashboard carried over (owner change 2026-10-0
     assert.equal(b[0].sub, 'In the 7 days before: 6 items, 5 asking for action.');
     assert.equal(b[1].text, 'Cyber is on 9 of the 13 items.');
     assert.equal(b[2].text, '1 of the 13 items continues an earlier thread; the longest is now 2 developments long.');
-    assert.equal(b[2].item.id, 'RS-261002-1400-02');
+    assert.ok(!('item' in b[2]), 'no pointer to an item: the window\'s items are listed below the brief');
     // The bar reading agrees with the report's own run count for the window.
     const rs = M.runStats(data, M.reportRange('week', NOW));
     assert.equal(b[3].text, `${rs.applied} runs in the last 7 days read 4,101 new headlines; 588 passed the first screen and 13 cleared the bar.`);
@@ -792,7 +797,7 @@ describe('empty archive and empty runs (day one)', () => {
     assert.equal(d.bar.any, false);
     assert.ok(d.bar.grid.every((g) => g.slots.every((s) => s.state === 'off' || s.state === 'later')), 'nothing counts as missed before runs begin');
     assert.match(d.archLine, /^Nothing published yet\./);
-    assert.deepEqual(M.mastheadTimes(empty), { edition: 'None yet', checked: 'Not yet' });
+    assert.deepEqual(M.mastheadStatus(empty, NOW), { updated: null, updatedFull: null, next: '18:00' });
   });
 
   test('report and archive', () => {

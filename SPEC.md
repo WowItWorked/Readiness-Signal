@@ -238,11 +238,12 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
 - Dashboard (owner change 2026-10-06, replacing the design's 7-day counts, which said little with so few items):
   analysis, not counts, all computed in `model.js` from `archive.json` and `runs.json` (never at build time).
   1. A brief of four readings in plain sentences: **Building** (the update thread with the most developments in
-     the last 90 days: size, start, last 30 days, its latest item), **Concentrating** (the domain on the most items
+     the last 90 days: size, start, last 30 days), **Concentrating** (the domain on the most items
      from the last 90 days against the 90 days before; domains with nothing in 90 days), **Asking** (how many of
      the last 90 days' items ask for action, by mechanism, against the 90 days before) and **The bar** (the last 7
      ET calendar days of runs: new headlines read, first-screen passes, items cleared; scheduled slots missed or
-     failed). 2. Latest additions (five newest items, live or backfilled). 3. Additions by month: a unit chart,
+     failed). No reading points at an item: the newest items are listed directly below it (owner change
+     2026-10-06, on the Report's brief too). 2. Latest additions (five newest items, live or backfilled). 3. Additions by month: a unit chart,
      one square per item, filled where it asks for action, open where it resolves as awareness only; section
      totals beneath. 4. Developing threads: items joined by `update_of` into stories (2+ items), each a timeline
      on a shared month axis with its latest item. 5. Questions to put to owners: the newest actionable items'
@@ -275,13 +276,16 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
 - `backfilled: true` items: small text label "Backfilled" in the collapsed meta line; expanded footer note
   "Added by the historical backfill pass, not by a live edition." Backfilled items never count as editions.
 - `update_of`: expanded view shows "Update to: <earlier claim>" linking to `#<earlier id>`.
-- Masthead times (owner change 2026-10-05), both in ET and read from `runs.json` at page load, never set
-  when the site is built, so they move on their own as runs are pushed: "Last edition" = slot of the latest
-  run that published at least one new item ("None yet" before the first); "Last checked" = `finished_at` of
-  the latest run that completed, published or silent ("Not yet" before the first). A silent run publishes no
-  edition and moves only "Last checked"; a failed run moves neither. The dashboard has no separate "As of".
-- Empty states everywhere (empty archive on day one must look intentional): masthead "Last edition — None yet",
-  "Last checked — Not yet".
+- Masthead status (owner change 2026-10-06, replacing the 2026-10-05 "Last edition" and "Last checked"
+  stamps, which read as noise): one line, "Updated Fri 14:21 · Next 18:00 ET", in ET. "Updated" =
+  `finished_at` of the latest run that completed, published or silent, read from `runs.json` at page load and
+  never set when the site is built, so it moves on its own as runs are pushed (weekday and time within six
+  days, else day and month); a failed run leaves it. "Next" = the next slot after now, with its weekday when
+  it falls on a later ET day. Before the first completed run, or when the data cannot load, the line is the
+  schedule alone ("Next update 18:00 ET"); nothing is guessed while loading; on paper the line is "Updated"
+  with the full date, and no schedule. The dashboard has no separate "As of".
+- Empty states everywhere (empty archive on day one must look intentional): the masthead shows the schedule
+  alone ("Next update 06:00 ET").
 - Data load failure: a plain message in the main column; never a blank page.
 - Footer (replaces "Illustrative content…"): "Public sources only: headlines and leads are referenced, never
   republished. Nothing here describes any institution's control position; validation questions and issue
@@ -332,17 +336,24 @@ The owner asked for "more personality, more color, and rounded edges". Layout, b
 stay as above; the visual layer changes:
 
 - Rounded surfaces (cards 16 px, panels 12 px, controls 10 px, chips and filter buttons as pills) with soft
-  shadows in place of hard rules; a navy-to-indigo masthead gradient with a faint decorative texture.
-- The masthead's nav row carries a radio wave of chatter, the same wave as the Readiness Signal panel on
-  emergingtechrisk.com (owner request, 2026-10-06): low traffic scrolls slowly and continuously under a dashed
-  "Materiality bar" laid on the nav row's top rule, and only the bursts that cross the bar light up, in a light
-  tint of the brand green. The owner chose continuous motion with no pause control (2026-10-06), accepting
-  that this falls short of WCAG 2.2.2; under `prefers-reduced-motion` the wave is still, and under 640 px and
-  in print the wave and its label are left out.
+  shadows in place of hard rules; a navy-to-indigo masthead gradient (its faint dot texture was dropped with
+  the masthead's other noise, owner change 2026-10-06).
+- The logo, from the owner's brand set (2026-10-06): the mark, a baseline that rises through a bar with the
+  part above the bar in the brand green (white below it on the navy masthead), beside the wordmark "Readiness
+  Signal" in Source Serif 4 Bold, with the tagline "Amplify the signal. Reduce the risk." under the wordmark in
+  Urbanist. Both faces load only the letters the logo uses. The favicon is the set's site icon: the same mark
+  on a navy square.
+- The masthead's nav row carries the chatter as level bars (owner request 2026-10-06, replacing a line wave
+  that read as a heart monitor): low traffic rises from the masthead's foot and scrolls slowly and
+  continuously under a dashed bar laid on the nav row's top rule, and only the bursts that cross the bar light
+  up above it, in the brand green, as in the logo. It carries no label. The owner chose continuous motion with
+  no pause control (2026-10-06), accepting that this falls short of WCAG 2.2.2; under
+  `prefers-reduced-motion` the bars are still, and under 640 px and in print they are left out.
 - Each mechanism has a categorical hue used on its tag, board column, mix strip and expanded panels:
   Candidate issue deep teal, KRI / KPI cyan, PRAF coverage violet, Awareness only blue-indigo (kept clearly apart from the violet and from the brand indigo). Hues stay outside red,
   amber and green so colour never reads as severity or safety; awareness only carries the same weight as the
-  others. The brand green remains emphasis only (its light tint marks the masthead wave's chatter and crossings).
+  others. The brand green remains emphasis only: the logo's cap, the masthead bars' crossings, the active nav
+  mark and link-hover underlines.
 - Text meets WCAG AA on every background; animation respects `prefers-reduced-motion`; no monospace.
 
 ## 8. Tests and tooling

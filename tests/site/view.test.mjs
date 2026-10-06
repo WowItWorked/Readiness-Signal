@@ -238,12 +238,11 @@ describe('colour hooks and palette', () => {
     }
   });
 
-  test('mechanism labels wrap rather than clip; focus rings clear the item bar; print stops the pulse', () => {
+  test('mechanism labels wrap rather than clip; focus rings clear the item bar', () => {
     const rule = (sel) => { const m = new RegExp(`(?:^|\\n)${sel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\{([^}]*)\\}`).exec(css); return m ? m[1] : null; };
     const label = rule('.mech-label');
     assert.ok(label && !/text-overflow|overflow:\s*hidden|white-space:\s*nowrap/.test(label), 'WCAG 1.4.12: no clipped mechanism label');
     assert.ok(/outline-offset:\s*-6px/.test(rule('.item > .row:focus-visible') || ''), 'item row ring sits inside the 4px bar');
-    assert.ok(/@media print\s*\{[^]*?\.mast \.dot\.live \{ animation: none; \}/.test(css), 'print rule outranks .mast .dot.live');
   });
 
   test('every mechanism-bearing element carries data-mech for its own mechanism', () => {
@@ -276,41 +275,62 @@ describe('colour hooks and palette', () => {
     assert.ok(!render({ page: 'dashboard' }).includes('class="quiet-sig"'), 'no quiet line on a populated dashboard');
   });
 
-  test('the live dot pulses only when there is an edition; motion respects reduced-motion', () => {
-    assert.ok(render({ page: 'dashboard' }).includes('<span class="dot live" aria-hidden="true"></span>Last edition'));
-    assert.ok(render({ page: 'dashboard' }, empty).includes('<span class="dot" aria-hidden="true"></span>Last edition'));
+  test('motion respects reduced-motion', () => {
     assert.ok(/@media \(prefers-reduced-motion: reduce\)\s*\{[^}]*animation: none !important; transition: none !important;/.test(css));
   });
 
-  test('the brand green is emphasis only: link underlines, the masthead bar, the live dot, the active nav mark, the masthead wave', () => {
+  test('the brand green is emphasis only: link underlines, the logo\'s cap, the active nav mark, the masthead bars\' crossings', () => {
     const rules = css.replace(/\/\*[^]*?\*\//g, '').split('}');
     for (const r of rules) {
       const [sel, body = ''] = r.split('{').slice(-2);
       for (const decl of body.split(';')) {
-        // The brand green and its light tint (#65E287), which only the masthead wave's strokes use.
+        // The brand green, and the light tint (#65E287) the old masthead wave used, which nothing may now.
         if (!/var\(--green\)|#1FD16A|rgba\(31, 209, 106|#65E287|rgba\(101, 226, 135/i.test(decl) || /--green:/.test(decl)) continue;
         const prop = decl.split(':')[0].trim();
         const ok = prop === 'text-decoration-color'
-          || /^\s*(\.brand-bar|\.dot|\.nav a\.on::after|0%|70%|100%)\s*$/.test(sel)
-          || (prop === 'stroke' && /^\s*\.mw-(bg|dim|hot)\s*$/.test(sel));
+          || (prop === 'fill' && /^\s*\.bm-cap\s*$/.test(sel))
+          || /^\s*\.nav a\.on::after\s*$/.test(sel)
+          || (prop === 'stroke' && /^\s*\.mw-hot\s*$/.test(sel));
         assert.ok(ok, `green used by "${sel.trim()}" ${prop}`);
       }
     }
   });
 
-  test('masthead wave: decorative, tiled, labelled, left out of print and off phones', () => {
+  test('masthead logo: the mark, wordmark and tagline from the owner\'s brand set (2026-10-06)', () => {
+    const html = render({ page: 'dashboard' });
+    const at = html.indexOf('<a class="brand"');
+    const brand = html.slice(at, html.indexOf('</a>', at));
+    assert.ok(brand.includes('<svg class="brand-mark" viewBox="0 0 284 94" aria-hidden="true" focusable="false">'));
+    assert.ok(text(brand).includes('Readiness Signal Amplify the signal. Reduce the risk.'));
+    // The static page shows the same logo before the script runs.
+    const index = readFileSync(new URL('../../docs/index.html', import.meta.url), 'utf8');
+    assert.ok(index.includes(brand.slice(brand.indexOf('<svg'))));
+    // Its two faces load only the letters the logo uses (so nothing else may ask for them).
+    const subset = decodeURIComponent(index.match(/text=([^&"]+)/)[1]);
+    assert.deepEqual([...new Set(subset)].sort(), [...new Set('Readiness Signal Amplify the signal. Reduce the risk.')].sort());
+    // The favicon is the same mark, white with its green cap, on the navy square.
+    const fav = readFileSync(new URL('../../docs/favicon.svg', import.meta.url), 'utf8');
+    assert.ok(fav.includes('<rect width="32" height="32" fill="#0B1F44"/>') && fav.includes('fill="#fff"') && fav.includes('fill="#1FD16A"'));
+  });
+
+  test('masthead bars: decorative, tiled, unlabelled, left out of print and off phones', () => {
     const html = render({ page: 'dashboard' });
     const mast = html.slice(0, html.indexOf('</header>'));
     assert.ok(mast.includes('<header class="mast" data-k="mast">'));
     assert.ok(mast.includes('<div class="mast-wave" aria-hidden="true"><svg focusable="false">'), 'hidden from assistive tech');
-    assert.equal((mast.match(/<use href="#mw-main"/g) || []).length, 10, 'dim and lit copies, five tiles each');
+    assert.equal((mast.match(/<use href="#mw-bars"/g) || []).length, 10, 'dim and lit copies, five tiles each');
     assert.ok(mast.includes('<line class="mw-bar" x1="0" y1="22" x2="100%" y2="22"></line>'), 'the bar sits on the nav row rule');
-    assert.ok(mast.includes('<span class="mw-label" aria-hidden="true">Materiality bar</span>'));
+    // A period is 80 bars rising from the masthead's foot (y 66); two of them cross the bar (y 22).
+    const bars = [...mast.match(/<path id="mw-bars" d="([^"]+)"/)[1].matchAll(/M(\d+) 66V(\d+)/g)].map((m) => 66 - Number(m[2]));
+    assert.equal(bars.length, 80);
+    assert.equal(bars.filter((h) => h > 44).length, 2);
+    assert.ok(!mast.includes('mw-label') && !mast.includes('Materiality bar'), 'no label (owner: noise, 2026-10-06)');
     assert.ok(!mast.includes('<button'), 'no pause control: the owner chose continuous motion (2026-10-06)');
+    assert.ok(!mast.includes('class="dot'), 'no live dot');
     const print = render({ page: 'report', printMode: 'collapsed' });
-    assert.ok(!print.includes('mast-wave') && !print.includes('mw-label'), 'print mode leaves out the wave and its label');
-    // Reduced motion stills it (the global motion rule), and phones, where the nav fills the row, never get it.
-    assert.ok(/@media \(max-width: 639\.98px\) \{ \.mast-wave, \.mw-label \{ display: none; \} \}/.test(css));
+    assert.ok(!print.includes('mast-wave'), 'print mode leaves the bars out');
+    // Reduced motion stills them (the global motion rule), and phones, where the nav fills the row, never get them.
+    assert.ok(/@media \(max-width: 639\.98px\) \{ \.mast-wave \{ display: none; \} \}/.test(css));
   });
 
   test('mechanism tags show the label alone, with no four-square rail', () => {
@@ -323,8 +343,7 @@ describe('colour hooks and palette', () => {
 describe('states', () => {
   test('day one: masthead, dashboard, report and archive look intentional', () => {
     const dash = text(render({ page: 'dashboard' }, empty));
-    assert.ok(dash.includes('Last edition None yet'));
-    assert.ok(dash.includes('Last checked Not yet'));
+    assert.ok(dash.includes('Next update 18:00 ET') && !dash.includes('Updated '), 'no run yet: only the schedule');
     // Day one: every panel says plainly that there is nothing yet; nothing claims a run applied the test.
     assert.ok(dash.includes('No scheduled run has been recorded yet.'));
     assert.ok(dash.includes('Nothing published yet. Runs at 06:00, 10:00, 14:00 and 18:00 ET publish only what clears the bar; a silent run is a result.'));
@@ -345,19 +364,22 @@ describe('states', () => {
     assert.ok(!arcHtml.includes('data-act="toggleall"') && !arcHtml.includes('class="export-btn"'));
   });
 
-  test('masthead: last edition and last checked, both from runs.json', () => {
-    const mast = text(render({ page: 'report' }).slice(0, render({ page: 'report' }).indexOf('</header>')));
-    assert.ok(mast.includes('Last edition Fri 2 Oct 2026, 14:00 ET'));
-    assert.ok(mast.includes('Last checked Fri 2 Oct 2026, 14:21 ET'));
-    // A silent run after the edition moves "Last checked" only.
+  test('masthead: one status line, updated from runs.json, the next slot from the schedule (owner change 2026-10-06)', () => {
+    const mastOf = (html) => text(html.slice(0, html.indexOf('</header>')));
+    const mast = mastOf(render({ page: 'report' }));
+    assert.ok(mast.includes('Updated Fri 14:21 · Next 18:00 ET'));
+    assert.ok(!mast.includes('Last edition') && !mast.includes('Last checked'));
+    // A silent run moves "Updated"; after the day's last slot, the next is the morning's.
     const runs = fixture('runs.json');
     runs.runs.push({ run_id: '2026-10-02-1800', slot: '2026-10-02T18:00:00-04:00', started_at: '2026-10-02T18:05:00-04:00', finished_at: '2026-10-02T18:31:00-04:00', status: 'silent', items: [] });
-    const later = text(render({ page: 'report' }, M.prepare(fixture('archive.json'), runs)));
-    assert.ok(later.includes('Last edition Fri 2 Oct 2026, 14:00 ET'));
-    assert.ok(later.includes('Last checked Fri 2 Oct 2026, 18:31 ET'));
-    // While loading, neither time is guessed.
+    const later = mastOf(render({ page: 'report' }, M.prepare(fixture('archive.json'), runs), { now: new Date('2026-10-02T18:40:00-04:00') }));
+    assert.ok(later.includes('Updated Fri 18:31 · Next Sat 06:00 ET'));
+    // Paper carries the full time of its data, and no schedule.
+    const paper = mastOf(render({ page: 'report', printMode: 'collapsed' }));
+    assert.ok(paper.includes('Updated Fri 2 Oct 2026, 14:21 ET') && !paper.includes('Next'));
+    // While loading, no time is guessed.
     const loadingMast = text(V.renderApp({ ui: ui({ page: 'report' }), data: null, now: NOW, error: null, loading: true }));
-    assert.ok(!/\d{2}:\d{2} ET/.test(loadingMast));
+    assert.ok(!/\d{2}:\d{2}/.test(loadingMast));
   });
 
   test('the dashboard opens with the brief, then its panels in reading order (owner change 2026-10-06)', () => {
@@ -454,7 +476,7 @@ describe('states', () => {
     for (const page of ['dashboard', 'report', 'archive']) {
       const t = text(V.renderApp({ ui: ui({ page }), data: null, now: NOW, error: new Error('x'), loading: false }));
       assert.ok(t.includes('The archive could not be loaded.'), page);
-      assert.ok(t.includes('Last edition Unavailable') && t.includes('Last checked Unavailable'));
+      assert.ok(t.includes('Next update 18:00 ET') && !t.includes('Updated '), 'nothing claims when the data changed');
     }
     const about = text(V.renderApp({ ui: ui({ page: 'about' }), data: null, now: NOW, error: new Error('x'), loading: false }));
     assert.ok(about.includes('A filter, not a feed.'));

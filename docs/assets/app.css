@@ -1,7 +1,7 @@
 /* Readiness Signal: approved v2 layout, restyled as "a calm instrument with character".
    Layout values follow the design's L table: narrow < 640px, wide >= 980px, medium otherwise.
    Colour is categorical only: four mechanism hues, a navy/indigo brand, and the brand green as
-   emphasis (masthead bar, live dot, link-hover underline). Nothing is red, amber or green as an
+   emphasis (the logo's cap, the masthead bars' crossings, the active nav mark, link-hover underlines). Nothing is red, amber or green as an
    item or status colour, and no colour means severity, rating or safety. */
 
 :root {
@@ -234,7 +234,6 @@ main[tabindex="-1"]:focus { outline: none; }
   color: var(--m-text); min-width: 0;
 }
 
-.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex: none; }
 
 /* Section number badges: 1 solid filled, 2 double, 3 dashed; rounded, never a status. */
 .badge {
@@ -272,20 +271,12 @@ main[tabindex="-1"]:focus { outline: none; }
   position: relative; isolation: isolate; overflow: hidden;
   background: var(--navy); background-image: var(--grad-brand); color: #fff;
 }
-/* Faint dot grid, fading in from the left so the brand line stays clean. */
-.mast::before {
-  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background-image: radial-gradient(rgba(255, 255, 255, .10) 1px, transparent 1.6px);
-  background-size: 18px 18px;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 30%, #000 75%);
-  mask-image: linear-gradient(90deg, transparent 0%, transparent 30%, #000 75%);
-}
-/* A radio wave of chatter across the empty right side of the nav row, the same wave as the
-   Readiness Signal panel on emergingtechrisk.com: traffic scrolls slowly and without end under a
-   dashed materiality bar laid on the nav row's top rule, and only the bursts that cross the bar
-   light up. It has no pause control (the owner chose continuous motion, 2026-10-06); reduced
-   motion stills it. Under 640px the nav fills the row, so the wave and its label are left out,
-   and print leaves them out too. */
+/* The masthead's chatter as level bars across the empty right side of the nav row: traffic rises
+   from the masthead's foot under a dashed bar laid on the nav row's top rule, and only the bursts
+   that cross the bar light up above it, in the brand green, like the cap of the logo. It scrolls
+   slowly and without end, with no pause control (the owner chose continuous motion, 2026-10-06);
+   reduced motion stills it. Under 640px the nav fills the row, so the bars are left out, and print
+   leaves them out too. */
 .mast-wave {
   position: absolute; z-index: -1; pointer-events: none;
   left: max(440px, 50%); right: 0; bottom: 0; height: 66px;
@@ -293,18 +284,12 @@ main[tabindex="-1"]:focus { outline: none; }
   mask-image: linear-gradient(90deg, transparent, #000 45%);
 }
 .mast-wave svg { display: block; width: 100%; height: 100%; overflow: hidden; fill: none; }
-.mw-bg { stroke: rgba(101, 226, 135, .16); stroke-width: 1; animation: mw-scroll 13s linear infinite; }
-.mw-dim { stroke: rgba(101, 226, 135, .42); stroke-width: 1.1; }
-.mw-hot { stroke: #65E287; stroke-width: 1.6; }
+.mw-dim { stroke: rgba(255, 255, 255, .2); stroke-width: 2; }
+.mw-hot { stroke: var(--green); stroke-width: 2; }
 .mw-bar { stroke: rgba(255, 255, 255, .38); stroke-width: 1; stroke-dasharray: 3 4; }
-.mw-chatter { animation: mw-scroll 7s linear infinite; }
-@keyframes mw-scroll { to { transform: translateX(-240px); } }
-.mw-label {
-  position: absolute; right: var(--hpad); bottom: 46px; pointer-events: none;
-  font-size: 9.5px; font-weight: 600; letter-spacing: .14em; line-height: 1.2; text-transform: uppercase;
-  color: rgba(255, 255, 255, .55); /* about 5:1 on the masthead indigo: AA, and quieter than the times above */
-}
-@media (max-width: 639.98px) { .mast-wave, .mw-label { display: none; } }
+.mw-chatter { animation: mw-scroll 24s linear infinite; }
+@keyframes mw-scroll { to { transform: translateX(-480px); } }
+@media (max-width: 639.98px) { .mast-wave { display: none; } }
 .mast-in {
   position: relative; max-width: 1200px; margin: 0 auto; padding: 20px var(--hpad) 0;
   display: flex; flex-direction: column; gap: 16px;
@@ -312,42 +297,35 @@ main[tabindex="-1"]:focus { outline: none; }
 .mast-top {
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 40px;
 }
+/* The logo, from the owner's brand set (2026-10-06): the mark beside the wordmark, the tagline under
+   the wordmark. The wordmark (Source Serif 4 Bold) and the tagline (Urbanist) load with only the
+   letters the logo uses, so nothing else may ask for those faces: a glyph outside the subset falls
+   back to the next family. */
 .brand {
-  display: flex; align-items: stretch; gap: 14px; min-width: 0; color: #fff; text-decoration: none;
-  border-radius: 4px;
+  display: grid; grid-template-columns: auto auto; justify-content: start; align-items: center;
+  column-gap: 10px; row-gap: 3px; min-width: 0; color: #fff; text-decoration: none; border-radius: 4px;
 }
 .brand:hover { color: #fff; }
-.brand-bar {
-  width: 8px; background: var(--green); flex: none; border-radius: var(--r-pill);
-  box-shadow: 0 0 12px rgba(31, 209, 106, .18);
-}
-.brand-text { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.brand-mark { display: block; width: 78px; height: auto; margin-top: 4px; }
+.bm-base { fill: #fff; }
+.bm-cap { fill: var(--green); }
 .brand-name {
-  font-family: var(--serif); font-size: 28px; font-weight: 600; letter-spacing: -0.01em; line-height: 1;
+  font-family: var(--serif); font-size: 34px; font-weight: 700; line-height: 1; letter-spacing: -.005em;
+  white-space: nowrap;
 }
-.brand-tag {
-  font-size: 14px; line-height: 1.4; color: var(--mast-muted);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-/* Phones: let the tagline wrap so its second sentence (the punchline) is never cut off. */
+.brand-tag { grid-column: 2; font-family: 'Urbanist', var(--sans); font-size: 14px; line-height: 1.2; }
 @media (max-width: 639.98px) {
-  .brand-tag { white-space: normal; overflow: visible; text-overflow: clip; text-wrap: balance; }
+  .brand { column-gap: 8px; row-gap: 3px; }
+  .brand-mark { width: 60px; margin-top: 3px; }
+  .brand-name { font-size: 26px; }
+  .brand-tag { font-size: 13px; }
 }
-/* "Last edition" and "Last checked": side by side, stacking when the row is too narrow. */
-.mast-latest { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 0; }
-.mast-stamp { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.mast-latest-k {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--mast-muted);
+/* One quiet line (owner change 2026-10-06): when the data last changed, and when it next may. */
+.mast-status {
+  margin: 0; font-size: 13.5px; line-height: 1.4; color: var(--mast-muted); font-variant-numeric: tabular-nums;
 }
-.mast-latest-v { margin: 0; font-size: 15px; font-weight: 500; color: #fff; font-variant-numeric: tabular-nums; }
-/* The live dot pulses twice (under five seconds), then rests; never under reduced motion. */
-.mast .dot.live { animation: rs-pulse 2.4s ease-out 2; }
-@keyframes rs-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(31, 209, 106, .55); }
-  70% { box-shadow: 0 0 0 7px rgba(31, 209, 106, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(31, 209, 106, 0); }
-}
+.ms-v { font-weight: 500; color: #fff; }
+.ms-sep { color: rgba(255, 255, 255, .45); }
 .nav {
   display: flex; gap: var(--nav-gap); border-top: 1px solid rgba(255, 255, 255, .13);
   overflow-x: auto; scrollbar-width: none;
@@ -435,7 +413,7 @@ main[tabindex="-1"]:focus { outline: none; }
   font-size: 14px; line-height: 1.55; color: var(--muted); background: var(--quiet);
 }
 /* Whole-row buttons in the panels share one shape. */
-.lt, .ask, .reg, .brief-item, .th-latest {
+.lt, .ask, .reg, .th-latest {
   text-align: left; border: 0; cursor: pointer; font: inherit; color: inherit;
 }
 .lt, .ask, .reg {
@@ -465,20 +443,16 @@ main[tabindex="-1"]:focus { outline: none; }
 }
 .brief-of { font-size: 20px; font-weight: 500; color: var(--muted); }
 .brief-s { font-size: 13.5px; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
-.brief-item {
-  margin-top: auto; background: none; padding: 12px 0 0; border-top: 1px solid var(--rule-soft);
-  display: flex; flex-direction: column; gap: 8px; border-radius: 0;
-}
-.brief-item-k, .th-latest-k {
+.th-latest-k {
   display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px;
   font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
 }
-.brief-claim, .th-claim {
+.th-claim {
   font-family: var(--serif); font-size: 15px; line-height: 1.42; color: var(--ink); text-wrap: pretty;
   text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 3px;
   transition: text-decoration-color .15s var(--ease);
 }
-.brief-item:hover .brief-claim, .th-latest:hover .th-claim { text-decoration-color: var(--green); }
+.th-latest:hover .th-claim { text-decoration-color: var(--green); }
 
 /* Latest additions */
 .lt { display: flex; flex-direction: column; gap: 6px; }
@@ -1105,9 +1079,7 @@ a.src-link:hover { color: var(--ink); text-decoration-color: var(--green); }
 
 @media print {
   body, .rs { background: #fff; }
-  .nav, .fbar, .copy-btn, .email-btn, .scrim, .skip, .row-tog, .mast-wave, .mw-label { display: none !important; }
-  .mast::before { display: none; }
-  .mast .dot.live { animation: none; }
+  .nav, .fbar, .copy-btn, .email-btn, .scrim, .skip, .row-tog, .mast-wave { display: none !important; }
   .mast-in { padding-bottom: 16px; }
   :focus-visible { outline: none; }
   .card, .arch-link, .panel { box-shadow: none !important; }

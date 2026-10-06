@@ -422,7 +422,7 @@ export function effectiveNow(data, clock) {
 }
 
 /**
- * "Last checked": when the latest completed run finished (runs.json `finished_at`), whether it
+ * The masthead's "Updated": when the latest completed run finished (runs.json `finished_at`), whether it
  * published or was silent. A failed run did not complete the check, so it leaves this time where
  * it was. Null until a run has completed.
  */
@@ -898,8 +898,8 @@ const MECH_ASK = {
  * (2026-10-06), for readability: a reading with numbers leads with `figure` (the number that
  * matters, shown large) and `text` (what it counts, read on from the figure: "13 of 14" "items in
  * the last 90 days are on AI"); `sub` adds the detail and the comparison in one plainer line.
- * Readings with nothing to count are a plain sentence in `text`. `item` is the item a reading
- * points at.
+ * Readings with nothing to count are a plain sentence in `text`. No reading points at an item
+ * (owner change 2026-10-06): the newest items are listed directly below the brief.
  */
 export function brief(data, now, { threadList, dm, bar }) {
   const out = [];
@@ -916,7 +916,6 @@ export function brief(data, now, { threadList, dm, bar }) {
     figure: String(t.n),
     text: `developments in one thread since ${fmtDate(t.first.date)}`,
     sub: t.recent ? `${t.recent} of them in the last 30 days.` : '',
-    item: t.latest,
   } : {
     key: 'building',
     kicker: 'Building',
@@ -1092,7 +1091,7 @@ export function windowBrief(data, ui, now) {
     building = `${inThread.length} of the ${n} items ${inThread.length === 1 ? 'continues an earlier thread' : 'continue earlier threads'}; `
       + `the longest is now ${longest.length} developments long.`;
   }
-  return [arrived, concentrating, { key: 'building', kicker: 'Building', text: building, item: inThread.length ? inThread[0] : null }, bar];
+  return [arrived, concentrating, { key: 'building', kicker: 'Building', text: building }, bar];
 }
 
 /**
@@ -1156,14 +1155,26 @@ export function dashboard(data, now) {
 }
 
 /**
- * Masthead times, both read from runs.json as the pipeline writes it, never fixed when the page
- * is built. `edition`: the slot of the latest run that published at least one new item.
- * `checked`: when the latest completed run finished, silent runs included.
+ * The masthead's status line (owner change 2026-10-06, replacing "Last edition" and "Last
+ * checked"): when the data last changed and when it next may. `updated` is when the latest
+ * completed run finished, silent runs included, read from runs.json at page load (never fixed when
+ * the page is built), in the compact form ('Fri 14:21'), with `updatedFull` for paper; both are
+ * null before the first completed run. `next` is the next scheduled slot after `now`.
  */
-export function mastheadTimes(data) {
-  const le = data ? latestEdition(data) : null;
+export function mastheadStatus(data, now) {
   const lc = data ? lastChecked(data) : null;
-  return { edition: le ? fmtFull(le.date) : 'None yet', checked: lc ? fmtFull(lc) : 'Not yet' };
+  return { updated: lc ? whenShort(lc, now) : null, updatedFull: lc ? fmtFull(lc) : null, next: nextSlot(now) };
+}
+
+/** The next edition slot after `now` in ET: '18:00' later the same ET day, else 'Sat 06:00'. */
+export function nextSlot(now) {
+  const p = etParts(now);
+  for (let k = 0; ; k++) {
+    for (const h of SLOT_HOURS) {
+      const at = etWallToDate(p.year, p.month, p.day + k, h);
+      if (+at > +now) return k ? `${etParts(at).weekday} ${hm(at)}` : hm(at);
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------------------
