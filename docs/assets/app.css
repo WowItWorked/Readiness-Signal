@@ -275,11 +275,13 @@ main[tabindex="-1"]:focus { outline: none; }
    from the masthead's foot under a dashed bar laid on the nav row's top rule, and only the bursts
    that cross the bar light up above it, in the brand green, like the cap of the logo. It scrolls
    slowly and without end, with no pause control (the owner chose continuous motion, 2026-10-06);
-   reduced motion stills it. Under 640px the nav fills the row, so the bars are left out, and print
-   leaves them out too. */
+   reduced motion stills it. It sits in the content column (owner, 2026-10-06): it ends where the
+   cards below end and starts over their right-hand column, half the 20px .dash-grid gap past the
+   middle, but never nearer the nav links than 440px. Under 640px the nav fills the row, so the
+   bars are left out, and print leaves them out too. */
 .mast-wave {
   position: absolute; z-index: -1; pointer-events: none;
-  left: max(440px, 50%); right: 0; bottom: 0; height: 66px;
+  left: max(440px, 50% + 10px); right: var(--hpad); bottom: 0; height: 66px;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 45%);
   mask-image: linear-gradient(90deg, transparent, #000 45%);
 }

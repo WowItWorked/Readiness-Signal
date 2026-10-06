@@ -346,7 +346,9 @@ stay as above; the visual layer changes:
 - The masthead's nav row carries the chatter as level bars (owner request 2026-10-06, replacing a line wave
   that read as a heart monitor): low traffic rises from the masthead's foot and scrolls slowly and
   continuously under a dashed bar laid on the nav row's top rule, and only the bursts that cross the bar light
-  up above it, in the brand green, as in the logo. It carries no label. The owner chose continuous motion with
+  up above it, in the brand green, as in the logo. It carries no label, and it stays in the page's content
+  column: it ends where the cards below end and starts over their right-hand column (owner, 2026-10-06), never
+  nearer the nav links than 440 px. The owner chose continuous motion with
   no pause control (2026-10-06), accepting that this falls short of WCAG 2.2.2; under
   `prefers-reduced-motion` the bars are still, and under 640 px and in print they are left out.
 - Each mechanism has a categorical hue used on its tag, board column, mix strip and expanded panels:

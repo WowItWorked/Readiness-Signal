@@ -58,8 +58,8 @@ function masthead(st) {
   }).join('')}</nav>`;
   return `<header class="mast" data-k="mast">
   ${ui.printMode ? '' : '<a class="skip" href="#main" data-act="skip" data-k="skip">Skip to content</a>'}
-  ${ui.printMode ? '' : MAST_WAVE}
   <div class="mast-in">
+    ${ui.printMode ? '' : MAST_WAVE}
     <div class="mast-top">
       <a class="brand" href="#dashboard"${navAttrs('dashboard')}>${BRAND_MARK}<span class="brand-name">Readiness Signal</span><span class="brand-tag">Amplify the signal. Reduce the risk.</span></a>
       ${mastStatus(st)}

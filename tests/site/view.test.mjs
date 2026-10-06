@@ -320,6 +320,11 @@ describe('colour hooks and palette', () => {
     assert.ok(mast.includes('<div class="mast-wave" aria-hidden="true"><svg focusable="false">'), 'hidden from assistive tech');
     assert.equal((mast.match(/<use href="#mw-bars"/g) || []).length, 10, 'dim and lit copies, five tiles each');
     assert.ok(mast.includes('<line class="mw-bar" x1="0" y1="22" x2="100%" y2="22"></line>'), 'the bar sits on the nav row rule');
+    // In the content column (owner, 2026-10-06): it ends where the cards end and starts over their
+    // right-hand column, half the 20px grid gap past the middle, clear of the nav links.
+    assert.ok(mast.includes('<div class="mast-in"><div class="mast-wave"'));
+    assert.ok(/\.mast-wave \{[^}]*left: max\(440px, 50% \+ 10px\); right: var\(--hpad\);/.test(css));
+    assert.ok(/\.dash-grid \{[^}]*gap: 20px;/.test(css), 'the offset is half this gap');
     // A period is 80 bars rising from the masthead's foot (y 66); two of them cross the bar (y 22).
     const bars = [...mast.match(/<path id="mw-bars" d="([^"]+)"/)[1].matchAll(/M(\d+) 66V(\d+)/g)].map((m) => 66 - Number(m[2]));
     assert.equal(bars.length, 80);
