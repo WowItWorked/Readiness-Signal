@@ -108,7 +108,8 @@ function monthAxis(months, cls) {
   return `<div class="mx ${cls}" aria-hidden="true">${months.map((m) => `<span class="mx-m">${esc(m.label)}${m.year ? `<span class="mx-y">${esc(m.year)}</span>` : ''}</span>`).join('')}</div>`;
 }
 
-function briefCard(brief) {
+/** The brief: readings in plain sentences, side by side (the dashboard's, and the report's for its window). */
+function briefCard(brief, title = 'At a glance', id = 'brief-h') {
   const cells = brief.map((b) => `<div class="brief-cell" data-k="brief-${esc(b.key)}">
         <span class="kicker">${esc(b.kicker)}</span>
         <p class="brief-t">${esc(b.text)}</p>
@@ -118,11 +119,16 @@ function briefCard(brief) {
           <span class="brief-claim">${esc(b.item.claim)}</span>
         </button>` : ''}
       </div>`).join('');
-  return `<section class="card brief" aria-labelledby="brief-h">
-    <h2 class="sr-only" id="brief-h">At a glance</h2>
-    <div class="brief-grid">${cells}</div>
+  return `<section class="card brief" aria-labelledby="${id}">
+    <h2 class="sr-only" id="${id}">${esc(title)}</h2>
+    <div class="brief-grid n${brief.length}">${cells}</div>
   </section>`;
 }
+
+/** One square of a unit chart, linking to its item: filled asks for action, open is awareness only. */
+const unitSquare = (it, cls = '') => `<a class="u${M.asksForAction(it) ? '' : ' aw'}${cls}" href="${href(`#${it.id}`)}" tabindex="-1" data-tip="${esc(itemTip(it))}"></a>`;
+
+const unitLegend = (extra = '') => `<div class="lg-row" aria-hidden="true"><span class="lg"><span class="u"></span>Asks for action</span><span class="lg"><span class="u aw"></span>Awareness only</span>${extra}</div>`;
 
 function latestCard(d) {
   const rows = d.latest.map((it, i) => `<button type="button" class="lt${i ? ' ruled' : ''}" data-act="reveal" data-id="${esc(it.id)}">
@@ -136,7 +142,7 @@ function latestCard(d) {
 }
 
 function additionsCard(d) {
-  const cols = d.additions.map((a) => `<div class="uc-col">${a.items.map((it) => `<a class="u${M.asksForAction(it) ? '' : ' aw'}" href="${href(`#${it.id}`)}" tabindex="-1" data-tip="${esc(itemTip(it))}"></a>`).join('')}</div>`).join('');
+  const cols = d.additions.map((a) => `<div class="uc-col">${a.items.map((it) => unitSquare(it)).join('')}</div>`).join('');
   const rows = d.additions.map((a) => `<tr><th scope="row">${esc(a.name)}</th><td>${a.items.length}</td><td>${a.action}</td></tr>`).join('');
   const secs = d.sections.map((s) => `<span class="secs-i"><span class="badge badge-22 badge-${s.mark}" aria-hidden="true">${s.n}</span><span class="secs-t">${esc(s.title)}</span><span class="secs-n">${s.count}</span></span>`).join('');
   return `<section class="card dcard d-adds" aria-labelledby="add-h">
@@ -146,7 +152,7 @@ function additionsCard(d) {
         <div class="uc-cols">${cols}</div>
         ${monthAxis(d.months, 'uc-axis')}
       </div>
-      <div class="lg-row" aria-hidden="true"><span class="lg"><span class="u"></span>Asks for action</span><span class="lg"><span class="u aw"></span>Awareness only</span></div>
+      ${unitLegend()}
       <table class="sr-only"><caption>Items added by month</caption><thead><tr><th scope="col">Month</th><th scope="col">Items</th><th scope="col">Ask for action</th></tr></thead><tbody>${rows}</tbody></table>
       ${d.beforeChart ? `<p class="dcard-note">${M.plural(d.beforeChart, 'earlier item')} not charted.</p>` : ''}
     </div>
@@ -154,22 +160,25 @@ function additionsCard(d) {
   </section>`;
 }
 
-/** One thread's timeline: its developments on the shared month axis, joined from first to latest. */
-function threadLine(t, n) {
+/**
+ * A thread's timeline: its developments (`dots`, each { item, x, current? }) on a month axis of
+ * `n` equal months, joined from first to latest. The current development, if any, is haloed.
+ */
+function threadLine(dots, n) {
   // Stretched to the card's width (preserveAspectRatio none), so every stroke is non-scaling and
   // each dot is a zero-length line with round caps: it stays round at any width.
   const NS = 'vector-effect="non-scaling-stroke"';
   const X = (x) => (x * 1000).toFixed(1);
   const seg = (cls, x, y1 = 11.99, y2 = 12.01) => `<line class="${cls}" x1="${x}" y1="${y1}" x2="${x}" y2="${y2}" ${NS}/>`;
   const grid = Array.from({ length: n - 1 }, (_, k) => seg('th-grid', X((k + 1) / n), 2, 22)).join('');
-  const xs = t.dots.map((p) => p.x);
+  const xs = dots.map((p) => p.x);
   const span = xs.length > 1 ? `<line class="th-span" x1="${X(Math.min(...xs))}" y1="12" x2="${X(Math.max(...xs))}" y2="12" ${NS}/>` : '';
-  const dots = t.dots.map((p) => {
+  const marks = dots.map((p) => {
     const x = X(p.x);
     const hole = M.asksForAction(p.item) ? '' : seg('th-hole', x);
-    return `<a href="${href(`#${p.item.id}`)}" tabindex="-1" data-tip="${esc(itemTip(p.item))}">${seg('th-hit', x)}${seg('th-ring', x)}${seg('th-dot', x)}${hole}</a>`;
+    return `<a href="${href(`#${p.item.id}`)}" tabindex="-1" data-tip="${esc(itemTip(p.item))}">${p.current ? seg('th-halo', x) : ''}${seg('th-hit', x)}${seg('th-ring', x)}${seg('th-dot', x)}${hole}</a>`;
   }).join('');
-  return `<svg class="th-svg" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">${grid}${span}${dots}</svg>`;
+  return `<svg class="th-svg" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">${grid}${span}${marks}</svg>`;
 }
 
 function threadsCard(d) {
@@ -179,7 +188,7 @@ function threadsCard(d) {
           <span class="th-n"><span class="th-num">${t.n}</span> developments</span>
           <span class="th-meta">${esc(`${M.fmtDate(t.first.date)} to ${M.fmtDate(t.latest.date)}${t.recent ? ` · ${t.recent} in the last 30 days` : ''}${t.domains.length ? ` · ${t.domains.join(', ')}` : ''}`)}</span>
         </div>
-        ${threadLine(t, n)}
+        ${threadLine(t.dots, n)}
         <button type="button" class="th-latest" data-act="reveal" data-id="${esc(t.latest.id)}">
           <span class="th-latest-k">Latest${mechTag(t.latest.mechanism)}</span>
           <span class="th-claim">${esc(t.latest.claim)}</span>
@@ -368,6 +377,7 @@ export function itemArticle(it, idx, st) {
           ${d.srcClassLabel ? `<span>${esc(d.srcClassLabel)}</span>` : ''}
           <span class="ticks"><span class="tick-set" aria-hidden="true">${ticks}</span><span class="tick-n">${esc(d.srcCount)}</span></span>
           <span>${esc(M.whenShort(it.date, now))}</span>
+          ${d.thread ? `<span class="meta-thr">Thread · ${d.thread.n}</span>` : ''}
           ${it.backfilled ? '<span class="meta-bf">Backfilled</span>' : ''}
         </div>
       </div>
@@ -404,12 +414,25 @@ export function itemArticle(it, idx, st) {
           <p class="panel-issue">“${esc(it.candidate_issue_statement)}”</p>
         </div>`;
 
+  // Owner change 2026-10-06: an item in a thread shows the whole story (the dashboard's timeline,
+  // this development haloed) and steps to the developments either side.
+  const t = d.thread;
+  const step = (x, k) => `<button type="button" class="thr-step" data-act="reveal" data-id="${esc(x.id)}">
+          <span class="thr-step-k">${k} · ${esc(M.fmtDate(x.date))}${mechTag(x.mechanism)}</span>
+          <span class="thr-step-c">${esc(x.claim)}</span>
+        </button>`;
+  const thread = t ? `<div class="b-thr">
+        <div class="thr-head"><span class="kicker">Thread</span><span class="thr-meta">${esc(`Development ${t.at} of ${t.n} · ${M.fmtDate(t.first.date)} to ${M.fmtDate(t.latest.date)}`)}</span></div>
+        <div class="thr-chart">${threadLine(t.dots, t.months.length)}${monthAxis(t.months, 'thr-axis')}</div>
+        ${t.prev || t.next ? `<div class="thr-nav">${t.prev ? step(t.prev, 'Earlier') : ''}${t.next ? step(t.next, 'Later') : ''}</div>` : ''}
+      </div>` : '';
+
   const sources = d.sources.map((s) => `<div class="src-row">
           <div class="src-k"><span class="src-pub">${esc(s.pub)}</span><span class="src-cls">${esc(s.cls)}${s.date ? ` · ${esc(s.date)}` : ''}</span></div>
           ${s.href ? `<a class="src-link" href="${esc(s.href)}" target="_blank" rel="noopener noreferrer">${esc(s.title)}</a>` : `<span class="src-link nolink">${esc(s.title)}</span>`}
         </div>`).join('');
 
-  const body = `<div class="body">
+  const body = `<div class="body${t ? ' has-thr' : ''}">
       <div class="b-disp">
         <span class="kicker">What it asks of you</span>
         <p class="asks">${esc(d.asks)}</p>
@@ -421,6 +444,7 @@ export function itemArticle(it, idx, st) {
         ${d.noRead ? `<span class="no-read">No material read-across: ${esc(d.noRead)}</span>` : ''}
       </div>
       <div class="b-act">${act}</div>
+      ${thread}
       <div class="b-src">
         <div class="src-head"><span class="kicker">Sources · ${d.srcN}</span><span class="corrob">${esc(d.corrob)}</span></div>
         <div class="src-list">${sources}</div>
@@ -476,11 +500,40 @@ function group(g, st) {
   return `<section id="${esc(g.anchor)}" class="card group" aria-label="${esc(label)}">${head}${items ? `<div>${items}</div>` : ''}${empty}</section>`;
 }
 
+/**
+ * The archive navigator: every item by month, faded where the current selection leaves it out.
+ * A month's label picks that month (and picks all time again once it is the selection).
+ */
+function archiveChartCard(c, ui) {
+  const fadedAny = c.columns.some((col) => col.shown < col.items.length);
+  const cols = c.columns.map((col) => `<div class="uc-col">${col.items.map((it) => unitSquare(it, c.on.has(it.id) ? '' : ' out')).join('')}</div>`).join('');
+  const axis = c.columns.map((col) => {
+    const v = `m-${col.key}`;
+    const on = ui.archTime === v;
+    const note = col.shown < col.items.length ? `, ${col.shown} in your selection` : '';
+    return `<button type="button" class="mx-m mx-btn" data-act="pick" data-f="time" data-v="${on ? 'all' : v}" aria-pressed="${on}"${col.items.length ? '' : ' disabled'}>
+        <span aria-hidden="true">${esc(col.label)}${col.year ? `<span class="mx-y">${esc(col.year)}</span>` : ''}</span>
+        <span class="sr-only">${esc(`${col.name}: ${M.plural(col.items.length, 'item')}${note}`)}</span>
+      </button>`;
+  }).join('');
+  return `<section class="card arch-chart" aria-labelledby="ac-h">
+    ${cardHead('ac-h', 'The archive by month', 'One square per item: filled where it asks for action, open where it resolves as awareness only. Choose a month to see only that month.')}
+    <div class="dcard-body">
+      <div class="uc" aria-hidden="true"><div class="uc-cols">${cols}</div></div>
+      <div class="mx uc-axis">${axis}</div>
+      ${unitLegend(fadedAny ? '<span class="lg"><span class="u out"></span>Outside your selection</span>' : '')}
+      ${c.before ? `<p class="dcard-note">${M.plural(c.before, 'earlier item')} not charted.</p>` : ''}
+    </div>
+  </section>`;
+}
+
 function listMain(st) {
   const { ui, data, now } = st;
   const lm = M.listModel(data, ui, now);
   const ctx = { ...st, showSec: lm.isArch };
-  const mix = lm.mix.map((m) => `<div class="mix-cell"${mechAttr(m.mech)}>${mechTag(m.mech)}<div class="num-row"><span class="num-24">${m.n}</span><span class="num-desc">${esc(m.desc)}</span></div></div>`).join('');
+  let lead = '';
+  if (lm.brief) lead = briefCard(lm.brief, `At a glance: ${M.rangeLabel(ui)}`, 'rb-h');
+  else if (lm.chart) lead = archiveChartCard(lm.chart, ui);
   let empty = '';
   if (lm.archiveEmpty) {
     empty = `<div class="card notice quiet">${QUIET}<p class="notice-t">Nothing published yet.</p><p class="notice-b">Every item that clears the bar is added here and stays searchable. Nothing is replaced.</p></div>`;
@@ -495,7 +548,7 @@ function listMain(st) {
       <h1 class="h1">${lm.title}</h1>
       <span class="list-sub">${esc(lm.sub)}</span>
     </div>
-    <div class="mix">${mix}</div>
+    ${lead}
   </div>
   ${empty}
   ${lm.groups.map((g) => group(g, ctx)).join('')}
@@ -537,6 +590,17 @@ function aboutMain() {
       <div class="prose">
         <p>Collapsed, an item is one line: the claim, stated as an assertion in about a dozen words; its domains; the class of its sources; and its mechanism.</p>
         <p>Expanded, it adds what the claim implies across the seven domains, a validation question you can paste to a program owner, issue language to use if the answer is no or unknown, and every backing source. Several sources on one item is a signal in itself.</p>
+        <p>When a later item materially updates an earlier one, both belong to a thread, and the expanded item shows the whole story with the developments either side.</p>
+      </div>
+    </div>
+
+    <div class="about-sec">
+      <h2 class="h-19">How the charts read</h2>
+      <div class="lgd-list">
+        <div class="lgd"><span class="lgd-k" aria-hidden="true"><span class="u"></span><span class="u aw"></span></span><span class="lgd-t">One square per item: filled where it asks for action, open where it resolves as awareness only. The two carry the same weight.</span></div>
+        <div class="lgd"><span class="lgd-k" aria-hidden="true"><svg class="lgd-thr" viewBox="0 0 64 16" focusable="false"><line class="lgd-line" x1="8" y1="8" x2="56" y2="8"/><circle class="lgd-dot" cx="8" cy="8" r="4.5"/><circle class="lgd-dot aw" cx="32" cy="8" r="4.5"/><circle class="lgd-dot" cx="56" cy="8" r="4.5"/></svg></span><span class="lgd-t">A thread: a story that later items have materially updated, each development a dot on its timeline.</span></div>
+        <div class="lgd"><span class="lgd-k" aria-hidden="true"><span class="slot slot-published"></span><span class="slot slot-silent"></span><span class="slot slot-failed"></span><span class="slot slot-missed"></span></span><span class="lgd-t">Each scheduled run: published an edition, ran silent, failed, or did not run.</span></div>
+        <div class="lgd"><span class="lgd-k" aria-hidden="true"><span class="dmd s1"></span><span class="dmd s2"></span><span class="dmd s4"></span></span><span class="lgd-t">Dot size counts items. Counts and sizes mean volume, never severity.</span></div>
       </div>
     </div>
 
@@ -552,8 +616,8 @@ function aboutMain() {
       <h2 class="h-19">Where things live</h2>
       <div class="lives">
         <a class="live-row" href="#dashboard"${navAttrs('dashboard')}><span class="live-k">Dashboard</span><span class="live-v">A brief of what is building, where the signal concentrates and what the archive asks, with the threads, trends and run log behind it.</span></a>
-        <a class="live-row" href="#report"${navAttrs('report', 'day')}><span class="live-k">Report</span><span class="live-v">The last 24 hours, week or month, organised by the three sections. Filter, expand and export.</span></a>
-        <a class="live-row" href="#archive"${navAttrs('archive')}><span class="live-k">Archive</span><span class="live-v">Everything ever published, by month, with search and a custom date range. Nothing is replaced.</span></a>
+        <a class="live-row" href="#report"${navAttrs('report', 'day')}><span class="live-k">Report</span><span class="live-v">The last 24 hours, week or month: a brief of the window, then its items by the three sections. Filter, expand and export.</span></a>
+        <a class="live-row" href="#archive"${navAttrs('archive')}><span class="live-k">Archive</span><span class="live-v">Everything ever published, charted and listed by month, with search and a custom date range. Nothing is replaced.</span></a>
       </div>
     </div>
   </article>

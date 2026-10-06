@@ -225,6 +225,16 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
 - Report (24 h / 7 d / 30 d; Section, Domain, Source filters with counts; expand/collapse all;
   export collapsed/expanded via print), Archive (All / month / custom range; search over claim, domains,
   publications, headlines; grouped by month), About — all exactly as designed, with the copy changes below.
+  Owner change 2026-10-06 (the dashboard's design carried over; the design's mechanism-count strip is gone):
+  the Report opens with a brief of its window, the dashboard's readings for the selected 24 h / 7 d / 30 d:
+  **Arrived** (items and what they ask, against the window before), **Concentrating** (leading domain, then the
+  next three), **Building** (items that continue threads, the longest thread's length) and **The bar** (the
+  window's runs, as on the dashboard). Item readings follow the filters; the bar covers every run in the
+  window. An empty window shows Arrived and The bar only. The Archive opens with a month navigator: the
+  dashboard's unit chart over every item (at most 12 months), squares outside the current selection faded,
+  each month's label a button that picks that month (or all time again once picked). Item rows in a thread
+  show "Thread · N"; an expanded item in a thread shows the thread's timeline on its own month axis (this
+  development haloed) and steps to the earlier and later developments.
 - Dashboard (owner change 2026-10-06, replacing the design's 7-day counts, which said little with so few items):
   analysis, not counts, all computed in `model.js` from `archive.json` and `runs.json` (never at build time).
   1. A brief of four readings in plain sentences: **Building** (the update thread with the most developments in
@@ -295,15 +305,20 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   section is often empty."
 - Every item says what it wants: design copy; PRAF coverage line "Confirm the risk assessment framework
   represents this risk at all."
-- How an item is built: design copy, "a validation question you can paste to a program owner".
+- How an item is built: design copy, "a validation question you can paste to a program owner", plus (owner
+  change 2026-10-06) a sentence on threads. Then "How the charts read": a key to the unit squares (filled asks
+  for action, open is awareness only, same weight), thread timelines, the run slots, and dot sizes ("Counts and
+  sizes mean volume, never severity"). Section titles carry the brief's short accent.
 - What it is not: "It is not a risk rating. Nothing here is red, amber or green; the green mark is emphasis only
   and never means safe. Colours mark what an item asks of you, never how serious it is." / "It is not a threat
   feed or a news service, and it says nothing about any
   institution's control position. The validation question is where that record starts, inside your own
   organisation."
-- Where things live: design copy, except the Dashboard line (owner change 2026-10-06): "A brief of what is
-  building, where the signal concentrates and what the archive asks, with the threads, trends and run log behind
-  it."
+- Where things live: design copy, except (owner change 2026-10-06) Dashboard: "A brief of what is building,
+  where the signal concentrates and what the archive asks, with the threads, trends and run log behind it.";
+  Report: "The last 24 hours, week or month: a brief of the window, then its items by the three sections.
+  Filter, expand and export."; Archive: "Everything ever published, charted and listed by month, with search
+  and a custom date range. Nothing is replaced."
 
 ### 7.4 Layout breakpoints
 

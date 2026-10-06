@@ -255,7 +255,7 @@ describe('colour hooks and palette', () => {
     const tags = (html.match(/class="mech(?: row-mech)?"/g) || []).length;
     assert.ok(tags > 0);
     assert.equal(tags, (html.match(/class="mech(?: row-mech)?" data-mech="(candidate_issue|kri_kpi|praf_coverage|awareness_only)"/g) || []).length);
-    for (const { key } of M.MECHANISMS) assert.ok(html.includes(`<div class="mix-cell" data-mech="${key}">`), `mix ${key}`);
+    assert.ok(html.includes('<section class="card brief" aria-labelledby="rb-h">'), 'the report opens with its brief, not mechanism counts');
     const dash = render({ page: 'dashboard' });
     const dashTags = (dash.match(/class="mech"/g) || []).length;
     assert.ok(dashTags > 0);
@@ -363,6 +363,50 @@ describe('states', () => {
     for (const m of html.slice(html.indexOf('<main')).matchAll(/href="([^"]+)"/g)) {
       assert.ok(/^#(RS-\d{6}-\d{4}-\d{2}|archive|report|dashboard)$/.test(m[1]), m[1]);
     }
+  });
+
+  test('report opens with a brief of its window (owner change 2026-10-06)', () => {
+    const html = render({ page: 'report', repTime: 'week' });
+    assert.ok(html.includes('<h2 class="sr-only" id="rb-h">At a glance: last 7 days</h2>'));
+    assert.ok(html.indexOf('class="card brief"') < html.indexOf('class="card group"'));
+    const t = text(html);
+    for (const b of M.windowBrief(data, ui({ page: 'report', repTime: 'week' }), NOW)) assert.ok(t.includes(V.esc(b.text)), b.key);
+    assert.ok(!/class="mix/.test(html));
+    assert.ok(render({ page: 'report' }, empty).includes('<div class="brief-grid n2">'), 'an empty window keeps to two cells');
+  });
+
+  test('archive opens with the month navigator: squares fade outside the selection; months are buttons', () => {
+    const html = render({ page: 'archive', q: 'cloud' });
+    assert.ok(html.indexOf('class="card arch-chart"') < html.indexOf('class="card group"'));
+    const lm = M.listModel(data, ui({ page: 'archive', q: 'cloud' }), NOW);
+    assert.equal((html.match(/<a class="u( aw)?( out)?" href="#RS-/g) || []).length, data.items.length);
+    assert.equal((html.match(/<a class="u( aw)?" href="#RS-/g) || []).length, lm.shown.length, 'only the matches stay solid');
+    assert.ok(html.includes('<span class="u out"></span>Outside your selection'));
+    assert.ok(html.includes('<button type="button" class="mx-m mx-btn" data-act="pick" data-f="time" data-v="m-2026-10" aria-pressed="false">'));
+    const oct = render({ page: 'archive', archTime: 'm-2026-10' });
+    assert.ok(oct.includes('data-v="all" aria-pressed="true"'), 'the chosen month picks all time again');
+    assert.ok(!render({ page: 'archive' }, empty).includes('arch-chart'));
+  });
+
+  test('an expanded item in a thread shows the thread and steps along it; rows mark it', () => {
+    const html = render({ page: 'report', open: { 'RS-261002-1400-02': true } });
+    const art = html.slice(html.indexOf('<article id="RS-261002-1400-02"'));
+    const one = art.slice(0, art.indexOf('</article>'));
+    assert.ok(one.includes('<div class="body has-thr">'));
+    assert.ok(one.includes('<span class="thr-meta">Development 2 of 2 · 21 Sep 2026 to 2 Oct 2026</span>'));
+    assert.ok(/<button type="button" class="thr-step" data-act="reveal" data-id="RS-260921-1000-01"><span class="thr-step-k">Earlier · 21 Sep 2026/.test(one));
+    assert.ok(!one.includes('>Later ·'));
+    assert.equal((one.match(/class="th-halo"/g) || []).length, 1, 'this development is haloed');
+    assert.ok(html.includes('<span class="meta-thr">Thread · 2</span>'));
+    const lone = render({ page: 'report', open: { 'RS-261002-1400-01': true } });
+    const a2 = lone.slice(lone.indexOf('<article id="RS-261002-1400-01"'));
+    assert.ok(!a2.slice(0, a2.indexOf('</article>')).includes('b-thr'));
+  });
+
+  test('About keys the charts', () => {
+    const about = render({ page: 'about' }, null);
+    assert.ok(about.includes('<h2 class="h-19">How the charts read</h2>'));
+    for (const s of ['One square per item', 'A thread:', 'Each scheduled run:', 'Counts and sizes mean volume, never severity.']) assert.ok(text(about).includes(s), s);
   });
 
   test('dashboard tooltips and labels are escaped data', () => {

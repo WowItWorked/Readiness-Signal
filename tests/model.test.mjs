@@ -532,6 +532,84 @@ describe('dashboard analysis', () => {
   });
 });
 
+describe('report and archive: the dashboard carried over (owner change 2026-10-06)', () => {
+  test('report brief: the window\'s arrivals, concentration, threads and runs', () => {
+    const b = M.windowBrief(data, ui({ page: 'report', repTime: 'week' }), NOW);
+    assert.deepEqual(b.map((x) => x.kicker), ['Arrived', 'Concentrating', 'Building', 'The bar']);
+    assert.equal(b[0].text, '13 items in the last 7 days: 4 candidate issues, 3 KRI / KPI checks, 3 PRAF coverage checks and 3 awareness only.');
+    assert.equal(b[0].sub, 'In the 7 days before: 6 items, 5 asking for action.');
+    assert.equal(b[1].text, 'Cyber is on 9 of the 13 items.');
+    assert.equal(b[2].text, '1 of the 13 items continues an earlier thread; the longest is now 2 developments long.');
+    assert.equal(b[2].item.id, 'RS-261002-1400-02');
+    // The bar reading agrees with the report's own run count for the window.
+    const rs = M.runStats(data, M.reportRange('week', NOW));
+    assert.equal(b[3].text, `${rs.applied} runs in the last 7 days read 4,101 new headlines; 588 passed the first screen and 13 cleared the bar.`);
+    assert.equal(b[3].sub, `${rs.failed} of ${rs.total} scheduled runs failed.`);
+  });
+
+  test('report brief follows the filters; the bar does not', () => {
+    const all = M.windowBrief(data, ui({ page: 'report', repTime: 'week' }), NOW);
+    const fraud = M.windowBrief(data, ui({ page: 'report', repTime: 'week', doms: ['fraud'] }), NOW);
+    assert.equal(fraud[1].text, 'Fraud is on all 5 items.');
+    assert.equal(fraud[3].text, all[3].text);
+    const none = M.windowBrief(data, ui({ page: 'report', repTime: 'day', doms: ['fraud'], srcs: ['standards_body'] }), NOW);
+    assert.deepEqual(none.map((x) => x.key), ['arrived', 'bar'], 'an empty window reads as two lines');
+    assert.equal(none[0].text, 'Nothing matching the filters in the last 24 hours.');
+    const blank = M.windowBrief(empty, ui({ page: 'report' }), NOW);
+    assert.deepEqual(blank.map((x) => x.text), ['Nothing published in the last 24 hours.', 'No scheduled run has been recorded yet.']);
+  });
+
+  test('report brief: one item, a tie, and a quiet window before', () => {
+    const aware = { mechanism: 'awareness_only', validation_question: null, candidate_issue_statement: null, awareness_rationale: 'Known.' };
+    const x = M.prepare({ items: [
+      item({ id: 'RS-261002-0600-01', timestamp: '2026-10-02T06:00:00-04:00', domains: ['cyber', 'ai'] }),
+      item({ id: 'RS-260930-0600-01', timestamp: '2026-09-30T06:00:00-04:00', ...aware }),
+    ] }, { runs: [] });
+    const day = M.windowBrief(x, ui({ page: 'report', repTime: 'day' }), NOW);
+    assert.equal(day[0].sub, 'Nothing in the 24 hours before.');
+    assert.equal(day[1].text, 'The one item is on Cyber and AI.');
+    const week = M.windowBrief(x, ui({ page: 'report', repTime: 'week' }), NOW);
+    assert.equal(week[1].text, 'Cyber is on all 2 items.');
+    assert.equal(week[1].sub, 'Then AI (1).');
+    const tie = M.prepare({ items: [
+      item({ id: 'RS-261002-0600-01', timestamp: '2026-10-02T06:00:00-04:00', domains: ['cyber', 'ai'] }),
+      item({ id: 'RS-261001-0600-01', timestamp: '2026-10-01T06:00:00-04:00', domains: ['ai', 'cyber'] }),
+    ] }, { runs: [] });
+    assert.equal(M.windowBrief(tie, ui({ page: 'report', repTime: 'week' }), NOW)[1].text, 'Cyber and AI are each on all 2 items.');
+    const before = M.prepare({ items: [item({ id: 'RS-260930-0600-01', timestamp: '2026-09-30T06:00:00-04:00', ...aware }), item()] }, { runs: [] });
+    assert.equal(M.windowBrief(before, ui({ page: 'report', repTime: 'day' }), new Date('2026-10-02T06:00:00-04:00'))[0].sub, 'In the 24 hours before: 1 item, none asking for action.');
+  });
+
+  test('run summary: missed slots count only after their hour and from the first run on', () => {
+    const x = M.prepare({ items: [] }, { runs: [
+      { slot: '2026-10-01T10:00:00-04:00', status: 'silent', items: [], funnel: { unseen: 100, stage1_pass: 5 } },
+      { slot: '2026-10-02T06:00:00-04:00', status: 'failed', items: [] },
+    ] });
+    const at = new Date('2026-10-02T14:30:00-04:00');
+    const s = M.runSummary(x, +at - 7 * DAY, at);
+    assert.deepEqual([s.completed, s.failed, s.missed, s.scheduled, s.unseen], [1, 1, 3, 5, 100]);
+    assert.equal(M.barReading(s, 'last 7 days').sub, 'Of 5 scheduled runs, 3 did not run and 1 failed.');
+  });
+
+  test('archive navigator: every item by month, the selection marked', () => {
+    const lm = M.listModel(data, ui({ page: 'archive', q: 'cloud' }), NOW);
+    assert.equal(lm.brief, null);
+    assert.equal(lm.chart.columns.reduce((n, c) => n + c.items.length, 0), data.items.length);
+    assert.equal(lm.chart.columns.reduce((n, c) => n + c.shown, 0), lm.shown.length);
+    assert.ok(lm.shown.every((i) => lm.chart.on.has(i.id)));
+    assert.equal(M.listModel(empty, ui({ page: 'archive' }), NOW).chart, null, 'nothing to chart on day one');
+    assert.equal(M.listModel(data, ui({ page: 'report' }), NOW).chart, null);
+  });
+
+  test('an item in a thread knows its place in the story', () => {
+    const t = M.itemDetail(data.byId.get('RS-261002-1400-02'), data).thread;
+    assert.deepEqual([t.n, t.at, t.prev.id, t.next], [2, 2, 'RS-260921-1000-01', null]);
+    assert.deepEqual(t.months.map((m) => m.key), ['2026-09', '2026-10']);
+    assert.deepEqual(t.dots.map((d) => d.current), [false, true]);
+    assert.equal(M.itemDetail(data.byId.get('RS-260926-1800-01'), data).thread, null);
+  });
+});
+
 describe('item detail and email', () => {
   test('detail strings', () => {
     const it = data.byId.get('RS-261002-1400-01');

@@ -63,7 +63,6 @@
   --main-pad: 24px 24px 40px;
   --card-head: 16px 24px;
   --card-x: 24px;
-  --mix-cols: repeat(4, minmax(0, 1fr));
   --sec-pad: 22px 24px 18px;
   --row-pad: 16px 24px;
   --body-pad: 6px 24px 26px;
@@ -71,6 +70,7 @@
   --line-areas: 'mech claim tog' 'mech meta tog';
   --body-cols: 168px minmax(0, 1fr);
   --body-areas: 'disp read' 'disp act' 'disp src' 'disp foot';
+  --body-areas-thr: 'disp read' 'disp act' 'disp thr' 'disp src' 'disp foot';
   --read-cols: 128px minmax(0, 1fr);
   --src-cols: 190px minmax(0, 1fr);
   --empty-cols: minmax(0, 1fr);
@@ -109,6 +109,7 @@
     --line-areas: 'mech claim meta tog';
     --body-cols: 184px minmax(0, 1.1fr) minmax(0, 1fr);
     --body-areas: 'disp read act' 'disp src src' 'disp foot foot';
+    --body-areas-thr: 'disp read act' 'disp thr thr' 'disp src src' 'disp foot foot';
     --empty-cols: minmax(0, 1.2fr) minmax(0, 1fr);
     --about-cols: 240px minmax(0, 1fr);
   }
@@ -121,7 +122,6 @@
     --main-pad: 16px 10px 32px;
     --card-head: 14px 16px;
     --card-x: 16px;
-    --mix-cols: repeat(2, minmax(0, 1fr));
     --sec-pad: 16px 16px 14px;
     --row-pad: 16px 16px;
     --body-pad: 4px 16px 22px;
@@ -129,6 +129,7 @@
     --line-areas: 'mech tog' 'claim claim' 'meta meta';
     --body-cols: minmax(0, 1fr);
     --body-areas: 'disp' 'read' 'act' 'src' 'foot';
+    --body-areas-thr: 'disp' 'read' 'act' 'thr' 'src' 'foot';
     --read-cols: minmax(0, 1fr);
     --src-cols: minmax(0, 1fr);
     --pop-wrap: static;
@@ -257,7 +258,7 @@ main[tabindex="-1"]:focus { outline: none; }
 }
 
 /* Tinted card heads with a slim navy-to-indigo accent along the top, inset from the rounded
-   corners with rounded ends to match the mix strip's mechanism bars. */
+   corners with rounded ends. */
 .sec-head, .month-head { position: relative; background: var(--navy-tint); }
 .sec-head::before, .month-head::before {
   content: ''; position: absolute; top: 0; left: var(--card-x); right: var(--card-x); height: 3px;
@@ -393,10 +394,6 @@ main[tabindex="-1"]:focus { outline: none; }
   padding: var(--card-head); border-bottom: 1px solid var(--rule); display: flex; flex-direction: column; gap: 4px;
   background: var(--navy-tint);
 }
-/* Mechanism counts (the report and archive mix strip). */
-.num-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-.num-24 { font-family: var(--serif); font-size: 24px; font-weight: 600; line-height: 1; color: var(--m-text); }
-.num-desc { font-size: 12.5px; color: var(--muted); }
 
 .dash-grid {
   display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px;
@@ -627,6 +624,68 @@ a.u.aw:hover { background: var(--active-bg); }
 }
 .arch-link:hover .arch-link-go { text-decoration-color: var(--green); }
 
+/* ---------------------------------------------------------------------------- carried over */
+/* Owner change 2026-10-06: the dashboard's design on the other pages. The report opens with a
+   brief of its window, the archive with a month navigator, an expanded item in a thread shows
+   the thread, and the About page keys the charts. */
+
+/* A brief of two readings (an empty report window) keeps to two columns. */
+@media (min-width: 1100px) { .brief-grid.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Archive navigator: squares fade outside the selection; a month's label picks that month. */
+.arch-chart .uc-cols { min-height: 72px; }
+.u.out { opacity: .22; }
+a.u.out:hover { opacity: .5; }
+.mx-btn {
+  padding: 4px 0; border: 0; border-radius: 6px; background: none; cursor: pointer;
+  font: inherit; font-size: 11.5px; line-height: 1.25; color: var(--muted);
+  transition: background-color .15s var(--ease), color .15s var(--ease);
+}
+.mx-btn > span[aria-hidden] { display: flex; flex-direction: column; align-items: center; }
+.mx-btn:hover:not(:disabled) { color: var(--navy); background: var(--hover); }
+.mx-btn[aria-pressed="true"] { color: var(--navy); font-weight: 600; background: var(--active-bg); }
+.mx-btn:disabled { cursor: default; opacity: .55; }
+
+/* Thread in an expanded item: the dashboard's timeline, this development haloed. */
+.b-thr {
+  grid-area: thr; display: flex; flex-direction: column; gap: 10px; min-width: 0;
+  padding: 14px 16px; border-radius: var(--r-panel); background: #fff; box-shadow: inset 0 0 0 1px var(--rule);
+}
+.thr-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.thr-head > .kicker { color: var(--navy); }
+.thr-meta { font-size: 12.5px; color: var(--muted); }
+.thr-chart { display: flex; flex-direction: column; gap: 4px; }
+.th-halo { stroke: var(--navy); stroke-opacity: .18; stroke-width: 24; stroke-linecap: round; pointer-events: none; }
+.thr-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 639.98px) { .thr-nav { grid-template-columns: minmax(0, 1fr); } }
+.thr-step {
+  text-align: left; border: 0; cursor: pointer; font: inherit; color: inherit; min-width: 0;
+  display: flex; flex-direction: column; gap: 6px; padding: 10px 12px;
+  border-radius: var(--r-control); background: var(--navy-tint);
+  transition: background-color .15s var(--ease);
+}
+.thr-step:hover { background: var(--active-bg); }
+.thr-step-k {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+}
+.thr-step-c { font-family: var(--serif); font-size: 14.5px; line-height: 1.4; color: var(--ink); text-wrap: pretty; }
+.meta-thr { font-weight: 600; color: var(--navy); }
+
+/* About: the brief's short accent over each section title, and the chart key. */
+.about-sec > .h-19::before {
+  content: ''; display: block; width: 24px; height: 3px; margin-bottom: 10px;
+  border-radius: var(--r-pill); background: var(--grad-accent);
+}
+.lgd-list { display: flex; flex-direction: column; gap: 14px; max-width: 680px; }
+.lgd { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; align-items: center; }
+.lgd-k { display: flex; align-items: center; gap: 6px; }
+.lgd-t { font-size: 14.5px; line-height: 1.55; color: var(--ink); text-wrap: pretty; }
+.lgd-thr { display: block; width: 64px; height: 16px; overflow: visible; }
+.lgd-line { stroke: var(--rule-navy); stroke-width: 2; }
+.lgd-dot { fill: var(--navy); stroke: #fff; stroke-width: 2; }
+.lgd-dot.aw { fill: #fff; stroke: var(--navy); stroke-width: 2.5; }
+
 /* ---------------------------------------------------------------------------- filter bar */
 
 .fbar {
@@ -785,30 +844,6 @@ a.u.aw:hover { background: var(--active-bg); }
 }
 .summary { display: flex; flex-direction: column; gap: 14px; }
 .list-sub { font-size: 13.5px; color: var(--muted); }
-.mix {
-  display: grid; grid-template-columns: var(--mix-cols); gap: 1px; background: var(--rule); border: 1px solid var(--rule);
-  border-radius: var(--r-card); box-shadow: var(--shadow-card); overflow: hidden; overflow: clip;
-}
-.mix-cell {
-  position: relative; background: #fff; padding: 14px 14px 12px; display: flex; flex-direction: column; gap: 6px; min-width: 0;
-}
-/* 3px rounded top bar in the mechanism fill. */
-.mix-cell::before {
-  content: ''; position: absolute; top: 0; left: 14px; right: 14px; height: 3px;
-  border-radius: 0 0 3px 3px; background: var(--m-fill);
-}
-/* In the mix the cell itself carries the hue, so the tag drops its pill and keeps the
-   design's rail-plus-label line. The rail-plus-label line needs ~158px of cell; a mix cell is
-   narrower than that below about 820px (four columns) and 410px (two columns). In those ranges
-   the rail sits above the label, which then fits on one line (the label alone needs ~108px; a
-   cell has >= 120px from 320px up). The label may wrap rather than run under the next cell if
-   a fallback font is wider still. */
-.mix-cell .mech { align-items: flex-start; background: none; box-shadow: none; padding: 0; border-radius: 0; }
-.mix-cell .rail { margin-top: 3px; }
-@media (max-width: 419.98px), (min-width: 640px) and (max-width: 839.98px) {
-  .mix-cell .mech { flex-direction: column; gap: 6px; }
-  .mix-cell .rail { margin-top: 0; }
-}
 
 .sec-head {
   display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 4px 16px; padding: var(--sec-pad);
@@ -877,6 +912,7 @@ a.u.aw:hover { background: var(--active-bg); }
   display: grid; grid-template-columns: var(--body-cols); grid-template-areas: var(--body-areas);
   gap: 22px 24px; padding: var(--body-pad);
 }
+.body.has-thr { grid-template-areas: var(--body-areas-thr); }
 .b-disp { grid-area: disp; display: flex; flex-direction: column; gap: 6px; }
 .b-disp > .kicker { color: var(--m-text); }
 .asks { font-size: 13.5px; line-height: 1.5; color: var(--ink); text-wrap: pretty; }
@@ -1056,7 +1092,7 @@ a.src-link:hover { color: var(--ink); text-decoration-color: var(--green); }
   .mast .dot.live { animation: none; }
   .mast-in { padding-bottom: 16px; }
   :focus-visible { outline: none; }
-  .card, .mix, .arch-link, .panel { box-shadow: none !important; }
+  .card, .arch-link, .panel { box-shadow: none !important; }
   .panel:not(.dashed) { border-left: 4px solid var(--m-fill); padding-left: 16px; }
   .item:hover::before { background: transparent; }
   .item.open::before { background: var(--m-fill); }
