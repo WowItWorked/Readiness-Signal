@@ -89,88 +89,207 @@ const errorMain = (page) => message(page, 'The archive could not be loaded.',
   'The page itself is fine, but the published data did not arrive or could not be read. Reload to try again.');
 
 // ---------------------------------------------------------------------------------------
-// Dashboard
+// Dashboard (owner change 2026-10-06): the brief, then the panels behind it. Charts use the one
+// navy ink; what an item asks is carried by labels and the mechanism tag, never by hue alone.
 
-function dashRow(it, rule, area, extraCls = '') {
-  return `<button type="button" class="dash-row${rule ? ' ruled' : ''}${extraCls}" data-act="reveal" data-id="${esc(it.item.id)}">
-      ${mechTag(it.item.mechanism)}
-      <span class="dash-claim">${esc(it.item.claim)}</span>
-      ${area}
-    </button>`;
+const cardHead = (id, title, sub) => `<header class="card-head">
+      <h2 class="h-19" id="${id}">${esc(title)}</h2>${sub ? `<span class="sub-13">${esc(sub)}</span>` : ''}
+    </header>`;
+
+/** Tooltip text for an item mark: date, what it asks, and the claim. */
+const itemTip = (it) => `${M.fmtDate(it.date)} · ${M.mechOf(it.mechanism).label}${it.backfilled ? ' · Backfilled' : ''}\n${it.claim}`;
+
+/** On phones the domain grid keeps its last six months. */
+const OLD_MONTHS = 6;
+const oldCls = (k, n) => (k < n - OLD_MONTHS ? ' old' : '');
+
+/** Month labels under a month-aligned chart: a short name, and the year where it starts or turns. */
+function monthAxis(months, cls) {
+  return `<div class="mx ${cls}" aria-hidden="true">${months.map((m) => `<span class="mx-m">${esc(m.label)}${m.year ? `<span class="mx-y">${esc(m.year)}</span>` : ''}</span>`).join('')}</div>`;
 }
 
-/** Dashboard domain counts render as pills; an em dash (none) is a quiet, unfilled pill. */
-const domCount = (n) => `<span class="dom-n${n === '—' ? ' zero' : ''}">${esc(n)}</span>`;
+function briefCard(brief) {
+  const cells = brief.map((b) => `<div class="brief-cell" data-k="brief-${esc(b.key)}">
+        <span class="kicker">${esc(b.kicker)}</span>
+        <p class="brief-t">${esc(b.text)}</p>
+        ${b.sub ? `<p class="brief-s">${esc(b.sub)}</p>` : ''}
+        ${b.item ? `<button type="button" class="brief-item" data-act="reveal" data-id="${esc(b.item.id)}">
+          <span class="brief-item-k">Latest${mechTag(b.item.mechanism)}</span>
+          <span class="brief-claim">${esc(b.item.claim)}</span>
+        </button>` : ''}
+      </div>`).join('');
+  return `<section class="card brief" aria-labelledby="brief-h">
+    <h2 class="sr-only" id="brief-h">At a glance</h2>
+    <div class="brief-grid">${cells}</div>
+  </section>`;
+}
+
+function latestCard(d) {
+  const rows = d.latest.map((it, i) => `<button type="button" class="lt${i ? ' ruled' : ''}" data-act="reveal" data-id="${esc(it.id)}">
+        <span class="lt-meta">${mechTag(it.mechanism)}<span class="lt-when">${esc(M.fmtDate(it.date))}</span>${it.backfilled ? '<span class="meta-bf">Backfilled</span>' : ''}</span>
+        <span class="lt-claim">${esc(it.claim)}</span>
+      </button>`).join('');
+  return `<section class="card dcard d-latest" aria-labelledby="lt-h">
+    ${cardHead('lt-h', 'Latest additions', 'The newest items, from live editions or the historical backfill.')}
+    ${rows || `<div class="dash-none">${QUIET}<p>Nothing published yet. Runs at 06:00, 10:00, 14:00 and 18:00 ET publish only what clears the bar; a silent run is a result.</p></div>`}
+  </section>`;
+}
+
+function additionsCard(d) {
+  const cols = d.additions.map((a) => `<div class="uc-col">${a.items.map((it) => `<a class="u${M.asksForAction(it) ? '' : ' aw'}" href="${href(`#${it.id}`)}" tabindex="-1" data-tip="${esc(itemTip(it))}"></a>`).join('')}</div>`).join('');
+  const rows = d.additions.map((a) => `<tr><th scope="row">${esc(a.name)}</th><td>${a.items.length}</td><td>${a.action}</td></tr>`).join('');
+  const secs = d.sections.map((s) => `<span class="secs-i"><span class="badge badge-22 badge-${s.mark}" aria-hidden="true">${s.n}</span><span class="secs-t">${esc(s.title)}</span><span class="secs-n">${s.count}</span></span>`).join('');
+  return `<section class="card dcard d-adds" aria-labelledby="add-h">
+    ${cardHead('add-h', 'Additions by month', 'One square per item: filled where it asks for action, open where it resolves as awareness only.')}
+    <div class="dcard-body">
+      <div class="uc" aria-hidden="true">
+        <div class="uc-cols">${cols}</div>
+        ${monthAxis(d.months, 'uc-axis')}
+      </div>
+      <div class="lg-row" aria-hidden="true"><span class="lg"><span class="u"></span>Asks for action</span><span class="lg"><span class="u aw"></span>Awareness only</span></div>
+      <table class="sr-only"><caption>Items added by month</caption><thead><tr><th scope="col">Month</th><th scope="col">Items</th><th scope="col">Ask for action</th></tr></thead><tbody>${rows}</tbody></table>
+      ${d.beforeChart ? `<p class="dcard-note">${M.plural(d.beforeChart, 'earlier item')} not charted.</p>` : ''}
+    </div>
+    <div class="secs"><span class="kicker">By section, all time</span><div class="secs-list">${secs}</div></div>
+  </section>`;
+}
+
+/** One thread's timeline: its developments on the shared month axis, joined from first to latest. */
+function threadLine(t, n) {
+  // Stretched to the card's width (preserveAspectRatio none), so every stroke is non-scaling and
+  // each dot is a zero-length line with round caps: it stays round at any width.
+  const NS = 'vector-effect="non-scaling-stroke"';
+  const X = (x) => (x * 1000).toFixed(1);
+  const seg = (cls, x, y1 = 11.99, y2 = 12.01) => `<line class="${cls}" x1="${x}" y1="${y1}" x2="${x}" y2="${y2}" ${NS}/>`;
+  const grid = Array.from({ length: n - 1 }, (_, k) => seg('th-grid', X((k + 1) / n), 2, 22)).join('');
+  const xs = t.dots.map((p) => p.x);
+  const span = xs.length > 1 ? `<line class="th-span" x1="${X(Math.min(...xs))}" y1="12" x2="${X(Math.max(...xs))}" y2="12" ${NS}/>` : '';
+  const dots = t.dots.map((p) => {
+    const x = X(p.x);
+    const hole = M.asksForAction(p.item) ? '' : seg('th-hole', x);
+    return `<a href="${href(`#${p.item.id}`)}" tabindex="-1" data-tip="${esc(itemTip(p.item))}">${seg('th-hit', x)}${seg('th-ring', x)}${seg('th-dot', x)}${hole}</a>`;
+  }).join('');
+  return `<svg class="th-svg" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">${grid}${span}${dots}</svg>`;
+}
+
+function threadsCard(d) {
+  const n = d.months.length;
+  const list = d.threads.map((t) => `<div class="th">
+        <div class="th-top">
+          <span class="th-n"><span class="th-num">${t.n}</span> developments</span>
+          <span class="th-meta">${esc(`${M.fmtDate(t.first.date)} to ${M.fmtDate(t.latest.date)}${t.recent ? ` · ${t.recent} in the last 30 days` : ''}${t.domains.length ? ` · ${t.domains.join(', ')}` : ''}`)}</span>
+        </div>
+        ${threadLine(t, n)}
+        <button type="button" class="th-latest" data-act="reveal" data-id="${esc(t.latest.id)}">
+          <span class="th-latest-k">Latest${mechTag(t.latest.mechanism)}</span>
+          <span class="th-claim">${esc(t.latest.claim)}</span>
+        </button>
+      </div>`).join('');
+  const more = d.threadCount > d.threads.length ? `<p class="dcard-note">${M.plural(d.threadCount - d.threads.length, 'more thread')} in the archive.</p>` : '';
+  return `<section class="card dcard d-threads" aria-labelledby="th-h">
+    ${cardHead('th-h', 'Developing threads', 'Stories that later items have materially updated, most recently active first. Filled dots ask for action.')}
+    ${list ? `<div class="th-list">${list}</div>${monthAxis(d.months, 'th-axis')}${more}` : `<div class="dash-none">${QUIET}<p>No developing thread yet. A thread forms when an item materially updates an earlier one.</p></div>`}
+  </section>`;
+}
+
+function asksCard(d) {
+  const rows = d.asks.map((it, i) => `<button type="button" class="ask${i ? ' ruled' : ''}" data-act="reveal" data-id="${esc(it.id)}">
+        <span class="ask-meta">${mechTag(it.mechanism)}<span class="ask-when">${esc(M.fmtDate(it.date))}</span></span>
+        <span class="ask-q">${esc(it.validation_question)}</span>
+        <span class="ask-c">${esc(it.claim)}</span>
+      </button>`).join('');
+  return `<section class="card dcard d-asks" aria-labelledby="ask-h">
+    ${cardHead('ask-h', 'Questions to put to owners', 'The newest items that ask for action. Each question is paste-ready.')}
+    ${rows || `<div class="dash-none">${QUIET}<p>No item asks for action yet. Every item so far resolves as awareness only.</p></div>`}
+    ${d.asksTotal > d.asks.length ? `<footer class="dcard-foot">${M.plural(d.asksTotal, 'item')} in the archive ask for action. <a class="small-link" href="#archive"${navAttrs('archive')}>Browse the archive</a></footer>` : ''}
+  </section>`;
+}
+
+function regulatoryCard(d) {
+  const rows = d.regulatory.map((r) => `<li><button type="button" class="reg" data-act="reveal" data-id="${esc(r.item.id)}">
+        <span class="reg-when">${esc(M.fmtDate(r.item.date))}</span>
+        <span class="reg-t">${r.issuer ? `<span class="reg-who">${esc(r.issuer)}</span>` : ''}<span class="reg-c">${esc(r.item.claim)}</span></span>
+      </button></li>`).join('');
+  return `<section class="card dcard d-reg" aria-labelledby="reg-h">
+    ${cardHead('reg-h', 'Regulatory direction', 'Where regulators and executives are signalling they are heading, newest first.')}
+    ${rows ? `<ol class="reg-list">${rows}</ol>` : `<div class="dash-none">${QUIET}<p>No regulatory or executive signal has cleared the bar yet.</p></div>`}
+    ${d.regulatoryTotal > d.regulatory.length ? `<footer class="dcard-foot"><a class="small-link" href="#archive"${navAttrs('archive', 'section', 'regulatory_trajectory')}>All ${d.regulatoryTotal} in the archive</a></footer>` : ''}
+  </section>`;
+}
+
+const SLOT_STATE = {
+  published: 'Published an edition', silent: 'Ran, silent', failed: 'Failed', missed: 'Did not run',
+  due: 'Due now', later: 'Not yet due', off: 'Before runs began',
+};
+
+function barCard(d) {
+  const b = d.bar;
+  const step = (v, l) => `<div class="fn"><span class="fn-v">${esc(Number(v).toLocaleString('en-US'))}</span><span class="fn-l">${l}</span></div>`;
+  const grid = b.grid.map((g) => `<tr><th scope="row"><span aria-hidden="true">${esc(g.label)}</span><span class="sr-only">${esc(g.name)}</span></th>${g.slots.map((s) => `<td><span class="slot slot-${s.state}" aria-hidden="true"></span><span class="sr-only">${SLOT_STATE[s.state]}</span></td>`).join('')}</tr>`).join('');
+  const reading = d.brief.find((x) => x.key === 'bar');
+  return `<section class="card dcard d-bar" aria-labelledby="bar-h">
+    ${cardHead('bar-h', `The bar, last ${b.days} days`, 'From the run log: what the scheduled runs read, what got through, and whether each slot ran.')}
+    <div class="dcard-body bar-body">
+      <div class="funnel">${step(b.unseen, 'new headlines read')}${step(b.stage1, 'passed the first screen')}${step(b.tested, 'put to an entry test')}${step(b.cleared, 'cleared the bar')}</div>
+      <div class="runs-wrap">
+        <table class="runs">
+          <caption class="sr-only">Scheduled runs by day and slot (ET)</caption>
+          <thead><tr><th scope="col"><span class="sr-only">Day</span></th>${M.SLOT_HOURS.map((h) => `<th scope="col">${String(h).padStart(2, '0')}:00</th>`).join('')}</tr></thead>
+          <tbody>${grid}</tbody>
+        </table>
+        <ul class="runs-key" aria-hidden="true">
+          <li><span class="slot slot-published"></span>Published</li><li><span class="slot slot-silent"></span>Silent</li>
+          <li><span class="slot slot-failed"></span>Failed</li><li><span class="slot slot-missed"></span>Did not run</li>
+        </ul>
+      </div>
+      ${reading && reading.sub ? `<p class="bar-note">${esc(reading.sub)}</p>` : ''}
+    </div>
+  </section>`;
+}
 
 function dashboardMain(st) {
   const d = M.dashboard(st.data, st.now);
-  const latest = d.latest
-    ? `<header class="latest-head">
-        <div class="latest-head-t"><span class="kicker">Last edition</span><h2 class="h-21">${esc(d.latest.title)}</h2></div>
-        <a class="small-link" href="#report"${navAttrs('report', 'latest')}>Open in the report</a>
-      </header>
-      ${d.latest.items.map((e, i) => dashRow(e, i > 0, `<span class="dash-sec">${esc(e.secLabel)}</span>`, ' latest-row')).join('')}`
-    : `<header class="latest-head">
-        <div class="latest-head-t"><span class="kicker">Last edition</span><h2 class="h-21">None yet</h2></div>
-      </header>
-      <div class="dash-none">${QUIET}<p>No edition has been published yet. Runs at 06:00, 10:00, 14:00 and 18:00 ET publish only what clears the bar; a silent run is a result.</p></div>`;
-
-  const board = d.board.map((col) => `<div class="board-col"${mechAttr(col.mech)}>
-        <div class="board-head">
-          ${mechTag(col.mech)}
-          <div class="num-row"><span class="num-30">${col.n}</span><span class="num-desc">${esc(col.desc)}</span></div>
-        </div>
-        ${col.items.map((x) => `<button type="button" class="board-item" data-act="reveal" data-id="${esc(x.item.id)}">
-          <span class="board-meta">${esc(x.meta)}</span>
-          <span class="board-claim">${esc(x.item.claim)}</span>
-        </button>`).join('')}
-        ${col.n ? '' : '<span class="board-none">Nothing this week.</span>'}
-      </div>`).join('');
-
-  const secRows = d.secRows.map((r, i) => `<button type="button" class="sec-row${i ? ' ruled' : ''}"${navAttrs('report', 'section', r.key)}>
-        <span class="badge badge-36 badge-${r.mark}" aria-hidden="true">${r.n}</span>
-        <span class="sec-row-t"><span class="sec-row-title">${esc(r.title)}</span><span class="sec-row-last">${esc(r.last)}</span></span>
-        <span class="sec-row-n">${r.count}</span>
-      </button>`).join('');
-
-  const domRows = d.domRows.map((r) => `<button type="button" class="dom-row" aria-label="${esc(r.name)}"${navAttrs('report', 'domain', r.key)}>
-        <span class="dom-name">${esc(r.label)}</span>${domCount(r.n)}${domCount(r.act)}
-      </button>`).join('');
-
   return `<main id="main" tabindex="-1" class="main dash" data-k="main-dashboard">
-  <div class="title-row">
+  <div class="title-row start">
     <h1 class="h1">Dashboard</h1>
+    ${d.scope ? `<span class="list-sub">${esc(d.scope)}</span>` : ''}
   </div>
-
-  <section class="card latest-card" aria-label="Last edition">
-    ${latest}
-  </section>
-
-  <section class="board-wrap" aria-labelledby="board-h">
-    <div class="title-row">
-      <h2 class="h-21" id="board-h">Last 7 days, by what each item asks</h2>
-      <a class="small-link" href="#report"${navAttrs('report', 'week')}>${esc(d.weekLink)}</a>
-    </div>
-    <div class="board">${board}</div>
-  </section>
-
-  <div class="dash-two">
-    <section class="card" aria-labelledby="secs-h">
-      <header class="card-head"><h2 class="h-19" id="secs-h">Sections, last 7 days</h2><span class="sub-13">Open a section in the report.</span></header>
-      ${secRows}
-    </section>
-    <section class="card" aria-labelledby="doms-h">
-      <header class="card-head"><h2 class="h-19" id="doms-h">Domains, last 7 days</h2><span class="sub-13">Items carry several domains, so these overlap.</span></header>
-      <div class="dom-cols" aria-hidden="true"><span>Domain</span><span>Items</span><span>Ask action</span></div>
-      ${domRows}
-    </section>
+  ${briefCard(d.brief)}
+  <div class="dash-grid">
+    ${latestCard(d)}
+    ${additionsCard(d)}
+    ${threadsCard(d)}
+    ${asksCard(d)}
+    ${regulatoryCard(d)}
+    ${domainsCard(d)}
+    ${barCard(d)}
   </div>
-
   <a class="arch-link" href="#archive"${navAttrs('archive')}>
     <span class="arch-link-t"><span class="arch-link-h">Archive</span><span class="arch-link-s">${esc(d.archLine)}</span></span>
     <span class="arch-link-go">Browse the archive</span>
   </a>
 </main>`;
+}
+
+function domainsCard(d) {
+  const { rows } = d.domains;
+  const n = d.months.length;
+  const head = d.months.map((m, k) => `<th scope="col" class="dm-m${oldCls(k, n)}"><span aria-hidden="true">${esc(m.label)}</span><span class="sr-only">${esc(m.name)}</span></th>`).join('');
+  const body = rows.map((r) => `<tr class="${r.recent ? '' : 'dm-quiet'}">
+        <th scope="row" class="dm-d">${esc(r.label)}</th>
+        ${r.cells.map((c, k) => `<td class="dm-c${oldCls(k, n)}" data-tip="${esc(`${r.label}, ${d.months[k].name}: ${M.plural(c, 'item')}`)}"><span class="dmd s${Math.min(c, 4)}" aria-hidden="true"></span><span class="sr-only">${c}</span></td>`).join('')}
+        <td class="dm-r"><span class="dm-n">${r.recent}</span><span class="dm-was">${r.prior} before</span></td>
+      </tr>`).join('');
+  return `<section class="card dcard d-doms" aria-labelledby="dom-h">
+    ${cardHead('dom-h', 'Where the signal concentrates', `Items by domain and month; the last column compares the last ${M.RECENT_DAYS} days with the ${M.RECENT_DAYS} before. Items carry several domains, so rows overlap.`)}
+    <div class="dcard-body">
+      <table class="dm">
+        <caption class="sr-only">Items by domain and month, and in the last ${M.RECENT_DAYS} days against the ${M.RECENT_DAYS} days before</caption>
+        <thead><tr><th scope="col" class="dm-d"><span class="sr-only">Domain</span></th>${head}<th scope="col" class="dm-r">${M.RECENT_DAYS} days</th></tr></thead>
+        <tbody>${body}</tbody>
+      </table>
+    </div>
+  </section>`;
 }
 
 // ---------------------------------------------------------------------------------------
@@ -432,7 +551,7 @@ function aboutMain() {
     <div class="about-sec">
       <h2 class="h-19">Where things live</h2>
       <div class="lives">
-        <a class="live-row" href="#dashboard"${navAttrs('dashboard')}><span class="live-k">Dashboard</span><span class="live-v">The last update and the past week at a glance, by mechanism, section and domain.</span></a>
+        <a class="live-row" href="#dashboard"${navAttrs('dashboard')}><span class="live-k">Dashboard</span><span class="live-v">A brief of what is building, where the signal concentrates and what the archive asks, with the threads, trends and run log behind it.</span></a>
         <a class="live-row" href="#report"${navAttrs('report', 'day')}><span class="live-k">Report</span><span class="live-v">The last 24 hours, week or month, organised by the three sections. Filter, expand and export.</span></a>
         <a class="live-row" href="#archive"${navAttrs('archive')}><span class="live-k">Archive</span><span class="live-v">Everything ever published, by month, with search and a custom date range. Nothing is replaced.</span></a>
       </div>

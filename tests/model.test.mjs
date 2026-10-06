@@ -390,51 +390,145 @@ describe('editions and runs', () => {
   });
 });
 
-describe('dashboard aggregates', () => {
+describe('dashboard analysis', () => {
   const d = M.dashboard(data, NOW);
+  const archive = (over) => M.prepare({ items: over.map((o) => item(o)) }, { runs: [] });
 
-  test('executive visibility, last 7 days, newest first', () => {
-    assert.deepEqual(d.exec.map((e) => e.item.id), [
-      'RS-261002-1400-01', 'RS-261002-1400-03', 'RS-261002-1000-01', 'RS-260930-1400-01', 'RS-260926-1800-01',
+  test('brief: four readings, each built from the archive or the run log', () => {
+    assert.deepEqual(d.brief.map((b) => b.kicker), ['Building', 'Concentrating', 'Asking', 'The bar']);
+    const [building, conc, asking, bar] = d.brief;
+    assert.equal(building.text, '2 developments in one thread since 21 Sep 2026, 2 of them in the last 30 days.');
+    assert.equal(building.item.id, 'RS-261002-1400-02');
+    const recentFrom = +NOW - 90 * DAY;
+    const recent = data.items.filter((i) => i.ts >= recentFrom);
+    const prior = data.items.filter((i) => i.ts >= recentFrom - 90 * DAY && i.ts < recentFrom);
+    const cyber = (l) => l.filter((i) => i.domains.includes('cyber')).length;
+    assert.equal(conc.text, `Cyber is on ${cyber(recent)} of the ${recent.length} items from the last 90 days, against ${cyber(prior)} of ${prior.length} in the 90 days before.`);
+    assert.equal(conc.sub, 'Every domain has items from the last 90 days.');
+    assert.equal(asking.text, '20 of the 25 items from the last 90 days ask for action: 7 candidate issues, 7 KRI / KPI checks and 6 PRAF coverage checks.');
+    assert.equal(asking.sub, 'In the 90 days before: 2 of 3.');
+    assert.equal(bar.text, '26 runs in the last 7 days read 4,001 new headlines; 573 passed the first screen and 13 cleared the bar.');
+    assert.equal(bar.sub, '1 of 27 scheduled runs failed.');
+  });
+
+  test('brief on thin data reads plainly', () => {
+    assert.deepEqual(M.dashboard(empty, NOW).brief.map((b) => b.text), [
+      'No developing thread yet. A thread forms when an item materially updates an earlier one.',
+      'Nothing was added in the last 90 days.',
+      'Nothing was added in the last 90 days.',
+      'No scheduled run has been recorded yet.',
     ]);
-    assert.equal(d.exec[0].when, 'Last edition · 14:00');
-    assert.equal(d.exec[0].isNew, true);
-    assert.equal(d.exec[2].when, 'Fri 10:00');
-    assert.equal(d.exec[2].isNew, false);
+    const aware = { mechanism: 'awareness_only', validation_question: null, candidate_issue_statement: null, awareness_rationale: 'Known.' };
+    const one = M.dashboard(archive([{ ...aware, domains: ['cyber', 'data'] }]), NOW).brief;
+    assert.equal(one[1].text, 'The one item from the last 90 days is on Cyber and Data.');
+    assert.equal(one[1].sub, 'Nothing in the last 90 days on Fraud, AI, Resilience, Third party and Risk quantification.');
+    assert.equal(one[2].text, 'The one item from the last 90 days resolves as awareness only.');
+    assert.equal(M.dashboard(archive([{}]), NOW).brief[2].text, 'The one item from the last 90 days asks for action: a candidate issue.');
+    const two = archive([{ ...aware }, { ...aware, id: 'RS-260930-1000-01', timestamp: '2026-09-30T10:00:00-04:00' }]);
+    assert.equal(M.dashboard(two, NOW).brief[2].text, 'None of the 2 items from the last 90 days asks for action; each resolves as awareness only.');
   });
 
-  test('latest edition list', () => {
-    assert.equal(d.latest.title, 'Fri 2 Oct, 14:00 ET · 4 items');
-    assert.deepEqual(d.latest.items.map((x) => x.secLabel), ['01 Executive Visibility', '01 Executive Visibility', '02 Capability & Control Shift', '02 Capability & Control Shift']);
-  });
-
-  test('mechanism board: counts, Executive Visibility first, then newest', () => {
-    assert.deepEqual(d.board.map((b) => [b.label, b.n]), [['Candidate issue', 4], ['KRI / KPI', 3], ['PRAF coverage', 3], ['Awareness only', 3]]);
-    const ci = d.board[0].items.map((x) => x.item.section);
-    assert.deepEqual(ci.slice(0, 2), ['executive_visibility', 'executive_visibility']);
-    assert.match(d.board[0].items[0].meta, /^Fri 14:00 · Section 1$/);
-    assert.equal(d.weekLink, 'All 13 items in the report');
-  });
-
-  test('section rows', () => {
-    assert.deepEqual(d.secRows.map((r) => [r.count, r.last]), [
-      [5, 'Last published Fri 2 Oct'], [6, 'Last published Fri 2 Oct'], [2, 'Last published Thu 1 Oct'],
+  test('threads: update_of links join items into stories; a lone item is not a thread', () => {
+    assert.equal(d.threadCount, 1);
+    assert.deepEqual(d.threads[0].items.map((i) => i.id), ['RS-260921-1000-01', 'RS-261002-1400-02']);
+    assert.equal(d.threads[0].recent, 2);
+    const x = archive([
+      { id: 'RS-260101-0600-01', timestamp: '2026-01-01T06:00:00-05:00' },
+      { id: 'RS-260201-0600-01', timestamp: '2026-02-01T06:00:00-05:00', update_of: 'RS-260101-0600-01' },
+      { id: 'RS-260301-0600-01', timestamp: '2026-03-01T06:00:00-05:00', update_of: 'RS-260101-0600-01' },
+      { id: 'RS-260401-1000-01', timestamp: '2026-04-01T10:00:00-04:00', update_of: 'RS-260301-0600-01' },
+      { id: 'RS-260501-1000-01', timestamp: '2026-05-01T10:00:00-04:00' },
+      { id: 'RS-260601-1000-01', timestamp: '2026-06-01T10:00:00-04:00', update_of: 'RS-260501-1000-01' },
+      { id: 'RS-260701-1000-01', timestamp: '2026-07-01T10:00:00-04:00' },
     ]);
+    const ts = M.threads(x, NOW);
+    assert.deepEqual(ts.map((t) => t.n), [2, 4], 'most recently active first');
+    assert.deepEqual(ts[1].items.map((i) => i.id), ['RS-260101-0600-01', 'RS-260201-0600-01', 'RS-260301-0600-01', 'RS-260401-1000-01'], 'a branching chain is one thread');
+    assert.deepEqual(M.threads(archive([{ update_of: 'RS-200101-0600-01' }]), NOW), [], 'a link to an item outside the archive');
   });
 
-  test('domain rows: Ask action = non-awareness count, dash for zero', () => {
-    assert.deepEqual(d.domRows.map((r) => [r.label, r.n, r.act]), [
-      ['Cyber', 9, 6], ['Fraud', 5, 4], ['AI', 5, 5], ['Data', 5, 3], ['Resilience', 5, 4], ['Third party', 5, 5], ['Risk quantification', 2, 1],
-    ]);
-    const wk = data.items.filter((i) => i.ts >= +NOW - 7 * DAY);
-    for (const r of d.domRows) {
-      const l = wk.filter((i) => i.domains.includes(r.key));
-      assert.equal(r.act, l.filter((i) => i.mechanism !== 'awareness_only').length || '—');
+  test('months: first item to now, at most twelve, the year where the axis starts or turns', () => {
+    assert.deepEqual(d.months.map((m) => m.key), ['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06', '2026-07', '2026-08', '2026-09', '2026-10']);
+    assert.deepEqual(d.months.filter((m) => m.year).map((m) => m.key), ['2026-01']);
+    const long = M.monthSpan(archive([{ id: 'RS-241101-0600-01', timestamp: '2024-11-01T06:00:00-04:00' }]), NOW);
+    assert.equal(long.length, 12);
+    assert.deepEqual(long.filter((m) => m.year).map((m) => `${m.label} ${m.year}`), ['Nov 2025', 'Jan 2026']);
+    assert.deepEqual(M.monthSpan(empty, NOW).map((m) => m.key), ['2026-10']);
+    assert.equal(M.dashboard(archive([{ id: 'RS-241101-0600-01', timestamp: '2024-11-01T06:00:00-04:00' }]), NOW).beforeChart, 1);
+  });
+
+  test('month positions: equal-width months, null off the axis', () => {
+    assert.equal(M.monthPos(d.months, new Date('2026-01-01T00:00:00-05:00')), 0);
+    assert.ok(Math.abs(M.monthPos(d.months, new Date('2026-10-16T12:00:00-04:00')) - (9 + 15.5 / 31) / 10) < 1e-9);
+    assert.equal(M.monthPos(d.months, new Date('2025-12-31T12:00:00-05:00')), null);
+  });
+
+  test('additions by month: actions first, then awareness, oldest first within each', () => {
+    const sep = d.additions.find((a) => a.key === '2026-09');
+    const items = data.items.filter((i) => i.month === '2026-09');
+    assert.equal(sep.items.length, items.length);
+    assert.equal(sep.action, items.filter((i) => i.mechanism !== 'awareness_only').length);
+    const flags = sep.items.map(M.asksForAction);
+    assert.deepEqual(flags, [...flags].sort((a, b) => Number(b) - Number(a)));
+    assert.equal(d.additions.reduce((n, a) => n + a.items.length, 0), data.items.length);
+    assert.equal(d.beforeChart, 0);
+  });
+
+  test('domain matrix: per month, and the last 90 days against the 90 before, in fixed order', () => {
+    assert.deepEqual(d.domains.rows.map((r) => r.key), M.DOMAINS.map((x) => x.key));
+    const recentFrom = +NOW - 90 * DAY;
+    for (const r of d.domains.rows) {
+      const has = (i) => i.domains.includes(r.key);
+      assert.equal(r.recent, data.items.filter((i) => i.ts >= recentFrom && has(i)).length, r.key);
+      assert.equal(r.prior, data.items.filter((i) => i.ts >= recentFrom - 90 * DAY && i.ts < recentFrom && has(i)).length, r.key);
+      assert.equal(r.cells.reduce((a, b) => a + b, 0), r.total, r.key);
     }
+  });
+
+  test('asks and regulatory signals, newest first', () => {
+    assert.equal(d.asksTotal, data.items.filter((i) => i.mechanism !== 'awareness_only').length);
+    assert.ok(d.asks.length === 5 && d.asks.every((i) => i.mechanism !== 'awareness_only' && i.validation_question));
+    assert.deepEqual(d.asks.map((i) => i.ts), [...d.asks.map((i) => i.ts)].sort((a, b) => b - a));
+    assert.equal(d.regulatoryTotal, data.items.filter((i) => i.section === 'regulatory_trajectory').length);
+    assert.deepEqual(d.regulatory.slice(0, 2).map((r) => [r.item.id, r.issuer]), [
+      ['RS-261001-0600-01', 'Example Senate Committee'], ['RS-260929-1000-01', 'Example House Committee'],
+    ]);
+    assert.deepEqual(d.sections.map((s) => s.count), [11, 13, 8]);
+  });
+
+  test('the bar: run-log sums over the last 7 calendar days, and what became of each slot', () => {
+    const b = d.bar;
+    assert.equal(b.from, +new Date('2026-09-26T00:00:00-04:00'));
+    const runs = RAW_RUNS.runs.filter((r) => Date.parse(r.slot) >= b.from && Date.parse(r.slot) <= +NOW);
+    const done = runs.filter((r) => r.status !== 'failed');
+    assert.equal(b.completed, done.length);
+    assert.equal(b.unseen, done.reduce((n, r) => n + r.funnel.unseen, 0));
+    assert.equal(b.stage1, done.reduce((n, r) => n + r.funnel.stage1_pass, 0));
+    assert.equal(b.tested, done.reduce((n, r) => n + Object.values(r.stage2_by_section).reduce((m, s) => m + s.tested, 0), 0));
+    assert.equal(b.cleared, done.reduce((n, r) => n + r.items.length, 0));
+    assert.deepEqual([b.published, b.silent, b.failed, b.missed, b.scheduled], [9, 17, 1, 0, 27]);
+    assert.equal(b.grid.length, 7);
+    assert.deepEqual(b.grid.at(-1).slots.map((s) => s.state), ['published', 'published', 'published', 'later']);
+  });
+
+  test('the bar counts a slot as missed only after its hour, and only once runs have begun', () => {
+    const x = M.prepare({ items: [] }, { runs: [
+      { slot: '2026-10-01T10:00:00-04:00', status: 'silent', items: [], funnel: { unseen: 100, stage1_pass: 5 } },
+      { slot: '2026-10-02T06:00:00-04:00', status: 'silent', items: [], funnel: { unseen: 50, stage1_pass: 2 } },
+    ] });
+    const at = new Date('2026-10-02T14:30:00-04:00');
+    const b = M.barStats(x, at);
+    assert.deepEqual(b.grid.at(-2).slots.map((s) => s.state), ['off', 'silent', 'missed', 'missed']);
+    assert.deepEqual(b.grid.at(-1).slots.map((s) => s.state), ['silent', 'missed', 'due', 'later']);
+    assert.deepEqual([b.missed, b.scheduled, b.completed, b.unseen, b.stage1, b.cleared], [3, 5, 2, 150, 7, 0]);
+    const bar = M.dashboard(x, at).brief[3];
+    assert.equal(bar.text, '2 runs in the last 7 days read 150 new headlines; 7 passed the first screen and none cleared the bar.');
+    assert.equal(bar.sub, '3 of 5 scheduled runs did not run.');
   });
 
   test('archive line', () => {
     assert.equal(d.archLine, '32 items published since 15 Jan 2026. Nothing is replaced; everything stays searchable.');
+    assert.equal(d.scope, '32 items since 15 Jan 2026');
   });
 });
 
@@ -600,11 +694,13 @@ describe('empty archive and empty runs (day one)', () => {
   test('dashboard', () => {
     const d = M.dashboard(empty, NOW);
     assert.equal(M.lastChecked(empty), null);
-    assert.equal(d.latest, null);
-    assert.deepEqual(d.exec, []);
-    assert.deepEqual(d.board.map((b) => b.n), [0, 0, 0, 0]);
-    assert.deepEqual(d.secRows.map((r) => r.last), Array(3).fill('Quiet this week · Last published never'));
-    assert.deepEqual(d.domRows.map((r) => [r.n, r.act]), Array(7).fill(['—', '—']));
+    assert.equal(d.scope, '');
+    assert.deepEqual(d.latest, []);
+    assert.deepEqual(d.threads, []);
+    assert.deepEqual([d.asksTotal, d.regulatoryTotal, d.additionsMax], [0, 0, 0]);
+    assert.deepEqual(d.months.map((m) => m.key), ['2026-10']);
+    assert.equal(d.bar.any, false);
+    assert.ok(d.bar.grid.every((g) => g.slots.every((s) => s.state === 'off' || s.state === 'later')), 'nothing counts as missed before runs begin');
     assert.match(d.archLine, /^Nothing published yet\./);
     assert.deepEqual(M.mastheadTimes(empty), { edition: 'None yet', checked: 'Not yet' });
   });
@@ -702,17 +798,6 @@ describe('review hardening', () => {
     // backfilled items never move the clock
     const bf = M.prepare({ items: [item({ id: 'RS-271001-1800-01', timestamp: '2027-10-01T18:00:00-04:00', backfilled: true })] }, { runs: [] });
     assert.equal(+M.effectiveNow(bf, NOW), +NOW);
-  });
-
-  test('dashboard: week link and Executive Visibility empty copy depend on what ran', () => {
-    assert.equal(M.dashboard(data, NOW).weekLink, `All ${M.plural(M.dashboard(data, NOW).weekCount, 'item')} in the report`);
-    assert.equal(M.dashboard(empty, NOW).weekLink, 'Open the report');
-    assert.match(M.dashboard(empty, NOW).execNone, /^Nothing published this week\./);
-    const silent = M.prepare({ items: [] }, { runs: [{ slot: '2026-10-01T06:00:00-04:00', status: 'silent', items: [] }] });
-    assert.equal(M.dashboard(silent, NOW).execNone, 'Nothing cleared the Executive Visibility test this week.');
-    const failed = M.prepare({ items: [] }, { runs: [{ slot: '2026-10-01T06:00:00-04:00', status: 'failed', items: [] }] });
-    assert.match(M.dashboard(failed, NOW).execNone, /^Nothing published this week\./);
-    assert.equal(M.dashboard(data, NOW).domRows[0].name, `Cyber: ${M.plural(data.items.filter((i) => i.ts >= +NOW - 7 * DAY && i.domains.includes('cyber')).length, 'item')}, ${data.items.filter((i) => i.ts >= +NOW - 7 * DAY && i.domains.includes('cyber') && i.mechanism !== 'awareness_only').length} ask action`);
   });
 
   test('list controls: nothing to expand or export in an empty selection', () => {

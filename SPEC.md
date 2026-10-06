@@ -222,11 +222,28 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   chosen view still does not show the item, the all-time archive with every filter and the search cleared, for that
   page load only. A permalink opened from outside the page jumps straight to the item (no smooth scroll) and holds it
   in view while fonts and layout settle: until the reader scrolls, taps, clicks or types, or 3 s after the page is visible.
-- Dashboard, Report (24 h / 7 d / 30 d; Section, Domain, Source filters with counts; expand/collapse all;
+- Report (24 h / 7 d / 30 d; Section, Domain, Source filters with counts; expand/collapse all;
   export collapsed/expanded via print), Archive (All / month / custom range; search over claim, domains,
   publications, headlines; grouped by month), About — all exactly as designed, with the copy changes below.
-  Owner change (2026-10-04): the Dashboard has no "Executive Visibility, last 7 days" card; it opens with the
-  Last edition card, followed by the mechanism board and the section and domain summaries.
+- Dashboard (owner change 2026-10-06, replacing the design's 7-day counts, which said little with so few items):
+  analysis, not counts, all computed in `model.js` from `archive.json` and `runs.json` (never at build time).
+  1. A brief of four readings in plain sentences: **Building** (the update thread with the most developments in
+     the last 90 days: size, start, last 30 days, its latest item), **Concentrating** (the domain on the most items
+     from the last 90 days against the 90 days before; domains with nothing in 90 days), **Asking** (how many of
+     the last 90 days' items ask for action, by mechanism, against the 90 days before) and **The bar** (the last 7
+     ET calendar days of runs: new headlines read, first-screen passes, items cleared; scheduled slots missed or
+     failed). 2. Latest additions (five newest items, live or backfilled). 3. Additions by month: a unit chart,
+     one square per item, filled where it asks for action, open where it resolves as awareness only; section
+     totals beneath. 4. Developing threads: items joined by `update_of` into stories (2+ items), each a timeline
+     on a shared month axis with its latest item. 5. Questions to put to owners: the newest actionable items'
+     validation questions. 6. Regulatory direction: the newest section 3 items with their primary source.
+     7. Where the signal concentrates: items per domain per month as sized dots, with the last 90 days against
+     the 90 before. 8. The bar, last 7 days: the run-log funnel and each scheduled slot (published, silent, failed,
+     did not run). A slot counts as missed only an hour after its time and only from the first recorded run on.
+  Charts use the one navy ink; what an item asks is carried by fill, labels and the mechanism tag, never by hue
+  alone; sizes mean volume, never severity. Chart marks are pointer shortcuts (tooltips, click to open); every
+  chart has a table or list equivalent for keyboard and screen-reader users. Months span at most 12; phones show
+  the domain grid's last six months.
 - Mechanism "asks" text: Candidate issue — "Send the validation question to the owner. If the answer is no or
   unknown, raise the candidate issue." KRI / KPI — "Confirm an indicator exists, is measured, and reaches
   someone who acts on it. If not, the issue language applies." PRAF coverage — "Confirm the risk assessment
@@ -284,7 +301,9 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   feed or a news service, and it says nothing about any
   institution's control position. The validation question is where that record starts, inside your own
   organisation."
-- Where things live: design copy.
+- Where things live: design copy, except the Dashboard line (owner change 2026-10-06): "A brief of what is
+  building, where the signal concentrates and what the archive asks, with the threads, trends and run log behind
+  it."
 
 ### 7.4 Layout breakpoints
 

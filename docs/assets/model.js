@@ -315,6 +315,9 @@ function normItem(r) {
   return it;
 }
 
+/** A non-negative count from the run log, or 0. */
+const count = (v) => (Number.isFinite(v) && v > 0 ? Math.floor(v) : 0);
+
 function normRun(r) {
   if (!r || typeof r !== 'object') return null;
   const slotTs = Date.parse(str(r.slot));
@@ -322,6 +325,8 @@ function normRun(r) {
   const started = Date.parse(str(r.started_at));
   const finished = Date.parse(str(r.finished_at));
   const status = ['published', 'silent', 'failed'].includes(r.status) ? r.status : 'failed';
+  const f = r.funnel && typeof r.funnel === 'object' ? r.funnel : {};
+  const bySection = r.stage2_by_section && typeof r.stage2_by_section === 'object' ? Object.values(r.stage2_by_section) : [];
   return {
     run_id: str(r.run_id),
     slotTs,
@@ -330,6 +335,9 @@ function normRun(r) {
     items: arr(r.items).filter((x) => typeof x === 'string'),
     startedTs: Number.isFinite(started) ? started : null,
     finishedTs: Number.isFinite(finished) ? finished : null,
+    unseen: count(f.unseen),
+    stage1: count(f.stage1_pass),
+    tested: bySection.reduce((n, s) => n + count(s && s.tested), 0),
   };
 }
 
@@ -675,60 +683,291 @@ export function mailtoHref(it, link = permalinkUrl(it.id)) {
 }
 
 // ---------------------------------------------------------------------------------------
-// Dashboard (design renderVals, page === 'dashboard')
+// Dashboard (owner change 2026-10-06): a brief of four readings and the panels behind them.
+// Each answers what a 7-day count could not: what is building, where the signal concentrates,
+// what the archive asks, and how the bar behaves. Item figures count every item, live or
+// backfilled (both are archive content); run figures come from runs.json alone.
+
+/** The window behind "lately" in the brief, and the one before it for comparison. */
+export const RECENT_DAYS = 90;
+/** Edition slot hours in ET (pipeline/lib/time.mjs SLOT_HOURS). */
+export const SLOT_HOURS = Object.freeze([6, 10, 14, 18]);
+/** A run has an hour from its slot (RUNBOOK time budget) before its absence counts as a miss. */
+export const RUN_BUDGET = 60 * 60e3;
+
+export const asksForAction = (it) => it.mechanism !== 'awareness_only';
+
+const fmtInt = (n) => Number(n).toLocaleString('en-US');
+
+/** 'a', 'a and b', 'a, b and c'. */
+export const listJoin = (xs) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
+
+/** '3 of the 15 items', or '1 of 1 item'. */
+const ofItems = (k, n) => (n === 1 ? `${k} of 1 item` : `${k} of the ${n} items`);
+
+const monthIdx = (key) => { const [y, m] = key.split('-').map(Number); return y * 12 + m - 1; };
+
+/**
+ * The months the dashboard charts: from the archive's first month to the current one, at most
+ * `max` of them. Each has its short label, and its year where the axis starts or the year turns.
+ */
+export function monthSpan(data, now, max = 12) {
+  const end = monthIdx(monthKey(now));
+  const first = data.earliest ? monthIdx(monthKey(data.earliest)) : end;
+  const start = Math.min(end, Math.max(first, end - max + 1));
+  const out = [];
+  for (let k = start; k <= end; k++) {
+    const y = Math.floor(k / 12);
+    const m = (k % 12) + 1;
+    const key = `${y}-${pad(m)}`;
+    out.push({ key, label: MON[m - 1], name: monthName(key), year: k === start || m === 1 ? String(y) : '' });
+  }
+  return out;
+}
+
+/**
+ * Where an instant sits on a month axis of equal-width months: 0 at the start of the first
+ * month, 1 at the end of the last. Null outside the axis.
+ */
+export function monthPos(months, value) {
+  const p = etParts(value);
+  const k = months.findIndex((m) => m.key === `${p.year}-${pad(p.month)}`);
+  if (k < 0) return null;
+  const days = new Date(Date.UTC(p.year, p.month, 0)).getUTCDate();
+  return (k + (p.day - 1 + (p.hour + p.minute / 60) / 24) / days) / months.length;
+}
+
+/**
+ * Developing threads: items joined by `update_of` (a later item that materially updates an
+ * earlier one), each joined group read as one story. Groups of two or more, the most recently
+ * active first. `recent` counts the last 30 days, `lately` the last RECENT_DAYS.
+ */
+export function threads(data, now) {
+  const up = new Map(data.items.map((i) => [i.id, i.id]));
+  const find = (id) => {
+    let r = id;
+    while (up.get(r) !== r) r = up.get(r);
+    for (let x = id; up.get(x) !== r;) { const next = up.get(x); up.set(x, r); x = next; }
+    return r;
+  };
+  for (const it of data.items) if (it.update_of && up.has(it.update_of)) up.set(find(it.id), find(it.update_of));
+  const groups = new Map();
+  for (const it of data.items) {
+    const r = find(it.id);
+    if (!groups.has(r)) groups.set(r, []);
+    groups.get(r).push(it);
+  }
+  const monthAgo = +now - 30 * DAY;
+  const latelyFrom = +now - RECENT_DAYS * DAY;
+  return [...groups.values()].filter((g) => g.length > 1).map((g) => {
+    const items = [...g].sort((a, b) => a.ts - b.ts || (a.id < b.id ? -1 : 1));
+    const tally = DOMAINS.map((d) => [d.label, items.filter((i) => i.domains.includes(d.key)).length])
+      .filter(([, n]) => n).sort((a, b) => b[1] - a[1]);
+    return {
+      key: items[0].id,
+      items,
+      first: items[0],
+      latest: items[items.length - 1],
+      n: items.length,
+      recent: items.filter((i) => i.ts >= monthAgo).length,
+      lately: items.filter((i) => i.ts >= latelyFrom).length,
+      action: items.filter(asksForAction).length,
+      domains: tally.slice(0, 3).map(([label]) => label),
+    };
+  }).sort((a, b) => b.latest.ts - a.latest.ts || b.n - a.n);
+}
+
+/** Items per domain per month, with each domain's count in the last RECENT_DAYS and the period before. */
+export function domainMatrix(data, months, now) {
+  const recentFrom = +now - RECENT_DAYS * DAY;
+  const priorFrom = recentFrom - RECENT_DAYS * DAY;
+  const recent = data.items.filter((i) => i.ts >= recentFrom);
+  const prior = data.items.filter((i) => i.ts >= priorFrom && i.ts < recentFrom);
+  const rows = DOMAINS.map((d) => {
+    const has = (i) => i.domains.includes(d.key);
+    const all = data.items.filter(has);
+    return {
+      key: d.key,
+      label: d.label,
+      cells: months.map((m) => all.filter((i) => i.month === m.key).length),
+      recent: recent.filter(has).length,
+      prior: prior.filter(has).length,
+      total: all.length,
+      last: all.length ? all[0].date : null,
+    };
+  });
+  return { rows, recentN: recent.length, priorN: prior.length };
+}
+
+/**
+ * The bar over the last `days` ET calendar days, today included, from runs.json: what the runs
+ * read and let through, and what became of each scheduled slot. A slot counts as missed only once
+ * its hour is up, and only from the first recorded run on (before it the schedule was not live).
+ */
+export function barStats(data, now, days = 7) {
+  const t = +now;
+  const today = todayEt(now);
+  const dates = Array.from({ length: days }, (_, k) => etDateKey(etDayStart(today, k - days + 1)));
+  const from = +etDayStart(dates[0]);
+  const live = data.runs.length ? data.runs[0].slotTs : null;
+  const bySlot = new Map(data.runs.map((r) => [r.slotTs, r]));
+  const grid = dates.map((iso) => {
+    const [y, m, d] = iso.split('-').map(Number);
+    const p = etParts(etWallToDate(y, m, d, 12));
+    return {
+      iso,
+      label: `${p.weekday} ${p.day}`,
+      name: fmtDate(etWallToDate(y, m, d, 12)),
+      slots: SLOT_HOURS.map((h) => {
+        const ts = +etWallToDate(y, m, d, h);
+        const r = bySlot.get(ts);
+        let state = 'missed';
+        if (r) state = r.status;
+        else if (ts > t) state = 'later';
+        else if (ts > t - RUN_BUDGET) state = 'due';
+        else if (live == null || ts < live) state = 'off';
+        return { ts, hour: h, state };
+      }),
+    };
+  });
+  const cells = grid.flatMap((g) => g.slots);
+  const n = (s) => cells.filter((c) => c.state === s).length;
+  const runs = data.runs.filter((r) => r.slotTs >= from && r.slotTs <= t);
+  const done = runs.filter((r) => r.status !== 'failed');
+  const sum = (f) => done.reduce((acc, r) => acc + f(r), 0);
+  const counts = { published: n('published'), silent: n('silent'), failed: n('failed'), missed: n('missed') };
+  return {
+    days,
+    from,
+    grid,
+    any: data.runs.length > 0,
+    completed: done.length,
+    ...counts,
+    scheduled: counts.published + counts.silent + counts.failed + counts.missed,
+    unseen: sum((r) => r.unseen),
+    stage1: sum((r) => r.stage1),
+    tested: sum((r) => r.tested),
+    cleared: sum((r) => r.items.length),
+  };
+}
+
+const MECH_ASK = {
+  candidate_issue: ['candidate issue', 'candidate issues'],
+  kri_kpi: ['KRI / KPI check', 'KRI / KPI checks'],
+  praf_coverage: ['PRAF coverage check', 'PRAF coverage checks'],
+};
+
+/**
+ * The brief: four readings in plain sentences, each built only from the archive and the run
+ * log. `item`, where present, is the item the reading points at.
+ */
+export function brief(data, now, { threadList, dm, bar }) {
+  const out = [];
+
+  // Building: the thread with the most developments lately (then the most recent).
+  const t = [...threadList].sort((a, b) => b.lately - a.lately || b.latest.ts - a.latest.ts)[0];
+  out.push(t ? {
+    key: 'building',
+    kicker: 'Building',
+    text: `${t.n} developments in one thread since ${fmtDate(t.first.date)}${t.recent ? `, ${t.recent} of them in the last 30 days` : ''}.`,
+    item: t.latest,
+  } : {
+    key: 'building',
+    kicker: 'Building',
+    text: 'No developing thread yet. A thread forms when an item materially updates an earlier one.',
+  });
+
+  // Concentrating: the domain on the most recent items, against the period before.
+  const lead = dm.rows.reduce((best, r) => (r.recent > best.recent ? r : best), dm.rows[0]);
+  const quiet = dm.rows.filter((r) => !r.recent).map((r) => r.label);
+  let concentrating = `Nothing was added in the last ${RECENT_DAYS} days.`;
+  if (dm.recentN === 1) {
+    concentrating = `The one item from the last ${RECENT_DAYS} days is on ${listJoin(dm.rows.filter((r) => r.recent).map((r) => r.label))}.`;
+  } else if (dm.recentN && lead.recent) {
+    concentrating = `${lead.label} is on ${ofItems(lead.recent, dm.recentN)} from the last ${RECENT_DAYS} days`
+      + `${dm.priorN ? `, against ${lead.prior} of ${dm.priorN} in the ${RECENT_DAYS} days before` : ''}.`;
+  }
+  let quietLine = '';
+  if (dm.recentN) quietLine = quiet.length ? `Nothing in the last ${RECENT_DAYS} days on ${listJoin(quiet)}.` : `Every domain has items from the last ${RECENT_DAYS} days.`;
+  out.push({ key: 'concentrating', kicker: 'Concentrating', text: concentrating, sub: quietLine });
+
+  // Asking: how much of what arrived lately asks for action, against the period before.
+  const recentFrom = +now - RECENT_DAYS * DAY;
+  const recent = data.items.filter((i) => i.ts >= recentFrom);
+  const prior = data.items.filter((i) => i.ts >= recentFrom - RECENT_DAYS * DAY && i.ts < recentFrom);
+  const act = recent.filter(asksForAction);
+  const parts = Object.keys(MECH_ASK).map((k) => [k, act.filter((i) => i.mechanism === k).length])
+    .filter(([, n]) => n).map(([k, n]) => `${n} ${MECH_ASK[k][n === 1 ? 0 : 1]}`);
+  let asking = `Nothing was added in the last ${RECENT_DAYS} days.`;
+  if (recent.length === 1) {
+    asking = act.length
+      ? `The one item from the last ${RECENT_DAYS} days asks for action: a ${MECH_ASK[act[0].mechanism][0]}.`
+      : `The one item from the last ${RECENT_DAYS} days resolves as awareness only.`;
+  } else if (recent.length && !act.length) {
+    asking = `None of the ${recent.length} items from the last ${RECENT_DAYS} days asks for action; each resolves as awareness only.`;
+  } else if (act.length) {
+    asking = `${ofItems(act.length, recent.length)} from the last ${RECENT_DAYS} days ${act.length === 1 ? 'asks' : 'ask'} for action: ${listJoin(parts)}.`;
+  }
+  out.push({
+    key: 'asking',
+    kicker: 'Asking',
+    text: asking,
+    sub: prior.length ? `In the ${RECENT_DAYS} days before: ${prior.filter(asksForAction).length} of ${prior.length}.` : '',
+  });
+
+  // The bar: what the runs of the last 7 days read and let through, and whether they ran.
+  let text = 'No scheduled run has been recorded yet.';
+  if (bar.any && !bar.completed) text = `No run completed in the last ${bar.days} days.`;
+  else if (bar.completed) {
+    text = `${plural(bar.completed, 'run')} in the last ${bar.days} days read ${fmtInt(bar.unseen)} new headlines; `
+      + `${fmtInt(bar.stage1)} passed the first screen and ${bar.cleared ? `${bar.cleared} cleared the bar` : 'none cleared the bar'}.`;
+  }
+  let sub = '';
+  if (bar.missed && bar.failed) sub = `Of ${plural(bar.scheduled, 'scheduled run')}, ${bar.missed} did not run and ${bar.failed} failed.`;
+  else if (bar.missed) sub = `${bar.missed} of ${plural(bar.scheduled, 'scheduled run')} did not run.`;
+  else if (bar.failed) sub = `${bar.failed} of ${plural(bar.scheduled, 'scheduled run')} failed.`;
+  else if (bar.scheduled) sub = bar.scheduled === 1 ? 'The scheduled run ran.' : `All ${bar.scheduled} scheduled runs ran.`;
+  out.push({ key: 'bar', kicker: 'The bar', text, sub });
+
+  return out;
+}
 
 export function dashboard(data, now) {
-  const le = latestEdition(data);
-  const weekStart = +now - 7 * DAY;
-  const wk = data.items.filter((i) => i.ts >= weekStart);
-  const isLatest = (i) => !!le && i.ts === le.ts && !i.backfilled;
-  const exec = wk.filter((i) => i.section === 'executive_visibility').map((i) => ({
-    item: i,
-    isNew: isLatest(i),
-    when: isLatest(i) ? `Last edition · ${hm(i.date)}` : whenShort(i.date, now),
-  }));
-  const board = MECHANISMS.map((m) => {
-    const list = wk.filter((i) => i.mechanism === m.key)
-      .sort((x, y) => (x.section === 'executive_visibility' ? 0 : 1) - (y.section === 'executive_visibility' ? 0 : 1)
-        || y.ts - x.ts);
-    return {
-      mech: m.key, label: m.label, desc: m.short, n: list.length,
-      items: list.map((i) => ({ item: i, meta: `${whenShort(i.date, now)} · Section ${secIndex(i)}` })),
-    };
+  const months = monthSpan(data, now);
+  const threadList = threads(data, now);
+  const dm = domainMatrix(data, months, now);
+  const bar = barStats(data, now);
+  const actionable = data.items.filter(asksForAction);
+  const regulatory = data.items.filter((i) => i.section === 'regulatory_trajectory');
+  const firstShown = months.length ? months[0].key : '';
+  const additions = months.map((m) => {
+    const items = data.items.filter((i) => i.month === m.key)
+      .sort((x, y) => Number(asksForAction(y)) - Number(asksForAction(x)) || x.ts - y.ts);
+    return { ...m, items, action: items.filter(asksForAction).length };
   });
-  const secRows = SECTIONS.map((S) => {
-    const n = wk.filter((i) => i.section === S.key).length;
-    const last = data.items.find((i) => i.section === S.key);
-    return {
-      key: S.key, n: S.n, title: S.title, mark: S.mark, count: n,
-      last: `${n ? '' : 'Quiet this week · '}Last published ${last ? dShort(last.date) : 'never'}`,
-    };
-  });
-  const domRows = DOMAINS.map((d) => {
-    const l = wk.filter((i) => i.domains.includes(d.key));
-    const act = l.filter((i) => i.mechanism !== 'awareness_only').length;
-    return {
-      key: d.key, label: d.label, n: l.length || '—', act: act || '—',
-      name: `${d.label}: ${plural(l.length, 'item')}, ${act} ask action`,
-    };
-  });
-  // "Nothing cleared the test" only when a run actually applied it this week (as the report does).
-  const weekRuns = runStats(data, [weekStart, null]);
   return {
-    execNone: weekRuns.applied
-      ? 'Nothing cleared the Executive Visibility test this week.'
-      : 'Nothing published this week. No run in the last 7 days has applied the entry test yet.',
-    latest: le ? {
-      title: `${dShort(le.date)}, ${hm(le.date)} ET · ${plural(le.items.length, 'item')}`,
-      items: le.items.map((i) => ({ item: i, secLabel: `0${secIndex(i)} ${SECTION_BY_KEY.get(i.section).title}` })),
-      window: revealWindow(+now - le.ts),
-    } : null,
-    exec,
-    weekCount: wk.length,
-    weekLink: wk.length ? `All ${plural(wk.length, 'item')} in the report` : 'Open the report',
-    board,
-    secRows,
-    domRows,
+    scope: data.items.length ? `${plural(data.items.length, 'item')} since ${fmtDate(data.earliest)}` : '',
+    brief: brief(data, now, { threadList, dm, bar }),
+    latest: data.items.slice(0, 5),
+    months,
+    additions,
+    additionsMax: Math.max(0, ...additions.map((a) => a.items.length)),
+    beforeChart: data.items.filter((i) => i.month < firstShown).length,
+    sections: SECTIONS.map((S) => {
+      const list = data.items.filter((i) => i.section === S.key);
+      return { key: S.key, n: S.n, title: S.title, mark: S.mark, count: list.length, last: list.length ? list[0].date : null };
+    }),
+    threads: threadList.slice(0, 3).map((t) => ({
+      ...t,
+      dots: t.items.map((item) => ({ item, x: monthPos(months, item.date) })).filter((d) => d.x != null),
+    })),
+    threadCount: threadList.length,
+    domains: dm,
+    asks: actionable.slice(0, 5),
+    asksTotal: actionable.length,
+    regulatory: regulatory.slice(0, 5).map((item) => ({ item, issuer: item.sources.length ? item.sources[0].publication : '' })),
+    regulatoryTotal: regulatory.length,
+    bar,
     archLine: data.items.length
       ? `${plural(data.items.length, 'item')} published since ${fmtDate(data.earliest)}. Nothing is replaced; everything stays searchable.`
       : 'Nothing published yet. Every item that clears the bar stays here, searchable; nothing is replaced.',

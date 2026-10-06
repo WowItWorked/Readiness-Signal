@@ -72,6 +72,7 @@ function morphChildren(from, to) {
 const clock = () => M.effectiveNow(data, new Date());
 
 function render() {
+  hideTip();
   const html = renderApp({
     ui, data, now: clock(), error: loadError, loading,
   }).replace(/>\s+</g, '><');
@@ -176,6 +177,39 @@ function set(patch) {
 }
 
 // ---------------------------------------------------------------------------------------
+// Chart tooltips: one floating label for any mark carrying data-tip, on pointer hover and on
+// keyboard focus. The text goes in with textContent (data is untrusted) and the box is placed
+// through CSSOM, which the page's style-src policy allows (style attributes in markup are not).
+
+let tip = null;
+
+function showTip(el) {
+  if (!tip) {
+    tip = document.createElement('div');
+    tip.className = 'tip';
+    tip.setAttribute('role', 'tooltip');
+    document.body.appendChild(tip);
+  }
+  tip.textContent = el.getAttribute('data-tip');
+  tip.hidden = false;
+  const r = el.getBoundingClientRect();
+  const vw = document.documentElement.clientWidth;
+  const x = Math.max(8, Math.min(r.left + r.width / 2 - tip.offsetWidth / 2, vw - tip.offsetWidth - 8));
+  const y = r.top - tip.offsetHeight - 8 < 8 ? r.bottom + 8 : r.top - tip.offsetHeight - 8;
+  tip.style.left = `${Math.round(x + window.scrollX)}px`;
+  tip.style.top = `${Math.round(y + window.scrollY)}px`;
+}
+
+function hideTip() {
+  if (tip) tip.hidden = true;
+}
+
+const tipFor = (e) => {
+  const el = e.target && e.target.closest ? e.target.closest('[data-tip]') : null;
+  return el && root.contains(el) ? el : null;
+};
+
+// ---------------------------------------------------------------------------------------
 // Navigation
 
 function setHash(h, replace = false) {
@@ -197,14 +231,8 @@ function go(page, preset, value) {
   else if (preset === 'exec') Object.assign(patch, { repTime: 'week' }, clear, { secs: ['executive_visibility'] });
   else if (preset === 'section' && M.SECTION_BY_KEY.has(value)) Object.assign(patch, { repTime: 'week' }, clear, { secs: [value] });
   else if (preset === 'domain' && M.DOMAIN_BY_KEY.has(value)) Object.assign(patch, { repTime: 'week' }, clear, { doms: [value] });
-  else if (preset === 'latest' && data) {
-    const le = M.latestEdition(data);
-    if (le) {
-      const win = M.revealWindow(+clock() - le.ts + M.REVEAL_SLACK);
-      Object.assign(patch, win, clear);
-      if (win.page === 'archive') Object.assign(patch, { archTime: `m-${M.monthKey(le.date)}`, q: '' });
-    }
-  }
+  // In the archive a section or domain opens across all time, with no search narrowing it.
+  if (page === 'archive' && (preset === 'section' || preset === 'domain')) Object.assign(patch, { archTime: 'all', q: '' });
   const changed = patch.page !== ui.page;
   setHash(patch.page);
   set(patch);
@@ -450,6 +478,19 @@ root.addEventListener('change', onField);
 root.addEventListener('focusout', (e) => {
   if (e.target && e.target.type === 'date') setTimeout(render, 0);
 });
+
+root.addEventListener('pointerover', (e) => {
+  const el = tipFor(e);
+  if (el) showTip(el);
+  else hideTip();
+});
+root.addEventListener('pointerleave', hideTip);
+root.addEventListener('focusin', (e) => {
+  const el = tipFor(e);
+  if (el) showTip(el);
+});
+root.addEventListener('focusout', hideTip);
+window.addEventListener('scroll', hideTip, { passive: true });
 
 window.addEventListener('hashchange', readHash);
 window.addEventListener('popstate', readHash);

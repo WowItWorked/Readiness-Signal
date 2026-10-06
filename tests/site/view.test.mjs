@@ -129,9 +129,8 @@ describe('brief overrides of the design', () => {
     assert.ok(one.includes('<main id="main" tabindex="-1" class="main list"'));
     assert.ok(one.includes('<a class="skip" href="#main" data-act="skip" data-k="skip">Skip to content</a>'));
     const dash = render({ page: 'dashboard' });
-    assert.ok(/<button type="button" class="dom-row" aria-label="Cyber: \d+ items?, \d+ ask action"/.test(dash));
-    assert.ok(!/class="sec-row[^"]*"[^>]*><span class="badge badge-36 badge-solid">/.test(dash), 'section badge digit is hidden from the name');
-    assert.ok(dash.includes('<span class="badge badge-36 badge-solid" aria-hidden="true">1</span><span class="sec-row-t">'));
+    assert.ok(dash.includes('<h2 class="sr-only" id="brief-h">At a glance</h2>'));
+    assert.ok(dash.includes('<span class="badge badge-22 badge-solid" aria-hidden="true">1</span><span class="secs-t">Executive Visibility</span>'), 'section badge digit is hidden from the name');
   });
 
   test('backfilled label and note', () => {
@@ -258,7 +257,9 @@ describe('colour hooks and palette', () => {
     assert.equal(tags, (html.match(/class="mech(?: row-mech)?" data-mech="(candidate_issue|kri_kpi|praf_coverage|awareness_only)"/g) || []).length);
     for (const { key } of M.MECHANISMS) assert.ok(html.includes(`<div class="mix-cell" data-mech="${key}">`), `mix ${key}`);
     const dash = render({ page: 'dashboard' });
-    for (const { key } of M.MECHANISMS) assert.ok(dash.includes(`<div class="board-col" data-mech="${key}">`), `board ${key}`);
+    const dashTags = (dash.match(/class="mech"/g) || []).length;
+    assert.ok(dashTags > 0);
+    assert.equal(dashTags, (dash.match(/class="mech" data-mech="(candidate_issue|kri_kpi|praf_coverage|awareness_only)"/g) || []).length);
     const about = render({ page: 'about' }, null);
     for (const { key } of M.MECHANISMS) assert.ok(about.includes(`<div class="mech-cell" data-mech="${key}">`), `about ${key}`);
   });
@@ -301,11 +302,13 @@ describe('states', () => {
     const dash = text(render({ page: 'dashboard' }, empty));
     assert.ok(dash.includes('Last edition None yet'));
     assert.ok(dash.includes('Last checked Not yet'));
-    // No run has applied the test yet, so the dashboard does not claim that nothing cleared it.
-    assert.ok(!dash.includes('Executive Visibility, last 7 days')); // card removed from the dashboard (owner request 2026-10-04)
-    assert.ok(!dash.includes('Nothing cleared the Executive Visibility test'));
-    assert.ok(dash.includes('No edition has been published yet.'));
-    assert.ok(dash.includes('Open the report') && !dash.includes('All 0 items'));
+    // Day one: every panel says plainly that there is nothing yet; nothing claims a run applied the test.
+    assert.ok(dash.includes('No scheduled run has been recorded yet.'));
+    assert.ok(dash.includes('Nothing published yet. Runs at 06:00, 10:00, 14:00 and 18:00 ET publish only what clears the bar; a silent run is a result.'));
+    assert.ok(dash.includes('No developing thread yet.'));
+    assert.ok(dash.includes('No item asks for action yet.'));
+    assert.ok(dash.includes('No regulatory or executive signal has cleared the bar yet.'));
+    assert.ok(!dash.includes('cleared the bar.') && !dash.includes('did not run'));
     assert.ok(!dash.includes('As of'));
     const repHtml = render({ page: 'report' }, empty);
     const rep = text(repHtml);
@@ -334,12 +337,39 @@ describe('states', () => {
     assert.ok(!/\d{2}:\d{2} ET/.test(loadingMast));
   });
 
-  test('the dashboard opens with the last edition; no Executive Visibility card', () => {
+  test('the dashboard opens with the brief, then its panels in reading order (owner change 2026-10-06)', () => {
     const html = render({ page: 'dashboard' });
-    assert.ok(!html.includes('exec-card') && !html.includes('Executive Visibility, last 7 days'));
-    assert.ok(html.indexOf('latest-card') > html.indexOf('class="h1"'));
-    const d = M.prepare({ items: [] }, { runs: [{ slot: '2026-10-02T06:00:00-04:00', status: 'silent', items: [] }] });
-    assert.ok(!text(render({ page: 'dashboard' }, d)).includes('Executive Visibility test'));
+    const order = ['class="card brief"', ...['latest', 'adds', 'threads', 'asks', 'reg', 'doms', 'bar'].map((k) => `class="card dcard d-${k}"`), 'class="arch-link"']
+      .map((k) => html.indexOf(k));
+    assert.ok(order.every((at) => at > html.indexOf('class="h1"')), 'everything after the title');
+    assert.deepEqual(order, [...order].sort((a, b) => a - b));
+    assert.ok(!/last 7 days, by what each item asks|Sections, last 7 days|Domains, last 7 days/i.test(html), 'the 7-day count panels are gone');
+    const t = text(html);
+    for (const b of M.dashboard(data, NOW).brief) assert.ok(t.includes(V.esc(b.text)), b.key);
+  });
+
+  test('dashboard charts: one mark per item, tables for assistive tech, links only to item ids', () => {
+    const html = render({ page: 'dashboard' });
+    const d = M.dashboard(data, NOW);
+    assert.equal((html.match(/<a class="u( aw)?" href="#RS-/g) || []).length, data.items.length, 'a square per item');
+    assert.equal((html.match(/<a class="u aw"/g) || []).length, data.items.filter((i) => i.mechanism === 'awareness_only').length);
+    assert.equal((html.match(/<line class="th-dot"/g) || []).length, d.threads.reduce((n, t) => n + t.dots.length, 0));
+    // Chart marks are pointer shortcuts; keyboard and screen-reader users get the tables and lists.
+    assert.ok(/<div class="uc" aria-hidden="true">/.test(html) && /<svg class="th-svg"[^>]*aria-hidden="true"/.test(html));
+    for (const m of html.matchAll(/<a class="u[^"]*"[^>]*>/g)) assert.ok(m[0].includes('tabindex="-1"'), m[0]);
+    assert.ok(html.includes('<caption>Items added by month</caption>'));
+    assert.ok(/<table class="dm">\s*<caption class="sr-only">Items by domain and month/.test(html));
+    assert.ok(html.includes('<caption class="sr-only">Scheduled runs by day and slot (ET)</caption>'));
+    for (const m of html.slice(html.indexOf('<main')).matchAll(/href="([^"]+)"/g)) {
+      assert.ok(/^#(RS-\d{6}-\d{4}-\d{2}|archive|report|dashboard)$/.test(m[1]), m[1]);
+    }
+  });
+
+  test('dashboard tooltips and labels are escaped data', () => {
+    const d = hostile();
+    const html = render({ page: 'dashboard' }, d);
+    assert.ok(!html.includes('<img') && !html.includes('<script'));
+    assert.ok(/data-tip="[^"]*Claim &lt;img src=x onerror=&quot;alert\(1\)&quot;&gt;/.test(html));
   });
 
   test('print: the permalink prints in full', () => {
