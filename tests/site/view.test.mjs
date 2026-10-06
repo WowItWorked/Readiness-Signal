@@ -210,7 +210,7 @@ describe('colour hooks and palette', () => {
   test('the four mechanism fills stay distinct, including under red-green colour-vision deficiency', () => {
     // OKLab distance (x100) between fills, for typical vision and Machado (2009) deuteranopia and
     // protanopia simulations. PRAF violet and awareness indigo once sat at 7.5 / 2.6 / 1.3; the
-    // candidate issue moved from fuchsia to a deep teal (2026-10-03), held about 13 apart from the KRI cyan by lightness as well as hue. Labels and rail positions carry
+    // candidate issue moved from fuchsia to a deep teal (2026-10-03), held about 13 apart from the KRI cyan by lightness as well as hue. The tag labels carry
     // the meaning regardless (WCAG 1.4.1); this guards against hues drifting back together.
     const lin = (h) => hex(h).map((c) => { const v = c / 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; });
     const lab = ([r, g, b]) => {
@@ -282,18 +282,41 @@ describe('colour hooks and palette', () => {
     assert.ok(/@media \(prefers-reduced-motion: reduce\)\s*\{[^}]*animation: none !important; transition: none !important;/.test(css));
   });
 
-  test('the brand green is emphasis only: link underlines, the masthead bar, the live dot, the active nav mark', () => {
+  test('the brand green is emphasis only: link underlines, the masthead bar, the live dot, the active nav mark, the masthead wave', () => {
     const rules = css.replace(/\/\*[^]*?\*\//g, '').split('}');
     for (const r of rules) {
       const [sel, body = ''] = r.split('{').slice(-2);
       for (const decl of body.split(';')) {
-        if (!/var\(--green\)|#1FD16A|rgba\(31, 209, 106/i.test(decl) || /--green:/.test(decl)) continue;
+        // The brand green and its light tint (#65E287), which only the masthead wave's strokes use.
+        if (!/var\(--green\)|#1FD16A|rgba\(31, 209, 106|#65E287|rgba\(101, 226, 135/i.test(decl) || /--green:/.test(decl)) continue;
         const prop = decl.split(':')[0].trim();
         const ok = prop === 'text-decoration-color'
-          || /^\s*(\.brand-bar|\.dot|\.nav a\.on::after|0%|70%|100%)\s*$/.test(sel);
+          || /^\s*(\.brand-bar|\.dot|\.nav a\.on::after|0%|70%|100%)\s*$/.test(sel)
+          || (prop === 'stroke' && /^\s*\.mw-(bg|dim|hot)\s*$/.test(sel));
         assert.ok(ok, `green used by "${sel.trim()}" ${prop}`);
       }
     }
+  });
+
+  test('masthead wave: decorative, tiled, labelled, left out of print and off phones', () => {
+    const html = render({ page: 'dashboard' });
+    const mast = html.slice(0, html.indexOf('</header>'));
+    assert.ok(mast.includes('<header class="mast" data-k="mast">'));
+    assert.ok(mast.includes('<div class="mast-wave" aria-hidden="true"><svg focusable="false">'), 'hidden from assistive tech');
+    assert.equal((mast.match(/<use href="#mw-main"/g) || []).length, 10, 'dim and lit copies, five tiles each');
+    assert.ok(mast.includes('<line class="mw-bar" x1="0" y1="22" x2="100%" y2="22"></line>'), 'the bar sits on the nav row rule');
+    assert.ok(mast.includes('<span class="mw-label" aria-hidden="true">Materiality bar</span>'));
+    assert.ok(!mast.includes('<button'), 'no pause control: the owner chose continuous motion (2026-10-06)');
+    const print = render({ page: 'report', printMode: 'collapsed' });
+    assert.ok(!print.includes('mast-wave') && !print.includes('mw-label'), 'print mode leaves out the wave and its label');
+    // Reduced motion stills it (the global motion rule), and phones, where the nav fills the row, never get it.
+    assert.ok(/@media \(max-width: 639\.98px\) \{ \.mast-wave, \.mw-label \{ display: none; \} \}/.test(css));
+  });
+
+  test('mechanism tags show the label alone, with no four-square rail', () => {
+    const html = render({ page: 'report', repTime: 'month' });
+    assert.ok(!html.includes('class="rail"'));
+    assert.ok(/<span class="mech(?: row-mech)?" data-mech="[a-z_]+"><span class="mech-label">/.test(html));
   });
 });
 

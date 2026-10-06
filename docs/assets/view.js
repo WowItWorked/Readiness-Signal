@@ -10,18 +10,20 @@ export const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ESC[c]);
 /** An attribute-safe href, or '' when the value is not an allowed link. */
 export const href = (h) => esc(M.safeHref(h));
 
-const ICONS = [0, 1, 2, 3];
-
-/** The four-square mechanism rail (decorative; the label carries the meaning). */
-export function rail(mechKey) {
-  const on = M.mechOf(mechKey).i;
-  return `<span class="rail" aria-hidden="true">${ICONS.map((i) => `<span${i === on ? ' class="on"' : ''}></span>`).join('')}</span>`;
-}
-
 /** data-mech lets the stylesheet set the mechanism hue (--m-*) on this element and its contents. */
 const mechAttr = (mechKey) => ` data-mech="${esc(mechKey)}"`;
 
-const mechTag = (mechKey, cls = 'mech') => `<span class="${cls}"${mechAttr(mechKey)}>${rail(mechKey)}<span class="mech-label">${esc(M.mechOf(mechKey).label)}</span></span>`;
+const mechTag = (mechKey, cls = 'mech') => `<span class="${cls}"${mechAttr(mechKey)}><span class="mech-label">${esc(M.mechOf(mechKey).label)}</span></span>`;
+
+// The masthead's radio wave, the same chatter as the Readiness Signal panel on
+// emergingtechrisk.com: traffic scrolls under a dashed materiality bar drawn on the nav row's
+// top rule, and only the bursts that cross it light up. Each path is two 240px periods in px
+// (the homepage wave at 0.6 across and 0.55 down, so the bar sits at y 22 of 66); <use> tiles
+// them to cover any width and the stylesheet scrolls one period at a time.
+const WAVE_MAIN = 'M0 44.1L1.5 42.6 3 39.9 4.5 36.3 6 35.3 7.5 45 9 44.6 10.5 42.1 12 41 13.5 38 15 41.1 16.5 38.7 18 37.6 19.5 44.4 21 44 22.5 42.7 24 36.9 25.5 35.1 27 42.2 28.5 43 30 41.5 31.5 43.6 33 41 34.5 40.4 36 38.5 37.5 36.1 39 46.1 40.5 43.1 42 33.4 43.5 39.9 45 56.7 46.5 45.7 48 19.9 49.5 30 51 53.4 52.5 49 54 40.5 55.5 37.6 57 34.7 58.5 40.6 60 43.7 61.5 44.4 63 42.8 64.5 38.1 66 39.3 67.5 39.6 69 36.6 70.5 41.9 72 44 73.5 45.6 75 42.1 76.5 33.6 78 38.2 79.5 40.8 81 43.2 82.5 42.8 84 40.6 85.5 42.7 87 40.3 88.5 35.7 90 39.7 91.5 43.1 93 45.5 94.5 44.4 96 37.2 97.5 38.5 99 40 100.5 39.2 102 42.6 103.5 41 105 44.1 106.5 42.9 108 35 109.5 37.3 111 40.5 112.5 44.1 114 45.3 115.5 39.3 117 40.6 118.5 41.9 120 38.4 121.5 35.9 123 34.9 124.5 51.6 126 57.8 127.5 33.4 129 24.1 130.5 38.8 132 47.1 133.5 45.8 135 39.8 136.5 41.5 138 43.7 139.5 36.4 141 36.1 142.5 39.3 144 44.7 145.5 46.1 147 39.8 148.5 37.8 150 39.7 151.5 39.4 153 40.7 154.5 39.7 156 43.3 157.5 46.1 159 38.1 160.5 36.2 162 37.2 163.5 40.4 165 46.9 166.5 42.2 168 39.7 169.5 41.8 171 38 172.5 38.4 174 37.7 175.5 41.9 177 48.1 178.5 41.4 180 37.1 181.5 38.6 183 42.9 184.5 41.1 186 28 187.5 41.5 189 65.5 190.5 46.1 192 15.2 193.5 25.5 195 52.3 196.5 54.1 198 40.2 199.5 36.9 201 39.3 202.5 38.1 204 40.4 205.5 39.2 207 40.4 208.5 45.7 210 43 211.5 39.5 213 35.5 214.5 36.4 216 45.2 217.5 42.6 219 41 220.5 41.9 222 39.3 223.5 40.1 225 37.6 226.5 38.1 228 46.1 229.5 44.3 231 40.1 232.5 37.9 234 36 235.5 42.7 237 41.3 238.5 40.3 240 44.1 241.5 42.6 243 39.9 244.5 36.3 246 35.3 247.5 45 249 44.6 250.5 42.1 252 41 253.5 38 255 41.1 256.5 38.7 258 37.6 259.5 44.4 261 44 262.5 42.7 264 36.9 265.5 35.1 267 42.2 268.5 43 270 41.5 271.5 43.6 273 41 274.5 40.4 276 38.5 277.5 36.1 279 46.1 280.5 43.1 282 33.4 283.5 39.9 285 56.7 286.5 45.7 288 19.9 289.5 30 291 53.4 292.5 49 294 40.5 295.5 37.6 297 34.7 298.5 40.6 300 43.7 301.5 44.4 303 42.8 304.5 38.1 306 39.3 307.5 39.6 309 36.6 310.5 41.9 312 44 313.5 45.6 315 42.1 316.5 33.6 318 38.2 319.5 40.8 321 43.2 322.5 42.8 324 40.6 325.5 42.7 327 40.3 328.5 35.7 330 39.7 331.5 43.1 333 45.5 334.5 44.4 336 37.2 337.5 38.5 339 40 340.5 39.2 342 42.6 343.5 41 345 44.1 346.5 42.9 348 35 349.5 37.3 351 40.5 352.5 44.1 354 45.3 355.5 39.3 357 40.6 358.5 41.9 360 38.4 361.5 35.9 363 34.9 364.5 51.6 366 57.8 367.5 33.4 369 24.1 370.5 38.8 372 47.1 373.5 45.8 375 39.8 376.5 41.5 378 43.7 379.5 36.4 381 36.1 382.5 39.3 384 44.7 385.5 46.1 387 39.8 388.5 37.8 390 39.7 391.5 39.4 393 40.7 394.5 39.7 396 43.3 397.5 46.1 399 38.1 400.5 36.2 402 37.2 403.5 40.4 405 46.9 406.5 42.2 408 39.7 409.5 41.8 411 38 412.5 38.4 414 37.7 415.5 41.9 417 48.1 418.5 41.4 420 37.1 421.5 38.6 423 42.9 424.5 41.1 426 28 427.5 41.5 429 65.5 430.5 46.1 432 15.2 433.5 25.5 435 52.3 436.5 54.1 438 40.2 439.5 36.9 441 39.3 442.5 38.1 444 40.4 445.5 39.2 447 40.4 448.5 45.7 450 43 451.5 39.5 453 35.5 454.5 36.4 456 45.2 457.5 42.6 459 41 460.5 41.9 462 39.3 463.5 40.1 465 37.6 466.5 38.1 468 46.1 469.5 44.3 471 40.1 472.5 37.9 474 36 475.5 42.7 477 41.3 478.5 40.3 480 44.1';
+const WAVE_BACK = 'M0 41.5L1.5 40.6 3 40.8 4.5 38.9 6 36 7.5 39.2 9 43.4 10.5 44.1 12 43.2 13.5 42.5 15 39.4 16.5 38.2 18 39.9 19.5 40.3 21 38 22.5 39.2 24 42.1 25.5 43.7 27 44.1 28.5 43 30 39.7 31.5 36 33 37.6 34.5 41.6 36 41.4 37.5 41 39 42.9 40.5 42 42 41.7 43.5 43 45 41.1 46.5 36.7 48 36.8 49.5 40.4 51 42.8 52.5 43.2 54 44.2 55.5 41.6 57 38.8 58.5 40.7 60 41.4 61.5 38 63 37.2 64.5 40.3 66 41.9 67.5 43.6 69 44.6 70.5 43.2 72 37.6 73.5 37 75 40.2 76.5 40.3 78 39.2 79.5 40.8 81 41.6 82.5 42 84 43.7 85.5 44 87 39.3 88.5 35.8 90 38.4 91.5 39.9 93 41.2 94.5 43.8 96 42.9 97.5 40.3 99 40.6 100.5 42.7 102 40 103.5 37.2 105 38.3 106.5 39.9 108 41.6 109.5 44 111 45.5 112.5 40.9 114 38.4 115.5 40 117 39.7 118.5 39.2 120 40 121.5 40.5 123 39.9 124.5 43.5 126 45.5 127.5 42.2 129 38.2 130.5 37.8 132 38 133.5 38.6 135 42.1 136.5 43.6 138 40.8 139.5 40.6 141 43.7 142.5 42.3 144 38.6 145.5 38.1 147 37.6 148.5 37.8 150 42.5 151.5 45.2 153 43.3 154.5 40 156 40.4 157.5 40.7 159 38.7 160.5 38.8 162 39.3 163.5 38.5 165 41.1 166.5 45 168 45.2 169.5 40.8 171 39 172.5 38.9 174 37.1 175.5 39.5 177 42.6 178.5 41 180 40.1 181.5 43.1 183 44.6 184.5 41.8 186 39.8 187.5 38.2 189 36.2 190.5 39.1 192 43.9 193.5 43.6 195 42 196.5 41 198 41.6 199.5 39.9 201 39.3 202.5 39.3 204 37.5 205.5 37.5 207 42.2 208.5 45.2 210 42.9 211.5 41.3 213 40.2 214.5 38 216 38.4 217.5 40.5 219 40.5 220.5 38.4 222 41.4 223.5 44.5 225 43.5 226.5 41.4 228 40.3 229.5 37.3 231 36.6 232.5 40.4 234 43 235.5 41.4 237 41.5 238.5 42.4 240 41.5 241.5 40.6 243 40.8 244.5 38.9 246 36 247.5 39.2 249 43.4 250.5 44.1 252 43.2 253.5 42.5 255 39.4 256.5 38.2 258 39.9 259.5 40.3 261 38 262.5 39.2 264 42.1 265.5 43.7 267 44.1 268.5 43 270 39.7 271.5 36 273 37.6 274.5 41.6 276 41.4 277.5 41 279 42.9 280.5 42 282 41.7 283.5 43 285 41.1 286.5 36.7 288 36.8 289.5 40.4 291 42.8 292.5 43.2 294 44.2 295.5 41.6 297 38.8 298.5 40.7 300 41.4 301.5 38 303 37.2 304.5 40.3 306 41.9 307.5 43.6 309 44.6 310.5 43.2 312 37.6 313.5 37 315 40.2 316.5 40.3 318 39.2 319.5 40.8 321 41.6 322.5 42 324 43.7 325.5 44 327 39.3 328.5 35.8 330 38.4 331.5 39.9 333 41.2 334.5 43.8 336 42.9 337.5 40.3 339 40.6 340.5 42.7 342 40 343.5 37.2 345 38.3 346.5 39.9 348 41.6 349.5 44 351 45.5 352.5 40.9 354 38.4 355.5 40 357 39.7 358.5 39.2 360 40 361.5 40.5 363 39.9 364.5 43.5 366 45.5 367.5 42.2 369 38.2 370.5 37.8 372 38 373.5 38.6 375 42.1 376.5 43.6 378 40.8 379.5 40.6 381 43.7 382.5 42.3 384 38.6 385.5 38.1 387 37.6 388.5 37.8 390 42.5 391.5 45.2 393 43.3 394.5 40 396 40.4 397.5 40.7 399 38.7 400.5 38.8 402 39.3 403.5 38.5 405 41.1 406.5 45 408 45.2 409.5 40.8 411 39 412.5 38.9 414 37.1 415.5 39.5 417 42.6 418.5 41 420 40.1 421.5 43.1 423 44.6 424.5 41.8 426 39.8 427.5 38.2 429 36.2 430.5 39.1 432 43.9 433.5 43.6 435 42 436.5 41 438 41.6 439.5 39.9 441 39.3 442.5 39.3 444 37.5 445.5 37.5 447 42.2 448.5 45.2 450 42.9 451.5 41.3 453 40.2 454.5 38 456 38.4 457.5 40.5 459 40.5 460.5 38.4 462 41.4 463.5 44.5 465 43.5 466.5 41.4 468 40.3 469.5 37.3 471 36.6 472.5 40.4 474 43 475.5 41.4 477 41.5 478.5 42.4 480 41.5';
+const waveTiles = (id) => [0, 480, 960, 1440, 1920].map((x) => `<use href="#${id}"${x ? ` x="${x}"` : ''}></use>`).join('');
+const MAST_WAVE = `<div class="mast-wave" aria-hidden="true"><svg focusable="false"><defs><path id="mw-main" d="${WAVE_MAIN}"></path><path id="mw-back" d="${WAVE_BACK}"></path><clipPath id="mw-above"><rect x="-10000" y="0" width="20000" height="22"></rect></clipPath></defs><g class="mw-bg">${waveTiles('mw-back')}</g><line class="mw-bar" x1="0" y1="22" x2="100%" y2="22"></line><g class="mw-chatter"><g class="mw-dim">${waveTiles('mw-main')}</g><g class="mw-hot" clip-path="url(#mw-above)">${waveTiles('mw-main')}</g></g></svg></div>`;
 
 /** Decorative "quiet signal" for empty states: a flat line with one soft blip. */
 const QUIET = '<svg class="quiet-sig" viewBox="0 0 104 22" aria-hidden="true" focusable="false"><path class="q-line" d="M2 16H38M66 16H102"/><path class="q-blip" d="M38 16C44 16 46 6 52 6S60 16 66 16"/><circle class="q-dot" cx="52" cy="6" r="2.25"/></svg>';
@@ -44,8 +46,10 @@ function masthead(st) {
     const on = ui.page === k;
     return `<a href="#${k}"${navAttrs(k)}${on ? ' class="on" aria-current="page"' : ''}>${l}</a>`;
   }).join('')}</nav>`;
+  const waveLabel = ui.printMode ? '' : '<span class="mw-label" aria-hidden="true">Materiality bar</span>';
   return `<header class="mast" data-k="mast">
   ${ui.printMode ? '' : '<a class="skip" href="#main" data-act="skip" data-k="skip">Skip to content</a>'}
+  ${ui.printMode ? '' : MAST_WAVE}
   <div class="mast-in">
     <div class="mast-top">
       <a class="brand" href="#dashboard"${navAttrs('dashboard')}>
@@ -62,7 +66,7 @@ function masthead(st) {
           <dd class="mast-latest-v">${shown(t && t.checked)}</dd>
         </div>
       </dl>
-    </div>${nav}
+    </div>${nav}${waveLabel}
   </div>
 </header>`;
 }
@@ -108,11 +112,17 @@ function monthAxis(months, cls) {
   return `<div class="mx ${cls}" aria-hidden="true">${months.map((m) => `<span class="mx-m">${esc(m.label)}${m.year ? `<span class="mx-y">${esc(m.year)}</span>` : ''}</span>`).join('')}</div>`;
 }
 
-/** The brief: readings in plain sentences, side by side (the dashboard's, and the report's for its window). */
+/** A reading's figure, its "of" set small: "13 of 14". */
+const briefFig = (f) => `<span class="brief-fig">${esc(f).replace(' of ', '<span class="brief-of"> of </span>')}</span> `;
+
+/**
+ * The brief: readings side by side (the dashboard's, and the report's for its window). A reading
+ * with a figure shows it large, its text reading on from it; one without is a plain sentence.
+ */
 function briefCard(brief, title = 'At a glance', id = 'brief-h') {
   const cells = brief.map((b) => `<div class="brief-cell" data-k="brief-${esc(b.key)}">
         <span class="kicker">${esc(b.kicker)}</span>
-        <p class="brief-t">${esc(b.text)}</p>
+        <p class="brief-t${b.figure ? ' has-fig' : ''}">${b.figure ? briefFig(b.figure) : ''}${esc(b.text)}</p>
         ${b.sub ? `<p class="brief-s">${esc(b.sub)}</p>` : ''}
         ${b.item ? `<button type="button" class="brief-item" data-act="reveal" data-id="${esc(b.item.id)}">
           <span class="brief-item-k">Latest${mechTag(b.item.mechanism)}</span>
@@ -251,7 +261,7 @@ function barCard(d) {
           <li><span class="slot slot-failed"></span>Failed</li><li><span class="slot slot-missed"></span>Did not run</li>
         </ul>
       </div>
-      ${reading && reading.sub ? `<p class="bar-note">${esc(reading.sub)}</p>` : ''}
+      ${reading && reading.status ? `<p class="bar-note">${esc(reading.status)}</p>` : ''}
     </div>
   </section>`;
 }
@@ -580,7 +590,7 @@ function aboutMain() {
     <div class="about-sec">
       <h2 class="h-19">Every item says what it wants</h2>
       <div class="about-col">
-        <p class="prose-p">Each item carries one mechanism tag. The four squares mark which one, so the mix of an edition can be read without reading the claims.</p>
+        <p class="prose-p">Each item carries one mechanism tag, named and coloured for what it asks, so the mix of an edition can be read without reading the claims.</p>
         <div class="mech-grid">${mechs}</div>
       </div>
     </div>

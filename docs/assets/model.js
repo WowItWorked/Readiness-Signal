@@ -894,86 +894,101 @@ const MECH_ASK = {
 };
 
 /**
- * The brief: four readings in plain sentences, each built only from the archive and the run
- * log. `item`, where present, is the item the reading points at.
+ * The brief: four readings, each built only from the archive and the run log. Owner request
+ * (2026-10-06), for readability: a reading with numbers leads with `figure` (the number that
+ * matters, shown large) and `text` (what it counts, read on from the figure: "13 of 14" "items in
+ * the last 90 days are on AI"); `sub` adds the detail and the comparison in one plainer line.
+ * Readings with nothing to count are a plain sentence in `text`. `item` is the item a reading
+ * points at.
  */
 export function brief(data, now, { threadList, dm, bar }) {
   const out = [];
+  const days = `in the last ${RECENT_DAYS} days`;
+  // "Up from 6 of 11 in the 90 days before." The direction compares shares, not counts.
+  const versus = (k, n, pk, pn) => (pn ? `${k / n > pk / pn ? 'Up from' : k / n < pk / pn ? 'Down from' : 'Level with'} ${pk} of ${pn} in the ${RECENT_DAYS} days before.` : '');
+  const line = (...parts) => parts.filter(Boolean).join(' ');
 
   // Building: the thread with the most developments lately (then the most recent).
   const t = [...threadList].sort((a, b) => b.lately - a.lately || b.latest.ts - a.latest.ts)[0];
   out.push(t ? {
     key: 'building',
     kicker: 'Building',
-    text: `${t.n} developments in one thread since ${fmtDate(t.first.date)}${t.recent ? `, ${t.recent} of them in the last 30 days` : ''}.`,
+    figure: String(t.n),
+    text: `developments in one thread since ${fmtDate(t.first.date)}`,
+    sub: t.recent ? `${t.recent} of them in the last 30 days.` : '',
     item: t.latest,
   } : {
     key: 'building',
     kicker: 'Building',
-    text: 'No developing thread yet. A thread forms when an item materially updates an earlier one.',
+    text: 'No developing thread yet.',
+    sub: 'A thread forms when an item materially updates an earlier one.',
   });
 
   // Concentrating: the domain on the most recent items, against the period before.
   const lead = dm.rows.reduce((best, r) => (r.recent > best.recent ? r : best), dm.rows[0]);
   const quiet = dm.rows.filter((r) => !r.recent).map((r) => r.label);
-  let concentrating = `Nothing was added in the last ${RECENT_DAYS} days.`;
+  const quietLine = quiet.length ? `None on ${listJoin(quiet)}.` : 'Every domain has recent items.';
+  const conc = { key: 'concentrating', kicker: 'Concentrating', text: `Nothing was added ${days}.` };
   if (dm.recentN === 1) {
-    concentrating = `The one item from the last ${RECENT_DAYS} days is on ${listJoin(dm.rows.filter((r) => r.recent).map((r) => r.label))}.`;
+    conc.text = `The one item ${days} is on ${listJoin(dm.rows.filter((r) => r.recent).map((r) => r.label))}.`;
+    conc.sub = quiet.length ? `Nothing ${days} on ${listJoin(quiet)}.` : '';
   } else if (dm.recentN && lead.recent) {
-    concentrating = `${lead.label} is on ${ofItems(lead.recent, dm.recentN)} from the last ${RECENT_DAYS} days`
-      + `${dm.priorN ? `, against ${lead.prior} of ${dm.priorN} in the ${RECENT_DAYS} days before` : ''}.`;
+    conc.figure = `${lead.recent} of ${dm.recentN}`;
+    conc.text = `items ${days} ${lead.recent === 1 ? 'is' : 'are'} on ${lead.label}`;
+    conc.sub = line(versus(lead.recent, dm.recentN, lead.prior, dm.priorN), quietLine);
   }
-  let quietLine = '';
-  if (dm.recentN) quietLine = quiet.length ? `Nothing in the last ${RECENT_DAYS} days on ${listJoin(quiet)}.` : `Every domain has items from the last ${RECENT_DAYS} days.`;
-  out.push({ key: 'concentrating', kicker: 'Concentrating', text: concentrating, sub: quietLine });
+  out.push(conc);
 
   // Asking: how much of what arrived lately asks for action, against the period before.
   const recentFrom = +now - RECENT_DAYS * DAY;
   const recent = data.items.filter((i) => i.ts >= recentFrom);
   const prior = data.items.filter((i) => i.ts >= recentFrom - RECENT_DAYS * DAY && i.ts < recentFrom);
   const act = recent.filter(asksForAction);
+  const priorAct = prior.filter(asksForAction).length;
   const parts = Object.keys(MECH_ASK).map((k) => [k, act.filter((i) => i.mechanism === k).length])
     .filter(([, n]) => n).map(([k, n]) => `${n} ${MECH_ASK[k][n === 1 ? 0 : 1]}`);
-  let asking = `Nothing was added in the last ${RECENT_DAYS} days.`;
+  const asking = { key: 'asking', kicker: 'Asking', text: `Nothing was added ${days}.` };
   if (recent.length === 1) {
-    asking = act.length
-      ? `The one item from the last ${RECENT_DAYS} days asks for action: a ${MECH_ASK[act[0].mechanism][0]}.`
-      : `The one item from the last ${RECENT_DAYS} days resolves as awareness only.`;
-  } else if (recent.length && !act.length) {
-    asking = `None of the ${recent.length} items from the last ${RECENT_DAYS} days asks for action; each resolves as awareness only.`;
-  } else if (act.length) {
-    asking = `${ofItems(act.length, recent.length)} from the last ${RECENT_DAYS} days ${act.length === 1 ? 'asks' : 'ask'} for action: ${listJoin(parts)}.`;
+    asking.text = act.length
+      ? `The one item ${days} asks for action: a ${MECH_ASK[act[0].mechanism][0]}.`
+      : `The one item ${days} resolves as awareness only.`;
+    asking.sub = versus(act.length, 1, priorAct, prior.length);
+  } else if (recent.length) {
+    asking.figure = `${act.length} of ${recent.length}`;
+    asking.text = `items ${days} ${act.length === 1 ? 'asks' : 'ask'} for action`;
+    asking.sub = line(act.length ? `${listJoin(parts)}.` : 'Each resolves as awareness only.', versus(act.length, recent.length, priorAct, prior.length));
   }
-  out.push({
-    key: 'asking',
-    kicker: 'Asking',
-    text: asking,
-    sub: prior.length ? `In the ${RECENT_DAYS} days before: ${prior.filter(asksForAction).length} of ${prior.length}.` : '',
-  });
+  out.push(asking);
 
   // The bar: what the runs of the last 7 days read and let through, and whether they ran.
-  out.push(barReading(bar, `last ${bar.days} days`));
+  out.push(barReading(bar, `last ${bar.days} days`, { figure: true }));
 
   return out;
 }
 
 /**
  * "The bar" as a reading, from a run summary (barStats or runSummary): what the window's runs
- * read and let through, and whether every scheduled slot ran.
+ * read and let through, and whether every scheduled slot ran. `status` is that last part alone
+ * (the dashboard's bar panel shows it under its run grid). With `figure`, the reading leads
+ * with "13 of 4,001" "headlines cleared the bar in the last 7 days", as the dashboard's brief does.
  */
-export function barReading(s, label) {
-  let text = 'No scheduled run has been recorded yet.';
-  if (s.any && !s.completed) text = `No run completed in the ${label}.`;
-  else if (s.completed) {
-    text = `${plural(s.completed, 'run')} in the ${label} read ${fmtInt(s.unseen)} new headlines; `
+export function barReading(s, label, { figure = false } = {}) {
+  let status = '';
+  if (s.missed && s.failed) status = `Of ${plural(s.scheduled, 'scheduled run')}, ${s.missed} did not run and ${s.failed} failed.`;
+  else if (s.missed) status = `${s.missed} of ${plural(s.scheduled, 'scheduled run')} did not run.`;
+  else if (s.failed) status = `${s.failed} of ${plural(s.scheduled, 'scheduled run')} failed.`;
+  else if (s.scheduled) status = s.scheduled === 1 ? 'The scheduled run ran.' : `All ${s.scheduled} scheduled runs ran.`;
+  const reading = { key: 'bar', kicker: 'The bar', text: 'No scheduled run has been recorded yet.', sub: status, status };
+  if (s.any && !s.completed) reading.text = `No run completed in the ${label}.`;
+  else if (s.completed && figure) {
+    reading.figure = `${s.cleared} of ${fmtInt(s.unseen)}`;
+    reading.text = `headlines cleared the bar in the ${label}`;
+    reading.sub = [`${fmtInt(s.stage1)} passed the first screen across ${plural(s.completed, 'run')}.`, status].filter(Boolean).join(' ');
+  } else if (s.completed) {
+    reading.text = `${plural(s.completed, 'run')} in the ${label} read ${fmtInt(s.unseen)} new headlines; `
       + `${fmtInt(s.stage1)} passed the first screen and ${s.cleared ? `${s.cleared} cleared the bar` : 'none cleared the bar'}.`;
   }
-  let sub = '';
-  if (s.missed && s.failed) sub = `Of ${plural(s.scheduled, 'scheduled run')}, ${s.missed} did not run and ${s.failed} failed.`;
-  else if (s.missed) sub = `${s.missed} of ${plural(s.scheduled, 'scheduled run')} did not run.`;
-  else if (s.failed) sub = `${s.failed} of ${plural(s.scheduled, 'scheduled run')} failed.`;
-  else if (s.scheduled) sub = s.scheduled === 1 ? 'The scheduled run ran.' : `All ${s.scheduled} scheduled runs ran.`;
-  return { key: 'bar', kicker: 'The bar', text, sub };
+  return reading;
 }
 
 /**

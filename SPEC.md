@@ -198,7 +198,7 @@ importable by Node tests), `docs/assets/view.js` (rendering + escaping), `docs/a
 | design | this build |
 |---|---|
 | sections 1/2/3 | `executive_visibility`/`capability_shift`/`regulatory_trajectory`; titles "Executive Visibility", "Capability & Control Shift", "Regulatory & Executive Trajectory" |
-| mech `issue/kri/praf/aware` | `candidate_issue/kri_kpi/praf_coverage/awareness_only`; labels "Candidate issue", "KRI / KPI", "PRAF coverage", "Awareness only"; four-square rail position 0/1/2/3 |
+| mech `issue/kri/praf/aware` | `candidate_issue/kri_kpi/praf_coverage/awareness_only`; labels "Candidate issue", "KRI / KPI", "PRAF coverage", "Awareness only" (the design's four-square rail was dropped on the owner's request, 2026-10-06: the tag shows the label alone) |
 | `read` `[[domain,text]]` | `interpretation[] {domain,text}` |
 | `q` | `validation_question` |
 | `issue` | `candidate_issue_statement` |
@@ -333,10 +333,16 @@ stay as above; the visual layer changes:
 
 - Rounded surfaces (cards 16 px, panels 12 px, controls 10 px, chips and filter buttons as pills) with soft
   shadows in place of hard rules; a navy-to-indigo masthead gradient with a faint decorative texture.
-- Each mechanism has a categorical hue used on its tag, rail, board column, mix strip and expanded panels:
+- The masthead's nav row carries a radio wave of chatter, the same wave as the Readiness Signal panel on
+  emergingtechrisk.com (owner request, 2026-10-06): low traffic scrolls slowly and continuously under a dashed
+  "Materiality bar" laid on the nav row's top rule, and only the bursts that cross the bar light up, in a light
+  tint of the brand green. The owner chose continuous motion with no pause control (2026-10-06), accepting
+  that this falls short of WCAG 2.2.2; under `prefers-reduced-motion` the wave is still, and under 640 px and
+  in print the wave and its label are left out.
+- Each mechanism has a categorical hue used on its tag, board column, mix strip and expanded panels:
   Candidate issue deep teal, KRI / KPI cyan, PRAF coverage violet, Awareness only blue-indigo (kept clearly apart from the violet and from the brand indigo). Hues stay outside red,
   amber and green so colour never reads as severity or safety; awareness only carries the same weight as the
-  others. The brand green remains emphasis only.
+  others. The brand green remains emphasis only (its light tint marks the masthead wave's chatter and crossings).
 - Text meets WCAG AA on every background; animation respects `prefers-reduced-motion`; no monospace.
 
 ## 8. Tests and tooling

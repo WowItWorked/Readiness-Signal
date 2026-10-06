@@ -30,7 +30,6 @@
   --chip: #EEF0FA;
   --navy-tint: #EEF1F8;
   --quiet: #F7F8FC;
-  --rail-off: rgba(14, 27, 54, .14);
   --mast-muted: #C9D3E6;
   --btn-hover: #14305F;
   --active-bg: #EEF0FA;
@@ -219,8 +218,7 @@ main[tabindex="-1"]:focus { outline: none; }
 .small-link:hover { text-decoration-color: var(--green); }
 .count { font-size: 12.5px; font-weight: 500; color: var(--muted); }
 
-/* Mechanism tag: a pill in the mechanism tint, the four-square rail with the "on" square in
-   the mechanism fill, and the label in the mechanism text shade. */
+/* Mechanism tag: a pill in the mechanism tint with the label in the mechanism text shade. */
 /* Sized to sit inside the design's 168px mechanism column (medium) with room to spare. */
 /* The radius is half the one-line tag height, so it reads as a pill; if user text-spacing or a
    wider fallback font makes the label wrap (WCAG 1.4.12), the tag becomes a rounded box and no
@@ -228,12 +226,9 @@ main[tabindex="-1"]:focus { outline: none; }
 .mech {
   display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%;
   justify-self: start; align-self: start;
-  padding: 4px 8px 4px 7px; border-radius: 11px;
+  padding: 4px 9px; border-radius: 11px;
   background: var(--m-tint); box-shadow: inset 0 0 0 1px var(--m-edge);
 }
-.rail { display: flex; gap: 3px; flex: none; }
-.rail > span { width: 8px; height: 8px; border-radius: 2px; background: var(--rail-off); }
-.rail > span.on { background: var(--m-fill); }
 .mech-label {
   font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; line-height: 1.3;
   color: var(--m-text); min-width: 0;
@@ -285,18 +280,33 @@ main[tabindex="-1"]:focus { outline: none; }
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 30%, #000 75%);
   mask-image: linear-gradient(90deg, transparent 0%, transparent 30%, #000 75%);
 }
-/* A faint signal trace (flat, one soft blip, a smaller echo) in the empty right side of the
-   nav row; under 640px the nav fills the row, so the trace is left out. */
-.mast::after {
-  content: ''; position: absolute; z-index: -1; pointer-events: none;
-  left: max(440px, 50%); right: 0; bottom: 4px; height: 40px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 40' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='0'/%3E%3Cstop offset='.4' stop-color='%23fff' stop-opacity='.2'/%3E%3Cstop offset='1' stop-color='%23fff' stop-opacity='.2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath stroke='url(%23g)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' d='M0 28H330C348 28 352 10 365 10S382 28 400 28H418C428 28 430 19 436 19S445 28 455 28H600'/%3E%3C/svg%3E") no-repeat right center / auto 100%;
+/* A radio wave of chatter across the empty right side of the nav row, the same wave as the
+   Readiness Signal panel on emergingtechrisk.com: traffic scrolls slowly and without end under a
+   dashed materiality bar laid on the nav row's top rule, and only the bursts that cross the bar
+   light up. It has no pause control (the owner chose continuous motion, 2026-10-06); reduced
+   motion stills it. Under 640px the nav fills the row, so the wave and its label are left out,
+   and print leaves them out too. */
+.mast-wave {
+  position: absolute; z-index: -1; pointer-events: none;
+  left: max(440px, 50%); right: 0; bottom: 0; height: 66px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 45%);
+  mask-image: linear-gradient(90deg, transparent, #000 45%);
 }
-@media (max-width: 639.98px) { .mast::after { display: none; } }
-/* Print mode drops the nav row, which would leave the trace under the masthead times. */
-.rs.printing .mast::after { display: none; }
+.mast-wave svg { display: block; width: 100%; height: 100%; overflow: hidden; fill: none; }
+.mw-bg { stroke: rgba(101, 226, 135, .16); stroke-width: 1; animation: mw-scroll 13s linear infinite; }
+.mw-dim { stroke: rgba(101, 226, 135, .42); stroke-width: 1.1; }
+.mw-hot { stroke: #65E287; stroke-width: 1.6; }
+.mw-bar { stroke: rgba(255, 255, 255, .38); stroke-width: 1; stroke-dasharray: 3 4; }
+.mw-chatter { animation: mw-scroll 7s linear infinite; }
+@keyframes mw-scroll { to { transform: translateX(-240px); } }
+.mw-label {
+  position: absolute; right: var(--hpad); bottom: 46px; pointer-events: none;
+  font-size: 9.5px; font-weight: 600; letter-spacing: .14em; line-height: 1.2; text-transform: uppercase;
+  color: rgba(255, 255, 255, .55); /* about 5:1 on the masthead indigo: AA, and quieter than the times above */
+}
+@media (max-width: 639.98px) { .mast-wave, .mw-label { display: none; } }
 .mast-in {
-  max-width: 1200px; margin: 0 auto; padding: 20px var(--hpad) 0;
+  position: relative; max-width: 1200px; margin: 0 auto; padding: 20px var(--hpad) 0;
   display: flex; flex-direction: column; gap: 16px;
 }
 .mast-top {
@@ -446,6 +456,14 @@ main[tabindex="-1"]:focus { outline: none; }
   border-radius: var(--r-pill); background: var(--grad-accent);
 }
 .brief-t { font-family: var(--serif); font-size: 17px; line-height: 1.42; color: var(--ink); text-wrap: pretty; }
+/* A reading that leads with a number: the figure large, the words under it quieter. */
+.brief-t.has-fig { font-size: 15.5px; line-height: 1.4; }
+.brief-fig {
+  display: block; margin-bottom: 6px;
+  font-size: 34px; font-weight: 600; line-height: 1.05; letter-spacing: -.01em;
+  font-variant-numeric: lining-nums tabular-nums; color: var(--navy);
+}
+.brief-of { font-size: 20px; font-weight: 500; color: var(--muted); }
 .brief-s { font-size: 13.5px; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
 .brief-item {
   margin-top: auto; background: none; padding: 12px 0 0; border-top: 1px solid var(--rule-soft);
@@ -1087,8 +1105,8 @@ a.src-link:hover { color: var(--ink); text-decoration-color: var(--green); }
 
 @media print {
   body, .rs { background: #fff; }
-  .nav, .fbar, .copy-btn, .email-btn, .scrim, .skip, .row-tog { display: none !important; }
-  .mast::before, .mast::after { display: none; }
+  .nav, .fbar, .copy-btn, .email-btn, .scrim, .skip, .row-tog, .mast-wave, .mw-label { display: none !important; }
+  .mast::before { display: none; }
   .mast .dot.live { animation: none; }
   .mast-in { padding-bottom: 16px; }
   :focus-visible { outline: none; }

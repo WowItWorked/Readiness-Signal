@@ -394,38 +394,49 @@ describe('dashboard analysis', () => {
   const d = M.dashboard(data, NOW);
   const archive = (over) => M.prepare({ items: over.map((o) => item(o)) }, { runs: [] });
 
-  test('brief: four readings, each built from the archive or the run log', () => {
+  test('brief: four readings, each built from the archive or the run log, figure first', () => {
     assert.deepEqual(d.brief.map((b) => b.kicker), ['Building', 'Concentrating', 'Asking', 'The bar']);
     const [building, conc, asking, bar] = d.brief;
-    assert.equal(building.text, '2 developments in one thread since 21 Sep 2026, 2 of them in the last 30 days.');
+    assert.equal(building.figure, '2');
+    assert.equal(building.text, 'developments in one thread since 21 Sep 2026');
+    assert.equal(building.sub, '2 of them in the last 30 days.');
     assert.equal(building.item.id, 'RS-261002-1400-02');
     const recentFrom = +NOW - 90 * DAY;
     const recent = data.items.filter((i) => i.ts >= recentFrom);
     const prior = data.items.filter((i) => i.ts >= recentFrom - 90 * DAY && i.ts < recentFrom);
     const cyber = (l) => l.filter((i) => i.domains.includes('cyber')).length;
-    assert.equal(conc.text, `Cyber is on ${cyber(recent)} of the ${recent.length} items from the last 90 days, against ${cyber(prior)} of ${prior.length} in the 90 days before.`);
-    assert.equal(conc.sub, 'Every domain has items from the last 90 days.');
-    assert.equal(asking.text, '20 of the 25 items from the last 90 days ask for action: 7 candidate issues, 7 KRI / KPI checks and 6 PRAF coverage checks.');
-    assert.equal(asking.sub, 'In the 90 days before: 2 of 3.');
-    assert.equal(bar.text, '26 runs in the last 7 days read 4,001 new headlines; 573 passed the first screen and 13 cleared the bar.');
-    assert.equal(bar.sub, '1 of 27 scheduled runs failed.');
+    const dir = (k, n, pk, pn) => (k / n > pk / pn ? 'Up from' : k / n < pk / pn ? 'Down from' : 'Level with');
+    assert.equal(conc.figure, `${cyber(recent)} of ${recent.length}`);
+    assert.equal(conc.text, `items in the last 90 days ${cyber(recent) === 1 ? 'is' : 'are'} on Cyber`);
+    assert.equal(conc.sub, `${dir(cyber(recent), recent.length, cyber(prior), prior.length)} ${cyber(prior)} of ${prior.length} in the 90 days before. Every domain has recent items.`);
+    assert.equal(asking.figure, '20 of 25');
+    assert.equal(asking.text, 'items in the last 90 days ask for action');
+    assert.equal(asking.sub, '7 candidate issues, 7 KRI / KPI checks and 6 PRAF coverage checks. Up from 2 of 3 in the 90 days before.');
+    assert.equal(bar.figure, '13 of 4,001');
+    assert.equal(bar.text, 'headlines cleared the bar in the last 7 days');
+    assert.equal(bar.sub, '573 passed the first screen across 26 runs. 1 of 27 scheduled runs failed.');
+    assert.equal(bar.status, '1 of 27 scheduled runs failed.');
   });
 
   test('brief on thin data reads plainly', () => {
-    assert.deepEqual(M.dashboard(empty, NOW).brief.map((b) => b.text), [
-      'No developing thread yet. A thread forms when an item materially updates an earlier one.',
+    const blank = M.dashboard(empty, NOW).brief;
+    assert.deepEqual(blank.map((b) => b.text), [
+      'No developing thread yet.',
       'Nothing was added in the last 90 days.',
       'Nothing was added in the last 90 days.',
       'No scheduled run has been recorded yet.',
     ]);
+    assert.equal(blank[0].sub, 'A thread forms when an item materially updates an earlier one.');
+    assert.ok(blank.every((b) => !b.figure), 'nothing to count, no figures');
     const aware = { mechanism: 'awareness_only', validation_question: null, candidate_issue_statement: null, awareness_rationale: 'Known.' };
     const one = M.dashboard(archive([{ ...aware, domains: ['cyber', 'data'] }]), NOW).brief;
-    assert.equal(one[1].text, 'The one item from the last 90 days is on Cyber and Data.');
+    assert.equal(one[1].text, 'The one item in the last 90 days is on Cyber and Data.');
     assert.equal(one[1].sub, 'Nothing in the last 90 days on Fraud, AI, Resilience, Third party and Risk quantification.');
-    assert.equal(one[2].text, 'The one item from the last 90 days resolves as awareness only.');
-    assert.equal(M.dashboard(archive([{}]), NOW).brief[2].text, 'The one item from the last 90 days asks for action: a candidate issue.');
+    assert.equal(one[2].text, 'The one item in the last 90 days resolves as awareness only.');
+    assert.equal(M.dashboard(archive([{}]), NOW).brief[2].text, 'The one item in the last 90 days asks for action: a candidate issue.');
     const two = archive([{ ...aware }, { ...aware, id: 'RS-260930-1000-01', timestamp: '2026-09-30T10:00:00-04:00' }]);
-    assert.equal(M.dashboard(two, NOW).brief[2].text, 'None of the 2 items from the last 90 days asks for action; each resolves as awareness only.');
+    const [, , asks] = M.dashboard(two, NOW).brief;
+    assert.deepEqual([asks.figure, asks.text, asks.sub], ['0 of 2', 'items in the last 90 days ask for action', 'Each resolves as awareness only.']);
   });
 
   test('threads: update_of links join items into stories; a lone item is not a thread', () => {
@@ -522,8 +533,9 @@ describe('dashboard analysis', () => {
     assert.deepEqual(b.grid.at(-1).slots.map((s) => s.state), ['silent', 'missed', 'due', 'later']);
     assert.deepEqual([b.missed, b.scheduled, b.completed, b.unseen, b.stage1, b.cleared], [3, 5, 2, 150, 7, 0]);
     const bar = M.dashboard(x, at).brief[3];
-    assert.equal(bar.text, '2 runs in the last 7 days read 150 new headlines; 7 passed the first screen and none cleared the bar.');
-    assert.equal(bar.sub, '3 of 5 scheduled runs did not run.');
+    assert.deepEqual([bar.figure, bar.text], ['0 of 150', 'headlines cleared the bar in the last 7 days']);
+    assert.equal(bar.sub, '7 passed the first screen across 2 runs. 3 of 5 scheduled runs did not run.');
+    assert.equal(bar.status, '3 of 5 scheduled runs did not run.');
   });
 
   test('archive line', () => {
