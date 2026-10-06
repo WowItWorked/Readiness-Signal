@@ -401,14 +401,6 @@ function aboutMain() {
     </div>
 
     <div class="about-sec">
-      <h2 class="h-19">Why it exists</h2>
-      <div class="prose">
-        <p>An earlier version failed because every item looked the same. Nothing said what it wanted from the reader, and the bar for inclusion didn’t discriminate, so it turned into news.</p>
-        <p>This version is judged by what it leaves out. It runs four times a day, at 06:00, 10:00, 14:00 and 18:00 ET. When nothing clears the bar, the run is silent, and silence is a result.</p>
-      </div>
-    </div>
-
-    <div class="about-sec">
       <h2 class="h-19">Three entry tests</h2>
       <div class="tests">${tests}</div>
     </div>

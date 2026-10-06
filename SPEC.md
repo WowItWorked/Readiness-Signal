@@ -273,9 +273,7 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
 
 - Lead: "Readiness Signal is a triage digest for technology risk professionals. It reads widely so you don't
   have to, and publishes only what changes what you should check, measure, cover, or be ready to answer."
-- Why it exists: keep the design's first paragraph; second: "This version is judged by what it leaves out. It
-  runs four times a day, at 06:00, 10:00, 14:00 and 18:00 ET. When nothing clears the bar, the run is silent,
-  and silence is a result."
+- No "Why it exists" section (owner change 2026-10-05: removed).
 - Three entry tests: as §7.2, with the design's layout. Section 3 adds "Most candidates fail this test, so the
   section is often empty."
 - Every item says what it wants: design copy; PRAF coverage line "Confirm the risk assessment framework

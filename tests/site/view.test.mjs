@@ -157,7 +157,7 @@ describe('brief overrides of the design', () => {
   test('About copy follows the institution-neutral rewrite', () => {
     const t = text(render({ page: 'about' }, null));
     assert.ok(t.includes('Readiness Signal is a triage digest for technology risk professionals. It reads widely so you don’t have to, and publishes only what changes what you should check, measure, cover, or be ready to answer.'));
-    assert.ok(t.includes('It runs four times a day, at 06:00, 10:00, 14:00 and 18:00 ET. When nothing clears the bar, the run is silent, and silence is a result.'));
+    assert.ok(!t.includes('Why it exists') && !t.includes('An earlier version failed'), 'section removed (owner change 2026-10-05)');
     assert.ok(t.includes('Most candidates fail this test, so the section is often empty.'));
     assert.ok(t.includes('Confirm the risk assessment framework represents this risk at all.'));
     assert.ok(t.includes('a validation question you can paste to a program owner'));
