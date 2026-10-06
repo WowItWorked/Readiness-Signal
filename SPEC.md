@@ -35,8 +35,9 @@ when nothing clears. Items are append-only; editions never overwrite.
 - Repo `WowItWorked/Readiness-Signal`, GitHub Pages **deploy from branch `main`, folder `/docs`**.
 - Served as a project sub-site of the user site (CNAME `emergingtechrisk.com`):
   `https://emergingtechrisk.com/Readiness-Signal/`. **All URLs in the site are relative**
-  (`data/archive.json`, `assets/app.js`) so it works under any base path. No CNAME file in
-  this repo. `docs/.nojekyll` present.
+  (`data/archive.json`, `assets/app.js`) so it works under any base path. The one exception is
+  the permalink that leaves the page (email, Copy link, print): it is always the absolute live
+  URL, `SITE_URL` in `docs/assets/model.js`. No CNAME file in this repo. `docs/.nojekyll` present.
 - No build step. Plain ES modules, no framework, no runtime CDN scripts. Google Fonts only
   (IBM Plex Sans 400/500/600; Source Serif 4 opsz 8..60, 400/500/600, italic 400).
 
@@ -217,11 +218,15 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
 
 - Pages via hash: `#dashboard` (default), `#report`, `#archive`, `#about`, `#<item id>` (reveal:
   ≤ 24 h → report day, ≤ 7 d → week, ≤ 30 d → month, else archive all-time; clears filters that would hide it; expands; scrolls).
+  The age carries one hour of slack, so an item at a window edge is still inside the window when it renders. If the
+  chosen view still does not show the item, the all-time archive with every filter and the search cleared, for that
+  page load only. A permalink opened from outside the page jumps straight to the item (no smooth scroll) and holds it
+  in view while fonts and layout settle: until the reader scrolls, taps, clicks or types, or 3 s after the page is visible.
 - Dashboard, Report (24 h / 7 d / 30 d; Section, Domain, Source filters with counts; expand/collapse all;
   export collapsed/expanded via print), Archive (All / month / custom range; search over claim, domains,
   publications, headlines; grouped by month), About — all exactly as designed, with the copy changes below.
   Owner change (2026-10-04): the Dashboard has no "Executive Visibility, last 7 days" card; it opens with the
-  Last update card, followed by the mechanism board and the section and domain summaries.
+  Last edition card, followed by the mechanism board and the section and domain summaries.
 - Mechanism "asks" text: Candidate issue — "Send the validation question to the owner. If the answer is no or
   unknown, raise the candidate issue." KRI / KPI — "Confirm an indicator exists, is measured, and reaches
   someone who acts on it. If not, the issue language applies." PRAF coverage — "Confirm the risk assessment
@@ -229,15 +234,27 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   "Nothing to action. This is a complete resolution: know it, in case you are asked."
 - Awareness-only items render the "Why this resolves as awareness only" panel from `awareness_rationale`, styled
   as a resolution (same weight as the validation question panel, never greyed or de-emphasised). No "If asked".
-- Validation question panel footer: "Paste-ready". Copy buttons for question, issue language, permalink.
-- "Email this item": `mailto:` with subject and plain-text body; no server send. The link is capped at
-  2,000 characters (source headlines, then later sources, are dropped first; claim, question, issue language
-  or rationale, and permalink are always kept). Permalinks never carry the page's query string.
+- Validation question panel footer: "Paste-ready". Copy buttons for question, issue language, permalink (the
+  absolute live URL, `https://emergingtechrisk.com/Readiness-Signal/#<id>`).
+- "Email this item" (owner change 2026-10-05): a real `<a href="mailto:…">`, no script handler, outside the row
+  that expands the item, so following it never toggles the item. No server send. Subject
+  `Readiness Signal: <claim>`. Plain-text body, CRLF lines: the claim; `Mechanism: <label>` and
+  `Domains: <labels>`; the interpretation (read-across texts in domain order) cut to its first two sentences;
+  then "Full item, validation question, candidate issue statement and sources:" ("Full item, awareness
+  rationale and sources:" for awareness-only items, which have neither) and the item's absolute permalink on the
+  live site. Encoded with `encodeURIComponent` (plus `!'()*`): spaces `%20`, never `+`; line breaks
+  `%0D%0A`; typographic punctuation goes out as ASCII. The whole mailto URL stays under 1,800 characters: if
+  the full body would not, the interpretation is dropped, never the link.
 - `backfilled: true` items: small text label "Backfilled" in the collapsed meta line; expanded footer note
   "Added by the historical backfill pass, not by a live edition." Backfilled items never count as editions.
 - `update_of`: expanded view shows "Update to: <earlier claim>" linking to `#<earlier id>`.
-- Empty states everywhere (empty archive on day one must look intentional): masthead "Last update — None yet" (the label reads "Last update"; its value is the latest published edition);
-  dashboard "As of" = latest run's `finished_at` (any status), hidden if no runs.
+- Masthead times (owner change 2026-10-05), both in ET and read from `runs.json` at page load, never set
+  when the site is built, so they move on their own as runs are pushed: "Last edition" = slot of the latest
+  run that published at least one new item ("None yet" before the first); "Last checked" = `finished_at` of
+  the latest run that completed, published or silent ("Not yet" before the first). A silent run publishes no
+  edition and moves only "Last checked"; a failed run moves neither. The dashboard has no separate "As of".
+- Empty states everywhere (empty archive on day one must look intentional): masthead "Last edition — None yet",
+  "Last checked — Not yet".
 - Data load failure: a plain message in the main column; never a blank page.
 - Footer (replaces "Illustrative content…"): "Public sources only: headlines and leads are referenced, never
   republished. Nothing here describes any institution's control position; validation questions and issue

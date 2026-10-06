@@ -304,7 +304,7 @@ main[tabindex="-1"]:focus { outline: none; }
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 40' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='0'/%3E%3Cstop offset='.4' stop-color='%23fff' stop-opacity='.2'/%3E%3Cstop offset='1' stop-color='%23fff' stop-opacity='.2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath stroke='url(%23g)' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' d='M0 28H330C348 28 352 10 365 10S382 28 400 28H418C428 28 430 19 436 19S445 28 455 28H600'/%3E%3C/svg%3E") no-repeat right center / auto 100%;
 }
 @media (max-width: 639.98px) { .mast::after { display: none; } }
-/* Print mode drops the nav row, which would leave the trace under "Last update". */
+/* Print mode drops the nav row, which would leave the trace under the masthead times. */
 .rs.printing .mast::after { display: none; }
 .mast-in {
   max-width: 1200px; margin: 0 auto; padding: 20px var(--hpad) 0;
@@ -334,12 +334,14 @@ main[tabindex="-1"]:focus { outline: none; }
 @media (max-width: 639.98px) {
   .brand-tag { white-space: normal; overflow: visible; text-overflow: clip; text-wrap: balance; }
 }
-.mast-latest { display: flex; flex-direction: column; gap: 4px; }
+/* "Last edition" and "Last checked": side by side, stacking when the row is too narrow. */
+.mast-latest { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 0; }
+.mast-stamp { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .mast-latest-k {
   display: flex; align-items: center; gap: 8px;
   font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--mast-muted);
 }
-.mast-latest-v { font-size: 15px; font-weight: 500; color: #fff; }
+.mast-latest-v { margin: 0; font-size: 15px; font-weight: 500; color: #fff; font-variant-numeric: tabular-nums; }
 /* The live dot pulses twice (under five seconds), then rests; never under reduced motion. */
 .mast .dot.live { animation: rs-pulse 2.4s ease-out 2; }
 @keyframes rs-pulse {
@@ -387,7 +389,6 @@ main[tabindex="-1"]:focus { outline: none; }
   display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px;
 }
 .title-row.start { justify-content: flex-start; }
-.as-of { font-size: 13px; color: var(--muted); }
 .loading { font-size: 13px; color: var(--muted); }
 .notice { padding: var(--sec-pad); display: flex; flex-direction: column; gap: 8px; }
 .notice.quiet { background: var(--quiet); gap: 10px; }

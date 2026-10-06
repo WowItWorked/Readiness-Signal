@@ -29,7 +29,7 @@ The site uses the browser clock, so on any other date the 24 h / 7 d / 30 d wind
 Tests that depend on windows should inject this time.
 
 - Latest edition: 2026-10-02 14:00 ET, 4 items (sections 1 and 2, three mechanisms).
-  The latest run finished at 14:21:40 ET ("As of" on the dashboard).
+  The latest run finished at 14:21:40 ET ("Last checked" in the masthead).
 - Regulatory & Executive Trajectory: no items in the last 24 hours (empty state), latest
   item `RS-261001-0600-01` (shows "Last published in this section").
 - Executive Visibility: 5 items in the last 7 days.

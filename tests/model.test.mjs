@@ -302,6 +302,35 @@ describe('permalink reveal', () => {
     assert.equal(M.revealWindow(-5000).repTime, 'day');
   });
 
+  test('an item near a window edge gets the next window, so it is still inside when rendered', () => {
+    // 23 h 30 min old when the window is chosen; the render a moment later must still show it.
+    const it = item({ id: 'RS-261001-1530-01', timestamp: new Date(+NOW - DAY + 30 * 60e3).toISOString() });
+    const d = M.prepare({ items: [it] }, { runs: [] });
+    const p = M.revealPatch(d, it.id, ui(), NOW);
+    assert.equal(p.repTime, 'week');
+    const later = new Date(+NOW + 45 * 60e3);
+    assert.ok(M.listModel(d, { ...ui(), ...p }, later).shown.some((i) => i.id === it.id));
+  });
+
+  test('last-resort reveal: all-time archive, no search, no filters, item open', () => {
+    const start = ui({ page: 'report', repTime: 'day', q: 'x', secs: ['executive_visibility'], doms: ['ai'], srcs: ['news'], open: { a: true } });
+    const p = M.revealAllPatch('RS-260115-1000-01', start);
+    assert.deepEqual(p, {
+      page: 'archive', archTime: 'all', q: '', secs: [], doms: [], srcs: [],
+      open: { a: true, 'RS-260115-1000-01': true }, pop: null, printMode: null,
+    });
+    assert.ok(M.listModel(data, { ...start, ...p }, NOW).shown.some((i) => i.id === 'RS-260115-1000-01'));
+  });
+
+  test('every item in the archive is shown, expanded, by its reveal from the default view', () => {
+    for (const it of data.items) {
+      const p = M.revealPatch(data, it.id, ui(), NOW);
+      const lm = M.listModel(data, { ...ui(), ...p }, NOW);
+      assert.ok(lm.shown.some((i) => i.id === it.id), it.id);
+      assert.equal(M.isOpen(it, { ...ui(), ...p }), true, it.id);
+    }
+  });
+
   test('hash parsing', () => {
     assert.deepEqual(M.parseHash(''), { page: 'dashboard' });
     assert.deepEqual(M.parseHash('#report'), { page: 'report' });
@@ -316,7 +345,7 @@ describe('editions and runs', () => {
     const le = M.latestEdition(data);
     assert.equal(M.fmtFull(le.date), 'Fri 2 Oct 2026, 14:00 ET');
     assert.deepEqual(le.items.map((i) => i.id), ['RS-261002-1400-01', 'RS-261002-1400-03', 'RS-261002-1400-02', 'RS-261002-1400-04']);
-    assert.equal(M.mastheadLatest(data), 'Fri 2 Oct 2026, 14:00 ET');
+    assert.equal(M.mastheadTimes(data).edition, 'Fri 2 Oct 2026, 14:00 ET');
   });
 
   test('fallback without published runs: latest non-backfilled item', () => {
@@ -324,12 +353,24 @@ describe('editions and runs', () => {
     assert.equal(M.latestEdition(d).items[0].id, 'RS-261001-1800-09');
   });
 
-  test('"As of" is the latest run of any status', () => {
-    assert.equal(M.fmtFull(M.asOf(data)), 'Fri 2 Oct 2026, 14:21 ET');
-    const d = M.prepare({ items: [] }, { runs: [{ slot: '2026-10-02T06:00:00-04:00', status: 'silent', started_at: '2026-10-02T06:01:00-04:00', finished_at: '2026-10-02T06:09:00-04:00', items: [] }] });
-    assert.equal(M.fmtFull(M.asOf(d)), 'Fri 2 Oct 2026, 06:09 ET');
-    assert.equal(M.latestEdition(d), null);
-    assert.equal(M.mastheadLatest(d), 'None yet');
+  test('"Last checked" is the latest completed run, silent included; a failed run leaves it', () => {
+    assert.equal(M.fmtFull(M.lastChecked(data)), 'Fri 2 Oct 2026, 14:21 ET');
+    const run = (slot, status, fin) => ({ slot: `2026-10-02T${slot}:00-04:00`, status, started_at: `2026-10-02T${slot}:30-04:00`, finished_at: `2026-10-02T${fin}:00-04:00`, items: [] });
+    const silent = M.prepare({ items: [] }, { runs: [run('06:00', 'silent', '06:09')] });
+    assert.deepEqual(M.mastheadTimes(silent), { edition: 'None yet', checked: 'Fri 2 Oct 2026, 06:09 ET' });
+    assert.equal(M.latestEdition(silent), null);
+    const failed = M.prepare({ items: [] }, { runs: [run('06:00', 'silent', '06:09'), run('10:00', 'failed', '10:20')] });
+    assert.equal(M.mastheadTimes(failed).checked, 'Fri 2 Oct 2026, 06:09 ET');
+    const onlyFailed = M.prepare({ items: [] }, { runs: [run('10:00', 'failed', '10:20')] });
+    assert.deepEqual(M.mastheadTimes(onlyFailed), { edition: 'None yet', checked: 'Not yet' });
+  });
+
+  test('a silent run moves "Last checked" and leaves "Last edition" alone', () => {
+    const before = M.mastheadTimes(data);
+    const next = { ...RAW_RUNS, runs: [...RAW_RUNS.runs, { run_id: '2026-10-02-1800', slot: '2026-10-02T18:00:00-04:00', started_at: '2026-10-02T18:05:00-04:00', finished_at: '2026-10-02T18:31:00-04:00', status: 'silent', items: [] }] };
+    const after = M.mastheadTimes(M.prepare(RAW_ARCHIVE, next));
+    assert.equal(after.edition, before.edition);
+    assert.equal(after.checked, 'Fri 2 Oct 2026, 18:31 ET');
   });
 
   test('run counts per window; silent and failed are not editions', () => {
@@ -356,16 +397,15 @@ describe('dashboard aggregates', () => {
     assert.deepEqual(d.exec.map((e) => e.item.id), [
       'RS-261002-1400-01', 'RS-261002-1400-03', 'RS-261002-1000-01', 'RS-260930-1400-01', 'RS-260926-1800-01',
     ]);
-    assert.equal(d.exec[0].when, 'Last update · 14:00');
+    assert.equal(d.exec[0].when, 'Last edition · 14:00');
     assert.equal(d.exec[0].isNew, true);
     assert.equal(d.exec[2].when, 'Fri 10:00');
     assert.equal(d.exec[2].isNew, false);
   });
 
-  test('latest edition list and "As of"', () => {
+  test('latest edition list', () => {
     assert.equal(d.latest.title, 'Fri 2 Oct, 14:00 ET · 4 items');
     assert.deepEqual(d.latest.items.map((x) => x.secLabel), ['01 Executive Visibility', '01 Executive Visibility', '02 Capability & Control Shift', '02 Capability & Control Shift']);
-    assert.equal(d.asOf, 'As of Fri 2 Oct 2026, 14:21 ET');
   });
 
   test('mechanism board: counts, Executive Visibility first, then newest', () => {
@@ -424,83 +464,114 @@ describe('item detail and email', () => {
     assert.deepEqual(d.updateOf, { id: 'RS-260921-1000-01', claim: data.byId.get('RS-260921-1000-01').claim, found: true });
   });
 
-  test('mailto body: candidate issue', () => {
+  test('email body: claim, tags, interpretation in two sentences, then the permalink', () => {
     const it = data.byId.get('RS-261002-1400-01');
-    const body = M.mailBody(it, 'https://example.org/Readiness-Signal/#RS-261002-1400-01');
-    const lines = body.split('\r\n');
-    assert.equal(lines[0], it.claim);
-    assert.deepEqual(lines.slice(2, 5), ['Mechanism: Candidate issue', 'Section: Executive Visibility', 'Domains: Resilience, Third party']);
-    assert.ok(lines.includes('Validation question:'));
-    assert.ok(lines.includes(it.validation_question));
-    assert.ok(lines.includes('If the answer is no or unknown, consider this language:'));
-    assert.ok(lines.includes(`“${it.candidate_issue_statement}”`));
-    assert.ok(lines.includes('- Example Wire: Bank apps go dark as cloud sign-in service fails https://example.com/example-wire/technology/'));
-    assert.equal(lines.at(-1), 'Permalink: https://example.org/Readiness-Signal/#RS-261002-1400-01');
-    assert.ok(!body.includes('Why awareness only'));
-    assert.ok(!/If asked/i.test(body));
+    const link = M.permalinkUrl(it.id);
+    assert.equal(link, 'https://emergingtechrisk.com/Readiness-Signal/#RS-261002-1400-01');
+    assert.deepEqual(M.mailBody(it).split('\r\n'), [
+      "A cloud identity-service failure took several banks' mobile apps offline for four hours.",
+      '',
+      'Mechanism: Candidate issue',
+      'Domains: Resilience, Third party',
+      '',
+      "Failover assumed a healthy secondary region, but the provider's shared identity service failed in both. Four hours is longer than many impact tolerances set for mobile banking.",
+      '',
+      'Full item, validation question, candidate issue statement and sources:',
+      link,
+    ]);
   });
 
-  test('mailto body: awareness only carries the rationale', () => {
+  test('email body: an awareness-only item points to its rationale', () => {
     const it = data.byId.get('RS-261002-1400-03');
-    const lines = M.mailBody(it, 'L').split('\r\n');
-    const k = lines.indexOf('Why awareness only:');
-    assert.ok(k > 0);
-    assert.equal(lines[k + 1], it.awareness_rationale);
-    assert.ok(!lines.includes('Validation question:'));
+    const lines = M.mailBody(it).split('\r\n');
+    assert.equal(lines[0], "A widely shared 'mega-leak' of bank logins is recompiled old breach data, not a new compromise.");
+    assert.equal(lines[2], 'Mechanism: Awareness only');
+    assert.equal(lines[3], 'Domains: Data, Fraud, Cyber');
+    assert.equal(lines.at(-2), 'Full item, awareness rationale and sources:');
+    assert.equal(lines.at(-1), M.permalinkUrl(it.id));
   });
 
-  test('mailto href is strictly encoded and accepted by safeHref', () => {
-    const it = M.prepare({ items: [item({ claim: "Attackers' (new) kit! *now* sells sessions for banks" })] }, { runs: [] }).items[0];
-    const href = M.mailtoHref(it, 'https://x/#a');
-    assert.ok(href.startsWith('mailto:?subject=Readiness%20Signal%3A%20Attackers%27%20%28new%29'));
+  test('email body leaves the question, issue language, rationale and sources to the permalink', () => {
+    for (const it of data.items) {
+      const body = M.mailBody(it);
+      for (const field of [it.validation_question, it.candidate_issue_statement, it.awareness_rationale]) {
+        if (field) assert.ok(!body.includes(M.plainText(field)), it.id);
+      }
+      for (const s of it.sources) if (s.url) assert.ok(!body.includes(s.url), it.id);
+    }
+  });
+
+  test('every email ends with the absolute permalink on the live site', () => {
+    for (const it of data.items) {
+      const body = decodeURIComponent(M.mailtoHref(it).split('&body=')[1]);
+      const last = body.split('\r\n').at(-1);
+      assert.equal(last, `https://emergingtechrisk.com/Readiness-Signal/#${it.id}`);
+      assert.equal(new URL(last).hash, `#${it.id}`);
+    }
+  });
+
+  test('sentences: abbreviations, initials and decimals do not end a sentence', () => {
+    assert.deepEqual(M.sentences('One. Two! Three? Four'), ['One.', 'Two!', 'Three?', 'Four']);
+    assert.deepEqual(M.sentences('The U.S. Treasury and the U.K. FCA spoke, e.g. on Jan. 5. A second one.'),
+      ['The U.S. Treasury and the U.K. FCA spoke, e.g. on Jan. 5.', 'A second one.']);
+    assert.deepEqual(M.sentences('Rates rose 2.5 percent. "Quoted." (Aside.) Last'), ['Rates rose 2.5 percent.', '"Quoted."', '(Aside.)', 'Last']);
+    assert.deepEqual(M.sentences('J. Smith of No. 10 spoke. Then left.'), ['J. Smith of No. 10 spoke.', 'Then left.']);
+  });
+
+  test('interpretation: read-across in domain order, cut to two sentences', () => {
+    const one = (interpretation) => M.prepare({ items: [item({ interpretation })] }, { runs: [] }).items[0];
+    assert.equal(M.mailInterpretation(one([
+      { domain: 'cyber', text: 'First sentence here. Second sentence here.' },
+      { domain: 'data', text: 'Third sentence, from another domain.' },
+    ])), 'First sentence here. Second sentence here.');
+    assert.equal(M.mailInterpretation(one([
+      { domain: 'cyber', text: 'One sentence without a stop' },
+      { domain: 'data', text: 'Then another — with a dash. And a third.' },
+    ])), 'One sentence without a stop. Then another - with a dash.');
+  });
+
+  test('typographic punctuation goes out as plain ASCII', () => {
+    assert.equal(M.plainText('“Quoted” — it’s 2–3… ok'), '"Quoted" - it\'s 2-3... ok');
+  });
+
+  test('mailto link: %20 spaces, %0D%0A line breaks, strict encoding, accepted by safeHref', () => {
+    const it = M.prepare({ items: [item({ claim: "Attackers' (new) kit! *now* sells sessions + tokens for banks" })] }, { runs: [] }).items[0];
+    const href = M.mailtoHref(it);
+    assert.ok(href.startsWith('mailto:?subject=Readiness%20Signal%3A%20Attackers%27%20%28new%29%20kit%21%20%2Anow%2A%20sells%20sessions%20%2B%20tokens'));
+    assert.ok(!href.includes('+'), 'spaces are %20 and a literal plus is %2B');
+    assert.ok(href.includes('%0D%0A'));
+    assert.ok(href.split('%0A').slice(0, -1).every((part) => part.endsWith('%0D')), 'every line break is CRLF');
     assert.equal(M.safeHref(href), href);
-    assert.ok(decodeURIComponent(href.split('&body=')[1]).startsWith("Attackers' (new) kit!"));
+    const [, subject, body] = /^mailto:\?subject=([^&]*)&body=([^&]*)$/.exec(href);
+    assert.equal(decodeURIComponent(subject), "Readiness Signal: Attackers' (new) kit! *now* sells sessions + tokens for banks");
+    assert.equal(decodeURIComponent(body), M.mailBody(it));
   });
 
-  test('mailto href stays inside the length budget for an item at the SPEC maxima', () => {
-    // Word counts at the SPEC limits (claim 22, question 40, issue 70), 7-character words,
-    // four sources with 200-character headlines and ~90-character URLs.
+  test('mailto stays under 1,800 characters: the interpretation is dropped first, never the link', () => {
+    // SPEC maxima: a 22-word claim, all seven domains, each read-across one 60-word sentence.
     const words = (n, w) => Array.from({ length: n }, (_, k) => `${w}${k % 10}`).join(' ');
-    const longUrl = (k) => `https://www.example-publication-${k}.com/technology/2026/10/02/${'a'.repeat(40)}-story-${k}`;
     const big = M.prepare({ items: [item({
-      claim: words(22, 'signal'),
-      validation_question: `${words(39, 'govern')} ok?`,
-      candidate_issue_statement: `Where ${words(34, 'monitr')}, ${words(35, 'effect')}.`,
-      sources: [1, 2, 3, 4].map((k) => ({ publication: `Publication number ${k}`, url: longUrl(k), headline: 'H'.repeat(200) })),
+      claim: words(22, 'Signalling'),
+      domains: M.DOMAINS.map((d) => d.key),
+      interpretation: M.DOMAINS.map((d) => ({ domain: d.key, text: `${words(59, 'consequential')} end.` })),
     })] }, { runs: [] }).items[0];
-    const link = 'https://emergingtechrisk.com/Readiness-Signal/#RS-261001-1800-09';
-    assert.ok(encodeURIComponent(M.mailBody(big, link)).length > M.MAILTO_BUDGET, 'the untrimmed body is over budget');
-    const href = M.mailtoHref(big, link);
-    assert.ok(href.length <= M.MAILTO_BUDGET, `mailto is ${href.length} chars`);
+    const href = M.mailtoHref(big);
+    assert.ok(href.length < M.MAILTO_LIMIT, `mailto is ${href.length} chars`);
     assert.equal(M.safeHref(href), href);
     const body = decodeURIComponent(href.split('&body=')[1]);
+    assert.ok(!body.includes('consequential'), 'interpretation dropped');
     assert.ok(body.startsWith(big.claim));
-    assert.ok(body.includes(big.validation_question));
-    assert.ok(body.includes(`“${big.candidate_issue_statement}”`));
-    assert.ok(body.endsWith(`Permalink: ${link}`));
-    assert.ok(!body.includes('H'.repeat(200)), 'headlines go first');
-  });
-
-  test('mailto trims sources in order: headlines, then later sources, then the list', () => {
+    assert.ok(body.includes('Domains: Cyber, Fraud, AI, Data, Resilience, Third party, Risk quantification'));
+    assert.ok(body.endsWith(`\r\n${M.permalinkUrl(big.id)}`));
+    // An ordinary item keeps its interpretation, and every archive item is under the limit.
     const it = data.byId.get('RS-261002-1400-01');
-    const L = 'https://x/#RS-261002-1400-01';
-    assert.ok(M.mailBody(it, L, 0).includes('- Example Wire: Bank apps go dark'));
-    const one = M.mailBody(it, L, 1).split('\r\n');
-    assert.ok(one.includes('- Example Wire https://example.com/example-wire/technology/'));
-    const two = M.mailBody(it, L, 2).split('\r\n');
-    assert.ok(two.includes('- Example Wire https://example.com/example-wire/technology/'));
-    assert.ok(two.includes('- 2 more sources at the permalink'));
-    const three = M.mailBody(it, L, 3).split('\r\n');
-    assert.ok(three.includes('Sources: 3, listed at the permalink.'));
-    assert.equal(three.at(-1), `Permalink: ${L}`);
-    // a normal item keeps the full body
-    assert.equal(decodeURIComponent(M.mailtoHref(it, L).split('&body=')[1]), M.mailBody(it, L));
+    assert.equal(decodeURIComponent(M.mailtoHref(it).split('&body=')[1]), M.mailBody(it));
+    for (const x of data.items) assert.ok(M.mailtoHref(x).length < M.MAILTO_LIMIT, x.id);
   });
 
   test('source without headline falls back to the publication', () => {
     const it = M.prepare({ items: [item({ sources: [{ publication: 'FinCEN', url: 'https://www.fincen.gov/' }] })] }, { runs: [] }).items[0];
     assert.equal(M.itemDetail(it, empty).sources[0].title, 'FinCEN');
-    assert.ok(M.mailBody(it, 'L').split('\r\n').includes('- FinCEN https://www.fincen.gov/'));
   });
 });
 
@@ -528,14 +599,14 @@ describe('URL safety', () => {
 describe('empty archive and empty runs (day one)', () => {
   test('dashboard', () => {
     const d = M.dashboard(empty, NOW);
-    assert.equal(d.asOf, '');
+    assert.equal(M.lastChecked(empty), null);
     assert.equal(d.latest, null);
     assert.deepEqual(d.exec, []);
     assert.deepEqual(d.board.map((b) => b.n), [0, 0, 0, 0]);
     assert.deepEqual(d.secRows.map((r) => r.last), Array(3).fill('Quiet this week · Last published never'));
     assert.deepEqual(d.domRows.map((r) => [r.n, r.act]), Array(7).fill(['—', '—']));
     assert.match(d.archLine, /^Nothing published yet\./);
-    assert.equal(M.mastheadLatest(empty), 'None yet');
+    assert.deepEqual(M.mastheadTimes(empty), { edition: 'None yet', checked: 'Not yet' });
   });
 
   test('report and archive', () => {

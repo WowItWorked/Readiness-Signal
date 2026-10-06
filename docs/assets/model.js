@@ -92,6 +92,16 @@ export const SAFE_ID = /^RS-\d{6}-\d{4}-\d{2}$/;
 /** Earliest date the custom range accepts; keyboard entry passes through years like 0202. */
 export const MIN_DATE = '1990-01-01';
 
+/**
+ * The live site. A permalink that leaves the page (email, Copy link, print) is always built on
+ * this absolute URL, never on the address the page happens to be open at: a local preview, a
+ * proxy or a mirror would otherwise end up in a sent email.
+ */
+export const SITE_URL = 'https://emergingtechrisk.com/Readiness-Signal/';
+
+/** An item's permanent link on the live site. */
+export const permalinkUrl = (id) => `${SITE_URL}#${id}`;
+
 // ---------------------------------------------------------------------------------------
 // Eastern-time formatting. Always America/New_York, never the viewer's zone (SPEC §4).
 
@@ -374,16 +384,18 @@ export function effectiveNow(data, clock) {
   return new Date(t);
 }
 
-/** Latest run of any status (by slot), or null. */
-export function latestRun(data) {
-  return data.runs.length ? data.runs[data.runs.length - 1] : null;
-}
-
-/** Dashboard "As of": the latest run's finished_at (any status); null hides the line. */
-export function asOf(data) {
-  const r = latestRun(data);
-  if (!r) return null;
-  return new Date(r.finishedTs ?? r.startedTs ?? r.slotTs);
+/**
+ * "Last checked": when the latest completed run finished (runs.json `finished_at`), whether it
+ * published or was silent. A failed run did not complete the check, so it leaves this time where
+ * it was. Null until a run has completed.
+ */
+export function lastChecked(data) {
+  for (let k = data.runs.length - 1; k >= 0; k--) {
+    const r = data.runs[k];
+    if (r.status === 'failed') continue;
+    return new Date(r.finishedTs ?? r.startedTs ?? r.slotTs);
+  }
+  return null;
 }
 
 const byEditionOrder = (x, y) => secIndex(x) - secIndex(y) || mechIndex(x) - mechIndex(y)
@@ -498,19 +510,38 @@ export function revealWindow(age) {
 }
 
 /**
+ * Margin added to an item's age when choosing its window. The window is chosen with one clock
+ * reading and rendered with a later one, so without it an item right at the 24 h, 7 d or 30 d
+ * edge would be outside the window by the time it renders.
+ */
+export const REVEAL_SLACK = 60 * 60 * 1000;
+
+/**
  * Permalink reveal: pick the report window (or the all-time archive) that holds the item,
  * clear only the filters that would hide it, and expand it. Null for an unknown id.
  */
 export function revealPatch(data, id, ui, now) {
   const it = data.byId.get(id);
   if (!it) return null;
-  const win = revealWindow(+now - it.ts);
+  const win = revealWindow(+now - it.ts + REVEAL_SLACK);
   const patch = { ...win, open: { ...ui.open, [id]: true }, pop: null, printMode: null };
   if (win.page === 'archive' && ui.q && !matchesQuery(it, ui.q)) patch.q = '';
   if (ui.secs.length && !ui.secs.includes(it.section)) patch.secs = [];
   if (ui.doms.length && !it.domains.some((d) => ui.doms.includes(d))) patch.doms = [];
   if (ui.srcs.length && !it.classes.some((c) => ui.srcs.includes(c))) patch.srcs = [];
   return patch;
+}
+
+/**
+ * Last resort when the view revealPatch chose still does not show the item: the all-time
+ * archive with the search and every filter cleared, so nothing can hide it. It lasts for this
+ * page load only (nothing is stored).
+ */
+export function revealAllPatch(id, ui) {
+  return {
+    page: 'archive', archTime: 'all', q: '', secs: [], doms: [], srcs: [],
+    open: { ...ui.open, [id]: true }, pop: null, printMode: null,
+  };
 }
 
 // ---------------------------------------------------------------------------------------
@@ -553,65 +584,94 @@ export function itemDetail(it, data) {
   };
 }
 
+// Email ("Email this item"): a short note that points at the item. The validation question,
+// issue language or rationale, and the sources stay on the site, one permalink away.
+
+const PLAIN = {
+  '‘': "'", '’': "'", '‚': "'", '‛': "'", '′': "'",
+  '“': '"', '”': '"', '„': '"', '‟': '"', '″': '"',
+  '‐': '-', '‑': '-', '‒': '-', '–': '-', '—': '-', '―': '-', '−': '-',
+  '…': '...', ' ': ' ', ' ': ' ', ' ': ' ',
+};
+const PLAIN_RE = /[‘’‚‛′“”„‟″‐‑‒–—―−…   ]/g;
+
 /**
- * Plain-text email body (design format; awareness items carry the rationale). CRLF lines.
- * `detail` trims only the source list, for the mailto length budget: 0 full, 1 without
- * headlines, 2 the primary source only, 3 sources left to the permalink. The claim, the
- * question and issue language (or the rationale) and the permalink are always kept.
+ * Email text with plain ASCII punctuation (curly quotes, dashes and ellipses become their plain
+ * forms; letters are untouched), so a mail client that decodes the link in a legacy code page
+ * still shows readable text. Whitespace is collapsed.
  */
-export function mailBody(it, link, detail = 0) {
-  const mech = MECH_BY_KEY.get(it.mechanism);
-  const sec = SECTION_BY_KEY.get(it.section);
-  const lines = [
-    it.claim, '',
-    `Mechanism: ${mech.label}`,
-    `Section: ${sec.title}`,
-    `Domains: ${it.domains.map(domainLabel).join(', ')}`,
-    '',
-  ];
-  if (it.mechanism === 'awareness_only') {
-    lines.push('Why awareness only:', it.awareness_rationale, '');
-  } else {
-    lines.push('Validation question:', it.validation_question, '',
-      'If the answer is no or unknown, consider this language:', `“${it.candidate_issue_statement}”`, '');
+export const plainText = (s) => String(s ?? '').replace(PLAIN_RE, (c) => PLAIN[c]).replace(/\s+/g, ' ').trim();
+
+/** A full stop after one of these does not end a sentence: initials, "U.S", "e.g", "No", months. */
+const NOT_A_STOP = /(?:^|[^A-Za-z])(?:[A-Za-z]|(?:[A-Za-z]\.)+[A-Za-z]|e\.g|i\.e|etc|vs|approx|incl|No|Nos|Mr|Mrs|Ms|Dr|Prof|St|Inc|Ltd|Co|Corp|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)$/;
+
+/**
+ * Prose split into sentences. A sentence ends at ".", "!" or "?" (plus any closing quote or
+ * bracket) followed by a space and a capital, a digit or an opening quote or bracket.
+ */
+export function sentences(text) {
+  const s = String(text ?? '').replace(/\s+/g, ' ').trim();
+  const out = [];
+  let start = 0;
+  for (const m of s.matchAll(/[.!?]+["')\]]*(?= ["'(\[]?[A-Z0-9])/g)) {
+    if (/^\.(?!\.)/.test(m[0]) && NOT_A_STOP.test(s.slice(start, m.index))) continue;
+    const end = m.index + m[0].length;
+    out.push(s.slice(start, end).trim());
+    start = end;
   }
-  const n = it.sources.length;
-  const srcLine = (s) => {
-    const url = safeHttps(s.url);
-    const head = s.headline && detail === 0 ? `${s.publication}: ${s.headline}` : s.publication;
-    return `- ${head}${url ? ` ${url}` : ''}`;
-  };
-  if (detail >= 3) {
-    lines.push(`Sources: ${n}, listed at the permalink.`);
-  } else if (detail === 2) {
-    lines.push('Sources:', srcLine(it.sources[0] || { publication: '' }));
-    if (n > 1) lines.push(`- ${plural(n - 1, 'more source')} at the permalink`);
-  } else {
-    lines.push('Sources:', ...it.sources.map(srcLine));
-  }
-  lines.push('', `Permalink: ${link}`);
+  const rest = s.slice(start).trim();
+  if (rest) out.push(rest);
+  return out;
+}
+
+/** The email's interpretation: the read-across in domain order as one paragraph, cut to two sentences. */
+export function mailInterpretation(it) {
+  const text = it.interpretation.map((r) => {
+    const t = plainText(r.text);
+    return /[.!?]["')\]]*$/.test(t) ? t : `${t}.`;
+  }).join(' ');
+  return sentences(text).slice(0, 2).join(' ');
+}
+
+/**
+ * The line above the permalink. An awareness-only item has no validation question or issue
+ * statement, so its line names the rationale instead.
+ */
+export const mailLinkLabel = (it) => (it.mechanism === 'awareness_only'
+  ? 'Full item, awareness rationale and sources:'
+  : 'Full item, validation question, candidate issue statement and sources:');
+
+/**
+ * Plain-text email body, CRLF lines: the claim; the mechanism and domain tags; the
+ * interpretation, at most two sentences (left out when `withInterpretation` is false); and the
+ * item's permanent link on the live site, which is always there.
+ */
+export function mailBody(it, link = permalinkUrl(it.id), withInterpretation = true) {
+  const lines = [plainText(it.claim), '', `Mechanism: ${MECH_BY_KEY.get(it.mechanism).label}`];
+  if (it.domains.length) lines.push(`Domains: ${it.domains.map(domainLabel).join(', ')}`);
+  const read = withInterpretation ? mailInterpretation(it) : '';
+  if (read) lines.push('', read);
+  lines.push('', mailLinkLabel(it), link);
   return lines.join('\r\n');
 }
 
-/** RFC 3986 strict: also encodes ! ' ( ) * so the result is safe inside any attribute. */
+/**
+ * encodeURIComponent, plus ! ' ( ) * (RFC 3986 strict) so the link is safe inside any attribute.
+ * Spaces become %20, never "+"; CRLF line breaks become %0D%0A.
+ */
 const enc = (s) => encodeURIComponent(s).replace(/[!'()*]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`);
 
 /**
- * Longest mailto: URL the site emits. Chromium on Windows silently drops external-protocol
- * URLs over 2,048 characters and some mail clients truncate long ones, so the source list is
- * trimmed first (see mailBody `detail`) to stay inside the budget.
+ * Every mailto: link is shorter than this. Mail handlers truncate or refuse long links
+ * (Chromium on Windows drops any over 2,048 characters), so when the full link would reach it
+ * the interpretation is left out. The claim, the tags and the permalink are never dropped.
  */
-export const MAILTO_BUDGET = 2000;
+export const MAILTO_LIMIT = 1800;
 
-export function mailtoHref(it, link) {
-  let href = '';
-  // Last resort (4): the subject carries the item id; the claim still opens the body.
-  for (let detail = 0; detail <= 4; detail++) {
-    const subject = enc(`Readiness Signal: ${detail < 4 ? it.claim : it.id}`);
-    href = `mailto:?subject=${subject}&body=${enc(mailBody(it, link, Math.min(detail, 3)))}`;
-    if (href.length <= MAILTO_BUDGET) break;
-  }
-  return href;
+export function mailtoHref(it, link = permalinkUrl(it.id)) {
+  const head = `mailto:?subject=${enc(`Readiness Signal: ${plainText(it.claim)}`)}&body=`;
+  const full = head + enc(mailBody(it, link, true));
+  return full.length < MAILTO_LIMIT ? full : head + enc(mailBody(it, link, false));
 }
 
 // ---------------------------------------------------------------------------------------
@@ -625,7 +685,7 @@ export function dashboard(data, now) {
   const exec = wk.filter((i) => i.section === 'executive_visibility').map((i) => ({
     item: i,
     isNew: isLatest(i),
-    when: isLatest(i) ? `Last update · ${hm(i.date)}` : whenShort(i.date, now),
+    when: isLatest(i) ? `Last edition · ${hm(i.date)}` : whenShort(i.date, now),
   }));
   const board = MECHANISMS.map((m) => {
     const list = wk.filter((i) => i.mechanism === m.key)
@@ -652,11 +712,9 @@ export function dashboard(data, now) {
       name: `${d.label}: ${plural(l.length, 'item')}, ${act} ask action`,
     };
   });
-  const asof = asOf(data);
   // "Nothing cleared the test" only when a run actually applied it this week (as the report does).
   const weekRuns = runStats(data, [weekStart, null]);
   return {
-    asOf: asof ? `As of ${fmtFull(asof)}` : '',
     execNone: weekRuns.applied
       ? 'Nothing cleared the Executive Visibility test this week.'
       : 'Nothing published this week. No run in the last 7 days has applied the entry test yet.',
@@ -677,10 +735,15 @@ export function dashboard(data, now) {
   };
 }
 
-/** Masthead "Last update" value (the latest published edition). */
-export function mastheadLatest(data) {
+/**
+ * Masthead times, both read from runs.json as the pipeline writes it, never fixed when the page
+ * is built. `edition`: the slot of the latest run that published at least one new item.
+ * `checked`: when the latest completed run finished, silent runs included.
+ */
+export function mastheadTimes(data) {
   const le = data ? latestEdition(data) : null;
-  return le ? fmtFull(le.date) : 'None yet';
+  const lc = data ? lastChecked(data) : null;
+  return { edition: le ? fmtFull(le.date) : 'None yet', checked: lc ? fmtFull(lc) : 'Not yet' };
 }
 
 // ---------------------------------------------------------------------------------------

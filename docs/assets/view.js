@@ -35,7 +35,8 @@ const NAV = [['dashboard', 'Dashboard'], ['report', 'Report'], ['archive', 'Arch
 
 function masthead(st) {
   const { ui, data, error, loading } = st;
-  const latest = loading ? '&nbsp;' : error ? 'Unavailable' : esc(M.mastheadLatest(data));
+  const t = data ? M.mastheadTimes(data) : null;
+  const shown = (v) => (loading ? '&nbsp;' : error || !t ? 'Unavailable' : esc(v));
   // The dot pulses (briefly) only when there is an edition to point at.
   const isLive = !loading && !error && !!data && !!M.latestEdition(data);
   const nav = ui.printMode ? '' : `
@@ -51,10 +52,16 @@ function masthead(st) {
         <span class="brand-bar" aria-hidden="true"></span>
         <span class="brand-text"><span class="brand-name">Readiness Signal</span><span class="brand-tag">Only what clears the bar. Silence when nothing does.</span></span>
       </a>
-      <div class="mast-latest">
-        <div class="mast-latest-k"><span class="dot${isLive ? ' live' : ''}" aria-hidden="true"></span>Last update</div>
-        <div class="mast-latest-v">${latest}</div>
-      </div>
+      <dl class="mast-latest">
+        <div class="mast-stamp">
+          <dt class="mast-latest-k"><span class="dot${isLive ? ' live' : ''}" aria-hidden="true"></span>Last edition</dt>
+          <dd class="mast-latest-v">${shown(t && t.edition)}</dd>
+        </div>
+        <div class="mast-stamp">
+          <dt class="mast-latest-k">Last checked</dt>
+          <dd class="mast-latest-v">${shown(t && t.checked)}</dd>
+        </div>
+      </dl>
     </div>${nav}
   </div>
 </header>`;
@@ -99,12 +106,12 @@ function dashboardMain(st) {
   const d = M.dashboard(st.data, st.now);
   const latest = d.latest
     ? `<header class="latest-head">
-        <div class="latest-head-t"><span class="kicker">Last update</span><h2 class="h-21">${esc(d.latest.title)}</h2></div>
+        <div class="latest-head-t"><span class="kicker">Last edition</span><h2 class="h-21">${esc(d.latest.title)}</h2></div>
         <a class="small-link" href="#report"${navAttrs('report', 'latest')}>Open in the report</a>
       </header>
       ${d.latest.items.map((e, i) => dashRow(e, i > 0, `<span class="dash-sec">${esc(e.secLabel)}</span>`, ' latest-row')).join('')}`
     : `<header class="latest-head">
-        <div class="latest-head-t"><span class="kicker">Last update</span><h2 class="h-21">None yet</h2></div>
+        <div class="latest-head-t"><span class="kicker">Last edition</span><h2 class="h-21">None yet</h2></div>
       </header>
       <div class="dash-none">${QUIET}<p>No edition has been published yet. Runs at 06:00, 10:00, 14:00 and 18:00 ET publish only what clears the bar; a silent run is a result.</p></div>`;
 
@@ -133,10 +140,9 @@ function dashboardMain(st) {
   return `<main id="main" tabindex="-1" class="main dash" data-k="main-dashboard">
   <div class="title-row">
     <h1 class="h1">Dashboard</h1>
-    ${d.asOf ? `<span class="as-of">${esc(d.asOf)}</span>` : ''}
   </div>
 
-  <section class="card latest-card" aria-label="Last update">
+  <section class="card latest-card" aria-label="Last edition">
     ${latest}
   </section>
 
@@ -226,11 +232,11 @@ function copyBtn(ui, key, id, kind, label, what) {
 }
 
 export function itemArticle(it, idx, st) {
-  const { ui, data, now, base, showSec } = st;
+  const { ui, data, now, showSec } = st;
   const screen = !ui.printMode;
   const open = M.isOpen(it, ui);
   const d = M.itemDetail(it, data);
-  const permalink = `${base}#${it.id}`;
+  const permalink = M.permalinkUrl(it.id);
   const ticks = it.sources.map(() => '<span></span>').join('');
 
   const headRow = `<div class="row" role="button" tabindex="0" aria-expanded="${open}" data-act="toggle" data-id="${esc(it.id)}">
@@ -446,7 +452,7 @@ function aboutMain() {
 // ---------------------------------------------------------------------------------------
 
 /**
- * Whole app body. st = { ui, data, now, base, error, loading }.
+ * Whole app body. st = { ui, data, now, error, loading }.
  * `data` may be null while loading or after a failure; About never needs it.
  */
 export function renderApp(st) {

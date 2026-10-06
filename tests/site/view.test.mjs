@@ -14,7 +14,7 @@ const data = M.prepare(fixture('archive.json'), fixture('runs.json'));
 const empty = M.prepare({ items: [] }, { runs: [] });
 const ui = (patch = {}) => ({ ...M.defaultUi(NOW), ...patch });
 // app.js collapses inter-tag whitespace before parsing; do the same here.
-const render = (u, d = data, extra = {}) => V.renderApp({ ui: ui(u), data: d, now: NOW, base: BASE, error: null, loading: false, ...extra }).replace(/>\s+</g, '><');
+const render = (u, d = data, extra = {}) => V.renderApp({ ui: ui(u), data: d, now: NOW, error: null, loading: false, ...extra }).replace(/>\s+</g, '><');
 const text = (html) => html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
 
 const EVIL = '<img src=x onerror="alert(1)">';
@@ -69,14 +69,21 @@ describe('escaping and link safety', () => {
     assert.ok(!html.includes('__proto__') && !html.includes('>constructor<'));
   });
 
-  test('email link is a mailto with an escaped, encoded body', () => {
-    const html = render({ page: 'report', open: { 'RS-261002-1400-01': true } });
+  test('email link is a real mailto anchor with an escaped, encoded body', () => {
+    const id = 'RS-261002-1400-01';
+    const html = render({ page: 'report', open: { [id]: true } });
     const m = /<a class="email-btn" href="(mailto:[^"]+)">Email this item<\/a>/.exec(html);
     assert.ok(m);
     const href = m[1].replace(/&amp;/g, '&');
+    assert.equal(href, M.mailtoHref(data.byId.get(id)));
     const body = decodeURIComponent(href.split('&body=')[1]);
-    assert.ok(body.includes('Validation question:'));
-    assert.ok(body.endsWith(`Permalink: ${BASE}#RS-261002-1400-01`));
+    assert.ok(body.endsWith(`Full item, validation question, candidate issue statement and sources:\r\n${BASE}#${id}`));
+    // Outside the row that toggles the item, and no click handler of its own: following the
+    // link never expands or collapses the item.
+    const art = html.slice(html.indexOf(`<article id="${id}"`));
+    const row = art.slice(0, art.indexOf('</div><div class="body">'));
+    assert.ok(!row.includes('email-btn'));
+    assert.ok(!/<a class="email-btn"[^>]*data-act/.test(html));
   });
 });
 
@@ -269,8 +276,8 @@ describe('colour hooks and palette', () => {
   });
 
   test('the live dot pulses only when there is an edition; motion respects reduced-motion', () => {
-    assert.ok(render({ page: 'dashboard' }).includes('<span class="dot live" aria-hidden="true"></span>Last update'));
-    assert.ok(render({ page: 'dashboard' }, empty).includes('<span class="dot" aria-hidden="true"></span>Last update'));
+    assert.ok(render({ page: 'dashboard' }).includes('<span class="dot live" aria-hidden="true"></span>Last edition'));
+    assert.ok(render({ page: 'dashboard' }, empty).includes('<span class="dot" aria-hidden="true"></span>Last edition'));
     assert.ok(/@media \(prefers-reduced-motion: reduce\)\s*\{[^}]*animation: none !important; transition: none !important;/.test(css));
   });
 
@@ -292,7 +299,8 @@ describe('colour hooks and palette', () => {
 describe('states', () => {
   test('day one: masthead, dashboard, report and archive look intentional', () => {
     const dash = text(render({ page: 'dashboard' }, empty));
-    assert.ok(dash.includes('Last update None yet'));
+    assert.ok(dash.includes('Last edition None yet'));
+    assert.ok(dash.includes('Last checked Not yet'));
     // No run has applied the test yet, so the dashboard does not claim that nothing cleared it.
     assert.ok(!dash.includes('Executive Visibility, last 7 days')); // card removed from the dashboard (owner request 2026-10-04)
     assert.ok(!dash.includes('Nothing cleared the Executive Visibility test'));
@@ -311,7 +319,22 @@ describe('states', () => {
     assert.ok(!arcHtml.includes('data-act="toggleall"') && !arcHtml.includes('class="export-btn"'));
   });
 
-  test('the dashboard opens with the last update; no Executive Visibility card', () => {
+  test('masthead: last edition and last checked, both from runs.json', () => {
+    const mast = text(render({ page: 'report' }).slice(0, render({ page: 'report' }).indexOf('</header>')));
+    assert.ok(mast.includes('Last edition Fri 2 Oct 2026, 14:00 ET'));
+    assert.ok(mast.includes('Last checked Fri 2 Oct 2026, 14:21 ET'));
+    // A silent run after the edition moves "Last checked" only.
+    const runs = fixture('runs.json');
+    runs.runs.push({ run_id: '2026-10-02-1800', slot: '2026-10-02T18:00:00-04:00', started_at: '2026-10-02T18:05:00-04:00', finished_at: '2026-10-02T18:31:00-04:00', status: 'silent', items: [] });
+    const later = text(render({ page: 'report' }, M.prepare(fixture('archive.json'), runs)));
+    assert.ok(later.includes('Last edition Fri 2 Oct 2026, 14:00 ET'));
+    assert.ok(later.includes('Last checked Fri 2 Oct 2026, 18:31 ET'));
+    // While loading, neither time is guessed.
+    const loadingMast = text(V.renderApp({ ui: ui({ page: 'report' }), data: null, now: NOW, error: null, loading: true }));
+    assert.ok(!/\d{2}:\d{2} ET/.test(loadingMast));
+  });
+
+  test('the dashboard opens with the last edition; no Executive Visibility card', () => {
     const html = render({ page: 'dashboard' });
     assert.ok(!html.includes('exec-card') && !html.includes('Executive Visibility, last 7 days'));
     assert.ok(html.indexOf('latest-card') > html.indexOf('class="h1"'));
@@ -321,7 +344,7 @@ describe('states', () => {
 
   test('print: the permalink prints in full', () => {
     const html = render({ page: 'report', printMode: 'expanded' });
-    assert.ok(html.includes(`<a class="perma-link" href="#RS-261002-1400-01">${BASE}#RS-261002-1400-01</a>`));
+    assert.ok(html.includes(`<a class="perma-link" href="#RS-261002-1400-01">${M.permalinkUrl('RS-261002-1400-01')}</a>`));
     const css = readFileSync(new URL('../../docs/assets/app.css', import.meta.url), 'utf8');
     assert.ok(/a\.src-link\[href\^="https:"\]::after\s*\{[^}]*content: " " attr\(href\)/.test(css));
   });
@@ -332,11 +355,11 @@ describe('states', () => {
 
   test('load failure shows a plain message; About still renders', () => {
     for (const page of ['dashboard', 'report', 'archive']) {
-      const t = text(V.renderApp({ ui: ui({ page }), data: null, now: NOW, base: BASE, error: new Error('x'), loading: false }));
+      const t = text(V.renderApp({ ui: ui({ page }), data: null, now: NOW, error: new Error('x'), loading: false }));
       assert.ok(t.includes('The archive could not be loaded.'), page);
-      assert.ok(t.includes('Last update Unavailable'));
+      assert.ok(t.includes('Last edition Unavailable') && t.includes('Last checked Unavailable'));
     }
-    const about = text(V.renderApp({ ui: ui({ page: 'about' }), data: null, now: NOW, base: BASE, error: new Error('x'), loading: false }));
+    const about = text(V.renderApp({ ui: ui({ page: 'about' }), data: null, now: NOW, error: new Error('x'), loading: false }));
     assert.ok(about.includes('A filter, not a feed.'));
   });
 

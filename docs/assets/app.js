@@ -12,7 +12,7 @@ let data = null;
 let loadError = null;
 let loading = true;
 let ui = M.defaultUi(new Date());
-let pendingScroll = null; // item id to bring into view after the next render
+let pendingScroll = null; // { id, land }: item to bring into view after the next render
 let pendingFocus = null; // selector to focus after the next render
 let copyTimer = 0;
 let lastRoute = null;
@@ -71,12 +71,9 @@ function morphChildren(from, to) {
 /** Render clock: the viewer's, or the pipeline's latest write if the viewer's runs behind. */
 const clock = () => M.effectiveNow(data, new Date());
 
-/** Permalink base: this page without any query string (no utm_/fbclid passed on) or hash. */
-const permalinkBase = () => location.href.split(/[?#]/)[0];
-
 function render() {
   const html = renderApp({
-    ui, data, now: clock(), base: permalinkBase(), error: loadError, loading,
+    ui, data, now: clock(), error: loadError, loading,
   }).replace(/>\s+</g, '><');
   const t = document.createElement('template');
   t.innerHTML = html;
@@ -97,9 +94,9 @@ function render() {
     if (el) el.focus();
   }
   if (pendingScroll && !loading) {
-    const id = pendingScroll;
+    const { id, land } = pendingScroll;
     pendingScroll = null;
-    setTimeout(() => scrollToItem(id), 0);
+    setTimeout(() => (land ? landOn(id) : scrollToItem(id)), 0);
   }
 }
 
@@ -124,13 +121,53 @@ function fitPopover() {
   if (below > 0 && room > 0) window.scrollBy(0, Math.min(below, room));
 }
 
-function scrollToItem(id) {
+function scrollToItem(id, instant = false, focus = true) {
   const el = document.getElementById(id);
   if (!el) return;
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  el.scrollIntoView({ block: 'start', behavior: reduce || document.hidden ? 'auto' : 'smooth' });
+  el.scrollIntoView({ block: 'start', behavior: instant || reduce || document.hidden ? 'auto' : 'smooth' });
+  if (!focus) return;
   const row = el.querySelector('.row');
   if (row) row.focus({ preventScroll: true });
+}
+
+const READER_INPUT = ['wheel', 'touchstart', 'pointerdown', 'keydown'];
+
+/**
+ * A permalink opened from outside the page: jump straight to the item (no smooth scroll across
+ * the whole archive), then hold it in view while the page settles. Web fonts that arrive late,
+ * or anything else that shifts the layout, can move the item after the jump, and not every
+ * browser keeps the scroll anchored. The hold repeats the jump when the fonts are ready, when
+ * the page has loaded and when a background tab is first shown; it ends as soon as the reader
+ * scrolls (wheel, touch, keys or the scrollbar), clicks or taps, and three seconds after the
+ * page is visible.
+ */
+function landOn(id) {
+  let holding = true;
+  let at = null; // where the last jump left the page, to tell the reader's own scrolling apart
+  const jump = (focus) => { scrollToItem(id, true, focus); at = window.scrollY; };
+  const hold = () => { if (holding) jump(false); };
+  const moved = () => { if (at !== null && Math.abs(window.scrollY - at) > 2) end(); };
+  const settle = () => setTimeout(() => { hold(); end(); }, 3000);
+  const shown = () => {
+    if (document.hidden) return;
+    document.removeEventListener('visibilitychange', shown);
+    hold();
+    settle();
+  };
+  function end() {
+    holding = false;
+    for (const t of READER_INPUT) window.removeEventListener(t, end, true);
+    window.removeEventListener('scroll', moved);
+    document.removeEventListener('visibilitychange', shown);
+  }
+  for (const t of READER_INPUT) window.addEventListener(t, end, { capture: true, passive: true });
+  window.addEventListener('scroll', moved, { passive: true });
+  jump(true);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(hold, () => {});
+  if (document.readyState !== 'complete') window.addEventListener('load', hold, { once: true });
+  if (document.hidden) document.addEventListener('visibilitychange', shown);
+  else settle();
 }
 
 function set(patch) {
@@ -163,7 +200,7 @@ function go(page, preset, value) {
   else if (preset === 'latest' && data) {
     const le = M.latestEdition(data);
     if (le) {
-      const win = M.revealWindow(+clock() - le.ts);
+      const win = M.revealWindow(+clock() - le.ts + M.REVEAL_SLACK);
       Object.assign(patch, win, clear);
       if (win.page === 'archive') Object.assign(patch, { archTime: `m-${M.monthKey(le.date)}`, q: '' });
     }
@@ -180,13 +217,26 @@ function announcePage() {
   announce(PAGE_TITLES[ui.page] || PAGE_TITLES.dashboard);
 }
 
-function reveal(id, push) {
+/** Item `id` is on the page and expanded. */
+function isShown(id) {
+  const el = document.getElementById(id);
+  return !!el && el.classList.contains('open');
+}
+
+/**
+ * Show item `id` expanded and bring it into view: in the smallest window that holds it, with
+ * only the filters that would hide it cleared (M.revealPatch). If that view still does not show
+ * it, the all-time archive with every filter and the search cleared, for this page load only.
+ * `land`: a permalink opened from outside the page (see landOn).
+ */
+function reveal(id, push, land = false) {
   if (!data) return;
   const patch = M.revealPatch(data, id, ui, clock());
   if (!patch) return;
   if (push) setHash(id);
-  pendingScroll = id;
+  pendingScroll = { id, land };
   set(patch);
+  if (!isShown(id)) set(M.revealAllPatch(id, ui));
 }
 
 function readHash() {
@@ -287,7 +337,7 @@ function copyFor(id, kind) {
   if (!it) return;
   if (kind === 'q') copyText(`${id}:q`, it.validation_question);
   else if (kind === 'i') copyText(`${id}:i`, it.candidate_issue_statement);
-  else if (kind === 'l') copyText(`${id}:l`, `${permalinkBase()}#${id}`);
+  else if (kind === 'l') copyText(`${id}:l`, M.permalinkUrl(id));
 }
 
 function printAs(mode) {
@@ -440,16 +490,13 @@ async function boot() {
     const d = M.defaultUi(clock());
     ui = { ...ui, from: d.from, to: d.to };
   }
-  if (first.id) {
-    if (data && data.byId.has(first.id)) {
-      pendingScroll = first.id;
-      ui = { ...ui, ...M.revealPatch(data, first.id, ui, clock()) };
-    } else {
-      ui.page = 'dashboard';
-    }
-  }
+  // A permalink lands on its item whatever the default view would show (reveal falls back to
+  // the unfiltered all-time archive if it has to); an unknown id opens the dashboard.
+  const landing = first.id && data && data.byId.has(first.id) ? first.id : null;
+  if (first.id && !landing) ui.page = 'dashboard';
   try {
-    render();
+    if (landing) reveal(landing, false, true);
+    else render();
   } catch (err) {
     // Never leave the loading line (or a blank main) behind: fall back to the plain message.
     console.error('Readiness Signal: render failed.', err);
