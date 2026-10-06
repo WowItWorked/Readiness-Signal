@@ -252,6 +252,24 @@
       "run_id": "2026-10-06-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.americanbanker.com/news/ai-linked-hacks-hit-korean-banks-through-loan-agent-sites": {
+      "first_seen": "2026-10-06T18:06:36-04:00",
+      "run_id": "2026-10-06-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/ninja-forms-plugin-flaw-exploited-to-hack-wordpress-sites": {
+      "first_seen": "2026-10-06T18:06:36-04:00",
+      "run_id": "2026-10-06-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/hackers-exploit-32-zero-days-on-first-day-of-pwn2own-ireland": {
+      "first_seen": "2026-10-06T18:06:36-04:00",
+      "run_id": "2026-10-06-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
