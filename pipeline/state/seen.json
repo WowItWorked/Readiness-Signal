@@ -192,6 +192,42 @@
       "run_id": "2026-10-06-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.wsj.com/world/asia/hackers-use-chinese-ai-tool-to-hit-south-korean-banks-exposing-new-risk-5d4d3885": {
+      "first_seen": "2026-10-06T10:23:11-04:00",
+      "run_id": "2026-10-06-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/clickfix-campaign-ukraine-lunex-stealer": {
+      "first_seen": "2026-10-06T10:23:11-04:00",
+      "run_id": "2026-10-06-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261006-supervisory-risk-appetite-efficiency-and-effectiveness": {
+      "first_seen": "2026-10-06T10:23:11-04:00",
+      "run_id": "2026-10-06-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USTREAS/bulletins/42e1de4": {
+      "first_seen": "2026-10-06T10:23:11-04:00",
+      "run_id": "2026-10-06-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261006-opening-remarks-community-bank-cyber-workshop": {
+      "first_seen": "2026-10-06T10:23:11-04:00",
+      "run_id": "2026-10-06-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261006-thailands-new-horizons-empowering-people-building-resilience": {
+      "first_seen": "2026-10-06T10:23:11-04:00",
+      "run_id": "2026-10-06-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
