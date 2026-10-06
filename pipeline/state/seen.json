@@ -186,6 +186,12 @@
       "run_id": "2026-10-05-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.eiopa.europa.eu/eiopa-sets-eu-wide-expectations-supervision-private-equity-backed-insurers-2026-10-06_en": {
+      "first_seen": "2026-10-06T06:06:41-04:00",
+      "run_id": "2026-10-06-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
