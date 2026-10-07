@@ -336,6 +336,18 @@
       "run_id": "2026-10-07-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://unit42.paloaltonetworks.com/web3-cloud-supply-chain-attacks": {
+      "first_seen": "2026-10-07T18:06:20-04:00",
+      "run_id": "2026-10-07-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.talosintelligence.com/microsoft-adobe-apple-and-foxit-vulnerabilities": {
+      "first_seen": "2026-10-07T18:06:20-04:00",
+      "run_id": "2026-10-07-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
