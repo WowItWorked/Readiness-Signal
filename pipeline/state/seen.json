@@ -312,6 +312,30 @@
       "run_id": "2026-10-07-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/phishing-authentication-ai-okta/832376": {
+      "first_seen": "2026-10-07T14:06:40-04:00",
+      "run_id": "2026-10-07-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.theregister.com/security/2026/10/07/poetry-is-the-new-ai-security-threat-as-poellm-malware-infects-3k-servers/5301672": {
+      "first_seen": "2026-10-07T14:06:40-04:00",
+      "run_id": "2026-10-07-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.finextra.com/newsarticle/48551/ai-systems-most-at-risk-of-cybersecurity-attacks-pwc-report-shows": {
+      "first_seen": "2026-10-07T14:06:40-04:00",
+      "run_id": "2026-10-07-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/poellm-malware-infects-exposed-ai-servers-in-cryptomining-attacks": {
+      "first_seen": "2026-10-07T14:06:40-04:00",
+      "run_id": "2026-10-07-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
