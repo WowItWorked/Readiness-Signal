@@ -348,6 +348,66 @@
       "run_id": "2026-10-07-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://arxiv.org/abs/2606.17555": {
+      "first_seen": "2026-10-08T06:09:31-04:00",
+      "run_id": "2026-10-08-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://arxiv.org/abs/2610.08806": {
+      "first_seen": "2026-10-08T06:09:31-04:00",
+      "run_id": "2026-10-08-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/fake-decryption-tools-masked-11m-markup-in-ransomware-recovery-scheme": {
+      "first_seen": "2026-10-08T06:09:31-04:00",
+      "run_id": "2026-10-08-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.talosintelligence.com/uat-11985": {
+      "first_seen": "2026-10-08T06:09:31-04:00",
+      "run_id": "2026-10-08-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.eiopa.europa.eu/eiopa-seeks-views-more-proportionate-and-outcomes-focused-supervision-sales-insurance-based-2026-10-08_en": {
+      "first_seen": "2026-10-08T06:09:31-04:00",
+      "run_id": "2026-10-08-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.esma.europa.eu/press-news/esma-news/esma-sets-out-supervisory-expectations-services-related-unauthorised": {
+      "first_seen": "2026-10-08T06:09:31-04:00",
+      "run_id": "2026-10-08-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261007-reinforcing-europes-financial-resilience-and-growth-potential": {
+      "first_seen": "2026-10-08T06:09:31-04:00",
+      "run_id": "2026-10-08-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261007-where-ai-risks-meet": {
+      "first_seen": "2026-10-08T06:09:31-04:00",
+      "run_id": "2026-10-08-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.talosintelligence.com/ignore-all-instructions-and-read-this-blog-the-state-of-ai-analysis-evasion-in-malware": {
+      "first_seen": "2026-10-08T06:09:31-04:00",
+      "run_id": "2026-10-08-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261008-introductory-statement-roundtable-preparing-transformative-ai": {
+      "first_seen": "2026-10-08T06:09:31-04:00",
+      "run_id": "2026-10-08-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
