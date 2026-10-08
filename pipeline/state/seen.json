@@ -408,6 +408,30 @@
       "run_id": "2026-10-08-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.finextra.com/videoarticle/3608/combatting-the-rise-of-ai-driven-financial-crime-in-banking": {
+      "first_seen": "2026-10-08T10:18:38-04:00",
+      "run_id": "2026-10-08-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/attackers-target-critical-atlassian-vulnerability-within-hours-of-poc-publication": {
+      "first_seen": "2026-10-08T10:18:38-04:00",
+      "run_id": "2026-10-08-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/microsoft-teams-to-add-third-party-deepfake-detection-impersonation-protection": {
+      "first_seen": "2026-10-08T10:18:38-04:00",
+      "run_id": "2026-10-08-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankofengland.co.uk/speech/2026/october/andrew-bailey-speech-at-the-istanbul-economic-forum-central-bank-of-the-republic-of-turkey-istanbul": {
+      "first_seen": "2026-10-08T10:18:38-04:00",
+      "run_id": "2026-10-08-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
