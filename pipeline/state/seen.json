@@ -432,6 +432,24 @@
       "run_id": "2026-10-08-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.paymentsdive.com/news/finance-leaders-fight-deepfakes-Certos-fraud-prevention/832475": {
+      "first_seen": "2026-10-08T14:06:32-04:00",
+      "run_id": "2026-10-08-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/cisco-warns-of-critical-flaws-allowing-nexus-switch-takeover": {
+      "first_seen": "2026-10-08T14:06:32-04:00",
+      "run_id": "2026-10-08-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://techcrunch.com/2026/10/08/asos-confirms-breach-of-customer-data-after-hackers-send-rogue-app-notification": {
+      "first_seen": "2026-10-08T14:06:32-04:00",
+      "run_id": "2026-10-08-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
