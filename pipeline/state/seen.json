@@ -450,6 +450,30 @@
       "run_id": "2026-10-08-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://insidecybersecurity.com/daily-news/cisa-advisory-warns-china-sponsored-threat-group-targeting-critical-infrastructure": {
+      "first_seen": "2026-10-08T18:06:37-04:00",
+      "run_id": "2026-10-08-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankingdive.com/news/amex-dinged-by-fed-occ-must-pay-350m-for-aml-failures/832570": {
+      "first_seen": "2026-10-08T18:06:37-04:00",
+      "run_id": "2026-10-08-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/fbi-disrupts-chinese-hacking-tools-used-to-breach-critical-infrastructure": {
+      "first_seen": "2026-10-08T18:06:37-04:00",
+      "run_id": "2026-10-08-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.darkreading.com/cyberattacks-data-breaches/venezuelan-cartel-malware-honcho-nabbed-atm-jackpotting": {
+      "first_seen": "2026-10-08T18:06:37-04:00",
+      "run_id": "2026-10-08-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
