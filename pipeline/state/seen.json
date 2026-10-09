@@ -474,6 +474,30 @@
       "run_id": "2026-10-08-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.finextra.com/newsarticle/48562/amex-hit-with-350m-penalty-for-aml-deficiencies": {
+      "first_seen": "2026-10-09T06:10:31-04:00",
+      "run_id": "2026-10-09-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.occ.gov/news-issuances/news-releases/2026/nr-occ-2026-87.html": {
+      "first_seen": "2026-10-09T06:10:31-04:00",
+      "run_id": "2026-10-09-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/citrix-warns-admins-to-patch-new-netscaler-rce-flaw-immediately": {
+      "first_seen": "2026-10-09T06:10:31-04:00",
+      "run_id": "2026-10-09-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankofengland.co.uk/news/2026/october/cmorg-holds-sector-wide-cloud-outage-simulation-exercise": {
+      "first_seen": "2026-10-09T06:10:31-04:00",
+      "run_id": "2026-10-09-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
