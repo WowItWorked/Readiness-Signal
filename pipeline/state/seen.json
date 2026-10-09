@@ -498,6 +498,18 @@
       "run_id": "2026-10-09-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/max-severity-sonicwall-sma1000-flaw-now-exploited-in-attacks": {
+      "first_seen": "2026-10-09T10:23:21-04:00",
+      "run_id": "2026-10-09-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/unpatched-ahsaycbs-vulnerabilities-exploited-in-the-wild": {
+      "first_seen": "2026-10-09T10:23:21-04:00",
+      "run_id": "2026-10-09-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
