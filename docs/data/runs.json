@@ -696,6 +696,47 @@
         "awareness_only": 0
       },
       "notes": "source: fed-testimony implausible dates skipped; manual-unread: fincen-news-releases,nydfs-industry-letters,enisa-publications,iosco-media-releases,ebf-policy-insights,ukfinance-press-releases,nacha-news,aws-post-event-summaries,azure-post-incident-reviews"
+    },
+    {
+      "run_id": "2026-10-09-1400",
+      "slot": "2026-10-09T14:00:00-04:00",
+      "started_at": "2026-10-09T14:06:56-04:00",
+      "finished_at": "2026-10-09T14:07:58-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 112,
+        "sources_failed": 11,
+        "fetched": 2314,
+        "in_window": 175,
+        "unseen": 169,
+        "stage1_pass": 2,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 2,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "manual-unread: fincen-news-releases,nydfs-industry-letters,enisa-publications,iosco-media-releases,ebf-policy-insights,ukfinance-press-releases,nacha-news,aws-post-event-summaries,azure-post-incident-reviews; source: fed-testimony implausible dates skipped"
     }
   ]
 }
