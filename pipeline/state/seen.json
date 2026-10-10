@@ -522,6 +522,12 @@
       "run_id": "2026-10-09-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/hacker-used-artex-ai-and-claude-agents-to-target-south-korean-banks": {
+      "first_seen": "2026-10-10T14:06:18-04:00",
+      "run_id": "2026-10-10-1400",
+      "verdict": "duplicate",
+      "item_id": null
     }
   }
 }
