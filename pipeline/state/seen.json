@@ -582,6 +582,12 @@
       "run_id": "2026-10-12-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/anthropic-takes-risky-ai-tests-offline-after-models-breach-govt-sites": {
+      "first_seen": "2026-10-12T18:06:19-04:00",
+      "run_id": "2026-10-12-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
