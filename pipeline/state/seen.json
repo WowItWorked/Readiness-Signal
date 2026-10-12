@@ -528,6 +528,30 @@
       "run_id": "2026-10-10-1400",
       "verdict": "duplicate",
       "item_id": null
+    },
+    "https://www.securityweek.com/critical-sonicwall-vulnerability-exploited-days-after-disclosure": {
+      "first_seen": "2026-10-12T06:10:33-04:00",
+      "run_id": "2026-10-12-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankingdive.com/spons/in-ai-era-banking-trust-has-a-new-enforcerthe-network/832333": {
+      "first_seen": "2026-10-12T06:10:33-04:00",
+      "run_id": "2026-10-12-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fsb.org/2026/10/fsb-chair-sets-out-fsb-work-on-ai-and-stablecoins": {
+      "first_seen": "2026-10-12T06:10:33-04:00",
+      "run_id": "2026-10-12-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fsb.org/2026/10/global-stablecoin-arrangements-cross-border-vulnerabilities-and-financial-stability-monitoring": {
+      "first_seen": "2026-10-12T06:10:33-04:00",
+      "run_id": "2026-10-12-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
