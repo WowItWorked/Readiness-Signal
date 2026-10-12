@@ -552,6 +552,24 @@
       "run_id": "2026-10-12-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/gitlab-warns-of-max-severity-rce-flaw-in-regex-compiler-engine": {
+      "first_seen": "2026-10-12T10:33:59-04:00",
+      "run_id": "2026-10-12-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/bricksforge-wordpress-plugin-vulnerability-exploited-in-the-wild": {
+      "first_seen": "2026-10-12T10:33:59-04:00",
+      "run_id": "2026-10-12-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cert.europa.eu/publications/security-advisories/2026-016": {
+      "first_seen": "2026-10-12T10:33:59-04:00",
+      "run_id": "2026-10-12-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
