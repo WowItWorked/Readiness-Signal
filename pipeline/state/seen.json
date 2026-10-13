@@ -618,6 +618,42 @@
       "run_id": "2026-10-13-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-104935": {
+      "first_seen": "2026-10-13T14:06:29-04:00",
+      "run_id": "2026-10-13-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.volexity.com/blog/2026/10/13/a-series-of-unauthenticated-events-chained-exploitation-of-ivanti-connect-secure-zero-days": {
+      "first_seen": "2026-10-13T14:06:29-04:00",
+      "run_id": "2026-10-13-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rapid7.com/blog/post/etr-ivanti-connect-secure-zero-day-exploited-in-the-wild-cve-2026-104935": {
+      "first_seen": "2026-10-13T14:06:29-04:00",
+      "run_id": "2026-10-13-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankingdive.com/news/jpmorgan-dimon-ai-agents-bank-customers-liability-transfer/832870": {
+      "first_seen": "2026-10-13T14:06:29-04:00",
+      "run_id": "2026-10-13-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/sandbox-vulnerability-gives-rogue-ai-agents-path-out": {
+      "first_seen": "2026-10-13T14:06:29-04:00",
+      "run_id": "2026-10-13-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/meta-says-hackers-took-code-personal-data-of-1500-in-github-breach": {
+      "first_seen": "2026-10-13T14:06:29-04:00",
+      "run_id": "2026-10-13-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
