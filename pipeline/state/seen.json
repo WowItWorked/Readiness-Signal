@@ -600,6 +600,24 @@
       "run_id": "2026-10-13-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/86-million-crypto-heist-linked-to-ledger-signer-hardware-implant": {
+      "first_seen": "2026-10-13T10:20:21-04:00",
+      "run_id": "2026-10-13-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.euronews.com/2026/10/13/anthropic-warns-ai-will-soon-self-replicate-and-spread-beyond-data-centres": {
+      "first_seen": "2026-10-13T10:20:21-04:00",
+      "run_id": "2026-10-13-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rapid7.com/blog/post/etr-cve-2026-97229-critical-unauthenticated-remote-code-execution-in-gitlab": {
+      "first_seen": "2026-10-13T10:20:21-04:00",
+      "run_id": "2026-10-13-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
