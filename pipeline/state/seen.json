@@ -588,6 +588,18 @@
       "run_id": "2026-10-12-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.fca.org.uk/news/press-releases/two-plead-guilty-after-clients-lose-2m-fraud-case": {
+      "first_seen": "2026-10-13T06:07:00-04:00",
+      "run_id": "2026-10-13-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261013-cross-border-payments-necessity-africas-resilience-and-economic-transformation": {
+      "first_seen": "2026-10-13T06:07:00-04:00",
+      "run_id": "2026-10-13-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
