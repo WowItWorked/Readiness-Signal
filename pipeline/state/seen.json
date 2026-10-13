@@ -654,6 +654,60 @@
       "run_id": "2026-10-13-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.occ.gov/news-issuances/news-releases/2026/nr-occ-2026-89.html": {
+      "first_seen": "2026-10-13T18:06:27-04:00",
+      "run_id": "2026-10-13-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/ivanti-zero-day-chain-gave-attackers-root-access-to-fully-patched-vpn": {
+      "first_seen": "2026-10-13T18:06:27-04:00",
+      "run_id": "2026-10-13-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankingdive.com/news/bofa-fined-1-21-billion-over-aml-bsa-occ-treasury/832915": {
+      "first_seen": "2026-10-13T18:06:27-04:00",
+      "run_id": "2026-10-13-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-96951": {
+      "first_seen": "2026-10-13T18:06:27-04:00",
+      "run_id": "2026-10-13-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://kb.cert.org/vuls/id/382143": {
+      "first_seen": "2026-10-13T18:06:27-04:00",
+      "run_id": "2026-10-13-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cnbc.com/2026/10/13/jpmorgan-ai-agents-account-access.html": {
+      "first_seen": "2026-10-13T18:06:27-04:00",
+      "run_id": "2026-10-13-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fincen.gov/news/news-releases/fincen-assesses-12-billion-penalty-against-bank-america": {
+      "first_seen": "2026-10-13T18:06:27-04:00",
+      "run_id": "2026-10-13-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://unit42.paloaltonetworks.com/noise-inside-network-third-party-risk": {
+      "first_seen": "2026-10-13T18:06:27-04:00",
+      "run_id": "2026-10-13-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://kb.cert.org/vuls/id/157374": {
+      "first_seen": "2026-10-13T18:06:27-04:00",
+      "run_id": "2026-10-13-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
