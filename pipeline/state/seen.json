@@ -774,6 +774,30 @@
       "run_id": "2026-10-14-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/cisco-patches-actively-exploited-secure-email-gateway-zero-day": {
+      "first_seen": "2026-10-14T14:06:31-04:00",
+      "run_id": "2026-10-14-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cyberscoop.com/microsoft-patch-tuesday-october-2026": {
+      "first_seen": "2026-10-14T14:06:31-04:00",
+      "run_id": "2026-10-14-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://krebsonsecurity.com/2026/10/u-k-sanctions-cryptomus-for-ru-money-laundering": {
+      "first_seen": "2026-10-14T14:06:31-04:00",
+      "run_id": "2026-10-14-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.theregister.com/security/2026/10/14/ivanti-patches-connect-secure-zero-day-after-researchers-confirm-in-the-wild-attacks/5303095": {
+      "first_seen": "2026-10-14T14:06:31-04:00",
+      "run_id": "2026-10-14-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
