@@ -738,6 +738,42 @@
       "run_id": "2026-10-14-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.finextra.com/newsarticle/48579/boa-fined-12bn-over-egregious-aml-deficiencies": {
+      "first_seen": "2026-10-14T10:18:37-04:00",
+      "run_id": "2026-10-14-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/cisa-warns-admins-to-immediately-fix-ivanti-flaw-exploited-as-zero-day": {
+      "first_seen": "2026-10-14T10:18:37-04:00",
+      "run_id": "2026-10-14-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/new-ivanti-microsoft-bugs-exploitation": {
+      "first_seen": "2026-10-14T10:18:37-04:00",
+      "run_id": "2026-10-14-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://kb.cert.org/vuls/id/166125": {
+      "first_seen": "2026-10-14T10:18:37-04:00",
+      "run_id": "2026-10-14-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.eiopa.europa.eu/eiopa-factsheet-shows-european-insurers-home-and-cross-border-investments-well-exposure-2026-10-14_en": {
+      "first_seen": "2026-10-14T10:18:37-04:00",
+      "run_id": "2026-10-14-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.proofpoint.com/us/blog/threat-insight/disruption-targets-major-chinese-language-phishing-kits-japanese-focus": {
+      "first_seen": "2026-10-14T10:18:37-04:00",
+      "run_id": "2026-10-14-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
