@@ -708,6 +708,36 @@
       "run_id": "2026-10-13-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://cyberscoop.com/ivanti-connect-secure-zero-day-actively-exploited": {
+      "first_seen": "2026-10-14T06:10:15-04:00",
+      "run_id": "2026-10-14-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/citrix-fortinet-ivanti-patch-29-vulnerabilities-across-their-products": {
+      "first_seen": "2026-10-14T06:10:15-04:00",
+      "run_id": "2026-10-14-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/microsoft-patches-record-1413-vulnerabilities-including-exploited-windows-zero-day": {
+      "first_seen": "2026-10-14T06:10:15-04:00",
+      "run_id": "2026-10-14-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/media-releases/20261014-global-standard-setting-bodies-publish-final-report-guidance-fmis-general-business-risks-and": {
+      "first_seen": "2026-10-14T06:10:15-04:00",
+      "run_id": "2026-10-14-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.threatfabric.com/blogs/hirudo-from-fake-updates-to-patched-banking-apps": {
+      "first_seen": "2026-10-14T06:10:15-04:00",
+      "run_id": "2026-10-14-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
