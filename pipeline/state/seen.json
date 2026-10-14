@@ -798,6 +798,42 @@
       "run_id": "2026-10-14-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.darkreading.com/vulnerabilities-threats/ivanti-ics-zero-day-attacks-vendor-patching": {
+      "first_seen": "2026-10-14T18:06:27-04:00",
+      "run_id": "2026-10-14-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-76519": {
+      "first_seen": "2026-10-14T18:06:27-04:00",
+      "run_id": "2026-10-14-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-0322": {
+      "first_seen": "2026-10-14T18:06:27-04:00",
+      "run_id": "2026-10-14-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.theregister.com/security/2026/10/14/cisco-make-me-root-email-bug-exploited-as-a-0-day-by-unknown-crims/5303168": {
+      "first_seen": "2026-10-14T18:06:27-04:00",
+      "run_id": "2026-10-14-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://github.blog/news-insights/company-news/github-availability-report-september-2026": {
+      "first_seen": "2026-10-14T18:06:27-04:00",
+      "run_id": "2026-10-14-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.iosco.org/news/pdf/IOSCONEWS805.pdf": {
+      "first_seen": "2026-10-14T18:06:27-04:00",
+      "run_id": "2026-10-14-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
