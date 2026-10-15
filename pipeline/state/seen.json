@@ -834,6 +834,72 @@
       "run_id": "2026-10-14-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/palo-alto-networks-warns-of-pan-os-rce-flaw-exploited-in-attacks": {
+      "first_seen": "2026-10-15T06:06:51-04:00",
+      "run_id": "2026-10-15-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/cisco-warns-of-exploited-secure-email-gateway-vulnerability": {
+      "first_seen": "2026-10-15T06:06:51-04:00",
+      "run_id": "2026-10-15-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fsb.org/2026/10/fsb-finalises-sound-practices-for-the-responsible-adoption-of-artificial-intelligence-ai": {
+      "first_seen": "2026-10-15T06:06:51-04:00",
+      "run_id": "2026-10-15-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/palo-alto-networks-patches-pan-os-zero-day-exploited-for-remote-code-execution": {
+      "first_seen": "2026-10-15T06:06:51-04:00",
+      "run_id": "2026-10-15-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cert.europa.eu/publications/security-advisories/2026-017": {
+      "first_seen": "2026-10-15T06:06:51-04:00",
+      "run_id": "2026-10-15-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fsb.org/2026/10/sound-practices-for-responsible-adoption-of-artificial-intelligence-ai-final-report": {
+      "first_seen": "2026-10-15T06:06:51-04:00",
+      "run_id": "2026-10-15-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://unit42.paloaltonetworks.com/fortimanager-cve-2024-47575-peerstitch-malware": {
+      "first_seen": "2026-10-15T06:06:51-04:00",
+      "run_id": "2026-10-15-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fsb.org/2026/10/sound-practices-for-responsible-adoption-of-artificial-intelligence-ai-overview-of-consultation-responses": {
+      "first_seen": "2026-10-15T06:06:51-04:00",
+      "run_id": "2026-10-15-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.banking.senate.gov/newsroom/minority/10/14/2026/warren-statement-on-bank-of-america-fine-for-violations-of-anti-money-laundering-and-sanctions-laws": {
+      "first_seen": "2026-10-15T06:06:51-04:00",
+      "run_id": "2026-10-15-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.banking.senate.gov/newsroom/minority/warren-statement-on-bank-of-america-fine-for-violations-of-anti-money-laundering-and-sanctions-laws": {
+      "first_seen": "2026-10-15T06:06:51-04:00",
+      "run_id": "2026-10-15-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/publications/bulletin-138-chokepoint-disruptions-and-their-macroeconomic-consequences": {
+      "first_seen": "2026-10-15T06:06:51-04:00",
+      "run_id": "2026-10-15-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
