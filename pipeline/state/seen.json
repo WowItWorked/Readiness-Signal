@@ -906,6 +906,24 @@
       "run_id": "2026-10-15-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-21589": {
+      "first_seen": "2026-10-15T14:06:28-04:00",
+      "run_id": "2026-10-15-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.talosintelligence.com/the-q3-vulnerability-pulse-discovery-exploitation": {
+      "first_seen": "2026-10-15T14:06:28-04:00",
+      "run_id": "2026-10-15-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.pcisecuritystandards.org/the-quantum-leap-preparing-for-post-quantum-cryptography-featuring-utimaco-inc": {
+      "first_seen": "2026-10-15T14:06:28-04:00",
+      "run_id": "2026-10-15-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
