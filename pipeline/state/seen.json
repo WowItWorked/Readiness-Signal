@@ -900,6 +900,12 @@
       "run_id": "2026-10-15-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.finextra.com/pressarticle/111285/new-zealand-regulators-set-out-cyber-and-ai-risk-expectations": {
+      "first_seen": "2026-10-15T10:15:36-04:00",
+      "run_id": "2026-10-15-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
