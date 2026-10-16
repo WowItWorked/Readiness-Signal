@@ -930,6 +930,18 @@
       "run_id": "2026-10-15-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.risk.net/comment/7964272/op-risk-data-efg-takes-a-bath-for-two-decades-of-money-laundering": {
+      "first_seen": "2026-10-16T06:06:20-04:00",
+      "run_id": "2026-10-16-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://unit42.paloaltonetworks.com/ai-campaign-targets-linux-infrastructure": {
+      "first_seen": "2026-10-16T06:06:20-04:00",
+      "run_id": "2026-10-16-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
