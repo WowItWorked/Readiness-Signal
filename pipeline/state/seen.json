@@ -966,6 +966,18 @@
       "run_id": "2026-10-16-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.darkreading.com/endpoint-security/beyondtrust-remote-support-exploited-edge-bugs": {
+      "first_seen": "2026-10-16T18:06:28-04:00",
+      "run_id": "2026-10-16-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.volexity.com/blog/2026/10/16/mind-the-patch-gap-part-3-analysis-with-volexity-volcano-threat-intel-and-mcp": {
+      "first_seen": "2026-10-16T18:06:28-04:00",
+      "run_id": "2026-10-16-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
