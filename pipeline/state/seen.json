@@ -942,6 +942,30 @@
       "run_id": "2026-10-16-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://cyberscoop.com/china-espionage-attacks-beyondtrust-zero-day-armory-castle": {
+      "first_seen": "2026-10-16T14:06:51-04:00",
+      "run_id": "2026-10-16-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2025-61624": {
+      "first_seen": "2026-10-16T14:06:51-04:00",
+      "run_id": "2026-10-16-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rapid7.com/blog/post/ra-gitlab-ci-cd-regex-integer-overflow-technical-analysis-cve-2026-97229": {
+      "first_seen": "2026-10-16T14:06:51-04:00",
+      "run_id": "2026-10-16-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.esma.europa.eu/press-news/esma-news/new-qas-available-27": {
+      "first_seen": "2026-10-16T14:06:51-04:00",
+      "run_id": "2026-10-16-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
