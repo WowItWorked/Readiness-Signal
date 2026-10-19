@@ -1080,6 +1080,36 @@
       "run_id": "2026-10-19-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://therecord.media/connectwise-suspends-cloud-backup-service-supply-chain-attack": {
+      "first_seen": "2026-10-19T18:07:05-04:00",
+      "run_id": "2026-10-19-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/nikkei-discloses-third-data-breach-in-a-month-18m-records-exposed": {
+      "first_seen": "2026-10-19T18:07:05-04:00",
+      "run_id": "2026-10-19-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.darkreading.com/identity-access-management-security/connectwise-disables-cloud-backups-downstream-msps": {
+      "first_seen": "2026-10-19T18:07:05-04:00",
+      "run_id": "2026-10-19-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/siemens-software-center-vulnerability-exploited-in-clickfix-malware-attacks": {
+      "first_seen": "2026-10-19T18:07:05-04:00",
+      "run_id": "2026-10-19-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sophos.com/en-us/blog/connectwise-cloud-backup-application-abused-in-token-sweep": {
+      "first_seen": "2026-10-19T18:07:05-04:00",
+      "run_id": "2026-10-19-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
