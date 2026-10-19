@@ -2334,6 +2334,47 @@
         "awareness_only": 0
       },
       "notes": "source: bis-cb-speeches reposts older speeches; source: 11 feeds failed (403 or not a feed); manual-unread: ukfinance-press-releases"
+    },
+    {
+      "run_id": "2026-10-19-1400",
+      "slot": "2026-10-19T14:00:00-04:00",
+      "started_at": "2026-10-19T14:06:59-04:00",
+      "finished_at": "2026-10-19T14:08:22-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 111,
+        "sources_failed": 12,
+        "fetched": 2284,
+        "in_window": 176,
+        "unseen": 169,
+        "stage1_pass": 8,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 2,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 4,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "S1-GAP: securityweek-news a remote-management vendor's cloud suspension after a cyberattack; manual-unread: all 9 page sources; source: bis-cb-speeches reposts older speeches; source: 12 feeds failed"
     }
   ]
 }
