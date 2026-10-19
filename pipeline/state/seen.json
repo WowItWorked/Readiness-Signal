@@ -984,6 +984,24 @@
       "run_id": "2026-10-17-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.finextra.com/newsarticle/48602/world-takes-on-ai-driven-impersonations-with-new-suite-for-banking-and-finance": {
+      "first_seen": "2026-10-19T06:08:46-04:00",
+      "run_id": "2026-10-19-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/news/speeches/building-future-finance-age-ai": {
+      "first_seen": "2026-10-19T06:08:46-04:00",
+      "run_id": "2026-10-19-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/publications/good-poor-practice/ai-financial-services": {
+      "first_seen": "2026-10-19T06:08:46-04:00",
+      "run_id": "2026-10-19-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
