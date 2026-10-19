@@ -1002,6 +1002,36 @@
       "run_id": "2026-10-19-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/exploited-fortinet-bug-linked-to-stealthy-fortigate-implant-in-telecom-hack": {
+      "first_seen": "2026-10-19T10:11:05-04:00",
+      "run_id": "2026-10-19-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261019-financial-resilience-age-repeated-shocks": {
+      "first_seen": "2026-10-19T10:11:05-04:00",
+      "run_id": "2026-10-19-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261016-ensuring-resilience-face-uncertainty": {
+      "first_seen": "2026-10-19T10:11:05-04:00",
+      "run_id": "2026-10-19-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261019-building-trusted-foundations-digital-finance": {
+      "first_seen": "2026-10-19T10:11:05-04:00",
+      "run_id": "2026-10-19-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261019-ai-opportunity-europe": {
+      "first_seen": "2026-10-19T10:11:05-04:00",
+      "run_id": "2026-10-19-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
