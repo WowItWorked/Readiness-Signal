@@ -25,14 +25,19 @@ const MONTHS = ['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06'
 const DAYS = ['2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04'];
 const UNTIL = '2026-10-04T18:00:00-04:00';
 const SECTIONS = ['capability_shift', 'regulatory_trajectory'];
+// re-judge series (BACKFILL.md §1a): 2026-10-05 to 2026-10-20, every section, the last ending at 18:00
+const REJUDGE = Array.from({ length: 16 }, (_, i) => `2026-10-${String(5 + i).padStart(2, '0')}`);
+const REJUDGE_UNTIL = '2026-10-20T18:00:00-04:00';
+const ALL_SECTIONS = ['executive_visibility', 'capability_shift', 'regulatory_trajectory'];
 
 // ---------------------------------------------------------------- PASSES and windows
 
 test('PASSES: months 2026-01 to 2026-09 and days 2026-10-01 to 2026-10-04, the January sections, the owner instruction', () => {
-  assert.deepEqual(Object.keys(PASSES), [...MONTHS, ...DAYS]);
+  assert.deepEqual(Object.keys(PASSES), [...MONTHS, ...DAYS, ...REJUDGE]);
   for (const key of Object.keys(PASSES)) {
-    assert.deepEqual([...PASSES[key].sections], SECTIONS, key);
-    assert.deepEqual(passSections(key), SECTIONS, key);
+    const want = REJUDGE.includes(key) ? ALL_SECTIONS : SECTIONS;
+    assert.deepEqual([...PASSES[key].sections], want, key);
+    assert.deepEqual(passSections(key), want, key);
     assert.equal(requirePass(key), PASSES[key]);
     assert.ok(Object.isFrozen(PASSES[key]) && Object.isFrozen(PASSES[key].sections), `${key} frozen`);
     assert.equal(passKind(key), MONTHS.includes(key) ? 'month' : 'day');
@@ -40,19 +45,25 @@ test('PASSES: months 2026-01 to 2026-09 and days 2026-10-01 to 2026-10-04, the J
   for (const key of [...MONTHS.slice(1), ...DAYS]) {
     assert.match(PASSES[key].instruction, /Now run all months sequentially until October and then run each day up until today so that nothing is missed from this year on it's first load/, key);
   }
-  // only the last day pass ends early
-  assert.deepEqual(Object.keys(PASSES).filter((k) => PASSES[k].until), ['2026-10-04']);
+  for (const key of REJUDGE) {
+    assert.equal(PASSES[key].rejudge, true, key);
+    assert.match(PASSES[key].instruction, /Re-judge backfill 5–20 Oct/, key);
+  }
+  assert.ok([...MONTHS, ...DAYS].every((k) => PASSES[k].rejudge !== true));
+  // only the last day pass of each series ends early
+  assert.deepEqual(Object.keys(PASSES).filter((k) => PASSES[k].until), ['2026-10-04', '2026-10-20']);
+  assert.equal(PASSES['2026-10-20'].until, REJUDGE_UNTIL);
   assert.equal(PASSES['2026-10-04'].until, UNTIL);
   // --sections narrows a day pass too, never widens it
   assert.deepEqual(passSections('2026-10-02', 'regulatory_trajectory'), ['regulatory_trajectory']);
   assert.throws(() => passSections('2026-10-02', 'executive_visibility'), /executive_visibility is not in the 2026-10-02 pass/);
-  for (const none of ['2025-12', '2026-10', '2026-10-05', '2026-09-15', '2026-01-20']) {
-    assert.throws(() => requirePass(none), new RegExp(`no backfill pass is defined for ${none} \\(BACKFILL\\.md §1 lists 2026-01, .*2026-10-04\\)`), none);
+  for (const none of ['2025-12', '2026-10', '2026-10-21', '2026-09-15', '2026-01-20']) {
+    assert.throws(() => requirePass(none), new RegExp(`no backfill pass is defined for ${none} \\(BACKFILL\\.md §1 lists 2026-01, .*2026-10-20\\)`), none);
   }
 });
 
 test('the passes cover 2026-01-01 00:00 ET to 2026-10-04 18:00 ET without gap or overlap, in order', () => {
-  const windows = Object.keys(PASSES).map((k) => passWindow(k));
+  const windows = Object.keys(PASSES).filter((k) => !REJUDGE.includes(k)).map((k) => passWindow(k));
   assert.equal(windows[0].since, '2026-01-01T00:00:00-05:00');
   for (let i = 1; i < windows.length; i++) {
     assert.equal(windows[i].start.getTime(), windows[i - 1].end.getTime(), `${windows[i - 1].key} ends where ${windows[i].key} starts`);
@@ -69,6 +80,19 @@ test('the passes cover 2026-01-01 00:00 ET to 2026-10-04 18:00 ET without gap or
   assert.equal(passKeyAt('2026-10-03T21:00:00-04:00'), '2026-10-03');
   assert.equal(passKeyAt(UNTIL), '2026-10-04');
   assert.equal(passKeyAt('2026-10-04T18:00:01-04:00'), null, 'after the until: the live routine');
+});
+
+test('the re-judge passes cover 2026-10-05 00:00 ET to 2026-10-20 18:00 ET without gap or overlap, in order', () => {
+  const windows = REJUDGE.map((k) => passWindow(k));
+  assert.equal(windows[0].since, '2026-10-05T00:00:00-04:00');
+  for (let i = 1; i < windows.length; i++) {
+    assert.equal(windows[i].start.getTime(), windows[i - 1].end.getTime(), `${windows[i - 1].key} ends where ${windows[i].key} starts`);
+  }
+  assert.equal(windows.at(-1).until, REJUDGE_UNTIL);
+  assert.equal(passKeyAt('2026-10-05T00:00:00-04:00'), '2026-10-05');
+  assert.equal(passKeyAt('2026-10-12T14:00:00-04:00'), '2026-10-12');
+  assert.equal(passKeyAt(REJUDGE_UNTIL), '2026-10-20');
+  assert.equal(passKeyAt('2026-10-20T18:00:01-04:00'), null, 'after the until: the live routine');
   assert.equal(passKeyAt('2025-12-31T23:59:59-05:00'), null);
   assert.equal(passKeyAt('garbage'), null);
 });
@@ -449,7 +473,7 @@ test('CLI --day: every day pass is accepted; one pass key, the right flag; work 
     usage(['--month', '2026-09', '--day', '2026-10-01'], /use one of --month or --day, not both/);
     usage(['--month', '2026-10-01'], /--month: "2026-10-01" is not YYYY-MM/);
     usage(['--day', '2026-10'], /--day: "2026-10" is not YYYY-MM-DD/);
-    usage(['--day', '2026-10-05'], /no backfill pass is defined for 2026-10-05 .*run a pass only when the owner asks for that day/);
+    usage(['--day', '2026-10-21'], /no backfill pass is defined for 2026-10-21 .*run a pass only when the owner asks for that day/);
     usage(['--day', '2026-09-30'], /no backfill pass is defined for 2026-09-30/);
     usage(['--day', '2026-02-30'], /--day: "2026-02-30" is not YYYY-MM-DD/);
     assert.equal(fs.existsSync(path.join(ws.dir, 'never')), false, 'nothing written');
