@@ -1110,6 +1110,30 @@
       "run_id": "2026-10-19-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.risk.net/risk-quantum/7964206/european-banks%E2%80%99-sft-exposures-jump-14-to-record-%E2%82%AC881bn": {
+      "first_seen": "2026-10-20T06:07:43-04:00",
+      "run_id": "2026-10-20-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://insidecybersecurity.com/daily-news/venable-urges-cyber-insurers-account-phishing-resistant-mfa-adoption": {
+      "first_seen": "2026-10-20T06:07:43-04:00",
+      "run_id": "2026-10-20-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/revolut-outage-disrupts-online-banking-operations-worldwide": {
+      "first_seen": "2026-10-20T06:07:43-04:00",
+      "run_id": "2026-10-20-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257": {
+      "first_seen": "2026-10-20T06:07:43-04:00",
+      "run_id": "2026-10-20-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
