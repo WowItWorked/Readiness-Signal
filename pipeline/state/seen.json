@@ -1134,6 +1134,30 @@
       "run_id": "2026-10-20-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.euronews.com/2026/10/20/digital-bank-revolut-down-in-major-worldwide-outage": {
+      "first_seen": "2026-10-20T10:07:28-04:00",
+      "run_id": "2026-10-20-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/ovhcloud-cli-releases-backdoored-on-github-to-steal-developer-secrets": {
+      "first_seen": "2026-10-20T10:07:28-04:00",
+      "run_id": "2026-10-20-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.finextra.com/newsarticle/48615/google-cloud-outage-disrupts-multiple-bank-sites": {
+      "first_seen": "2026-10-20T10:07:28-04:00",
+      "run_id": "2026-10-20-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261020-reimagining-assurance-harnessing-intelligence-resilience-and-integrity": {
+      "first_seen": "2026-10-20T10:07:28-04:00",
+      "run_id": "2026-10-20-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
