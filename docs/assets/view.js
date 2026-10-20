@@ -113,7 +113,7 @@ const cardHead = (id, title, sub) => `<header class="card-head">
     </header>`;
 
 /** Tooltip text for an item mark: date, what it asks, and the claim. */
-const itemTip = (it) => `${M.fmtDate(it.date)} · ${M.mechOf(it.mechanism).label}${it.backfilled ? ' · Backfilled' : ''}\n${it.claim}`;
+const itemTip = (it) => `${M.fmtDate(it.date)} · ${M.mechOf(it.mechanism).label}\n${it.claim}`;
 
 /** On phones the domain grid keeps its last six months. */
 const OLD_MONTHS = 6;
@@ -150,7 +150,7 @@ const unitLegend = (extra = '') => `<div class="lg-row" aria-hidden="true"><span
 
 function latestCard(d) {
   const rows = d.latest.map((it, i) => `<button type="button" class="lt${i ? ' ruled' : ''}" data-act="reveal" data-id="${esc(it.id)}">
-        <span class="lt-meta">${mechTag(it.mechanism)}<span class="lt-when">${esc(M.fmtDate(it.date))}</span>${it.backfilled ? '<span class="meta-bf">Backfilled</span>' : ''}</span>
+        <span class="lt-meta">${mechTag(it.mechanism)}<span class="lt-when">${esc(M.fmtDate(it.date))}</span></span>
         <span class="lt-claim">${esc(it.claim)}</span>
       </button>`).join('');
   return `<section class="card dcard d-latest" aria-labelledby="lt-h">
@@ -396,7 +396,6 @@ export function itemArticle(it, idx, st) {
           <span class="ticks"><span class="tick-set" aria-hidden="true">${ticks}</span><span class="tick-n">${esc(d.srcCount)}</span></span>
           <span>${esc(M.whenShort(it.date, now))}</span>
           ${d.thread ? `<span class="meta-thr">Thread · ${d.thread.n}</span>` : ''}
-          ${it.backfilled ? '<span class="meta-bf">Backfilled</span>' : ''}
         </div>
       </div>
       <div class="row-tog" aria-hidden="true"><span class="chev${open ? ' up' : ''}"></span></div>
@@ -474,7 +473,6 @@ export function itemArticle(it, idx, st) {
           ${screen ? copyBtn(ui, `${it.id}:l`, it.id, 'l', 'Copy link', 'to this item') : ''}
         </div>
         ${screen && mail ? `<a class="email-btn" href="${esc(mail)}">Email this item</a>` : ''}
-        ${it.backfilled ? '<p class="bf-note">Added by the historical backfill pass, not by a live edition.</p>' : ''}
       </div>
     </div>`;
 
