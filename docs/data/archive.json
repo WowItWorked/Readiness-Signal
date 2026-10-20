@@ -2037,6 +2037,43 @@
       ],
       "backfilled": true,
       "update_of": null
+    },
+    {
+      "id": "RS-261004-1800-01",
+      "timestamp": "2026-10-04T18:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "CISA lists a third exploited Citrix NetScaler flaw in 7 days, after two flaws added on 27 September.",
+      "domains": [
+        "cyber"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Fixed releases of this appliance line were overtaken three times in a week: CISA listed two exploited flaws on 27 September and a third on 4 October, each with a three-day deadline for federal agencies, after another NetScaler listing on 9 September."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The 4 October entry is the third NetScaler flaw CISA marked as exploited within 7 days and the fourth since 9 September. Exploitation of edge appliances before or soon after fixes is an established failure mode, and the expected response is the patching and mitigation that the listing already directs; what changed is how often it struck one product line, not the controls involved (AW2).",
+      "sources": [
+        {
+          "publication": "CISA",
+          "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-88779",
+          "published": "2026-10-04",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "CISA",
+          "url": "https://www.cisa.gov/news-events/alerts/2026/10/04/cisa-adds-one-known-exploited-vulnerability-catalog",
+          "headline": "CISA Adds One Known Exploited Vulnerability to Catalog",
+          "published": "2026-10-04",
+          "source_class": "vendor_threat_research"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
     }
   ]
 }
