@@ -1182,6 +1182,30 @@
       "run_id": "2026-10-20-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.americanbanker.com/news/extortion-group-threatens-to-leak-bank-vendors-secrets": {
+      "first_seen": "2026-10-20T18:07:23-04:00",
+      "run_id": "2026-10-20-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/fbi-says-safepay-ransomware-gang-among-most-active-600-victims": {
+      "first_seen": "2026-10-20T18:07:23-04:00",
+      "run_id": "2026-10-20-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://kb.cert.org/vuls/id/645818": {
+      "first_seen": "2026-10-20T18:07:23-04:00",
+      "run_id": "2026-10-20-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cert.europa.eu/publications/security-advisories/2026-018": {
+      "first_seen": "2026-10-20T18:07:23-04:00",
+      "run_id": "2026-10-20-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
