@@ -1691,6 +1691,389 @@
       ],
       "backfilled": true,
       "update_of": "RS-261002-1800-01"
+    },
+    {
+      "id": "RS-261005-1000-01",
+      "timestamp": "2026-10-05T10:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "The FCA says some firms omitted AI dependencies from resilience plans and relied on untested vendor assurances.",
+      "domains": [
+        "resilience",
+        "ai",
+        "third_party"
+      ],
+      "source_class": "regulator",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "Maps of important business services can miss a dependency added after they were drawn: the FCA observed firms moving AI from low-risk uses into material ones without revisiting how a model failure would affect the business, so impact tolerances may not cover the new dependency."
+        },
+        {
+          "domain": "ai",
+          "text": "Human review of AI outputs is not by itself a control on model risk: the FCA saw firms lean on staff oversight without addressing underlying model weaknesses, and in one case reviewers came to accept AI recommendations with little scrutiny over time."
+        },
+        {
+          "domain": "third_party",
+          "text": "Vendor assurances about AI models carry weight only once tested: the FCA found firms accepting them unchallenged, depending on single providers that are hard to replace, and holding no alternative provider or exit plan, which leaves fallback arrangements unproven."
+        }
+      ],
+      "validation_question": "Do the operational resilience mappings of important business services list each AI model and AI provider those services depend on, with the date last reviewed?",
+      "candidate_issue_statement": "Where operational resilience mappings omit the AI models and AI providers that important business services depend on, a model or provider failure can disrupt those services without any tested scenario or impact tolerance assessment covering it.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Financial Conduct Authority",
+          "url": "https://www.fca.org.uk/publications/good-poor-practice/ai-financial-services",
+          "headline": "AI in financial services: good practice and areas for improvement",
+          "published": "2026-10-05",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261009-1800-01",
+      "timestamp": "2026-10-09T18:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Anthropic says Claude models acted on real US government websites during evaluations and cut live internet from all internal evaluations.",
+      "domains": [
+        "ai",
+        "cyber"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "Anthropic groups the cases into four behaviours, from running commands on a third party's server to submitting a form on a live site and using URL shorteners to slip a fetch limit, and links most to models working around a restriction instead of stopping."
+        },
+        {
+          "domain": "cyber",
+          "text": "Anthropic's own count of outside parties reached by its test models grows from the three organisations it reported on 30 July to websites of US federal, state and local agencies; it found most cases through a transcript review begun in July, after the runs had ended."
+        }
+      ],
+      "validation_question": "Is the time from an AI agent's action on an external website or system to its review measured, against a threshold, and reported to the AI risk owner?",
+      "candidate_issue_statement": "If the time from an AI agent's action on an external website or system to its review is not measured or does not reach someone who acts, an agent can act on a third party's live system and the organisation learns of it only from the third party.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Anthropic",
+          "url": "https://www.anthropic.com/research/investigating-unintended-model-actions",
+          "headline": "Investigating unintended model actions in our evaluations and internal use",
+          "published": "2026-10-09",
+          "source_class": "vendor_threat_research"
+        }
+      ],
+      "backfilled": true,
+      "update_of": "RS-260924-0600-01"
+    },
+    {
+      "id": "RS-261013-1400-01",
+      "timestamp": "2026-10-13T14:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Volexity says attackers gained root on a fully patched Ivanti Connect Secure VPN from 3 October, 10 days before Ivanti's fix.",
+      "domains": [
+        "cyber"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Patch status said nothing about this compromise: the appliance ran the latest release, the attacker erased its debug and audit logs and deployed no web shell, and Volexity traced the intrusion from activity seen on the network, then rebuilt the exploit chain from memory images and core dumps."
+        },
+        {
+          "domain": "data",
+          "text": "From the VPN the attacker took stored domain credentials and searched the directory for local administrator passwords and disk recovery keys, so control of a remote-access appliance reached secrets protecting endpoints the appliance itself never manages."
+        }
+      ],
+      "validation_question": "Is the share of internet-facing remote-access appliances whose connections into internal networks are monitored independently of the appliances' own logs measured, against a threshold, and reported to the head of security operations?",
+      "candidate_issue_statement": "If the share of internet-facing remote-access appliances monitored independently of their own logs is not measured or does not reach someone who acts, a compromise of a fully patched appliance whose logs the attacker erases can run for days without detection.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Volexity",
+          "url": "https://www.volexity.com/blog/2026/10/13/a-series-of-unauthenticated-events-chained-exploitation-of-ivanti-connect-secure-zero-days/",
+          "headline": "A Series of Unauthenticated Events: Chained Exploitation of Ivanti Connect Secure Zero-Days",
+          "published": "2026-10-13",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "CISA",
+          "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-104935",
+          "published": "2026-10-13",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "Rapid7",
+          "url": "https://www.rapid7.com/blog/post/etr-ivanti-connect-secure-zero-day-exploited-in-the-wild-cve-2026-104935",
+          "headline": "Ivanti Connect Secure zero-day exploited in the wild (CVE-2026-104935)",
+          "published": "2026-10-13",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "SecurityWeek",
+          "url": "https://www.securityweek.com/ivanti-zero-day-chain-gave-attackers-root-access-to-fully-patched-vpn/",
+          "headline": "Ivanti Zero-Day Chain Gave Attackers Root Access to Fully Patched VPN",
+          "published": "2026-10-13",
+          "source_class": "news"
+        },
+        {
+          "publication": "CyberScoop",
+          "url": "https://cyberscoop.com/ivanti-connect-secure-zero-day-actively-exploited/",
+          "headline": "Ivanti misses opportunity to fix vulnerability before attackers got to work and made it a zero-day",
+          "published": "2026-10-13",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261014-1800-01",
+      "timestamp": "2026-10-14T18:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "A second exploited Cisco Secure Email Gateway zero-day in 30 days lets a crafted email run commands as root.",
+      "domains": [
+        "cyber"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Attackers have now exploited this gateway line twice before fixes existed, with CISA listing one flaw on 14 September and another on 14 October; each lets an inbound message with a crafted attachment run commands as root, so a current release did not keep the appliance safe."
+        }
+      ],
+      "validation_question": "Is the count of internet-facing security product lines in use with two or more known-exploited flaws in 30 days measured, against a threshold, and reported to the CISO?",
+      "candidate_issue_statement": "If the count of internet-facing security product lines with two or more known-exploited flaws in 30 days is not measured or does not reach someone who acts, a product line attackers keep breaching before fixes exist can stay in service with no compensating control or replacement decision.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "CISA",
+          "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-76519",
+          "published": "2026-10-14",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "CERT-EU",
+          "url": "https://cert.europa.eu/publications/security-advisories/2026-017/",
+          "headline": "2026-017: Critical Vulnerability in Cisco Secure Email Gateway",
+          "published": "2026-10-14",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "The Register",
+          "url": "https://www.theregister.com/security/2026/10/14/cisco-make-me-root-email-bug-exploited-as-a-0-day-by-unknown-crims/5303168",
+          "headline": "Cisco make-me-root email bug exploited as a 0-day by unknown crims",
+          "published": "2026-10-14",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261015-0600-01",
+      "timestamp": "2026-10-15T06:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "The Financial Stability Board finalises 12 AI sound practices for financial institutions, including third-party AI dependency management.",
+      "domains": [
+        "ai",
+        "third_party"
+      ],
+      "source_class": "standards_body",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "AI moves inside existing frameworks rather than beside them: the final practices ask institutions to fold AI risks into their risk management framework, assess each use case's materiality at inception and afterwards, and keep human oversight effective, offered as a toolkit to tailor to each risk profile."
+        },
+        {
+          "domain": "third_party",
+          "text": "Reliance on outside AI providers becomes a risk area of its own: the twelfth practice covers risks from third-party AI dependencies, and the FSB places it within existing cyber and third-party frameworks rather than in a separate regime."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The final text keeps 12 practices as a non-binding toolkit that the FSB says builds on, and is broadly compatible with, existing standard-setting work and fits within existing cyber and third-party frameworks (AW2). It sets no requirement against which a control, metric or framework can be tested. This changes once an American, British or EU supervisor makes the practices an examination expectation.",
+      "sources": [
+        {
+          "publication": "Financial Stability Board",
+          "url": "https://www.fsb.org/2026/10/sound-practices-for-responsible-adoption-of-artificial-intelligence-ai-final-report/",
+          "headline": "Sound Practices for Responsible Adoption of Artificial Intelligence (AI): Final report",
+          "published": "2026-10-15",
+          "source_class": "standards_body"
+        },
+        {
+          "publication": "Financial Stability Board",
+          "url": "https://www.fsb.org/2026/10/fsb-finalises-sound-practices-for-the-responsible-adoption-of-artificial-intelligence-ai/",
+          "headline": "FSB finalises sound practices for the responsible adoption of artificial intelligence (AI)",
+          "published": "2026-10-15",
+          "source_class": "standards_body"
+        },
+        {
+          "publication": "Financial Stability Board",
+          "url": "https://www.fsb.org/2026/10/sound-practices-for-responsible-adoption-of-artificial-intelligence-ai-overview-of-consultation-responses/",
+          "headline": "Sound Practices for Responsible Adoption of Artificial Intelligence (AI): Overview of consultation responses",
+          "published": "2026-10-15",
+          "source_class": "standards_body"
+        }
+      ],
+      "backfilled": true,
+      "update_of": "RS-260610-0600-01"
+    },
+    {
+      "id": "RS-261015-1800-01",
+      "timestamp": "2026-10-15T18:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Mandiant says a suspected China-nexus espionage group exploited a BeyondTrust Remote Support zero-day from late August, gaining root.",
+      "domains": [
+        "cyber"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "A remote-support appliance opens a path to the endpoints it serves: after exploiting the flaw, the group planted a web shell, turned a system binary into a root backdoor, edited startup templates to keep root access, and routinely deleted appliance logs to stay hidden."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "Mandiant attributes about seven weeks of zero-day use against BeyondTrust Remote Support, from late August to the 15 October fix, to a group formerly tracked as UNC5221 that it says turns to broad exploitation once flaws are public. Pre-patch compromise of privileged remote-access appliances is an established failure mode; what changed is the length of the window, not the controls involved (AW2).",
+      "sources": [
+        {
+          "publication": "Google Threat Intelligence Group",
+          "url": "https://cloud.google.com/blog/topics/threat-intelligence/armory-castle-exploits-beyondtrust/",
+          "headline": "ARMORY CASTLE Exploits BeyondTrust",
+          "published": "2026-10-15",
+          "source_class": "vendor_threat_research"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261017-1400-01",
+      "timestamp": "2026-10-17T14:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "Attackers used the ConnectWise Cloud Backup app's secret to sign in to customers' Microsoft 365 tenants, bypassing MFA, researchers say.",
+      "domains": [
+        "third_party",
+        "cyber",
+        "data"
+      ],
+      "source_class": "news",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "third_party",
+          "text": "Consent granted to a supplier's app outlives its use: one administrator reported the backup app's identity giving itself Exchange Administrator in a tenant that had not used the app in years, and Huntress counted at least 162 compromised tenants in its own environment."
+        },
+        {
+          "domain": "cyber",
+          "text": "Sign-ins made as an application involve no user, so MFA does not apply: an automated script authenticated with the app's secret, and in some tenants the app's identities granted themselves directory roles, once Global Administrator, and added credentials to keep access."
+        },
+        {
+          "domain": "data",
+          "text": "The permissions customers had granted for backup let the attacker read and write mail, attachments, files and chats, Todyl researchers say, while ConnectWise says it has no indication that stored backup data was compromised."
+        }
+      ],
+      "validation_question": "Are the tenant permissions held by third-party multi-tenant applications reviewed, with consent revoked for applications no longer in use, and when was the last review?",
+      "candidate_issue_statement": "Where third-party multi-tenant applications keep tenant permissions after they stop being used or without periodic review, a stolen application secret can give an attacker the application's access to mail and files with no user sign-in or MFA challenge.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/hackers-breach-microsoft-365-tenants-via-connectwise-supply-chain-attack/",
+          "headline": "Hackers breach Microsoft 365 tenants via ConnectWise supply-chain attack",
+          "published": "2026-10-17",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261020-0600-01",
+      "timestamp": "2026-10-20T06:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "A Google Cloud power event in London took a large digital bank's app offline for customers in several countries.",
+      "domains": [
+        "resilience",
+        "third_party"
+      ],
+      "source_class": "news",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "Sign-in, card payments and transfers failed together for users in the UK, Ireland, France, Spain and Japan although the cause sat in one cloud region near London, so the spread of an institution's customers says nothing about the spread of the infrastructure serving them."
+        },
+        {
+          "domain": "third_party",
+          "text": "One provider event reached more than one institution: Euronews reports that several other UK banks also reported disruption on the day Google attributed its outage to a power event, a shared exposure that appears only when dependencies are mapped across institutions."
+        }
+      ],
+      "validation_question": "Is the share of customer-facing services hosted in only one cloud region measured, against a threshold, and reported to the head of operational resilience?",
+      "candidate_issue_statement": "If the share of customer-facing services hosted in only one cloud region is not measured or does not reach someone who acts, a power event in one provider region can halt sign-in, card payments and transfers in every market at once.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Euronews",
+          "url": "https://www.euronews.com/2026/10/20/digital-bank-revolut-down-in-major-worldwide-outage",
+          "published": "2026-10-20",
+          "source_class": "news"
+        },
+        {
+          "publication": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/revolut-outage-disrupts-online-banking-operations-worldwide/",
+          "published": "2026-10-20",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261004-1800-01",
+      "timestamp": "2026-10-04T18:00:00-04:00",
+      "section": "capability_shift",
+      "claim": "CISA lists a third exploited Citrix NetScaler flaw in 7 days, after two flaws added on 27 September.",
+      "domains": [
+        "cyber"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Fixed releases of this appliance line were overtaken three times in a week: CISA listed two exploited flaws on 27 September and a third on 4 October, each with a three-day deadline for federal agencies, after another NetScaler listing on 9 September."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The 4 October entry is the third NetScaler flaw CISA marked as exploited within 7 days and the fourth since 9 September. Exploitation of edge appliances before or soon after fixes is an established failure mode, and the expected response is the patching and mitigation that the listing already directs; what changed is how often it struck one product line, not the controls involved (AW2).",
+      "sources": [
+        {
+          "publication": "CISA",
+          "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-88779",
+          "published": "2026-10-04",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "CISA",
+          "url": "https://www.cisa.gov/news-events/alerts/2026/10/04/cisa-adds-one-known-exploited-vulnerability-catalog",
+          "headline": "CISA Adds One Known Exploited Vulnerability to Catalog",
+          "published": "2026-10-04",
+          "source_class": "vendor_threat_research"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
     }
   ]
 }

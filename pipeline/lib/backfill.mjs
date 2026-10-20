@@ -36,6 +36,10 @@ const PASS_SECTIONS = Object.freeze(['capability_shift', 'regulatory_trajectory'
 // 2026-10-04 15:57 ET; the build owner set the sections to the 2026-01 pass's for every pass
 const YEAR_TO_DATE_INSTRUCTION = '2026-10-04 15:57 ET: "Now run all months sequentially until October and then run each day up until today so that nothing is missed from this year on it\'s first load"; sections as the 2026-01 pass (build owner decision).';
 const yearToDate = (extra = {}) => Object.freeze({ sections: PASS_SECTIONS, instruction: YEAR_TO_DATE_INSTRUCTION, ...extra });
+// 2026-10-20, owner, after FILTER.md v2 (thresholds revision 2): re-judge the live days in every section
+const REJUDGE_SECTIONS = Object.freeze([...SECTIONS]);
+const REJUDGE_INSTRUCTION = '2026-10-20 ET: "Re-judge backfill 5–20 Oct" under FILTER.md v2, all three sections; the days the live routine judged under v1 (BACKFILL.md §1a).';
+const rejudge = (extra = {}) => Object.freeze({ sections: REJUDGE_SECTIONS, instruction: REJUDGE_INSTRUCTION, rejudge: true, ...extra });
 
 /**
  * The passes the owner has instructed, mirroring the BACKFILL.md §1 table (binding). A pass key is
@@ -63,7 +67,19 @@ export const PASSES = Object.freeze({
   '2026-10-03': yearToDate(),
   // the live routine takes over at 06:05 ET on 2026-10-05 with its own 72-hour window
   '2026-10-04': yearToDate({ until: '2026-10-04T18:00:00-04:00' }),
+  // re-judge series (BACKFILL.md §1a): days the live routine already judged under FILTER.md v1
+  ...Object.fromEntries(Array.from({ length: 16 }, (_, i) => {
+    const day = `2026-10-${pad2(5 + i)}`;
+    return [day, rejudge(day === '2026-10-20' ? { until: '2026-10-20T18:00:00-04:00' } : {})];
+  })),
 });
+
+/**
+ * Re-judge passes (BACKFILL.md §1a): days 2026-10-05 to 2026-10-20 that the live routine judged
+ * under FILTER.md v1, judged again under v2 in all three sections. They overlap the live runs'
+ * windows by design; the year-to-date passes above stay contiguous on their own.
+ */
+export const REJUDGE_PASS_KEYS = Object.freeze(Object.keys(PASSES).filter((k) => PASSES[k].rejudge === true));
 
 /** Backfill-only drop codes (BACKFILL.md §6); every other code is FILTER.md §8.2's closed list. */
 export const BF_REASON_CODES = Object.freeze(['BF_SECTION_EXCLUDED', 'BF_OUT_OF_WINDOW', 'BF_URL_UNVERIFIED']);

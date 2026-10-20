@@ -37,10 +37,40 @@ owner set every one of these passes to the 2026-01 pass's sections. The passes a
 the 2026-10-04 pass is published only after 18:00 ET that day (real clock), and the live routine takes
 over at 06:05 ET on 2026-10-05 with its own 72-hour window.
 
-The windows never overlap and leave no gap from 2026-01-01 00:00 ET to the last `until`, so each
-backfilled item belongs to exactly one pass. A candidate that would qualify only under a section
+The year-to-date windows never overlap and leave no gap from 2026-01-01 00:00 ET to the 2026-10-04
+`until`, so each backfilled item belongs to exactly one pass (the re-judge series, §1a, starts after it). A candidate that would qualify only under a section
 outside the pass is dropped `BF_SECTION_EXCLUDED` (it is not re-routed). A development first made
 public outside the window (for the last day pass, after its `until`) is dropped `BF_OUT_OF_WINDOW`.
+
+## 1a. Re-judge passes (owner instruction 2026-10-20)
+
+After the owner's calibration of 2026-10-20 (FILTER.md version 2, `pipeline/thresholds.json`
+revision 2), the owner chose to "Re-judge backfill 5–20 Oct": the days the live routine had already
+judged under FILTER.md version 1, during which 62 runs published nothing, are judged again under
+version 2 as day passes.
+
+| Pass | Window (ET) | Sections |
+|---|---|---|
+| 2026-10-05 … 2026-10-19 (15 day passes) | each calendar day 00:00 – 23:59 | `executive_visibility`, `capability_shift`, `regulatory_trajectory` |
+| 2026-10-20 (day) | 2026-10-20 00:00 – 18:00 (`until` 2026-10-20T18:00:00-04:00) | all three |
+
+- **Overlap by design.** These windows overlap the live runs' windows; the year-to-date passes above
+  stay contiguous among themselves, and the re-judge passes are contiguous among themselves from
+  2026-10-05 00:00 to the 2026-10-20 18:00 slot. Entries timed between 2026-10-04 18:00 and 24:00 ET
+  are covered by neither series' re-judging (the live 2026-10-05 06:00 run judged them under v1).
+  After the `until`, the live routine (now on v2) covers everything.
+- **Discovery.** The live runs' stage-1 survivors for the day (`pipeline/logs/2026/10/*.jsonl`,
+  `discovery_mode` `feed`), the §3.1 archives, and §3.2–3.3 listing pages and search. A live
+  judgment is never a precedent (FILTER A3): every candidate is judged afresh.
+- **Live records stay as they are.** `docs/data/runs.json`, the live run logs and
+  `pipeline/state/seen.json` are untouched; a slot recorded as silent keeps its record, and its
+  backfilled items carry `backfilled: true`. No live item exists in the window, so nothing here
+  references one (§2).
+- Passes run and publish in key order, so a later day's dedup sees the earlier days' items.
+- **2026-10-04, re-judged (owner instruction 2026-10-20: "Re-judge 4 Oct too").** The 2026-10-04 pass's
+  dropped NetScaler candidates (the 4 October known-exploited listing, its CISA alert and its NVD
+  record) are judged again under version 2 with `publish --append-missing --rejudge`, in that pass's
+  own window and sections (§6). The pass's published item is untouched.
 
 ## 2. Selection standard: the live standard, judged as of the date
 

@@ -3,7 +3,7 @@
   "description": "Tunable knobs for the selection standard in pipeline/FILTER.md (section 9). The routine agent reads this file at the start of every run, applies each knob's 'value', copies 'level' into decisions.json as threshold_level, and never edits it. Only the owner changes it, after a calibration review, one step per knob per review (FILTER.md 9.6). Fields named 'description', 'element', 'launch', 'loosening_steps' and 'tightening_steps' are documentation; only 'value' is applied. FILTER.md section 11 lists every launch choice that goes beyond the owner's brief, each with its knob here.",
   "level": "high",
   "level_description": "Overall posture label recorded in every run record. One of high, medium, low. Stays 'high' until the owner judges the overall posture has changed; individual knob changes are tracked by 'revision' and 'changelog'.",
-  "revision": 1,
+  "revision": 2,
   "changelog": [
     {
       "revision": 1,
@@ -11,6 +11,13 @@
       "level": "high",
       "change": "Launch values. All thresholds deliberately high; to be reviewed after the first 28 scheduled runs (FILTER.md 9.5). Set before the first run: rt_standard_setters launches at consultations and rt_bank_exec_scope at gsib_extended (any G-SIB), because the stricter values substituted a different test for the brief's. Owner decision 2026-10-03, also before the first run: formal_instrument_scope launches at new_in_regulatory_trajectory (newly issued formal rules and exam notices are in scope in regulatory_trajectory; reminders and restatements are not new), overriding the brief's exclusion; the earlier all-sections exclusion is kept as the tightening value none. Every other launch choice beyond the brief has its own knob at its strictest value (FILTER.md 11).",
       "evidence": null
+    },
+    {
+      "revision": 2,
+      "date": "2026-10-20",
+      "level": "high",
+      "change": "Owner calibration after 62 silent live runs (2026-10-05 to 2026-10-20), outside the FILTER.md 9.6(a) counts because NEAR markers could not accumulate (1 in 197 judgments). ev_min_general_outlets 2 -> 1; ev_data_min_individuals 10000000 -> 1000000; cs_routine_vuln_exceptions adds bank_common_escalation; rt_standard_setters consultations -> consultations_and_final_guidance (new step; the old loosening step is renamed consultations_final_guidance_and_principal_speeches); new knob ev_outage_min_institution_customers 10000000. FILTER.md version 2 amends the fixed elements alongside (2.7.5(c), E2a, E2e, E4f, C1, C4, C6 escalation path, R3, M4; 10 #104-#111; 11.1 #24).",
+      "evidence": "Recall review of 12 dropped stories chosen for notability, not at random: 9 rated should have passed (standard setter's final AI sound practices; UK authority's AI good-practice findings; a digital bank's multi-country outage; a cloud outage at several banks behind a blocked page; a managed-service tool compromise reaching customer tenants; two AML penalties and a G-SIB's AI-agent access block, both left for a separate scope decision; an ATM jackpotting sanctions action; an AI developer's evaluation escape), 2 only if bank-relevant (repeated and pre-patch exploitation of edge products), 1 floor too high but story still out (8.8m-person government registry breach). Projected from the logged reasons, not re-read pages: about 10 more items over the 16 days, 4-5 of them via bank_common_escalation. Re-review after the next 28 runs (9.5 step 9)."
     }
   ],
   "dedup_window_days": 21,
@@ -61,10 +68,10 @@
       "description": "Minimum number of independent outlets covering the story (wire copy counts once; common-ownership copy counts once; press-release reprints count zero). May step to 1 only once ev_min_general_outlets is 1 or lower."
     },
     "ev_min_general_outlets": {
-      "value": 2,
+      "value": 1,
       "element": "E3",
       "launch": 2,
-      "loosening_steps": [1, 0],
+      "loosening_steps": [0],
       "description": "How many of those outlets must be general or business press (international wires, national newspapers and broadcasters, national business dailies or business news services). At 0, national or international trade press suffices, never local press or security and technology trade press alone."
     },
     "ev_disruption_min_hours": {
@@ -95,11 +102,18 @@
       "loosening_steps": [2],
       "description": "Alternatively, minimum number of institutions disrupted at once through a shared dependency. Also the number of financial institutions a provider must be publicly known to serve to count as 'used by many financial institutions' (FILTER.md 4.2)."
     },
-    "ev_data_min_individuals": {
+    "ev_outage_min_institution_customers": {
       "value": 10000000,
+      "element": "E2a, E4",
+      "launch": 10000000,
+      "loosening_steps": [5000000],
+      "description": "Added 2026-10-20 (revision 2). Minimum customer count, stated on a public page of the institution or in its public disclosures, for E2a's major digital-channel outage limb: an outage of the app and online banking together, reported by at least one general or business outlet as affecting customers in more than one country or nationwide. Duration and affected count may be unknown. Meeting this limb also meets E4f (FILTER.md 4.2)."
+    },
+    "ev_data_min_individuals": {
+      "value": 1000000,
       "element": "E2b",
       "launch": 10000000,
-      "loosening_steps": [1000000],
+      "loosening_steps": [],
       "description": "Minimum number of people whose personal data is confirmed compromised (by the affected organisation or an authority)."
     },
     "ev_financial_data_min_individuals": {
@@ -191,11 +205,11 @@
       "description": "A Branch A capability change must have been first publicly established by evidence admissible under C2 at the current knob values (or have had its step-change) no more than this many days before the run."
     },
     "cs_routine_vuln_exceptions": {
-      "value": ["persistence", "security_control_negated", "mitigation_ineffective", "distribution_channel"],
+      "value": ["persistence", "security_control_negated", "mitigation_ineffective", "distribution_channel", "bank_common_escalation"],
       "element": "C6",
       "launch": ["persistence", "security_control_negated", "mitigation_ineffective", "distribution_channel"],
-      "loosening_steps": [["persistence", "security_control_negated", "mitigation_ineffective", "distribution_channel", "pre_patch_mass_exploitation"]],
-      "description": "A vulnerability passes C6 only if at least one listed exception holds; exploitation or a known-exploited listing alone is routine. pre_patch_mass_exploitation (loosening step): mass exploitation of a product widely deployed in financial services with no patch for 72 hours or more."
+      "loosening_steps": [["persistence", "security_control_negated", "mitigation_ineffective", "distribution_channel", "bank_common_escalation", "pre_patch_mass_exploitation"]],
+      "description": "A vulnerability passes C6 only if at least one listed exception holds; exploitation or a known-exploited listing alone is routine. bank_common_escalation (added 2026-10-20, revision 2): confirmed exploitation of a remote-access or VPN gateway, edge firewall, application delivery controller, email security gateway or remote-support tool from a leading vendor, plus one escalation signal from public evidence in the run: a second distinct exploited flaw in the same product line within 30 days, 7 or more days of pre-patch exploitation giving administrative or root control, or a US, UK or EU authority naming financial institutions as targets; such a candidate takes the escalation path (FILTER.md 4.3). pre_patch_mass_exploitation (loosening step): mass exploitation of a product widely deployed in financial services with no patch for 72 hours or more."
     },
     "cs_admit_measurement_evidence": {
       "value": false,
@@ -215,11 +229,11 @@
       "description": "principal: heads and deputy heads, governors and deputy governors, board, commission, policy-committee and supervisory-board members, ESA chairs and executive directors, legislators in official proceedings. executive_director: also UK executive directors, US division directors, ECB directors general and equivalents. Staff and former officials are never eligible."
     },
     "rt_standard_setters": {
-      "value": "consultations",
+      "value": "consultations_and_final_guidance",
       "element": "R1, R2",
       "launch": "consultations",
-      "loosening_steps": ["consultations_and_principal_speeches"],
-      "description": "consultations: consultative documents and calls for input from global financial standard setters (FSB, BCBS, CPMI, IOSCO, IAIS and other BIS-hosted committees) are RT instruments; nothing else of theirs is. consultations_and_principal_speeches: also speeches by their chairs and secretaries-general. A tightening review may set it to none, under which standards_body sources can publish only through CS, which in practice is almost never."
+      "loosening_steps": ["consultations_final_guidance_and_principal_speeches"],
+      "description": "consultations (launch): consultative documents and calls for input from global financial standard setters (FSB, BCBS, CPMI, IOSCO, IAIS and other BIS-hosted committees) are RT instruments; nothing else of theirs is. consultations_and_final_guidance (2026-10-20, revision 2): also their final standards, principles, guidance and sound-practice reports within the seven domains, as soft signals under R1-R5 (a final text of an archived consultation is its M4 update). consultations_final_guidance_and_principal_speeches: also speeches by their chairs and secretaries-general. A tightening review may set it to none, under which standards_body sources can publish only through CS, which in practice is almost never."
     },
     "rt_cyber_agencies": {
       "value": false,
