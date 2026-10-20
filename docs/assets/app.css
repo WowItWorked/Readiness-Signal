@@ -890,7 +890,6 @@ a.u.out:hover { opacity: .5; }
 }
 .meta-line { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 10px; font-size: 12px; color: var(--muted); }
 .meta-sec { font-weight: 600; color: var(--navy); }
-.meta-bf { font-weight: 600; color: var(--navy); }
 .ticks { display: inline-flex; align-items: center; gap: 2px; }
 .tick-set { display: inline-flex; align-items: center; gap: 2px; }
 .tick-set > span { width: 3px; height: 10px; border-radius: 2px; background: var(--navy); }
@@ -990,7 +989,6 @@ a.src-link:hover { color: var(--ink); text-decoration-color: var(--green); }
 .email-btn {
   height: 34px; padding: 0 14px; display: inline-flex; align-items: center; text-decoration: none;
 }
-.bf-note { flex-basis: 100%; font-size: 12.5px; line-height: 1.5; color: var(--muted); }
 
 .empty {
   padding: var(--sec-pad); display: grid; grid-template-columns: var(--empty-cols); gap: 18px 40px;

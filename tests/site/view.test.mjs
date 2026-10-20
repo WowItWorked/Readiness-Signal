@@ -133,13 +133,12 @@ describe('brief overrides of the design', () => {
     assert.ok(dash.includes('<span class="badge badge-22 badge-solid" aria-hidden="true">1</span><span class="secs-t">Executive Visibility</span>'), 'section badge digit is hidden from the name');
   });
 
-  test('backfilled label and note', () => {
+  test('backfilled items carry no visible marker (owner change 2026-10-20)', () => {
     const one = render({ page: 'archive', open: { 'RS-260115-1000-01': true } });
-    assert.ok(one.includes('<span class="meta-bf">Backfilled</span>'));
-    assert.ok(one.includes('Added by the historical backfill pass, not by a live edition.'));
-    const live = render({ page: 'archive', open: { 'RS-261002-1400-01': true } });
-    const art = live.slice(live.indexOf('<article id="RS-261002-1400-01"'));
-    assert.ok(!art.slice(0, art.indexOf('</article>')).includes('Backfilled'));
+    const art = one.slice(one.indexOf('<article id="RS-260115-1000-01"'));
+    assert.ok(art.indexOf('</article>') > 0, 'the backfilled item renders');
+    assert.ok(!one.includes('Backfilled') && !one.includes('meta-bf'));
+    assert.ok(!one.includes('Added by the historical backfill pass'));
   });
 
   test('section entry tests and mechanism asks', () => {

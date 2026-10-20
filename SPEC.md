@@ -273,8 +273,8 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   live site. Encoded with `encodeURIComponent` (plus `!'()*`): spaces `%20`, never `+`; line breaks
   `%0D%0A`; typographic punctuation goes out as ASCII. The whole mailto URL stays under 1,800 characters: if
   the full body would not, the interpretation is dropped, never the link.
-- `backfilled: true` items: small text label "Backfilled" in the collapsed meta line; expanded footer note
-  "Added by the historical backfill pass, not by a live edition." Backfilled items never count as editions.
+- `backfilled: true` items: no visible marker (owner change 2026-10-20: the "Backfilled" label, tooltip
+  mention and footer note were removed). Backfilled items still never count as editions.
 - `update_of`: expanded view shows "Update to: <earlier claim>" linking to `#<earlier id>`.
 - Masthead status (owner change 2026-10-06, replacing the 2026-10-05 "Last edition" and "Last checked"
   stamps, which read as noise): one line, "Updated Fri 14:21 · Next 18:00 ET", in ET. "Updated" =
