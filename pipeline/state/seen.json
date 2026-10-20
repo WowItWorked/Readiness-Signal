@@ -1158,6 +1158,30 @@
       "run_id": "2026-10-20-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://cyberscoop.com/connectwise-cloud-backup-supply-chain-attack": {
+      "first_seen": "2026-10-20T14:06:21-04:00",
+      "run_id": "2026-10-20-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/ransomware-targeting-palo-alto-networks-vulnerability/833474": {
+      "first_seen": "2026-10-20T14:06:21-04:00",
+      "run_id": "2026-10-20-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sec.gov/newsroom/press-releases/2026-108-sec-amf-announce-supervisory-mou-enhance-cooperation-investment-advisers-investment-service": {
+      "first_seen": "2026-10-20T14:06:21-04:00",
+      "run_id": "2026-10-20-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://research.checkpoint.com/2026/the-risk-of-ai-powered-antidetect-browsers-in-online-fraud-and-influence-operations": {
+      "first_seen": "2026-10-20T14:06:21-04:00",
+      "run_id": "2026-10-20-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
