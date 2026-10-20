@@ -67,6 +67,10 @@ version 2 as day passes.
   backfilled items carry `backfilled: true`. No live item exists in the window, so nothing here
   references one (§2).
 - Passes run and publish in key order, so a later day's dedup sees the earlier days' items.
+- **2026-10-04, re-judged (owner instruction 2026-10-20: "Re-judge 4 Oct too").** The 2026-10-04 pass's
+  dropped NetScaler candidates (the 4 October known-exploited listing, its CISA alert and its NVD
+  record) are judged again under version 2 with `publish --append-missing --rejudge`, in that pass's
+  own window and sections (§6). The pass's published item is untouched.
 
 ## 2. Selection standard: the live standard, judged as of the date
 
