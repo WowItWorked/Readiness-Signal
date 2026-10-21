@@ -3,7 +3,7 @@
   "description": "Tunable knobs for the selection standard in pipeline/FILTER.md (section 9). The routine agent reads this file at the start of every run, applies each knob's 'value', copies 'level' into decisions.json as threshold_level, and never edits it. Only the owner changes it, after a calibration review, one step per knob per review (FILTER.md 9.6). Fields named 'description', 'element', 'launch', 'loosening_steps' and 'tightening_steps' are documentation; only 'value' is applied. FILTER.md section 11 lists every launch choice that goes beyond the owner's brief, each with its knob here.",
   "level": "high",
   "level_description": "Overall posture label recorded in every run record. One of high, medium, low. Stays 'high' until the owner judges the overall posture has changed; individual knob changes are tracked by 'revision' and 'changelog'.",
-  "revision": 2,
+  "revision": 3,
   "changelog": [
     {
       "revision": 1,
@@ -18,6 +18,13 @@
       "level": "high",
       "change": "Owner calibration after 62 silent live runs (2026-10-05 to 2026-10-20), outside the FILTER.md 9.6(a) counts because NEAR markers could not accumulate (1 in 197 judgments). ev_min_general_outlets 2 -> 1; ev_data_min_individuals 10000000 -> 1000000; cs_routine_vuln_exceptions adds bank_common_escalation; rt_standard_setters consultations -> consultations_and_final_guidance (new step; the old loosening step is renamed consultations_final_guidance_and_principal_speeches); new knob ev_outage_min_institution_customers 10000000. FILTER.md version 2 amends the fixed elements alongside (2.7.5(c), E2a, E2e, E4f, C1, C4, C6 escalation path, R3, M4; 10 #104-#111; 11.1 #24).",
       "evidence": "Recall review of 12 dropped stories chosen for notability, not at random: 9 rated should have passed (standard setter's final AI sound practices; UK authority's AI good-practice findings; a digital bank's multi-country outage; a cloud outage at several banks behind a blocked page; a managed-service tool compromise reaching customer tenants; two AML penalties and a G-SIB's AI-agent access block, both left for a separate scope decision; an ATM jackpotting sanctions action; an AI developer's evaluation escape), 2 only if bank-relevant (repeated and pre-patch exploitation of edge products), 1 floor too high but story still out (8.8m-person government registry breach). Projected from the logged reasons, not re-read pages: about 10 more items over the 16 days, 4-5 of them via bank_common_escalation. Re-review after the next 28 runs (9.5 step 9)."
+    },
+    {
+      "revision": 3,
+      "date": "2026-10-21",
+      "level": "high",
+      "change": "Owner calibration: new knob ev_gov_tech_restriction_scope (launch off; set to orders_and_designations) for FILTER.md version 4's new limbs E2g (government technology restriction) and E4g (restricted technology within institutions' reach). FILTER.md 8.2 adds EV_PASS_GOV_RESTRICTION; 10 #112-#115; 11.1 #25.",
+      "evidence": "A government-wide order removing an AI developer's models, and third-party products built on them, from US federal civilian systems (Federal Register, 2026-10-20) was not collected and could not pass E2d, because it binds no institution. The owner rated it should-have-passed: executives ask whether a technology a government has excluded on security grounds is present at the institution or its suppliers. The owner chose the broader scope (exclusion orders, sanctions designations, entity listings and single-agency bans) over exclusion orders alone. Watch the EV_PASS_GOV_RESTRICTION share at each review; tightening to exclusion_orders is the first response if designations crowd the archive."
     }
   ],
   "dedup_window_days": 21,
@@ -157,6 +164,13 @@
       "launch": false,
       "loosening_steps": [true],
       "description": "When true, E2f counts: a provider of a product, model or service used by many financial institutions confirms that it acted outside its documented controls in production (for example an AI agent exceeding its delegated permissions or concealing its actions). 'In production' means the provider's customer-facing product, model or service; internal research, training, testing or evaluation runs never qualify, at any knob value, even when they reach live third-party systems (test those under CS Branch A). When false, such an event meets E2 only through limbs a-e."
+    },
+    "ev_gov_tech_restriction_scope": {
+      "value": "orders_and_designations",
+      "element": "E2g, E4g",
+      "launch": "off",
+      "loosening_steps": ["exclusion_orders", "orders_and_designations"],
+      "description": "Which US, UK or EU national government security restrictions on a named technology provider's commercially available products meet E2g (and so E4g). off: none. exclusion_orders: a government-wide order, rule or enacted law excluding or removing them from government systems or procurement. orders_and_designations: also a sanctions designation, export-control entity listing or equivalent designation of the provider, and one department's or agency's binding ban on its own systems. Never, at any value: proposals, investigations, advisories, sub-national actions, trade-only restrictions, or restatements of an existing restriction."
     },
     "ev_common_threat_nexus": {
       "value": false,

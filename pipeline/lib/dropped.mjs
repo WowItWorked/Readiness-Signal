@@ -38,7 +38,8 @@ export const ELEMENT_NAMES = Object.freeze({
   G10: 'Not one institution’s position', G11: 'Enough public facts',
   E1: 'A dated event', E2: 'Consequence floor', E2a: 'Consequence floor: disruption', E2b: 'Consequence floor: data compromise',
   E2c: 'Consequence floor: loss', E2d: 'Consequence floor: official action', E2e: 'Consequence floor: confirmed campaign',
-  E2f: 'Consequence floor: provider control failure', E3: 'Prominence', E4: 'Relevance to financial services', E5: 'A question a director would ask',
+  E2f: 'Consequence floor: provider control failure',
+  E2g: 'Consequence floor: government technology restriction', E3: 'Prominence', E4: 'Relevance to financial services', E5: 'A question a director would ask',
   C1: 'A specific change', C2: 'Quality of evidence', C3: 'An assumption others rely on fails', C4: 'Widely used in financial services',
   C5: 'Novelty', C6: 'More than a routine vulnerability',
   R1: 'An eligible kind of document', R1f: 'Applies to a class of firms', R2: 'An eligible issuer or speaker', R3: 'A change of direction',
@@ -51,7 +52,7 @@ const KNOB_NAMES = Object.freeze({
   max_event_age_days: 'the 7-day age limit', ev_min_general_outlets: 'the general-press minimum', ev_min_independent_outlets: 'the outlet minimum',
   cs_routine_vuln_exceptions: 'the vulnerability exceptions', cs_novelty_window_days: 'the 30-day novelty window',
   cs_demonstration_evidence: 'the demonstration evidence standard', cs_accept_preprints: 'the preprint rule', rt_standard_setters: 'the standard-setter scope',
-  rt_speaker_tier: 'the speaker tier', rt_cyber_agencies: 'the cyber-agency scope', rt_us_bills: 'the US bill stage',
+  rt_speaker_tier: 'the speaker tier', ev_gov_tech_restriction_scope: 'the government-restriction scope', rt_cyber_agencies: 'the cyber-agency scope', rt_us_bills: 'the US bill stage',
   research_require_sample: 'the research sample rule', unnamed_source_reporting: 'the unnamed-source rule', m2_min_scope_factor: 'the update size factor',
 });
 const SECTION_NAMES = Object.freeze({ EV: 'Executive Visibility', CS: 'Capability & Control Shift', RT: 'Regulatory & Executive Trajectory' });
@@ -66,7 +67,7 @@ export const CODE_EXPLAIN = Object.freeze({
   CS_NARROW: 'The affected product or control is not widely used in financial services: a niche product, one bespoke system or one firm’s misconfiguration.',
   CS_NOT_NEW: 'The shift was already public, or is already in the archive; a repeat of a known failure is not new.',
   EV_NOT_AN_EVENT: 'Not a dated event: a trend piece, survey, forecast or explainer.',
-  EV_BELOW_FLOOR: 'The consequence is below every floor, or its size was not confirmed: no outage, data loss, financial loss, penalty or confirmed campaign of the required scale.',
+  EV_BELOW_FLOOR: 'The consequence is below every floor, or its size was not confirmed: no outage, data loss, financial loss, penalty, confirmed campaign or government technology restriction of the required scale.',
   EV_NO_PROMINENCE: 'Not covered widely enough: it needs two independent outlets, at least one of them general or business press.',
   EV_NO_SECTOR_NEXUS: 'No link to financial services: the incident is outside the sector and its cause would not carry over to institutions.',
   EV_NO_EXEC_QUESTION: 'There is no question a director would ask unprompted about their own organisation.',

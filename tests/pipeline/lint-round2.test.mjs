@@ -201,7 +201,7 @@ test('sync: §8.2 elements parse; every NEAR knob exists in thresholds.json and 
   assert.equal(elements.get('RT_EXEC_OWN_POSITION'), 'R3b');
   assert.equal(elements.get('GL_NO_MECHANISM'), null);
   const knobs = loadThresholds(THRESHOLDS_PATH).knobs();
-  assert.equal(knobs.size, 34);
+  assert.equal(knobs.size, 35);
   for (const [code, { element, knob }] of Object.entries(NEAR_KNOB_REQUIRED)) {
     assert.ok(codes.has(code), code);
     assert.ok(knobs.has(knob), `${code}: ${knob}`);

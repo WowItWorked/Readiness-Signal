@@ -71,6 +71,13 @@ version 2 as day passes.
   dropped NetScaler candidates (the 4 October known-exploited listing, its CISA alert and its NVD
   record) are judged again under version 2 with `publish --append-missing --rejudge`, in that pass's
   own window and sections (§6). The pass's published item is untouched.
+- **2026-10-20, appended (owner instruction 2026-10-21).** The owner named a government-wide order
+  removing an AI developer's products from federal civilian systems as a story that should pass, and
+  amended the standard for it (FILTER.md version 4, E2g and E4g; `pipeline/thresholds.json` revision 3).
+  No live run or earlier pass collected it. Its sources dated inside the 2026-10-20 window are
+  registered with `add` (discovery `search`) and judged under version 4 with `publish --append-missing`;
+  the pass's earlier rows and item are untouched. Coverage dated 2026-10-19 is before the window and
+  is not registered, so the item takes the slot of its earliest registered source (§4).
 
 ## 2. Selection standard: the live standard, judged as of the date
 
