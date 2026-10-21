@@ -689,7 +689,10 @@ function dropRow(r) {
   return `<li class="drop-row" data-k="drop-${esc(r.id)}">
       <div class="meta-line"><span>${esc(dropDate(r.date))}</span><span class="meta-sec">${esc(sec ? sec.title : 'Evidence gate')}</span>${r.headline && r.publication ? `<span>${esc(r.publication)}</span>` : ''}${r.more_sources ? `<span>+${r.more_sources} more source${r.more_sources > 1 ? 's' : ''}</span>` : ''}</div>
       <p class="drop-title">${title}</p>
-      <p class="drop-why"><span class="drop-code">${esc(r.label.charAt(0).toUpperCase() + r.label.slice(1))}</span> ${esc(r.reason)}</p>
+      <p class="drop-why"><span class="drop-code">${esc(r.test ? `Failed: ${r.test}` : r.label.charAt(0).toUpperCase() + r.label.slice(1))}</span> ${esc(r.explain || '')}</p>
+      ${r.near ? `<p class="drop-near">${esc(r.near)}</p>` : ''}
+      ${r.alt ? `<p class="drop-alt">${esc(r.alt)}</p>` : ''}
+      <p class="drop-notes"><span class="drop-notes-k">Filter notes</span> ${esc(r.reason)}</p>
       <p class="drop-by">${esc(judged)} · ${esc(r.code)}</p>
     </li>`;
 }
@@ -697,7 +700,7 @@ function dropRow(r) {
 function droppedMain(st) {
   const intro = `<section class="card drop-intro" aria-labelledby="drop-h">
     <h2 class="h-19" id="drop-h">Read, tested and set aside</h2>
-    <p class="drop-p">In-domain stories the filter judged and dropped, each with the reason logged when it was judged. Kept for audit: nothing here is published or recommended. Off-domain items, marketing, stale reposts, round-ups and stories later published are left out. Where a headline names a financial institution, only the outlet is shown.</p>
+    <p class="drop-p">In-domain stories the filter judged and dropped, each with a plain-English reason and the filter’s own notes from when it was judged. Kept for audit: nothing here is published or recommended. Off-domain items, marketing, stale reposts, round-ups and stories later published are left out. Where a headline names a financial institution, only the outlet is shown.</p>
   </section>`;
   const head = (sub) => `<div class="title-row start"><h1 class="h1">Dropped</h1>${sub ? `<span class="list-sub">${esc(sub)}</span>` : ''}</div>`;
   if (st.droppedState === 'error') {

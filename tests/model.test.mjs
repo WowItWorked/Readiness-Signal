@@ -416,7 +416,7 @@ describe('dashboard analysis', () => {
     assert.equal(conc.sub, `${dir(cyber(recent), recent.length, cyber(prior), prior.length)} ${cyber(prior)} of ${prior.length} in the 90 days before. Every domain has recent items.`);
     assert.equal(asking.figure, '20 of 25');
     assert.equal(asking.text, 'items in the last 90 days ask for action');
-    assert.equal(asking.sub, '7 candidate issues, 7 KRI / KPI checks and 6 PRAF coverage checks. Up from 2 of 3 in the 90 days before.');
+    assert.equal(asking.sub, '13 candidate issues and 7 KRI / KPI checks. Up from 2 of 3 in the 90 days before.');
     assert.equal(bar.figure, '13 of 4,001');
     assert.equal(bar.text, 'headlines cleared the bar in the last 7 days');
     assert.equal(bar.sub, '573 passed the first screen across 26 runs. 1 of 27 scheduled runs failed.');
@@ -553,7 +553,7 @@ describe('report and archive: the dashboard carried over (owner change 2026-10-0
   test('report brief: the window\'s arrivals, concentration, threads and runs', () => {
     const b = M.windowBrief(data, ui({ page: 'report', repTime: 'week' }), NOW);
     assert.deepEqual(b.map((x) => x.kicker), ['Arrived', 'Concentrating', 'Building', 'The bar']);
-    assert.equal(b[0].text, '13 items in the last 7 days: 4 candidate issues, 3 KRI / KPI checks, 3 PRAF coverage checks and 3 awareness only.');
+    assert.equal(b[0].text, '13 items in the last 7 days: 7 candidate issues, 3 KRI / KPI checks and 3 awareness only.');
     assert.equal(b[0].sub, 'In the 7 days before: 6 items, 5 asking for action.');
     assert.equal(b[1].text, 'Cyber is on 9 of the 13 items.');
     assert.equal(b[2].text, '1 of the 13 items continues an earlier thread; the longest is now 2 developments long.');
@@ -643,9 +643,10 @@ describe('item detail and email', () => {
     assert.equal(fincen.date, '');
   });
 
-  test('PRAF asks text follows the brief', () => {
-    assert.equal(M.mechOf('praf_coverage').asks,
-      'Confirm the risk assessment framework represents this risk at all. If it does not, the issue language applies.');
+  test('three mechanisms: the retired praf_coverage is gone from the site (owner decision 2026-10-21)', () => {
+    assert.deepEqual(M.MECHANISMS.map((m) => m.key), ['candidate_issue', 'kri_kpi', 'awareness_only']);
+    assert.equal(M.mechOf('praf_coverage'), undefined);
+    assert.ok(!JSON.stringify(M.MECHANISMS).match(/PRAF|risk assessment framework/i));
   });
 
   test('update_of resolves to the earlier claim', () => {

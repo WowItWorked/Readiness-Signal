@@ -331,7 +331,7 @@ The routine's last message is a short plain-text report (no first person):
 run <RUN> (<slot ET>): <published|silent|failed|skipped>
 items: <id> <section> <mechanism>; …            (or "none")
 funnel: fetched <n>, stage 1 <n>, stage 2 passed <n>, dedup dropped <n> (same story <n>, cluster members <n>), published <n>
-mechanisms: candidate_issue <n>, kri_kpi <n>, praf_coverage <n>, awareness_only <n>
+mechanisms: candidate_issue <n>, kri_kpi <n>, awareness_only <n>
 notes: <notes>
 commit: <sha> pushed | push failed | push not permitted | not committed (<reason>)
 ```

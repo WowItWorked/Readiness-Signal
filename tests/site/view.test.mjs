@@ -132,7 +132,8 @@ describe('brief overrides of the design', () => {
     // owner change 2026-10-20: the dashboard opens with what the site is for, not the four readings
     assert.ok(dash.includes('<h2 class="h-19" id="intro-h">What this site is for</h2>'));
     assert.ok(!dash.includes('id="brief-h"'));
-    for (const t of ['The thresholds', 'The recommendations', 'Executive Visibility', 'Capability &amp; Control Shift', 'Regulatory &amp; Executive Trajectory', 'Candidate issue', 'KRI / KPI', 'PRAF coverage', 'Awareness only']) assert.ok(dash.includes(t), t);
+    for (const t of ['The thresholds', 'The recommendations', 'Executive Visibility', 'Capability &amp; Control Shift', 'Regulatory &amp; Executive Trajectory', 'Candidate issue', 'KRI / KPI', 'Awareness only']) assert.ok(dash.includes(t), t);
+    assert.ok(!/PRAF|risk assessment framework/i.test(dash), 'retired mechanism (owner decision 2026-10-21)');
     assert.ok(dash.includes('<span class="badge badge-22 badge-solid" aria-hidden="true">1</span><span class="secs-t">Executive Visibility</span>'), 'section badge digit is hidden from the name');
   });
 
@@ -173,7 +174,7 @@ describe('brief overrides of the design', () => {
   test('section entry tests and mechanism asks', () => {
     const t = text(html);
     for (const S of M.SECTIONS) assert.ok(t.includes(V.esc(S.test)), S.key);
-    assert.ok(t.includes('Confirm the risk assessment framework represents this risk at all. If it does not, the issue language applies.'));
+    assert.ok(!/PRAF|risk assessment framework/i.test(t), 'retired mechanism (owner decision 2026-10-21)');
   });
 
   test('footer replaces the design-review disclaimer', () => {
@@ -186,7 +187,7 @@ describe('brief overrides of the design', () => {
     assert.ok(t.includes('Readiness Signal is a triage digest for technology risk professionals. It reads widely so you don’t have to, and publishes only what changes what you should check, measure, cover, or be ready to answer.'));
     assert.ok(!t.includes('Why it exists') && !t.includes('An earlier version failed'), 'section removed (owner change 2026-10-05)');
     assert.ok(t.includes('Most candidates fail this test, so the section is often empty.'));
-    assert.ok(t.includes('Confirm the risk assessment framework represents this risk at all.'));
+    assert.ok(!/PRAF|risk assessment framework/i.test(t), 'retired mechanism (owner decision 2026-10-21)');
     assert.ok(t.includes('a validation question you can paste to a program owner'));
     assert.ok(t.includes('It is not a threat feed or a news service, and it says nothing about any institution’s control position. The validation question is where that record starts, inside your own organisation.'));
     assert.ok(!t.includes('personal triage digest'), 'design lead replaced');

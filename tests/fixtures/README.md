@@ -38,7 +38,7 @@ Tests that depend on windows should inject this time.
 
 - **32 items**, 2026-01-15 to 2026-10-02, in append order (oldest first). Executive
   Visibility 11, Capability & Control Shift 13, Regulatory & Executive Trajectory 8.
-  Candidate issue 9, KRI / KPI 7, PRAF coverage 8, Awareness only 8. All seven domains and
+  Candidate issue 17, KRI / KPI 7, Awareness only 8 (the eight former PRAF-coverage items were re-tagged when that mechanism was retired, 2026-10-21). All seven domains and
   all six source classes appear.
 - **69 runs**: one per slot from 2026-09-18 06:00 to 2026-10-02 14:00 ET (59 runs: 15
   published, 42 silent, 2 failed), plus a published run for each older live item's slot.

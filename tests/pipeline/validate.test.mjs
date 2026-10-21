@@ -119,7 +119,8 @@ test('null/present rules by mechanism', () => {
   fails(validateItem(awareness({ awareness_rationale: null })), /awareness_rationale: required for awareness_only/);
   fails(validateItem(item({ validation_question: null })), /validation_question: required for candidate_issue/);
   fails(validateItem(item({ mechanism: 'kri_kpi', candidate_issue_statement: null })), /candidate_issue_statement: required for kri_kpi/);
-  fails(validateItem(item({ mechanism: 'praf_coverage', awareness_rationale: 'Not needed.' })), /awareness_rationale: must be null unless/);
+  fails(validateItem(item({ mechanism: 'kri_kpi', awareness_rationale: 'Not needed.' })), /awareness_rationale: must be null unless/);
+  fails(validateItem(item({ mechanism: 'praf_coverage' })), /mechanism: must be exactly one of candidate_issue, kri_kpi, awareness_only/, 'retired 2026-10-21 (FILTER.md §6.3)');
 });
 
 test('sources: https, unique, non-empty publication, headline <= 200, YYYY-MM-DD, class enum', () => {

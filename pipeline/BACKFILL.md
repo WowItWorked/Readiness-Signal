@@ -127,7 +127,7 @@ never judged, and never sets the item's timestamp.
   `until`, and nothing after it is inside the window.)
 - **Id** = `RS-YYMMDD-HHMM-NN` from the slot, `NN` ordered within the slot by section
   (capability_shift before regulatory_trajectory) then mechanism (candidate_issue, kri_kpi,
-  praf_coverage, awareness_only), then the primary source's date, as live publish does. Ids never
+  awareness_only), then the primary source's date, as live publish does. Ids never
   collide with existing items.
 - `backfilled: true` on every item. Backfilled items create **no** run records (`docs/data/runs.json`
   is untouched) and never count as editions on the site. `pipeline/state/seen.json` is untouched.
