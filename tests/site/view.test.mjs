@@ -129,7 +129,10 @@ describe('brief overrides of the design', () => {
     assert.ok(one.includes('<main id="main" tabindex="-1" class="main list"'));
     assert.ok(one.includes('<a class="skip" href="#main" data-act="skip" data-k="skip">Skip to content</a>'));
     const dash = render({ page: 'dashboard' });
-    assert.ok(dash.includes('<h2 class="sr-only" id="brief-h">At a glance</h2>'));
+    // owner change 2026-10-20: the dashboard opens with what the site is for, not the four readings
+    assert.ok(dash.includes('<h2 class="h-19" id="intro-h">What this site is for</h2>'));
+    assert.ok(!dash.includes('id="brief-h"'));
+    for (const t of ['The thresholds', 'The recommendations', 'Executive Visibility', 'Capability &amp; Control Shift', 'Regulatory &amp; Executive Trajectory', 'Candidate issue', 'KRI / KPI', 'PRAF coverage', 'Awareness only']) assert.ok(dash.includes(t), t);
     assert.ok(dash.includes('<span class="badge badge-22 badge-solid" aria-hidden="true">1</span><span class="secs-t">Executive Visibility</span>'), 'section badge digit is hidden from the name');
   });
 
@@ -349,7 +352,7 @@ describe('states', () => {
     const dash = text(render({ page: 'dashboard' }, empty));
     assert.ok(dash.includes('Next update 18:00 ET') && !dash.includes('Updated '), 'no run yet: only the schedule');
     // Day one: every panel says plainly that there is nothing yet; nothing claims a run applied the test.
-    assert.ok(dash.includes('No scheduled run has been recorded yet.'));
+    assert.ok(dash.includes('What this site is for'), 'the opening explains the site even before any run');
     assert.ok(dash.includes('Nothing published yet. Runs at 06:00, 10:00, 14:00 and 18:00 ET publish only what clears the bar; a silent run is a result.'));
     assert.ok(dash.includes('No developing thread yet.'));
     assert.ok(dash.includes('No item asks for action yet.'));
@@ -386,15 +389,14 @@ describe('states', () => {
     assert.ok(!/\d{2}:\d{2}/.test(loadingMast));
   });
 
-  test('the dashboard opens with the brief, then its panels in reading order (owner change 2026-10-06)', () => {
+  test('the dashboard opens with what the site is for, then its panels in reading order (owner changes 2026-10-06, 2026-10-20)', () => {
     const html = render({ page: 'dashboard' });
-    const order = ['class="card brief"', ...['latest', 'adds', 'threads', 'asks', 'reg', 'doms', 'bar'].map((k) => `class="card dcard d-${k}"`), 'class="arch-link"']
+    const order = ['class="card intro"', ...['latest', 'adds', 'threads', 'asks', 'reg', 'doms', 'bar'].map((k) => `class="card dcard d-${k}"`), 'class="arch-link"']
       .map((k) => html.indexOf(k));
     assert.ok(order.every((at) => at > html.indexOf('class="h1"')), 'everything after the title');
     assert.deepEqual(order, [...order].sort((a, b) => a - b));
     assert.ok(!/last 7 days, by what each item asks|Sections, last 7 days|Domains, last 7 days/i.test(html), 'the 7-day count panels are gone');
-    const t = text(html);
-    for (const b of M.dashboard(data, NOW).brief) assert.ok(t.includes(V.esc(b.text)), b.key);
+    assert.ok(!html.includes('class="card brief"'), 'the four readings are not on the dashboard');
   });
 
   test('dashboard charts: one mark per item, tables for assistive tech, links only to item ids', () => {
@@ -410,7 +412,7 @@ describe('states', () => {
     assert.ok(/<table class="dm">\s*<caption class="sr-only">Items by domain and month/.test(html));
     assert.ok(html.includes('<caption class="sr-only">Scheduled runs by day and slot (ET)</caption>'));
     for (const m of html.slice(html.indexOf('<main')).matchAll(/href="([^"]+)"/g)) {
-      assert.ok(/^#(RS-\d{6}-\d{4}-\d{2}|archive|report|dashboard)$/.test(m[1]), m[1]);
+      assert.ok(/^#(RS-\d{6}-\d{4}-\d{2}|archive|report|dashboard|about)$/.test(m[1]), m[1]);
     }
   });
 
