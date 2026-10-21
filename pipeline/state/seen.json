@@ -1236,6 +1236,30 @@
       "run_id": "2026-10-21-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.axios.com/2026/10/21/openai-google-cloud-ai-models": {
+      "first_seen": "2026-10-21T10:06:55-04:00",
+      "run_id": "2026-10-21-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sophos.com/en-us/blog/proof-of-concept-exploit-released-for-php-vulnerabilities-109618-109619": {
+      "first_seen": "2026-10-21T10:06:55-04:00",
+      "run_id": "2026-10-21-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/publications/guidance-consultations/gc26-7-decentralised-finance-guidance": {
+      "first_seen": "2026-10-21T10:06:55-04:00",
+      "run_id": "2026-10-21-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://unit42.paloaltonetworks.com/cve-2026-109618-cve-2026-109619": {
+      "first_seen": "2026-10-21T10:06:55-04:00",
+      "run_id": "2026-10-21-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
