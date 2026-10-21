@@ -59,7 +59,7 @@ when nothing clears. Items are append-only; editions never overwrite.
 | `claim` | string | One line, ~12 words (hard limits 6–22), an assertion of fact, not a headline teaser. |
 | `domains` | enum[] | 1–7 unique of `cyber`, `fraud`, `ai`, `data`, `resilience`, `third_party`, `risk_quantification`. Primary domains first. |
 | `source_class` | enum | Class of the primary source: `news` \| `regulator` \| `standards_body` \| `industry_trade` \| `vendor_threat_research` \| `research_analysis` |
-| `mechanism` | enum | Exactly one: `candidate_issue` \| `kri_kpi` \| `praf_coverage` \| `awareness_only` |
+| `mechanism` | enum | Exactly one: `candidate_issue` \| `kri_kpi` \| `awareness_only` (owner decision 2026-10-21: `praf_coverage` retired, FILTER.md §6.3) |
 | `interpretation` | object[] | Cross-domain implication, one entry per affected domain: `{ "domain": <domain enum>, "text": string ≤ 60 words }`. Must cover every tagged domain; may add others. Unique domains. Order: tagged domains first. |
 | `validation_question` | string \| null | Short, paste-ready, ends with `?`, ≤ 40 words. **Null iff `awareness_only`.** |
 | `candidate_issue_statement` | string \| null | Conditional, phrased as a control weakness with consequence: begins `Where …` or `If …`, weakness clause then consequence clause, ≤ 70 words. **Null iff `awareness_only`.** |
@@ -92,6 +92,7 @@ edition counts. A silent run is logged but is **not** an edition.
                          "capability_shift": {"tested": 0, "passed": 0},
                          "regulatory_trajectory": {"tested": 0, "passed": 0} },
   "mechanism_distribution": { "candidate_issue": 0, "kri_kpi": 0, "praf_coverage": 0, "awareness_only": 0 },
+  /* praf_coverage: a retired count, always 0 from 2026-10-21 (FILTER.md §6.3); kept because runs.json is append-only */
   "notes": "≤ 280 chars, optional"
 } ] }
 ```
@@ -108,14 +109,20 @@ backfill judgment replaces a live one, and a later row an earlier one. A headlin
 financial institution (`institutions.mjs`) is withheld (`headline: null`, `headline_withheld: true`).
 
 ```json
-{ "schema_version": 1, "note": "…", "codes": { "CS_ROUTINE_VULN": "vulnerability without an exception" },
+{ "schema_version": 1, "note": "…",
+  "codes": { "CS_ROUTINE_VULN": { "label": "vulnerability without an exception",
+    "test": "More than a routine vulnerability", "explain": "one plain-English sentence" } },
   "items": [ { "id": "c-…", "date": "2026-10-14", "section": "capability_shift | … | null",
     "code": "CS_ROUTINE_VULN", "reason": "the logged reason line", "publication": "…",
     "headline": "… | null", "headline_withheld": true, "url": "https://…", "more_sources": 2,
-    "judged": "live | backfill", "run": "2026-10-14-0600 | 2026-10-14", "rejudged": true } ] }
+    "judged": "live | backfill", "run": "2026-10-14-0600 | 2026-10-14", "rejudged": true,
+    "near": "Near-miss: only “Novelty” failed; …", "alt": "Also tested as Executive Visibility: failed “…”." } ] }
 ```
 
-`headline_withheld`, `more_sources` and `rejudged` appear only when true or non-zero.
+`headline_withheld`, `more_sources`, `rejudged`, `near` and `alt` appear only when they say something.
+Plain English (owner request 2026-10-21): each code carries the plain name of the test it fails and a
+one-sentence explanation (`pipeline/lib/dropped.mjs` CODE_EXPLAIN, ELEMENT_NAMES); `near` and `alt` restate
+a reason line's `NEAR …` and `[alt …]` markers in words.
 
 ### 3.4 Pipeline state and logs (committed, outside `/docs`)
 
@@ -219,7 +226,7 @@ importable by Node tests), `docs/assets/view.js` (rendering + escaping), `docs/a
 | design | this build |
 |---|---|
 | sections 1/2/3 | `executive_visibility`/`capability_shift`/`regulatory_trajectory`; titles "Executive Visibility", "Capability & Control Shift", "Regulatory & Executive Trajectory" |
-| mech `issue/kri/praf/aware` | `candidate_issue/kri_kpi/praf_coverage/awareness_only`; labels "Candidate issue", "KRI / KPI", "PRAF coverage", "Awareness only" (the design's four-square rail was dropped on the owner's request, 2026-10-06: the tag shows the label alone) |
+| mech `issue/kri/aware` | `candidate_issue/kri_kpi/awareness_only`; labels "Candidate issue", "KRI / KPI", "Awareness only" (the design's fourth mechanism was retired by the owner on 2026-10-21 and appears nowhere on the site) (the design's four-square rail was dropped on the owner's request, 2026-10-06: the tag shows the label alone) |
 | `read` `[[domain,text]]` | `interpretation[] {domain,text}` |
 | `q` | `validation_question` |
 | `issue` | `candidate_issue_statement` |
@@ -282,8 +289,7 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   the domain grid's last six months.
 - Mechanism "asks" text: Candidate issue — "Send the validation question to the owner. If the answer is no or
   unknown, raise the candidate issue." KRI / KPI — "Confirm an indicator exists, is measured, and reaches
-  someone who acts on it. If not, the issue language applies." PRAF coverage — "Confirm the risk assessment
-  framework represents this risk at all. If it does not, the issue language applies." Awareness only —
+  someone who acts on it. If not, the issue language applies." Awareness only —
   "Nothing to action. This is a complete resolution: know it, in case you are asked."
 - Awareness-only items render the "Why this resolves as awareness only" panel from `awareness_rationale`, styled
   as a resolution (same weight as the validation question panel, never greyed or de-emphasised). No "If asked".
@@ -331,8 +337,8 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   what is left out. Filters: section (All, the three sections, Evidence gates) and month (newest first, with
   counts; the newest month by default). Each row: date, section, outlet, extra sources; the headline linking
   to the source in a new tab (or "Headline withheld: it names a financial institution." and the outlet);
-  the reason's plain label and the logged reason; how it was judged (live run or backfill pass, re-judged)
-  and the code. Links are emitted only for plain https URLs.
+  "Failed: <test>" with the plain-English explanation; the near-miss and other-section notes where present;
+  the logged reason as "Filter notes"; how it was judged (live run or backfill pass, re-judged) and the code. Links are emitted only for plain https URLs.
 
 ### 7.3 About page copy (institution-neutral rewrite of the design)
 
@@ -341,8 +347,7 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
 - No "Why it exists" section (owner change 2026-10-05: removed).
 - Three entry tests: as §7.2, with the design's layout. Section 3 adds "Most candidates fail this test, so the
   section is often empty."
-- Every item says what it wants: design copy; PRAF coverage line "Confirm the risk assessment framework
-  represents this risk at all."
+- Every item says what it wants: design copy, three mechanisms (the fourth retired 2026-10-21).
 - How an item is built: design copy, "a validation question you can paste to a program owner", plus (owner
   change 2026-10-06) a sentence on threads. Then "How the charts read": a key to the unit squares (filled asks
   for action, open is awareness only, same weight), thread timelines, the run slots, and dot sizes ("Counts and
@@ -386,7 +391,7 @@ stay as above; the visual layer changes:
   no pause control (2026-10-06), accepting that this falls short of WCAG 2.2.2; under
   `prefers-reduced-motion` the bars are still, and under 640 px and in print they are left out.
 - Each mechanism has a categorical hue used on its tag, board column, mix strip and expanded panels:
-  Candidate issue deep teal, KRI / KPI cyan, PRAF coverage violet, Awareness only blue-indigo (kept clearly apart from the violet and from the brand indigo). Hues stay outside red,
+  Candidate issue deep teal, KRI / KPI cyan, Awareness only blue-indigo (kept clearly apart from the brand indigo). Hues stay outside red,
   amber and green so colour never reads as severity or safety; awareness only carries the same weight as the
   others. The brand green remains emphasis only: the logo's cap, the masthead bars' crossings, the active nav
   mark and link-hover underlines.

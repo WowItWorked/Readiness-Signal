@@ -121,9 +121,9 @@
         }
       },
       "mechanism_distribution": {
-        "candidate_issue": 0,
+        "candidate_issue": 1,
         "kri_kpi": 0,
-        "praf_coverage": 1,
+        "praf_coverage": 0,
         "awareness_only": 0
       }
     },
@@ -497,9 +497,9 @@
         }
       },
       "mechanism_distribution": {
-        "candidate_issue": 0,
+        "candidate_issue": 1,
         "kri_kpi": 0,
-        "praf_coverage": 1,
+        "praf_coverage": 0,
         "awareness_only": 0
       }
     },
@@ -1347,9 +1347,9 @@
         }
       },
       "mechanism_distribution": {
-        "candidate_issue": 0,
+        "candidate_issue": 1,
         "kri_kpi": 1,
-        "praf_coverage": 1,
+        "praf_coverage": 0,
         "awareness_only": 0
       }
     },
@@ -1631,9 +1631,9 @@
         }
       },
       "mechanism_distribution": {
-        "candidate_issue": 0,
+        "candidate_issue": 1,
         "kri_kpi": 0,
-        "praf_coverage": 1,
+        "praf_coverage": 0,
         "awareness_only": 0
       }
     },
@@ -2278,9 +2278,9 @@
         }
       },
       "mechanism_distribution": {
-        "candidate_issue": 0,
+        "candidate_issue": 1,
         "kri_kpi": 0,
-        "praf_coverage": 1,
+        "praf_coverage": 0,
         "awareness_only": 0
       }
     },
@@ -2481,9 +2481,9 @@
         }
       },
       "mechanism_distribution": {
-        "candidate_issue": 0,
+        "candidate_issue": 1,
         "kri_kpi": 0,
-        "praf_coverage": 1,
+        "praf_coverage": 0,
         "awareness_only": 1
       }
     },
@@ -2688,9 +2688,9 @@
         }
       },
       "mechanism_distribution": {
-        "candidate_issue": 0,
+        "candidate_issue": 1,
         "kri_kpi": 0,
-        "praf_coverage": 1,
+        "praf_coverage": 0,
         "awareness_only": 0
       }
     },

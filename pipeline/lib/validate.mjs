@@ -5,7 +5,7 @@
 // warnings are printed and recorded but do not block.
 
 import {
-  CANDIDATE_ID_RE, DEDUP_OUTCOMES, DOMAINS, FUNNEL_KEYS, ITEM_ID_RE, ITEM_KEYS, MECHANISMS, REASON_CODE_RE,
+  CANDIDATE_ID_RE, DEDUP_OUTCOMES, DOMAINS, FUNNEL_KEYS, ITEM_ID_RE, ITEM_KEYS, MECHANISMS, REASON_CODE_RE, RUN_MECHANISM_KEYS,
   RUN_STATUSES, SECTIONS, SEEN_VERDICTS, SOURCE_CLASSES, SOURCE_KEYS, THRESHOLD_LEVELS, VERDICTS,
 } from './enums.mjs';
 import { findInstitutions } from './institutions.mjs';
@@ -891,9 +891,9 @@ export function validateRun(run, { at = 'run' } = {}) {
   }
   if (!isObj(run.mechanism_distribution)) v.error(at, 'mechanism_distribution: required object');
   else {
-    for (const k of Object.keys(run.mechanism_distribution)) if (!MECHANISMS.includes(k)) v.error(at, `mechanism_distribution.${k}: unknown mechanism`);
+    for (const k of Object.keys(run.mechanism_distribution)) if (!RUN_MECHANISM_KEYS.includes(k)) v.error(at, `mechanism_distribution.${k}: unknown mechanism`);
     let sum = 0;
-    for (const m of MECHANISMS) {
+    for (const m of RUN_MECHANISM_KEYS) {
       if (!isInt(run.mechanism_distribution[m])) v.error(at, `mechanism_distribution.${m}: required non-negative integer`);
       else sum += run.mechanism_distribution[m];
     }
@@ -943,7 +943,7 @@ export function validateRuns(doc, archiveDoc = null, { at = 'runs' } = {}) {
     doc.runs.forEach((run, i) => {
       if (!isObj(run) || !Array.isArray(run.items)) return;
       const a = `runs[${i}] (${run.run_id})`;
-      const mech = Object.fromEntries(MECHANISMS.map((m) => [m, 0]));
+      const mech = Object.fromEntries(RUN_MECHANISM_KEYS.map((m) => [m, 0]));
       for (const id of run.items) {
         const it = items.get(id);
         if (!it) {
@@ -954,10 +954,10 @@ export function validateRuns(doc, archiveDoc = null, { at = 'runs' } = {}) {
         claimed.set(id, run.run_id);
         if (it.timestamp !== run.slot) v.error(a, `items: ${id} timestamp ${it.timestamp} does not match run slot ${run.slot}`);
         if (it.backfilled === true) v.error(a, `items: ${id} is backfilled; backfilled items are never part of an edition`);
-        if (MECHANISMS.includes(it.mechanism)) mech[it.mechanism]++;
+        if (RUN_MECHANISM_KEYS.includes(it.mechanism)) mech[it.mechanism]++;
       }
       if (isObj(run.mechanism_distribution)) {
-        for (const m of MECHANISMS) {
+        for (const m of RUN_MECHANISM_KEYS) {
           if (isInt(run.mechanism_distribution[m]) && run.mechanism_distribution[m] !== mech[m]) {
             v.error(a, `mechanism_distribution.${m}: ${run.mechanism_distribution[m]} but the listed items have ${mech[m]}`);
           }
@@ -1026,22 +1026,17 @@ export function buildNgramSet(texts, n = LIMITS.verbatimWords) {
 
 /**
  * FILTER.md §10 preface: live items never reuse the worked examples' wording. The n-grams of §10
- * (decision table and model items), minus those of the mechanism question shapes of §7.5 rule 6
- * and the praf_coverage issue opener, which every item of that mechanism may share. An empty set
- * when the text has no §10.
+ * (decision table and model items), minus those of the mechanism question shapes of §7.5 rule 6,
+ * which every item of a mechanism may share. An empty set when the text has no §10.
  */
-const MODEL_SHAPE_OPENERS = Object.freeze([
-  'If the risk assessment framework does not represent the risk',
-  'Where the risk assessment framework does not represent the risk',
-]);
 export function modelWordingNgrams(filterText, n = LIMITS.verbatimWords) {
   const t = String(filterText ?? '');
   const from = t.indexOf('\n## 10.');
   if (from === -1) return new Set();
   const to = t.indexOf('\n## 11.', from);
   const set = buildNgramSet([t.slice(from, to === -1 ? undefined : to)], n);
-  const shapes = t.match(/^\s*- (?:candidate_issue|kri_kpi|praf_coverage): ".*"$/gm) ?? [];
-  for (const g of buildNgramSet([...shapes, ...MODEL_SHAPE_OPENERS], n)) set.delete(g);
+  const shapes = t.match(/^\s*- (?:candidate_issue|kri_kpi): ".*"$/gm) ?? [];
+  for (const g of buildNgramSet(shapes, n)) set.delete(g);
   return set;
 }
 

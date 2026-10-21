@@ -271,7 +271,7 @@ runMain(async () => {
   log(`${record.status.toUpperCase()} ${formatEtHuman(slot.instant)} (${runId}): ${record.items.length} item(s)`);
   for (const it of newItems) log(`  ${it.id}  ${it.section} / ${it.mechanism}  ${it.claim}`);
   const md = record.mechanism_distribution;
-  log(`  mechanisms: candidate_issue ${md.candidate_issue}, kri_kpi ${md.kri_kpi}, praf_coverage ${md.praf_coverage}, awareness_only ${md.awareness_only}`);
+  log(`  mechanisms: candidate_issue ${md.candidate_issue}, kri_kpi ${md.kri_kpi}, awareness_only ${md.awareness_only}`);
   const f = record.funnel;
   log(`  funnel: sources ${f.sources_ok} ok / ${f.sources_failed} failed; fetched ${f.fetched} -> in window ${f.in_window} -> unseen ${f.unseen} -> stage1 ${f.stage1_pass} -> stage2 ${f.stage2_pass} -> dedup dropped ${f.dedup_dropped} (same story ${dedupSplit.same_story}, cluster members ${dedupSplit.cluster_members}) -> published ${f.published}`);
 

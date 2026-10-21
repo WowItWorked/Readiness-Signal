@@ -37,8 +37,28 @@ test('in-domain drops only; noise and same-story drops left out; clusters fold i
   assert.equal(a.more_sources, 1);
   assert.equal(a.date, '2026-10-13');
   assert.equal(a.judged, 'live');
-  assert.equal(doc.codes.CS_ROUTINE_VULN, 'vulnerability without an exception');
+  assert.equal(doc.codes.CS_ROUTINE_VULN.label, 'vulnerability without an exception');
+  assert.equal(doc.codes.CS_ROUTINE_VULN.test, 'More than a routine vulnerability');
+  assert.match(doc.codes.CS_ROUTINE_VULN.explain, /^An exploited or newly disclosed vulnerability is routine on its own\./);
   for (const c of ['GL_OFF_DOMAIN', 'GL_MARKETING', 'GL_STALE', 'GL_NO_DEVELOPMENT', 'DD_SAME_STORY']) assert.ok(NOISE_CODES.includes(c), c);
+});
+
+test('plain-English near-miss and other-section notes come from the reason markers', () => {
+  const doc = buildDropped({
+    logs: [{ rows: [
+      row({ reason: 'NEAR C5/cs_novelty_window_days: first shown 40 days earlier [alt EV:E3/ev_min_general_outlets]', reason_code: 'CS_NOT_NEW' }),
+      row({ candidate_id: 'c-ffffffffff', url: 'https://example.com/f', reason: 'C6: patched flaw [alt EV:E2]' }),
+    ], judged: 'live', key: 'x' }],
+    archive: { items: [] },
+    filterText: FILTER,
+  });
+  const near = doc.items.find((i) => i.id === 'c-aaaaaaaaaa');
+  assert.equal(near.near, 'Near-miss: only “Novelty” failed; loosening the 30-day novelty window one step would admit it.');
+  assert.equal(near.alt, 'Also tested as Executive Visibility: failed “Prominence” (a near-miss on the general-press minimum).');
+  const plain = doc.items.find((i) => i.id === 'c-ffffffffff');
+  assert.equal(plain.near, undefined);
+  assert.equal(plain.alt, 'Also tested as Executive Visibility: failed “Consequence floor”.');
+  for (const [code, info] of Object.entries(doc.codes)) assert.ok(info.explain && info.test, code);
 });
 
 test('a later judgment of the same URL replaces an earlier one; a later publication removes it', () => {

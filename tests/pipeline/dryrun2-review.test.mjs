@@ -104,7 +104,7 @@ test('7.5: a candidate_issue question that only checks a version is patch manage
 
 // ---------------------------------------------------------------- §10 wording
 
-test('FILTER 10: generated text never reuses a worked example; the question shapes and the praf opener are shared', () => {
+test('FILTER 10: generated text never reuses a worked example; the question shapes are shared', () => {
   const ngrams = modelWordingNgrams(FILTER_MD);
   assert.ok(ngrams.size > 1000);
   assert.equal(modelWordingNgrams('# no section ten').size, 0);
@@ -118,12 +118,6 @@ test('FILTER 10: generated text never reuses a worked example; the question shap
   const out = dsi(d, { candidates: [c], filterText: FILTER_MD }).join('\n');
   assert.match(out, /B FILTER 10 decisions\.items\[0\] candidate_issue_statement: repeats 8\+ consecutive words of a FILTER\.md §10 worked example \("if no indicator tracks how many important business"\)/);
   assert.doesNotMatch(out, /validation_question: repeats/, 'the kri_kpi shape is shared wording');
-  const praf = makeDraft([c], {
-    mechanism: 'praf_coverage',
-    validation_question: 'Does the risk assessment framework include a risk covering AI agents acting beyond their authorisation against third-party systems, and when was it last assessed?',
-    candidate_issue_statement: 'If the risk assessment framework does not represent the risk of agents acting beyond their authorisation, intrusions launched from inside the organisation can go unassessed.',
-  });
-  assert.doesNotMatch(dsi({ ...d, items: [praf] }, { candidates: [c], filterText: FILTER_MD }).join('\n'), /FILTER 10/);
   assert.doesNotMatch(dsi(d, { candidates: [c] }).join('\n'), /FILTER 10/, 'without the FILTER text the check is off');
 });
 

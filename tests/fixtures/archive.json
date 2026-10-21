@@ -12,7 +12,7 @@
         "cyber"
       ],
       "source_class": "news",
-      "mechanism": "praf_coverage",
+      "mechanism": "candidate_issue",
       "interpretation": [
         {
           "domain": "resilience",
@@ -31,8 +31,8 @@
           "text": "Correlated loss across many clients of one provider is a tail scenario that single-firm loss data will not contain."
         }
       ],
-      "validation_question": "Does the risk assessment framework include a scenario where a shared core-processing provider is unavailable for several days because of ransomware, and what recovery assumption does it use?",
-      "candidate_issue_statement": "Where the risk assessment framework has no scenario for multi-day loss of a shared core-processing provider, the severity of a correlated outage is not assessed, and recovery plans may rest on provider recovery times never tested against ransomware.",
+      "validation_question": "Does the scenario set used in resilience testing include multi-day ransomware loss of a shared core-processing provider, with a stated recovery assumption?",
+      "candidate_issue_statement": "Where resilience testing has no scenario for multi-day loss of a shared core-processing provider, the severity of a correlated outage is not assessed, and recovery plans may rest on provider recovery times never tested against ransomware.",
       "awareness_rationale": null,
       "sources": [
         {
@@ -188,7 +188,7 @@
         "third_party"
       ],
       "source_class": "news",
-      "mechanism": "praf_coverage",
+      "mechanism": "candidate_issue",
       "interpretation": [
         {
           "domain": "resilience",
@@ -203,8 +203,8 @@
           "text": "Customers pushed to unfamiliar channels during an outage are easier targets for impersonation scams."
         }
       ],
-      "validation_question": "Does the risk assessment framework include a scenario where the primary telecom carrier fails across branches and ATMs for a full day, and is carrier diversity evidenced?",
-      "candidate_issue_statement": "Where the risk assessment framework has no scenario for day-long failure of a primary telecom carrier, and carrier diversity for branches and ATMs is not evidenced, a single network fault could remove every physical channel at once without the impact having been assessed.",
+      "validation_question": "Does the scenario set used in resilience testing include a day-long failure of the primary telecom carrier across branches and ATMs, with carrier diversity evidenced?",
+      "candidate_issue_statement": "Where resilience testing has no scenario for day-long failure of a primary telecom carrier, and carrier diversity for branches and ATMs is not evidenced, a single network fault could remove every physical channel at once without the impact having been assessed.",
       "awareness_rationale": null,
       "sources": [
         {
@@ -535,7 +535,7 @@
         "risk_quantification"
       ],
       "source_class": "standards_body",
-      "mechanism": "praf_coverage",
+      "mechanism": "candidate_issue",
       "interpretation": [
         {
           "domain": "ai",
@@ -550,8 +550,8 @@
           "text": "An agent holding standing credentials is an attractive target, and its misuse can look like legitimate automated activity in logs."
         }
       ],
-      "validation_question": "Does the risk assessment framework include a scenario where an AI agent operating with delegated access takes a harmful action at scale?",
-      "candidate_issue_statement": "Where the risk assessment framework has no scenario for harmful actions by AI agents operating with delegated access, an emerging event type is neither assessed nor sized, and exposure may grow with agent adoption before it shows in loss data.",
+      "validation_question": "Does the scenario set used in resilience testing include an AI agent with delegated access taking a harmful action at scale, with a date of last test?",
+      "candidate_issue_statement": "Where resilience testing has no scenario for harmful actions by AI agents operating with delegated access, an emerging event type is neither tested nor sized, and exposure may grow with agent adoption before it shows in loss data.",
       "awareness_rationale": null,
       "sources": [
         {
@@ -756,7 +756,7 @@
         "risk_quantification"
       ],
       "source_class": "vendor_threat_research",
-      "mechanism": "praf_coverage",
+      "mechanism": "candidate_issue",
       "interpretation": [
         {
           "domain": "cyber",
@@ -771,8 +771,8 @@
           "text": "Scenarios that assume partial encryption and fast snapshot restore will understate both outage duration and loss severity."
         }
       ],
-      "validation_question": "Does the ransomware scenario in the risk assessment framework assume loss of the virtualisation layer and its snapshots, and what recovery time does it use?",
-      "candidate_issue_statement": "Where the ransomware scenario assumes partial encryption and restore from platform snapshots, loss of the virtualisation layer with its snapshots is not assessed, and modelled outage duration and loss severity may be understated.",
+      "validation_question": "Does the ransomware scenario used in resilience testing assume loss of the virtualisation layer and its snapshots, with a stated recovery time?",
+      "candidate_issue_statement": "Where the ransomware scenario assumes partial encryption and restore from platform snapshots, loss of the virtualisation layer with its snapshots is not tested, and modelled outage duration and loss severity may be understated.",
       "awareness_rationale": null,
       "sources": [
         {
@@ -803,7 +803,7 @@
         "risk_quantification"
       ],
       "source_class": "regulator",
-      "mechanism": "praf_coverage",
+      "mechanism": "candidate_issue",
       "interpretation": [
         {
           "domain": "resilience",
@@ -818,8 +818,8 @@
           "text": "Correlated provider failure will need defensible loss estimates, not illustrative figures, once supervisors compare results across firms."
         }
       ],
-      "validation_question": "Does the risk assessment framework include a scenario for simultaneous loss of a critical cloud provider across more than one important business service?",
-      "candidate_issue_statement": "Where the risk assessment framework has no scenario for simultaneous failure of a critical cloud provider across several important business services, an emerging supervisory expectation is unaddressed, and correlated outage losses are not sized.",
+      "validation_question": "Does the scenario set used in resilience testing include simultaneous loss of a critical cloud provider across more than one important business service?",
+      "candidate_issue_statement": "Where resilience testing has no scenario for simultaneous failure of a critical cloud provider across several important business services, an emerging supervisory expectation is unaddressed, and correlated outage losses are not sized.",
       "awareness_rationale": null,
       "sources": [
         {
@@ -931,7 +931,7 @@
         "resilience"
       ],
       "source_class": "regulator",
-      "mechanism": "praf_coverage",
+      "mechanism": "candidate_issue",
       "interpretation": [
         {
           "domain": "ai",
@@ -946,8 +946,8 @@
           "text": "Loss or degradation of a common model provider is a correlated outage affecting every service built on it."
         }
       ],
-      "validation_question": "Does the risk assessment framework include a scenario where a widely used AI model provider becomes unavailable or changes behaviour across several business services at once?",
-      "candidate_issue_statement": "Where the risk assessment framework has no scenario for unavailability or behaviour change of a shared AI model provider, concentration on that provider is not assessed, and an outage could affect several business services at once without a planned response.",
+      "validation_question": "Does the scenario set used in resilience testing include a widely used AI model provider becoming unavailable or changing behaviour across several business services at once?",
+      "candidate_issue_statement": "Where resilience testing has no scenario for unavailability or behaviour change of a shared AI model provider, concentration on that provider is not tested, and an outage could affect several business services at once without a planned response.",
       "awareness_rationale": null,
       "sources": [
         {
@@ -978,7 +978,7 @@
         "cyber"
       ],
       "source_class": "news",
-      "mechanism": "praf_coverage",
+      "mechanism": "candidate_issue",
       "interpretation": [
         {
           "domain": "resilience",
@@ -993,8 +993,8 @@
           "text": "Delaying security updates to reduce this risk lengthens exposure to real threats; staged rollout is the usual compromise."
         }
       ],
-      "validation_question": "Does the risk assessment framework include a scenario where a faulty security-agent update disables most workstations at once, and does it assume manual recovery?",
-      "candidate_issue_statement": "Where the risk assessment framework has no scenario for a defective security-agent update disabling workstations at scale, manual recovery effort and service impact are not assessed, and update staging may not be required of the vendor.",
+      "validation_question": "Does the scenario set used in resilience testing include a faulty security-agent update disabling most workstations at once, with manual recovery assumed?",
+      "candidate_issue_statement": "Where resilience testing has no scenario for a defective security-agent update disabling workstations at scale, manual recovery effort and service impact are not assessed, and update staging may not be required of the vendor.",
       "awareness_rationale": null,
       "sources": [
         {
@@ -1100,7 +1100,7 @@
         "risk_quantification"
       ],
       "source_class": "regulator",
-      "mechanism": "praf_coverage",
+      "mechanism": "candidate_issue",
       "interpretation": [
         {
           "domain": "cyber",
@@ -1119,7 +1119,7 @@
           "text": "Scenarios that assume a two-week exposure window will understate attack frequency for internet-facing systems."
         }
       ],
-      "validation_question": "What exposure window do cyber scenarios in the risk assessment framework assume for internet-facing appliances, and is it shorter than 48 hours?",
+      "validation_question": "Does the exposure window assumed for internet-facing appliances in cyber scenarios fall below 48 hours, with the date it was last recalibrated?",
       "candidate_issue_statement": "Where the exposure-window assumption for internet-facing appliances in cyber scenarios has not been recalibrated against current time-to-exploit evidence, modelled attack frequency may be understated, and residual risk reported to committees may be too low.",
       "awareness_rationale": null,
       "sources": [

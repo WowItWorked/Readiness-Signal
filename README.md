@@ -3,7 +3,7 @@
 **A filter, not a feed.** A static, stateless technology-risk triage archive. Four scheduled
 runs a day read public sources and publish only what clears a deliberately high materiality
 bar. Each item carries exactly one mechanism that says what it wants from the reader: a
-candidate issue, a KRI/KPI, PRAF coverage, or awareness only. When nothing clears, the run is
+candidate issue, a KRI/KPI, or awareness only. When nothing clears, the run is
 silent.
 
 Live: <https://emergingtechrisk.com/Readiness-Signal/>

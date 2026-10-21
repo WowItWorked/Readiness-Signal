@@ -99,7 +99,7 @@
     "section": { "enum": ["executive_visibility", "capability_shift", "regulatory_trajectory"] },
     "domain": { "enum": ["cyber", "fraud", "ai", "data", "resilience", "third_party", "risk_quantification"] },
     "source_class": { "enum": ["news", "regulator", "standards_body", "industry_trade", "vendor_threat_research", "research_analysis"] },
-    "mechanism": { "enum": ["candidate_issue", "kri_kpi", "praf_coverage", "awareness_only"] },
+    "mechanism": { "enum": ["candidate_issue", "kri_kpi", "awareness_only"] },
     "source": {
       "type": "object",
       "additionalProperties": false,

@@ -10,7 +10,13 @@ export const SOURCE_CLASSES = Object.freeze([
 ]);
 
 /** Mechanism order also drives id numbering within a section. */
-export const MECHANISMS = Object.freeze(['candidate_issue', 'kri_kpi', 'praf_coverage', 'awareness_only']);
+/** Mechanisms an item may carry (FILTER.md §6.2). `praf_coverage` was retired on 2026-10-21 (§6.3). */
+export const MECHANISMS = Object.freeze(['candidate_issue', 'kri_kpi', 'awareness_only']);
+/**
+ * Keys of a run record's mechanism_distribution. runs.json is append-only and every record carries
+ * praf_coverage, so the key stays: a retired count that is always 0 from 2026-10-21 (FILTER.md §6.3).
+ */
+export const RUN_MECHANISM_KEYS = Object.freeze(['candidate_issue', 'kri_kpi', 'praf_coverage', 'awareness_only']);
 
 export const RUN_STATUSES = Object.freeze(['published', 'silent', 'failed']);
 

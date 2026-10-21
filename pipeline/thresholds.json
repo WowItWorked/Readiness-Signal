@@ -216,7 +216,7 @@
       "element": "C1",
       "launch": false,
       "loosening_steps": [true],
-      "description": "When true, research meeting RA1-RA6 that invalidates a quantification assumption (loss distributions, scenario severities) can meet C1 even without a capability change or control failure; the mechanism is then limited to kri_kpi or praf_coverage. When false, it fails C1 (CS_NO_SPECIFIC_CHANGE)."
+      "description": "When true, research meeting RA1-RA6 that invalidates a quantification assumption (loss distributions, scenario severities) can meet C1 even without a capability change or control failure; the mechanism is then limited to kri_kpi. When false, it fails C1 (CS_NO_SPECIFIC_CHANGE)."
     }
   },
   "regulatory_trajectory": {

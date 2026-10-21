@@ -1,6 +1,6 @@
 // Pure helpers for scripts/publish.mjs: id assignment, item finalisation, run record, log, seen.
 
-import { DEDUP_OUTCOMES, MECHANISMS, SECTIONS } from './enums.mjs';
+import { DEDUP_OUTCOMES, MECHANISMS, RUN_MECHANISM_KEYS, SECTIONS } from './enums.mjs';
 import { normaliseUrl } from './url.mjs';
 
 export const SEEN_RETENTION_DAYS = 120;
@@ -10,7 +10,7 @@ export const isPublishedJudgment = (j) => j?.verdict === 'pass' && PUBLISHED_DED
 
 /**
  * Order draft items by section (executive_visibility, capability_shift, regulatory_trajectory),
- * then mechanism (candidate_issue, kri_kpi, praf_coverage, awareness_only), then the primary
+ * then mechanism (candidate_issue, kri_kpi, awareness_only), then the primary
  * source's published date (earliest first, undated last; FILTER.md §7.9), then draft order, and
  * number them NN = 01... Returns [{ draftIndex, id }] in publication order.
  */
@@ -74,7 +74,7 @@ export function stage2BySection(judgments) {
 }
 
 export function mechanismDistribution(items) {
-  const out = Object.fromEntries(MECHANISMS.map((m) => [m, 0]));
+  const out = Object.fromEntries(RUN_MECHANISM_KEYS.map((m) => [m, 0]));
   for (const it of items) if (MECHANISMS.includes(it.mechanism)) out[it.mechanism]++;
   return out;
 }

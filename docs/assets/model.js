@@ -38,12 +38,7 @@ export const MECHANISMS = Object.freeze([
     about: 'Confirm an indicator exists, is measured, and reaches someone who acts on it.',
   },
   {
-    key: 'praf_coverage', i: 2, label: 'PRAF coverage', short: 'Confirm coverage',
-    asks: 'Confirm the risk assessment framework represents this risk at all. If it does not, the issue language applies.',
-    about: 'Confirm the risk assessment framework represents this risk at all.',
-  },
-  {
-    key: 'awareness_only', i: 3, label: 'Awareness only', short: 'Resolved; know it',
+    key: 'awareness_only', i: 2, label: 'Awareness only', short: 'Resolved; know it',
     asks: 'Nothing to action. This is a complete resolution: know it, in case you are asked.',
     about: 'A complete resolution. Nothing to action; know it in case you’re asked.',
   },
@@ -544,7 +539,12 @@ export function prepareDropped(doc) {
       ...r,
       month: r.date.slice(0, 7),
       sec: SECTION_BY_KEY.has(r.section) ? r.section : 'gate',
-      label: typeof codes[r.code] === 'string' ? codes[r.code] : r.code,
+      // codes[code] is { label, test, explain } (a plain string in the first version of the file)
+      label: typeof codes[r.code] === 'string' ? codes[r.code] : (codes[r.code]?.label ?? r.code),
+      test: typeof codes[r.code]?.test === 'string' ? codes[r.code].test : null,
+      explain: typeof codes[r.code]?.explain === 'string' ? codes[r.code].explain : null,
+      near: typeof r.near === 'string' ? r.near : null,
+      alt: typeof r.alt === 'string' ? r.alt : null,
       href: safeHttps(r.url), // null unless a plain https URL: never a javascript: or data: link
     }));
   return { items };
@@ -933,7 +933,6 @@ export function barStats(data, now, days = 7) {
 const MECH_ASK = {
   candidate_issue: ['candidate issue', 'candidate issues'],
   kri_kpi: ['KRI / KPI check', 'KRI / KPI checks'],
-  praf_coverage: ['PRAF coverage check', 'PRAF coverage checks'],
 };
 
 /**

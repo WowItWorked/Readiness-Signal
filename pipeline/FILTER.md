@@ -1,7 +1,7 @@
 # FILTER.md: Readiness Signal selection standard
 
 **Status:** binding. Every scheduled live run (06:00, 10:00, 14:00 and 18:00 ET) applies it to every stage-1 survivor.
-**Version:** 2 (owner calibration of 2026-10-20, from a recall review of the first 62 live runs: blocked pages read at headline and lead, §2.7.5(c); the major digital-channel outage limb, E2a and E4f; authority actions that confirm a campaign, E2e; the escalation exception for exploited edge products, C6 and the escalation path; supplier-access compromise, C1; AI-agent containment, C4; standard setters' final guidance and published supervisory findings, §4.4.1, R3, M4; knob changes in `pipeline/thresholds.json` revision 2; §10 #104–#111; §11.1 #24). Version 1: launch; revised before the first run, including the owner decision of 2026-10-03 that admits newly issued formal rules and exam notices, §4.4.5 and §11, and the clarifications from its calibration of 2026-10-04: §3.3, §4.4.2, §10 #93–#96; and the owner decision of 2026-10-05 on material developments in stories never published: §5.8–§5.10, §4.3 C5 "Updates", §10 #97–#103, §11.2. **Threshold level:** read from `pipeline/thresholds.json` (`level`) at the start of every run.
+**Version:** 3 (owner decision of 2026-10-21: the `praf_coverage` mechanism is retired and never assigned; items take `candidate_issue`, `kri_kpi` or `awareness_only` (§6.1–§6.3, §6.8, §6.9, §7.5, §7.6, §7.9, §10 #47, #86 and item D, §11). Version 2: owner calibration of 2026-10-20, from a recall review of the first 62 live runs: blocked pages read at headline and lead, §2.7.5(c); the major digital-channel outage limb, E2a and E4f; authority actions that confirm a campaign, E2e; the escalation exception for exploited edge products, C6 and the escalation path; supplier-access compromise, C1; AI-agent containment, C4; standard setters' final guidance and published supervisory findings, §4.4.1, R3, M4; knob changes in `pipeline/thresholds.json` revision 2; §10 #104–#111; §11.1 #24). Version 1: launch; revised before the first run, including the owner decision of 2026-10-03 that admits newly issued formal rules and exam notices, §4.4.5 and §11, and the clarifications from its calibration of 2026-10-04: §3.3, §4.4.2, §10 #93–#96; and the owner decision of 2026-10-05 on material developments in stories never published: §5.8–§5.10, §4.3 C5 "Updates", §10 #97–#103, §11.2. **Threshold level:** read from `pipeline/thresholds.json` (`level`) at the start of every run.
 **Owner:** changed only by the owner, by commit. The routine agent never edits this file, `pipeline/thresholds.json`, `pipeline/RUNBOOK.md`, the lexicon or the source registry during a run.
 **Scope:** live collection only. This is **not** the backfill standard and is never applied to a historical pass (`pipeline/BACKFILL.md`).
 **Other files:** `SPEC.md` governs schemas, paths and process; `pipeline/RUNBOOK.md` governs run steps; this file governs judgment. If this file and `SPEC.md` appear to conflict, apply the stricter reading and add `FILTER-SPEC conflict: <phrase>` to the run notes. The launch choices in §11 that are stricter than SPEC (for example V4) are deliberate, not conflicts, and are never noted.
@@ -27,7 +27,7 @@ Conventions:
 5. **Route** (§4.1). RT form → test RT only. RT form includes a formal rule or exam notice, and a notice that only reminds of, restates, corrects, extends or re-publishes one (§4.4.2). Otherwise test EV, then CS; if both fail, record the primary route and the other section's first failed element as `[alt …]`.
 6. **Test every element** of the section: EV E1–E5 (§4.2); CS C1–C6, vulnerability rule first (§4.3); RT R1–R5 and X1–X6 (§4.4), or for a formal instrument R1, R1f, R2, R3f, R4f and R5 (§4.4.5). A formal instrument is tested for newness, not direction: a reminder, restatement, correction, extension or re-publication fails R3f (`RT_INSTRUMENT_NOT_NEW`), never R3. Unknown is not met (D1); borderline is drop (D5). The first failed element in ID order gives the code (§8.2). `NEAR`, and a knob on `NEAR` or `[alt …]`, only under §8.4. Two frequent cases: an actor adopting established techniques fails C1, never `NEAR C5`; and C5 Branch A's window runs from the first admissible establishment of the change (an earlier study of the same metric counts), while a later report inside that window still meets C5 (§4.3, D2).
 7. **Before any pass,** search the whole archive (§5.6). A match is a material update or `DD_SAME_STORY` (§5.4, §5.5).
-8. **Mechanism.** The first guard that holds, in the order `praf_coverage`, `candidate_issue`, `kri_kpi`, `awareness_only` (§6.2). None → `GL_NO_MECHANISM`.
+8. **Mechanism.** The first guard that holds, in the order `candidate_issue`, `kri_kpi`, `awareness_only` (§6.2). None → `GL_NO_MECHANISM`.
 9. **Sources.** Cite only candidates in this run's `candidates.json` (in an owner replay, only pages published before its window closed). Register a page found by search with `add-manual.mjs --extra` before citing it. A search-result summary is never evidence (§2.7.5).
 10. **Write** the fields (§7): nothing names or uniquely describes an institution or its product, no question, issue statement or rationale refers back to one, and nothing states an institution's or the sector's position or infers a lapse (V4, V5). No fact changes status or scope in paraphrase, and no wording is reused from §10 (V11, §10). Then run the item checklist (§7.10).
 11. **Record** the judgment (§8.1; reason grammar §8.4).
@@ -68,7 +68,7 @@ Otherwise it is dropped. These rules apply throughout:
 - **D1. Unknown means not met.** An element that cannot be established from the evidence available in this run fails.
 - **D2. Evidence must be public and present.**
   - **Facts about the development** (what happened, when, to what, how much, who said it) come only from the candidate's headline and lead, public pages opened under §2, and public reporting added under §2.7. Never from background knowledge, analogy or "this could lead to".
-  - **Judgments about the state of practice or of public knowledge** (C3, C4, C5, CI3, CI5, E4(b), K2, K4, P2, P3 and the R3 "before") may use professional knowledge, but the reason must cite a basis. For practice: a C3 basis type (a)–(d). For novelty: `new (search: <terms>; archive: none)`, or the earlier report found, which fails the element.
+  - **Judgments about the state of practice or of public knowledge** (C3, C4, C5, CI3, CI5, E4(b), K2, K4 and the R3 "before") may use professional knowledge, but the reason must cite a basis. For practice: a C3 basis type (a)–(d). For novelty: `new (search: <terms>; archive: none)`, or the earlier report found, which fails the element.
   - **A change measured by a statistic** (exploitation counts, time-to-exploit, loss figures): the novelty search covers the metric itself and its public trackers, not only the source's own framing, and the reason names the closest earlier measurement found (`closest: <publisher, date>`) or says none was found.
   - A source calling itself "first" or "new" is never a basis (D3).
 - **D3. Adjectives are not evidence.** "Unprecedented", "critical", "landmark", "first-ever", "major" and "sophisticated" establish nothing. Facts do: numbers, named systems, named techniques, named instruments and dates, confirmed by a named party. A vendor's own severity label (for example a CVSS score) is a fact about the label only.
@@ -397,7 +397,7 @@ Two branches:
 - **Branch A, adversary capability:** a new or materially changed adversary technique, tool, scale or speed.
 - **Branch B, control failure:** a control failed in a real event, or was defeated in a qualifying demonstration.
 
-**C3 and the branches.** Branch B always needs C3 (the brief attaches "invalidates an assumption others rely on" to the control-failure limb). At launch `cs_branch_a_requires_assumption` is `false`, as the brief's sentence reads ("has adversary capability changed, **or** has a control failed … in a way that invalidates an assumption others rely on"): Branch A needs C1, C2, C4, C5 and C6, and C3 is recorded where it holds. Every other Branch A element stays at its high launch value. Setting the knob to `true` is a tightening beyond the brief, under which Branch A must also meet C3. A Branch A pass that does not meet C3 has no control assumption to test, so its mechanism is `kri_kpi`, `praf_coverage` or `awareness_only`, never `candidate_issue` (§6, CI1).
+**C3 and the branches.** Branch B always needs C3 (the brief attaches "invalidates an assumption others rely on" to the control-failure limb). At launch `cs_branch_a_requires_assumption` is `false`, as the brief's sentence reads ("has adversary capability changed, **or** has a control failed … in a way that invalidates an assumption others rely on"): Branch A needs C1, C2, C4, C5 and C6, and C3 is recorded where it holds. Every other Branch A element stays at its high launch value. Setting the knob to `true` is a tightening beyond the brief, under which Branch A must also meet C3. A Branch A pass that does not meet C3 has no control assumption to test, so its mechanism is `kri_kpi` or `awareness_only`, never `candidate_issue` (§6, CI1).
 
 **Definitions:**
 - **Widely deployed:** used by many financial institutions (§4.2), or a mainstream enterprise product in its category: major operating systems, browsers, cloud platforms, identity providers, edge appliances and VPNs from leading vendors, and widely used open-source components.
@@ -759,7 +759,6 @@ Once a shift or a story is in the archive, later confirmed facts that show its c
 - **Exactly one mechanism per item.** It says what the item asks of the reader (site copy, SPEC §7.2):
   - **Candidate issue:** "Send the validation question to the owner. If the answer is no or unknown, raise the candidate issue."
   - **KRI / KPI:** "Confirm an indicator exists, is measured, and reaches someone who acts on it. If not, the issue language applies."
-  - **PRAF coverage:** "Confirm the risk assessment framework represents this risk at all. If it does not, the issue language applies."
   - **Awareness only:** "Nothing to action. This is a complete resolution: know it, in case you are asked."
 - **No quotas.** Tag each item on its own evidence (A7). `publish.mjs` logs the distribution of every run so that over-application is visible during calibration.
 - **`candidate_issue` is the tag most likely to be over-applied.** It requires a specific control, a specific failure mode and a resolving question, all articulable (§6.4). Doubt means it does not hold.
@@ -769,24 +768,18 @@ Once a shift or a story is in the archive, later confirmed facts that show its c
 
 Test the guards in this order and assign the **first** that holds in full:
 
-1. **`praf_coverage`**: P1–P4 (§6.3).
-2. **`candidate_issue`**: CI1–CI5 (§6.4).
-3. **`kri_kpi`**: K1–K4 (§6.5).
-4. **`awareness_only`**: AO1–AO3 (§6.6).
-5. **None holds:** drop with `GL_NO_MECHANISM`.
+1. **`candidate_issue`**: CI1–CI5 (§6.4).
+2. **`kri_kpi`**: K1–K4 (§6.5).
+3. **`awareness_only`**: AO1–AO3 (§6.6).
+4. **None holds:** drop with `GL_NO_MECHANISM`.
+
+`praf_coverage` is retired (§6.3) and is never assigned.
 
 Apply the tie-breakers (§6.7) while testing. The pass reason names the guard that held and, where a tempting earlier guard failed, the element that failed it (for example `CI5 fails: reminder only`).
 
-### 6.3 `praf_coverage` guard (P1–P4, all required)
+### 6.3 Retired: `praf_coverage` (owner decision 2026-10-21)
 
-"Suggests a risk that may not be represented in the risk assessment framework at all."
-
-- **P1.** The risk stated as cause → event → consequence.
-- **P2.** The nearest existing category in a conventional operational and technology risk taxonomy (for example external fraud, execution and process failure, business disruption, third-party failure, information security).
-- **P3.** The property that category would lose: what makes the risk dangerous that mapping it there would miss. A new **cause** of an existing event type fails P3 (deepfake impersonation is still external fraud). A new **event type or pathway** passes (authorised and authenticated actions taken by a non-human agent within its delegation; data captured now for decryption later).
-- **P4.** Currency: this development establishes the risk as current, either because an authority names it or because it has occurred. It is not speculative.
-
-"May be under-weighted" is not "not represented at all".
+The fourth mechanism, which asked whether a risk is represented in the risk assessment framework at all, is retired: it is never assigned, and neither the site nor any generated field uses its terminology. A development that suggests a risk outside common taxonomies is tagged by the remaining guards: `candidate_issue` when a specific control, failure mode and resolving question can be articulated (CI1–CI5), `kri_kpi` when a measurable quantity follows (K1–K4), otherwise `awareness_only` on its AW basis (AO1–AO3). Run records keep `praf_coverage` in `mechanism_distribution` as a retired count that is always 0, because `docs/data/runs.json` is append-only.
 
 ### 6.4 `candidate_issue` guard (CI1–CI5, all required)
 
@@ -800,7 +793,6 @@ Apply the tie-breakers (§6.7) while testing. The pass reason names the guard th
 
 Not `candidate_issue`:
 - general exhortations ("review AI risk");
-- risks that are not represented at all (`praf_coverage`);
 - measurement gaps (`kri_kpi`);
 - controls the development does not touch;
 - questions that cannot be answered yes, no or with a number.
@@ -828,7 +820,7 @@ Not `candidate_issue`:
 
 ### 6.7 Tie-breakers
 
-- **T1. Represented risk, control gap.** If the risk is represented (P3 fails) and the gap is in how a control or scenario treats it, test `candidate_issue`, not `praf_coverage`.
+- **T1. Control gap.** If the gap is in how a control or scenario treats a risk, test `candidate_issue`.
 - **T2. Dose, not defeat.** A change in rate, speed, volume, scale or concentration points to `kri_kpi`, unless a specific control is shown defeated.
 - **T3. Established failure mode.** A failure mode publicly established before this development fails CI5. Consider `kri_kpi` if a quantity changed, otherwise AW2.
 - **T4. Supervisor-reported gap.** An authority's published finding that a specific control is commonly deficient meets CI2 and CI3.
@@ -841,7 +833,6 @@ Not `candidate_issue`:
 |---|---|---|---|
 | `candidate_issue` | resolves whether the control weakness (CI1–CI2) is present | "Where/If [the control weakness], [consequence]" | `null` |
 | `kri_kpi` | asks whether the metric (K1) is measured, against a threshold, and reaches someone who acts | "Where/If [the indicator is not measured or does not reach someone who acts], [consequence of not seeing the change]" | `null` |
-| `praf_coverage` | asks whether the framework represents the risk (P1) as such | "Where/If [the framework does not represent the risk], [consequence of it going unassessed]" | `null` |
 | `awareness_only` | `null` | `null` | required (§7.7) |
 
 ### 6.9 Formal rules and exam notices
@@ -850,7 +841,6 @@ A new formal instrument (§4.4.5) gets its mechanism like any item: the §6.2 or
 
 - **`candidate_issue`** only when a specific control can be named whose current design is plausibly non-compliant with a specific new requirement, and one question resolves it. CI1 names the control in common use. CI2 is the gap between that design and the requirement, in one clause, taken from the instrument's text. CI3 holds where the non-compliant design is plausibly common because the requirement goes beyond an earlier expectation, a product default or documented practice (cite the basis). CI4 is the resolving question. CI5 holds only for a requirement this instrument introduces, not one carried over from an earlier instrument. "Is the organisation compliant?" names no control and fails CI1.
 - **`kri_kpi`** is typical for a new reporting, notification or measurement duty. K1 is the quantity the duty makes the organisation measure (incidents classified within the required time, notifications filed against a deadline); K4 is met by the instrument.
-- **`praf_coverage`** is typical where the instrument regulates a risk category for the first time. P1–P4 still apply in full: the instrument naming the risk meets P4, and P3 still needs a new event type or pathway.
 - **`awareness_only`** fits an instrument that codifies established practice (AW2: its expectations match what earlier guidance or common frameworks already describe) or removes an obligation (AW3: a policy-level removal that no institution-level control alters). The rationale names the earlier expectation the instrument matches, never anyone's compliance with it (§7.7).
 - Validation questions and issue statements name the requirement's content in category form (a 24-hour notification trigger, a major-incident threshold, a tested exit plan). They never name the instrument's title, number, date or issuer, and they stay generic and institution-neutral (§7.5 rule 7, §7.6).
 
@@ -934,7 +924,7 @@ Good: a deepfaked payment instruction is `["fraud", "ai"]`. Bad: `["ai", "fraud"
 
 ### 7.5 `validation_question`
 
-1. Present for `candidate_issue`, `kri_kpi` and `praf_coverage`; `null` for `awareness_only`.
+1. Present for `candidate_issue` and `kri_kpi`; `null` for `awareness_only`.
 2. One question ending with "?", 40 words or fewer (aim for 15–30), with exactly one question mark and at most one "and", used to attach evidence or a date. A second yes/no clause ("…, and is it reported?") is a second question; the `kri_kpi` shape in rule 6 is the one exception. No lists of sub-questions.
 3. **Paste-ready:** it makes sense pasted into an email to the owner of a control, metric or framework who has not seen the item. Name the thing itself ("vendor-pushed updates to endpoint security agents"); never "this", "these", "the above", "described above", "aforementioned" or "the incident described".
 4. **It resolves the uncertainty:** answerable yes, no or unknown, ideally with evidence or a date. Its "no" or "unknown" answer is exactly what makes the issue statement true. Do not open with Why, or with How other than How many, How much, How long, How often or How quickly; never "what is … doing" or "what steps". Never ask whether the organisation has considered, is aware of, is ready or prepared for, or is confident, comfortable or satisfied about something: those answers settle nothing about a control.
@@ -942,7 +932,6 @@ Good: a deepfaked payment instruction is `["fraud", "ai"]`. Bad: `["ai", "fraud"
 6. **Shape by mechanism:**
    - candidate_issue: "Does [the control] [withstand the failure mode], and [evidence or date]?"
    - kri_kpi: "Is [the indicator] measured, against a threshold, and reported to [the role that acts]?"
-   - praf_coverage: "Does the risk assessment framework include a risk covering [the risk], and when was it last assessed?"
 
    The `kri_kpi` indicator counts the organisation's own systems, services, transactions, providers or exposures ("newly known-exploited vulnerabilities on the organisation's internet-facing systems, against the number remediated"); an external population count (all exploited vulnerabilities worldwide) is its data source (K2), never the indicator, because a "yes" to measuring it settles nothing about the organisation.
 7. **Generic:** the question makes sense at an institution untouched by the development. Never refer to the reader's own incident, finding, supervisor or remediation ("its lead supervisor requested", "after the September intrusion"). Never refer to the development, its date or its victim ("following the 30 September outage", "unlike the UK lender", "exposure to the [vendor] token theft"), and never presuppose a weakness ("its own weaknesses"). Prefer the class of system to a vendor product ("internet-facing email security gateways", not "[Product] appliances"); name a product only when the item is about that product, and then ask whether it is in use before asking about its state. A question whose only content is whether a fixed version is installed ("older than version 2.16.1.0") is patch management (C6), never a `candidate_issue` question: the control is what a fixed version does not settle. Rule 7 applies to the issue statement too (§7.6).
@@ -963,7 +952,7 @@ Good (candidate_issue): "Does authorisation of high-value payments require confi
 
 ### 7.6 `candidate_issue_statement`
 
-1. Present for `candidate_issue`, `kri_kpi` and `praf_coverage`; `null` for `awareness_only`. The site shows it after the line "If the answer is no or unknown, consider this language:".
+1. Present for `candidate_issue` and `kri_kpi`; `null` for `awareness_only`. The site shows it after the line "If the answer is no or unknown, consider this language:".
 2. One sentence of 70 words or fewer, beginning `Where ` or `If `: the conditional clause states the weakness, then a comma, then the consequence clause says what can happen, and to what.
 3. Conditional throughout. It never asserts that the weakness exists anywhere, and never uses "is already …" to assert that the weakness or harm exists.
 4. The conditional clause is the validation question's "no" or "unknown" answer restated as a condition. If they do not match, rewrite one of them.
@@ -1015,7 +1004,7 @@ Good (AW1): "The speech signals intent only: no consultation, definition or time
 
 - **Fields to write:** `section`, `claim`, `domains`, `source_class` (equal to `sources[0].source_class`), `mechanism`, `interpretation`, `validation_question`, `candidate_issue_statement`, `awareness_rationale`, `sources`, `update_of` (`null` unless a material update), `candidate_ids`.
 - **Never write** `id`, `timestamp` or `backfilled`; `publish.mjs` assigns them.
-- **Order:** section (executive_visibility, capability_shift, regulatory_trajectory), then mechanism (candidate_issue, kri_kpi, praf_coverage, awareness_only), then the earliest published date of the primary source. `publish.mjs` numbers ids in section and mechanism order.
+- **Order:** section (executive_visibility, capability_shift, regulatory_trajectory), then mechanism (candidate_issue, kri_kpi, awareness_only), then the earliest published date of the primary source. `publish.mjs` numbers ids in section and mechanism order.
 
 ### 7.10 Checklist before writing `decisions.json`
 
@@ -1222,7 +1211,7 @@ Each loosening step is one step per review, applied by the owner. Launch values 
 | `cs_accept_preprints` | C2 | false | true | admits preprints with released code or data, tested against deployed products |
 | `cs_novelty_window_days` | C5 Branch A | 30 | 90 | admits shifts recognised more slowly |
 | `cs_routine_vuln_exceptions` | C6 | 4 exceptions (current: 5, `bank_common_escalation` added by owner calibration 2026-10-20) | add `pre_patch_mass_exploitation` | admits mass exploitation of a widely deployed product with no patch for 72 hours or more |
-| `cs_admit_measurement_evidence` | C1 | false | true | admits research (RA1–RA6) that invalidates a quantification assumption; the mechanism is then limited to `kri_kpi` or `praf_coverage` |
+| `cs_admit_measurement_evidence` | C1 | false | true | admits research (RA1–RA6) that invalidates a quantification assumption; the mechanism is then limited to `kri_kpi` |
 | `rt_speaker_tier` | R2 | `principal` | `executive_director` | adds UK executive directors, US division directors, ECB directors general and equivalents |
 | `rt_standard_setters` | R1, R2 | `consultations` (current: `consultations_and_final_guidance`, owner calibration 2026-10-20) | `consultations_final_guidance_and_principal_speeches` | `consultations_and_final_guidance` admits standard setters' final standards, principles, guidance and sound-practice reports as soft signals; the next step adds speeches by their chairs and secretaries-general |
 | `rt_cyber_agencies` | R2 | false | true | admits US, UK and EU cyber, technology-standards and AI authorities' consultation drafts and policy direction |
@@ -1254,7 +1243,7 @@ Window: the first 28 scheduled runs (seven days).
 1. **Run `npm run calibration`** over the window and record: items per day, silent-run and failed-run rates, tested and passed counts by section, mechanism distribution (warning when `candidate_issue` exceeds `candidate_issue_share_warn`), reason-code tallies by section, and `S1-GAP` notes. Near-misses: the report counts `NEAR` reasons by element and knob (`[M#] NEAR` included), knob-bearing `[alt …]` markers, and the stories near each knob, which is the count §9.6(a) uses; and, as prominently, the stories near each fixed element (`NEAR` with no knob), which is the count the fixed-element route uses. A window whose near-misses are all on fixed elements gives the knob route nothing to act on: review those stories under the fixed-element route rather than reading the silence as evidence about any knob.
 2. **Precision.** Rate every published item: Keep; Wrong section; Wrong mechanism; Should not have passed (name the element); Writing defect (name the rule).
 3. **Recall.** Rate every `NEAR` drop, plus a random sample of other stage-2 drops: 10% of each section's drops, minimum 20 (all if fewer). Rate each: Correct drop, or Should have passed (name the element that was too strict). For a gate `NEAR` (§8.4), also judge whether the section test would have passed. Also rate every RT drop of a new formal instrument (R3f held): would it have cleared EV or CS on its facts? These ratings are the evidence for `formal_instrument_scope` (§9.6), which no marker carries.
-4. **Mechanism audit.** Re-test every `candidate_issue` against CI1–CI5, every `kri_kpi` against K1–K4, every `praf_coverage` against P1–P4, and every `awareness_only` rationale against AO1–AO3.
+4. **Mechanism audit.** Re-test every `candidate_issue` against CI1–CI5, every `kri_kpi` against K1–K4, and every `awareness_only` rationale against AO1–AO3.
 5. **Dedup audit.** Review every `DD_SAME_STORY`, material update and cluster, and every `CS_NOT_NEW` or `RT_NO_DIRECTION` that cites an archive id. Look for duplicates published, missed updates, split clusters and story splitting.
 6. **Neutrality audit.** Read the generated text, source headlines, reasons and notes for breaches the lint cannot catch: positioning words, named financial institutions, unique descriptors, evaluative language about any institution, sector-level position statements. Fix findings by tightening §7 wording. This audit, not NEAR counts, decides `claims_may_name_institutions`.
 7. **Launch choices.** Walk §11: for each choice, its NEAR count and ratings, and a keep-or-loosen decision.
@@ -1286,7 +1275,7 @@ Window: the first 28 scheduled runs (seven days).
 
 ## 10. Worked boundary examples
 
-All candidates are fictional composites. Bracketed roles stand in for names. None describes any real institution's position. Do not reuse this wording in live items: stock phrasing makes items look alike, which is the failure in §1.2. (Checked: `selfcheck.mjs` errors on any run of 8 or more words from this section in a generated field, the §7.5 rule 6 question shapes and the `praf_coverage` issue opener aside.)
+All candidates are fictional composites. Bracketed roles stand in for names. None describes any real institution's position. Do not reuse this wording in live items: stock phrasing makes items look alike, which is the failure in §1.2. (Checked: `selfcheck.mjs` errors on any run of 8 or more words from this section in a generated field, the §7.5 rule 6 question shapes aside.)
 
 ### 10.1 Decision table
 
@@ -1338,7 +1327,7 @@ All candidates are fictional composites. Bracketed roles stand in for names. Non
 | 44 | A large bank's customer channels are down for two days after a core-platform migration; millions affected; general press | PASS | executive_visibility | awareness_only | `EV_PASS_DISRUPTION` | E4b: core migrations are common. CI1 and CI2 fail: the cause is given only as "migration" (T5). AW2 and AW4. The claim uses the category form. |
 | 45 | [UK deputy governor] signals future expectations on firms' reliance on a few AI model providers; no consultation yet | PASS | regulatory_trajectory | awareness_only | `RT_PASS_SPEECH` | R1–R5 met. AW1 (rationale in §7.7). |
 | 46 | Six weeks after #45: the same authority publishes a discussion paper proposing that firms identify and report dependencies on AI model providers | PASS | regulatory_trajectory | kri_kpi | `RT_PASS_CONSULTATION` | `[M4]`, `update_of` = #45's item. K1: count and share of AI use cases dependent on each external model provider. |
-| 47 | [Head of a US federal banking agency] tells a congressional committee the agency will propose standards for AI agents that initiate payments for customers | PASS | regulatory_trajectory | praf_coverage | `RT_PASS_TESTIMONY` | Full item D |
+| 47 | [Head of a US federal banking agency] tells a congressional committee the agency will propose standards for AI agents that initiate payments for customers | PASS | regulatory_trajectory | awareness_only | `RT_PASS_TESTIMONY` | Full item D |
 | 48 | A UK supervisor publishes thematic findings that firms' severe-but-plausible scenarios commonly exclude a major cloud provider failing across several regions at once | PASS | regulatory_trajectory | candidate_issue | `RT_PASS_SUPERVISORY_DIRECTION` | T1: the risk is represented and scenario design is the control. T4 meets CI2 and CI3. |
 | 49 | Central-bank official: AI brings opportunities and risks, and firms must manage them responsibly | DROP | regulatory_trajectory | — | `RT_NO_DIRECTION` | R3: an established position |
 | 50 | A US agency issues a request for information on banks' use of AI in fraud detection; no direction signalled | DROP | regulatory_trajectory | — | `RT_NO_DIRECTION` | R3; not a knob near-miss |
@@ -1377,7 +1366,7 @@ All candidates are fictional composites. Bracketed roles stand in for names. Non
 | 83 | A UK authority's final supervisory statement on cloud exit planning, issued 11 days before the run, is first collected now | DROP | — | — | `GL_STALE` | G7: the statement itself is dated 11 days before the slot. `NEAR G7/max_event_age_days`: it would clear G7 at 14 days. Section tests not run (§8.4). |
 | 84 | A federal register publishes today a final rule that its issuing agency released 10 days before the run; the release itself was never collected | DROP | regulatory_trajectory | — | `RT_INSTRUMENT_NOT_NEW` | G7 dates the register entry (today). R3f: the first issuance is 10 days before the slot. `NEAR R3f/max_event_age_days` because R1, R1f, R2, R4f and R5 hold and the release would be new at 14 days. Contrast #83, where the instrument's own document is the candidate. |
 | 85 | An EU supervisory authority extends the comment period on its consultation on AI governance expectations by four weeks | DROP | regulatory_trajectory | — | `RT_INSTRUMENT_NOT_NEW` | R3f: an extension is a notice about a consultation (§4.4.2), not R1. Never NEAR. If the consultation were an item, the extension would be `DD_SAME_STORY` (§5.4). |
-| 86 | A US banking agency issues final standards for AI agents that initiate payments for customers; its consultation was never an item, and the testimony in #47 is | PASS | regulatory_trajectory | praf_coverage | `RT_PASS_FORMAL_RULE` | `[M4]`, `update_of` = #47's item, the latest in its chain: a stated intention issued as a final instrument (§5.4). R1, R1f, R2, R3f (the instrument itself is not in the archive) and R5 hold; R4f duties for agent-initiated payments. A newly regulated risk category (§6.9): P4 met by the instrument; P2 and P3 as in item D. |
+| 86 | A US banking agency issues final standards for AI agents that initiate payments for customers; its consultation was never an item, and the testimony in #47 is | PASS | regulatory_trajectory | §6.2 decides | `RT_PASS_FORMAL_RULE` | `[M4]`, `update_of` = #47's item, the latest in its chain: a stated intention issued as a final instrument (§5.4). R1, R1f, R2, R3f (the instrument itself is not in the archive) and R5 hold; R4f duties for agent-initiated payments. A newly regulated risk category (§6.9): `kri_kpi` where the standards set a reporting or measurement duty, `candidate_issue` where a named control falls short of a stated duty. |
 | 87 | A US banking agency rescinds, with immediate effect and no replacement, its guidance requiring supervised banks to notify it before using public blockchains in payment activities; the rescission was issued 2 days before the run | PASS | regulatory_trajectory | awareness_only | `RT_PASS_FORMAL_RULE` | R3f: the rescission of a technology-risk instrument is new, because it changes obligations (§4.4.2). R4f the prior-notice duty removed. AW3: a policy-level removal; no institution-level control, metric or framework gap follows from an obligation ceasing. |
 | 88 | A global standard setter publishes final principles on operational resilience for AI-dependent services | DROP | regulatory_trajectory | — | `RT_INSTRUMENT_INELIGIBLE` | R2 admits standard setters only for the consultative documents their R1 row lists; final standards are an instrument R1 does not admit (§4.4.5). No knob step admits them, so not NEAR. |
 | 89 | A national cyber agency issues a final rule requiring critical-infrastructure entities, financial firms among them, to report cyber incidents within 72 hours | DROP | regulatory_trajectory | — | `RT_SPEAKER_INELIGIBLE` | R2: a cyber agency while `rt_cyber_agencies` is `false`. Not NEAR: at `true` its R1 row admits only consultation drafts and statements of direction. At `formal_instrument_scope` `new_any_section` it would also be tested under EV and CS on its facts (§4.1). |
@@ -1488,7 +1477,7 @@ Reason: `E1 outage confirmed by provider; E2a 9h, several banks; E3 wire + 2 bus
 
 Reason: `[M1] C1 failover depended on control plane in failed region; C2 provider report; C3 basis b: regions fail independently; C4 recommended architecture; C5 new (provider's first disclosure of the cause; archive: outage item only); C6 n/a | candidate_issue CI1-5`
 
-**D. regulatory_trajectory · praf_coverage (#47)**
+**D. regulatory_trajectory · awareness_only (#47)**
 
 ```json
 {
@@ -1496,14 +1485,14 @@ Reason: `[M1] C1 failover depended on control plane in failed region; C2 provide
   "claim": "A US banking agency head told legislators the agency will propose standards for payment-initiating AI agents.",
   "domains": ["ai", "fraud"],
   "source_class": "regulator",
-  "mechanism": "praf_coverage",
+  "mechanism": "awareness_only",
   "interpretation": [
     { "domain": "ai", "text": "Supervisory attention is moving from AI as a decision aid to AI as an actor: agents holding delegated authority to move money create payments that are authorised and authenticated yet not directed by the customer when executed." },
     { "domain": "fraud", "text": "Fraud categories assume either an unauthorised party or a deceived customer. An agent acting within its delegation but against the customer's interest fits neither, so loss attribution, reimbursement and detection rules have no clear home." }
   ],
-  "validation_question": "Does the risk assessment framework include a risk covering payments initiated by AI agents acting within customer-delegated authority, and when was it last assessed?",
-  "candidate_issue_statement": "If the risk assessment framework does not represent payments initiated by AI agents under customer delegation, losses from agent error or manipulation fall between fraud and process categories, and neither controls nor liability positions are assessed before supervisory standards arrive.",
-  "awareness_rationale": null,
+  "validation_question": null,
+  "candidate_issue_statement": null,
+  "awareness_rationale": "The agency head has stated an intention to propose standards for payment-initiating AI agents; no proposal text, definition or timetable has been published, so no control, metric or framework change can be tested yet (AW1). This changes when the agency publishes the proposal and its duties for agent-initiated payments.",
   "sources": [
     { "publication": "[Congressional committee]", "url": "https://example.org/hearings/ai-payments", "headline": "[hearing title as published]", "published": "2026-10-01", "source_class": "regulator" }
   ],
@@ -1512,7 +1501,7 @@ Reason: `[M1] C1 failover depended on control plane in failed region; C2 provide
 }
 ```
 
-Reason: `R1 testimony; R2 agency head, US; R3 before: no stated expectations for AI agents (search: agency AI agent payments; archive: none) / signal: standards to be proposed; R4 AI agents initiating payments; R5 hearing record public | praf_coverage P1-4: P2 external fraud; P3 authorised non-human delegate`
+Reason: `R1 testimony; R2 agency head, US; R3 before: no stated expectations for AI agents (search: agency AI agent payments; archive: none) / signal: standards to be proposed; R4 AI agents initiating payments; R5 hearing record public | awareness_only AW1: intention only, no text to test`
 
 **E. regulatory_trajectory · awareness_only · leading bank executive (#57)**
 
@@ -1544,7 +1533,7 @@ Reason: `R1 testimony; R2b G-SIB CEO (X1); R3b sector call: platforms share scam
 
 ## 11. Launch choices beyond the brief
 
-The brief fixes the three entry tests, the four mechanisms, the six source classes, the hard constraints, and the instruction to set all thresholds deliberately high at launch and loosen them after a first-week calibration review. The rules below go **beyond the brief's literal text**: each is this standard's choice of how to make a test checkable at a high bar, except the owner decisions marked as such, which depart from the brief's text on the build owner's instruction. Every one has a knob in `pipeline/thresholds.json`, set at launch to its strictest value except where an owner decision set it (#2, #11). The owner reviews this list at the first-week calibration (§9.5 step 7); loosening follows §9.6. The agent applies the knobs as set and never cites this section to argue a pass.
+The brief fixes the three entry tests, the mechanisms (four in the brief; the owner retired `praf_coverage` on 2026-10-21, §6.3), the six source classes, the hard constraints, and the instruction to set all thresholds deliberately high at launch and loosen them after a first-week calibration review. The rules below go **beyond the brief's literal text**: each is this standard's choice of how to make a test checkable at a high bar, except the owner decisions marked as such, which depart from the brief's text on the build owner's instruction. Every one has a knob in `pipeline/thresholds.json`, set at launch to its strictest value except where an owner decision set it (#2, #11). The owner reviews this list at the first-week calibration (§9.5 step 7); loosening follows §9.6. The agent applies the knobs as set and never cites this section to argue a pass.
 
 ### 11.1 Choices with a knob
 
@@ -1565,7 +1554,7 @@ The brief fixes the three entry tests, the four mechanisms, the six source class
 | 13 | Preprints never sufficient, and never start the novelty window (C2, C5) | as 12 | `cs_accept_preprints`: false → true | admits preprints with released code or data, tested against deployed products |
 | 14 | A capability change must be no older than 30 days since first admissible establishment (C5 Branch A) | "changed" | `cs_novelty_window_days`: 30 → 90 | admits shifts recognised more slowly |
 | 15 | Exploited vulnerabilities are routine unless an exception holds (C6) | "control has failed … invalidates an assumption" | `cs_routine_vuln_exceptions`: 4 exceptions → `bank_common_escalation` added 2026-10-20 → add `pre_patch_mass_exploitation` | admits mass exploitation of a widely deployed product unpatched for 72 hours or more |
-| 16 | Measurement-only research excluded from CS (C1) | capability or control change | `cs_admit_measurement_evidence`: false → true | admits research invalidating a quantification assumption, mechanism limited to `kri_kpi` or `praf_coverage` |
+| 16 | Measurement-only research excluded from CS (C1) | capability or control change | `cs_admit_measurement_evidence`: false → true | admits research invalidating a quantification assumption, mechanism limited to `kri_kpi` |
 | 17 | Speeches count only from principals (R2) | "speeches, testimony" | `rt_speaker_tier`: `principal` → `executive_director` | adds senior staff such as executive directors and directors general |
 | 18 | RT issuers limited to financial authorities and legislatures; cyber, standards and AI agencies excluded (R2) | "speeches, testimony, consultation papers, supervisory direction (US, UK, EU)" | `rt_cyber_agencies`: false → true | admits US, UK and EU cyber, technology-standards and AI authorities' consultation drafts and policy direction |
 | 19 | Global standard setters admitted for consultative documents only (R1, R2) | names FSB, BIS, CPMI, IOSCO as a source class; "(US, UK, EU)" | `rt_standard_setters`: `consultations` → `consultations_and_final_guidance` (taken 2026-10-20, §11.1 #24) → `consultations_final_guidance_and_principal_speeches` | adds their final guidance as soft signals, then speeches by their chairs and secretaries-general. Launch is not `none`, because `none` leaves the standards_body class almost no route to publication |
@@ -1588,7 +1577,7 @@ These turn the brief's own words into checkable elements. They change only throu
 | R1f breadth, R3f newness (first issuance in final form, apart from its `max_event_age_days` window) and the not-new list, R4f technology-risk substance | the owner's decision of 2026-10-03: "a newly issued formal rule or exam notice"; "reminders and restatements of existing rules do not count" |
 | R3b and X2–X6: only a bank executive's sector-direction statements count | the hard constraint on institutions' positions |
 | G10 and V1–V11 (except V4's claim scope) | the hard constraints |
-| CI1–CI5 (including the CI5 reminder test), K4, P3, AO1–AO3, and `GL_NO_MECHANISM` | "reserve candidate_issue for items where a specific control weakness can actually be articulated"; awareness_only "is not a fallback" |
+| CI1–CI5 (including the CI5 reminder test), K4, AO1–AO3, and `GL_NO_MECHANISM` | "reserve candidate_issue for items where a specific control weakness can actually be articulated"; awareness_only "is not a fallback" |
 | §5: whole-archive same-story check, M1–M6 (apart from M2's factor), one story one item | the owner's dedup decision and "one story … does not produce multiple entries" |
 | **Owner decision (2026-10-05).** §5.8: a material development (M1–M5, first public within `max_event_age_days`) in a story never published, whose record began within 180 days and meets E3 cumulatively, is tested with C5 and G7 dating the new fact; §4.3 C5 "Updates" | the owner's instruction that material updates to impactful stories are surfaced as updates even when the original is older than the novelty window |
 | **Owner decision (2026-10-05).** §5.9: a capability shift or control failure first established within 365 days that no archive item represents meets C5 by the archive gap at its next fresh, admissible, E3-prominent development. §5.10: confirmed new counts of organisations responsible or affected, and confirmed new extents of impact, publish as M2 trend updates | the owner's instruction that a shift not yet captured for the year is a materially important data point, and that reported concentration and depth of impact are data points that show trends |
