@@ -276,37 +276,33 @@ function barCard(d) {
 
 /**
  * The dashboard's opening (owner change 2026-10-20, replacing the four-reading brief): what the
- * site is for, the bar an item must clear, and what each item asks of the reader.
+ * site is for, the bar an item must clear, and what each item asks, kept short; About has the rest.
  */
 function introCard() {
-  const tests = M.SECTIONS.map((S) => `<li class="intro-test"><span class="badge badge-22 badge-${S.mark}" aria-hidden="true">${S.n}</span><span><span class="intro-th">${esc(S.title)}</span> ${esc(INTRO_TESTS[S.key])}</span></li>`).join('');
-  const asks = M.MECHANISMS.map((m) => `<li class="intro-ask"${mechAttr(m.key)}>${mechTag(m.key)}<span class="intro-at">${esc(m.about)}</span></li>`).join('');
+  const tests = M.SECTIONS.map((S) => `<li class="intro-test"><span class="badge badge-22 badge-${S.mark}" aria-hidden="true">${S.n}</span><span><span class="intro-th">${esc(S.title)}:</span> ${esc(INTRO_TESTS[S.key])}</span></li>`).join('');
+  const asks = M.MECHANISMS.map((m) => `<li class="intro-ask"${mechAttr(m.key)}>${mechTag(m.key)}<span class="intro-at">${esc(m.short)}</span></li>`).join('');
   return `<section class="card intro" aria-labelledby="intro-h">
-    <div class="intro-lead">
-      <h2 class="h-19" id="intro-h">What this site is for</h2>
-      <p class="intro-p">Readiness Signal reads public sources on technology risk in financial services four times a day and publishes only the developments that should change what a risk or control owner checks, measures, covers or is ready to answer. Most runs publish nothing: a silent run is a result, not a gap.</p>
-    </div>
+    <h2 class="h-19" id="intro-h">What this site is for</h2>
+    <p class="intro-p">Public sources on technology risk in financial services, read four times a day. Only what should change what a risk or control owner checks is published; most runs publish nothing.</p>
     <div class="intro-cols">
       <div class="intro-col">
-        <h3 class="intro-h3">The thresholds</h3>
-        <p class="intro-s">An item is published only if it clears one of three tests. Unknown counts as not met; borderline counts as a drop.</p>
+        <h3 class="intro-h3">The thresholds <span class="intro-s">Unknown is not met; borderline is a drop.</span></h3>
         <ul class="intro-list">${tests}</ul>
       </div>
       <div class="intro-col">
-        <h3 class="intro-h3">The recommendations</h3>
-        <p class="intro-s">Each item carries one ask, and none states or implies any institution’s position.</p>
-        <ul class="intro-list">${asks}</ul>
+        <h3 class="intro-h3">The recommendations <span class="intro-s">One ask per item.</span></h3>
+        <ul class="intro-list intro-asks">${asks}</ul>
+        <a class="intro-more" href="#about"${navAttrs('about')}>How the bar and the asks work</a>
       </div>
     </div>
-    <a class="intro-more" href="#about"${navAttrs('about')}>How the bar and the asks work</a>
   </section>`;
 }
 
-/** One line per entry test for the dashboard's opening: what clears it, in short. */
+/** One short line per entry test for the dashboard's opening. */
 const INTRO_TESTS = {
-  executive_visibility: 'A material outage, breach, loss, penalty or confirmed campaign, reported by general press, that a director would ask about unprompted.',
-  capability_shift: 'Attackers can now do something new, or a control others rely on has failed, including repeated or pre-patch exploitation of widely used edge devices.',
-  regulatory_trajectory: 'A signal of where US, UK or EU supervisors are heading: a speech, consultation, supervisory finding, or a newly issued rule or exam notice.',
+  executive_visibility: 'a material incident a director would ask about.',
+  capability_shift: 'a new attack capability or a failed control.',
+  regulatory_trajectory: 'where US, UK or EU supervisors are heading.',
 };
 
 function dashboardMain(st) {
