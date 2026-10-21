@@ -96,6 +96,27 @@ edition counts. A silent run is logged but is **not** an edition.
 } ] }
 ```
 
+### 3.3a `docs/data/dropped.json` (owner request 2026-10-21)
+
+The Dropped page's data: in-domain stories the filter judged and dropped, with the logged reason, for
+audit. Derived, never hand-edited: `node pipeline/scripts/dropped.mjs` (`pipeline/lib/dropped.mjs`)
+rebuilds it whole from the live run logs and the backfill audit logs after every publish (RUNBOOK
+step 13, BACKFILL.md §6). Left out: off-domain, marketing, stale, round-up, advocacy and same-story
+drops, backfill out-of-window and out-of-section drops, and any story whose URL is a source of a
+published item. Cluster members fold into their lead (`more_sources`). One row per story URL: a
+backfill judgment replaces a live one, and a later row an earlier one. A headline that names a
+financial institution (`institutions.mjs`) is withheld (`headline: null`, `headline_withheld: true`).
+
+```json
+{ "schema_version": 1, "note": "…", "codes": { "CS_ROUTINE_VULN": "vulnerability without an exception" },
+  "items": [ { "id": "c-…", "date": "2026-10-14", "section": "capability_shift | … | null",
+    "code": "CS_ROUTINE_VULN", "reason": "the logged reason line", "publication": "…",
+    "headline": "… | null", "headline_withheld": true, "url": "https://…", "more_sources": 2,
+    "judged": "live | backfill", "run": "2026-10-14-0600 | 2026-10-14", "rejudged": true } ] }
+```
+
+`headline_withheld`, `more_sources` and `rejudged` appear only when true or non-zero.
+
 ### 3.4 Pipeline state and logs (committed, outside `/docs`)
 
 - `pipeline/state/seen.json` — `{ "schema_version": 1, "urls": { "<normalised url>": { "first_seen": ISO, "run_id": str, "verdict": "published|dropped|duplicate", "item_id": str|null } } }`. Pruned to 120 days. Stops the same candidate being re-judged every run. Written only by `publish.mjs` (judged survivors and item sources; candidates dropped as `GL_NOT_JUDGED` are not recorded, so they are re-collected next run).
@@ -303,6 +324,15 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   leading bank executive, or a newly issued formal rule or exam notice? Reminders and restatements of existing rules
   do not count." (Owner decision 2026-10-03: new formal rules and exam notices are in scope in this section; the
   brief had excluded formal rules and exam notices as "covered elsewhere".)
+
+- Dropped (owner request 2026-10-21): a fifth nav page, between Archive and About, for audit. It loads
+  `docs/data/dropped.json` the first time it opens (never with the other data). An intro says these are
+  in-domain stories the filter judged and dropped, kept for audit, nothing published or recommended, and
+  what is left out. Filters: section (All, the three sections, Evidence gates) and month (newest first, with
+  counts; the newest month by default). Each row: date, section, outlet, extra sources; the headline linking
+  to the source in a new tab (or "Headline withheld: it names a financial institution." and the outlet);
+  the reason's plain label and the logged reason; how it was judged (live run or backfill pass, re-judged)
+  and the code. Links are emitted only for plain https URLs.
 
 ### 7.3 About page copy (institution-neutral rewrite of the design)
 
