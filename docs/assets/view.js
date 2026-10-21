@@ -154,7 +154,7 @@ function latestCard(d) {
         <span class="lt-claim">${esc(it.claim)}</span>
       </button>`).join('');
   return `<section class="card dcard d-latest" aria-labelledby="lt-h">
-    ${cardHead('lt-h', 'Latest additions', 'The newest items, from live editions or the historical backfill.')}
+    ${cardHead('lt-h', 'Latest additions', 'The five newest items.')}
     ${rows || `<div class="dash-none">${QUIET}<p>Nothing published yet. Runs at 06:00, 10:00, 14:00 and 18:00 ET publish only what clears the bar; a silent run is a result.</p></div>`}
   </section>`;
 }
