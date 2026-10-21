@@ -1302,6 +1302,42 @@
       "run_id": "2026-10-21-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://cyberscoop.com/microsoft-attributes-connectwise-supply-chain-attack-china-storm-0940": {
+      "first_seen": "2026-10-21T18:06:58-04:00",
+      "run_id": "2026-10-21-1800",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise": {
+      "first_seen": "2026-10-21T18:06:58-04:00",
+      "run_id": "2026-10-21-1800",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.americanbanker.com/news/a-team-sport-responding-to-cyber-threats-in-the-age-of-ai": {
+      "first_seen": "2026-10-21T18:06:58-04:00",
+      "run_id": "2026-10-21-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://fortune.com/2026/10/21/collector-rare-pokemon-sports-cards-thieves-graders-million": {
+      "first_seen": "2026-10-21T18:06:58-04:00",
+      "run_id": "2026-10-21-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://fortune.com/2026/10/21/ai-tools-discovered-the-php-vulnerability-that-could-take-down-70-of-the-internet-now-the-race-is-on-to-patch-it-before-ai-powered-hackers-attack": {
+      "first_seen": "2026-10-21T18:06:58-04:00",
+      "run_id": "2026-10-21-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261021-artificial-intelligence-monetary-policy-and-financial-stability": {
+      "first_seen": "2026-10-21T18:06:58-04:00",
+      "run_id": "2026-10-21-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
