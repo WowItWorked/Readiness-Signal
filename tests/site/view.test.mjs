@@ -144,6 +144,32 @@ describe('brief overrides of the design', () => {
     assert.ok(!one.includes('Added by the historical backfill pass'));
   });
 
+  test('Dropped page: nav, intro, filters by section and month, withheld headlines, safe links (owner request 2026-10-21)', () => {
+    const doc = {
+      schema_version: 1,
+      codes: { CS_ROUTINE_VULN: 'vulnerability without an exception', GL_PAYWALL_INSUFFICIENT: 'elements not establishable' },
+      items: [
+        { id: 'c-1111111111', date: '2026-10-14', section: 'capability_shift', code: 'CS_ROUTINE_VULN', reason: 'C6: patched flaw', publication: 'Example', headline: `Head ${EVIL}`, url: 'https://example.com/x', more_sources: 2, judged: 'live', run: '2026-10-14-0600' },
+        { id: 'c-2222222222', date: '2026-10-13', section: null, code: 'GL_PAYWALL_INSUFFICIENT', reason: 'G11 paywalled', publication: 'Paper', headline: null, headline_withheld: true, url: 'https://example.com/y', judged: 'backfill', run: '2026-10-13', rejudged: true },
+        { id: 'c-3333333333', date: '2026-09-02', section: 'capability_shift', code: 'CS_ROUTINE_VULN', reason: 'C6: older', publication: 'Example', headline: 'Older story', url: 'javascript:alert(1)', judged: 'backfill', run: '2026-09' },
+      ],
+    };
+    const dropped = M.prepareDropped(doc);
+    const html = render({ page: 'dropped' }, data, { dropped, droppedState: 'ready' });
+    assert.ok(html.includes('data-page="dropped"'), 'in the nav');
+    assert.ok(html.includes('<h1 class="h1">Dropped</h1>') && html.includes('3 dropped stories'));
+    assert.ok(html.includes('Kept for audit: nothing here is published or recommended.'));
+    assert.ok(!html.includes(EVIL), 'headlines are escaped');
+    assert.ok(html.includes('Headline withheld: it names a financial institution.'));
+    assert.ok(html.includes('+2 more sources') && html.includes('Backfill pass 2026-10-13, re-judged'));
+    assert.ok(!html.includes('Older story'), 'only the newest month shows by default');
+    const sep = render({ page: 'dropped', dropMonth: '2026-09' }, data, { dropped, droppedState: 'ready' });
+    assert.ok(sep.includes('Older story') && !sep.includes('href="javascript:'), 'unsafe links are never emitted as javascript: hrefs');
+    const gates = render({ page: 'dropped', dropSec: 'gate' }, data, { dropped, droppedState: 'ready' });
+    assert.ok(gates.includes('G11 paywalled') && !gates.includes('C6: patched flaw'));
+    assert.ok(render({ page: 'dropped' }, data, { dropped: null, droppedState: 'loading' }).includes('Loading the dropped-story log'));
+  });
+
   test('section entry tests and mechanism asks', () => {
     const t = text(html);
     for (const S of M.SECTIONS) assert.ok(t.includes(V.esc(S.test)), S.key);

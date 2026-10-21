@@ -157,7 +157,8 @@ final URL, content type, time) is recorded in the pass's audit log.
 ## 6. Writing to the archive
 
 Only `node pipeline/scripts/backfill.mjs publish --month YYYY-MM` (a day pass: `--day YYYY-MM-DD`)
-writes backfilled items. It:
+writes backfilled items. After every publish, run `node pipeline/scripts/dropped.mjs` and commit
+`docs/data/dropped.json` with the audit log: the Dropped page lists the pass's in-domain drops. It:
 
 - validates every item exactly as live publish does (schema, every FILTER §7 lint rule, the verbatim
   guard against captured headlines and leads, institution and first-person rules), plus that every
