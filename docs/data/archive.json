@@ -2074,6 +2074,53 @@
       ],
       "backfilled": true,
       "update_of": null
+    },
+    {
+      "id": "RS-261020-1000-01",
+      "timestamp": "2026-10-20T10:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "US Homeland Security ordered civilian federal agencies to remove DeepSeek AI and products built on it.",
+      "domains": [
+        "third_party",
+        "ai"
+      ],
+      "source_class": "regulator",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "third_party",
+          "text": "The Department of Homeland Security order reaches third-party products and services developed using DeepSeek implementations, not only DeepSeek's own apps, so whether a supplier's product falls within it depends on the model underneath, a fact that supplier registers recording only the vendor and the service do not hold."
+        },
+        {
+          "domain": "ai",
+          "text": "A national government excluded a commercially available AI model developer from its own systems on national-security grounds tied to the developer's operations in China, so the developer of each model in use, and not only the vendor that supplies it, becomes a fact an AI inventory is asked for."
+        }
+      ],
+      "validation_question": "Does the inventory of AI models in use, including models embedded in supplier products, record each model's developer, with the date of its last review?",
+      "candidate_issue_statement": "If the inventory of AI models in use does not record the developer of models embedded in supplier products, products built on a model a government has excluded on security grounds can stay in use without any owner identifying them.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Department of Homeland Security",
+          "url": "https://www.federalregister.gov/documents/2026/10/20/2026-21447/notice-of-order-regarding-exclusion-and-removal-of-deepseek-products-from-federal-civilian-executive",
+          "published": "2026-10-20",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "Fox News",
+          "url": "https://www.foxnews.com/live-news/ai-news-deepseek-security-10-20-26",
+          "published": "2026-10-20",
+          "source_class": "news"
+        },
+        {
+          "publication": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/20/us-orders-federal-agencies-to-remove-chinas-deepseek-ai-from-their-systems/",
+          "published": "2026-10-20",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
     }
   ]
 }

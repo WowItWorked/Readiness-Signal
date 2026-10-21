@@ -45,7 +45,7 @@
     "EV_BELOW_FLOOR": {
       "label": "no consequence limb met",
       "test": "Consequence floor",
-      "explain": "The consequence is below every floor, or its size was not confirmed: no outage, data loss, financial loss, penalty or confirmed campaign of the required scale."
+      "explain": "The consequence is below every floor, or its size was not confirmed: no outage, data loss, financial loss, penalty, confirmed campaign or government technology restriction of the required scale."
     },
     "EV_NO_PROMINENCE": {
       "label": "prominence not met",
