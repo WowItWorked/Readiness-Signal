@@ -1206,6 +1206,36 @@
       "run_id": "2026-10-20-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/php2shell-mass-exploitation-looms-for-leaked-critical-php-flaws": {
+      "first_seen": "2026-10-21T06:07:26-04:00",
+      "run_id": "2026-10-21-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://insidecybersecurity.com/daily-news/cisa-and-partners-issue-ransomware-advisory-safepay-threat-actors-impacting-critical": {
+      "first_seen": "2026-10-21T06:07:26-04:00",
+      "run_id": "2026-10-21-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/cisa-and-fbi-safepay-ransomware-has-hit-over-600-critical-infrastructure-organizations": {
+      "first_seen": "2026-10-21T06:07:26-04:00",
+      "run_id": "2026-10-21-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/news/press-releases/former-chief-executive-banned-after-misconduct-led-4m-losses-high-risk-investments": {
+      "first_seen": "2026-10-21T06:07:26-04:00",
+      "run_id": "2026-10-21-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fsb.org/2026/10/innovation-and-resilience-managing-the-risks-of-a-changing-financial-system": {
+      "first_seen": "2026-10-21T06:07:26-04:00",
+      "run_id": "2026-10-21-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

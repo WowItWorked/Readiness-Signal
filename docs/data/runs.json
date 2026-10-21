@@ -2580,6 +2580,47 @@
         "awareness_only": 0
       },
       "notes": "manual-unread: all 9 page sources; source: bis-cb-speeches reposts older speeches; source: fed-testimony implausible dates skipped"
+    },
+    {
+      "run_id": "2026-10-21-0600",
+      "slot": "2026-10-21T06:00:00-04:00",
+      "started_at": "2026-10-21T06:07:26-04:00",
+      "finished_at": "2026-10-21T06:08:45-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 112,
+        "sources_failed": 11,
+        "fetched": 2314,
+        "in_window": 188,
+        "unseen": 181,
+        "stage1_pass": 5,
+        "stage2_pass": 0,
+        "dedup_dropped": 1,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 2,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "manual-unread: all 9 page sources; source: bis-cb-speeches reposts older speeches; source: fed-testimony implausible dates skipped; S1-GAP: a digital bank's worldwide outage seen only in a page sidebar"
     }
   ]
 }
