@@ -21,7 +21,7 @@ export const SECTIONS = Object.freeze([
   },
   {
     key: 'regulatory_trajectory', n: 3, title: 'Regulatory & Executive Trajectory', mark: 'dashed',
-    test: 'Is this a signal of where regulators or executives are heading — a speech, testimony, consultation or supervisory direction in the US, UK or EU, a public statement by a leading bank executive, or a newly issued formal rule or exam notice? Reminders and restatements of existing rules do not count.',
+    test: 'Is this a signal of where regulators or executives are heading — a speech, testimony, consultation or supervisory direction in the US, UK, EU or Canada, a public statement by a leading bank executive, or a newly issued formal rule or exam notice? Reminders and restatements of existing rules do not count.',
     empty: 'Most soft signals do not survive the entry test, and genuinely new formal rules or exam notices on technology risk are rare. An empty section is a result, not a gap.',
   },
 ]);
@@ -63,7 +63,7 @@ export const SOURCE_CLASSES = Object.freeze([
   { key: 'research_analysis', label: 'Research & analysis' },
 ]);
 
-export const PAGES = Object.freeze(['dashboard', 'report', 'archive', 'dropped', 'about']);
+export const PAGES = Object.freeze(['dashboard', 'report', 'archive', 'watch', 'dropped', 'about']);
 export const REPORT_SPANS = Object.freeze({ day: 1, week: 7, month: 30 });
 
 const byKey = (list) => new Map(list.map((x) => [x.key, x]));
@@ -519,7 +519,7 @@ export function defaultUi(now) {
   return {
     page: 'dashboard', repTime: 'day', archTime: 'all', from, to: todayEt(now), q: '',
     secs: [], doms: [], srcs: [], open: {}, copied: null, pop: null, printMode: null,
-    dropSec: 'all', dropMonth: null,
+    dropSec: 'all', dropMonth: null, watchJur: 'all', watchMonth: null,
   };
 }
 
@@ -562,6 +562,35 @@ export function droppedView(dropped, ui) {
   const month = months.some((m) => m.key === ui.dropMonth) ? ui.dropMonth : (months[0]?.key ?? null);
   const rows = inSec.filter((r) => r.month === month);
   return { total: all.length, sec, secCount, months, month, rows };
+}
+
+// ---------------------------------------------------------------------------------------
+// Global watch (owner decision 2026-10-21, FILTER.md §4.4.6): regulatory signals from the other
+// G20 jurisdictions, Singapore and Hong Kong, from docs/data/watch.json (built from pipeline/logs).
+// Context on the wider ecosystem only: never published items.
+
+/** Validate watch.json. Rows that do not parse are skipped, never guessed. */
+export function prepareWatch(doc) {
+  const items = (Array.isArray(doc?.items) ? doc.items : [])
+    .filter((r) => r && typeof r.jurisdiction === 'string' && typeof r.signal === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(String(r.date)))
+    .map((r) => ({ ...r, month: r.date.slice(0, 7), href: safeHttps(r.url) }));
+  const jurisdictions = (Array.isArray(doc?.jurisdictions) ? doc.jurisdictions : []).filter((j) => typeof j === 'string');
+  return { items, jurisdictions };
+}
+
+/** The Global watch page for the current filters: jurisdiction counts, months, the month's rows. */
+export function watchView(watch, ui) {
+  const all = watch ? watch.items : [];
+  const jurs = ['all', ...(watch ? watch.jurisdictions : [])];
+  const jur = jurs.includes(ui.watchJur) ? ui.watchJur : 'all';
+  const jurCount = Object.fromEntries(jurs.map((k) => [k, k === 'all' ? all.length : all.filter((r) => r.jurisdiction === k).length]));
+  const inJur = jur === 'all' ? all : all.filter((r) => r.jurisdiction === jur);
+  const counts = new Map();
+  for (const r of inJur) counts.set(r.month, (counts.get(r.month) ?? 0) + 1);
+  const months = [...counts.keys()].sort().reverse().map((m) => ({ key: m, label: monthLabel(m), n: counts.get(m) }));
+  const month = months.some((m) => m.key === ui.watchMonth) ? ui.watchMonth : (months[0]?.key ?? null);
+  const rows = inJur.filter((r) => r.month === month);
+  return { total: all.length, jurs, jur, jurCount, months, month, rows };
 }
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

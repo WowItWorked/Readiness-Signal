@@ -4,7 +4,7 @@
 // Derived and rebuilt whole every time: the logs stay the record, this file is a view of them.
 //
 // Rules:
-//   - drops only; noise codes (off-domain, marketing, stale reposts, round-ups, advocacy, out of a
+//   - drops only, never Global watch records (RT_GLOBAL_WATCH, their own page); noise codes (off-domain, marketing, stale reposts, round-ups, advocacy, out of a
 //     backfill window or its sections, never judged) and same-story drops are left out;
 //   - cluster members fold into their lead, which counts them;
 //   - a story whose URL is a source of a published item is left out (it was published later);
@@ -72,7 +72,7 @@ export const CODE_EXPLAIN = Object.freeze({
   EV_NO_SECTOR_NEXUS: 'No link to financial services: the incident is outside the sector and its cause would not carry over to institutions.',
   EV_NO_EXEC_QUESTION: 'There is no question a director would ask unprompted about their own organisation.',
   RT_INSTRUMENT_INELIGIBLE: 'Not a kind of document the section admits: a press release, report, work programme or note rather than a speech, consultation, supervisory direction or new rule.',
-  RT_JURISDICTION: 'The issuer is outside the US, UK and EU.',
+  RT_JURISDICTION: 'The issuer is outside the US, UK, EU and Canada, and outside the Global watch list.',
   RT_SPEAKER_INELIGIBLE: 'The speaker or issuer does not qualify: staff below the senior tier, a trade body, or an authority type the section does not admit.',
   RT_NO_DIRECTION: 'No change of direction: it restates an existing position, repeats a published signal, or asks questions without signalling intent.',
   RT_EXEC_OWN_POSITION: 'A bank executive speaking about their own institution rather than the sector.',
@@ -132,8 +132,8 @@ export function codeInfo(filterText, only = null) {
   return out;
 }
 
-const isCluster = (r) => r.dedup === 'cluster_merged' || /^cluster member of /.test(String(r.reason ?? ''));
-const dateOfRun = (runId) => (/^(\d{4}-\d{2}-\d{2})/.exec(String(runId ?? '')) || [])[1] ?? null;
+export const isCluster = (r) => r.dedup === 'cluster_merged' || /^cluster member of /.test(String(r.reason ?? ''));
+export const dateOfRun = (runId) => (/^(\d{4}-\d{2}-\d{2})/.exec(String(runId ?? '')) || [])[1] ?? null;
 
 /** Rows of one log file with their origin: { rows, judged: 'live'|'backfill', key } */
 function readLog(file, logsDir) {
@@ -167,7 +167,8 @@ export function buildDropped({ logs, archive, filterText }) {
         byUrl.delete(url);
         continue;
       }
-      if (r.verdict !== 'drop' || NOISE_CODES.includes(r.reason_code)) {
+      // a Global watch record is not a drop to audit: it has its own page (pipeline/lib/watch.mjs)
+      if (r.verdict !== 'drop' || NOISE_CODES.includes(r.reason_code) || r.reason_code === 'RT_GLOBAL_WATCH') {
         byUrl.delete(url);
         continue;
       }

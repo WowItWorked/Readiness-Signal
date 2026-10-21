@@ -94,10 +94,13 @@ The script writes `pipeline/work/$RUN/candidates.json` and `pipeline/work/$RUN/f
 - **Exit 1, or exit 2 for any other reason,** is a script error: run it once more, then go to F with `fetch error: <first line>`.
 - Read `fetch-report.json` → `date_warnings`. Unreadable dates are kept as undated, so the window does not apply to them; implausible dates are skipped. Reposts (a feed listing an older document under a new date, such as a BIS central bankers' speech whose lead states the delivery date) keep their feed date: judge G7 by the date the lead states. Note affected sources as a source issue that bears on judgment: `source: <source_id> <what failed>`, for example `source: bis-cb-speeches reposts older speeches` (FILTER.md §9.1).
 - For each source with status `failed`, note any that matter for judgment (for example, a key regulator feed down) the same way.
+- A failure whose error reads `HTTP 403: blocked by the environment's network policy, not the publisher` comes from the cloud environment's network settings, not the publisher (owner audit 2026-10-21: BBC, the Guardian, the FT, the NYT, Politico and DW). These fail every run and are known; do not list them individually in the notes.
 
 ## 5. Page sources (manual)
 
 `fetch-report.json` → `manual[]` lists sources of type `page`, each with `{ id, publication, url, notes }`. The fetch script does not read them.
+
+Sources of type `listing` are publishers' listing pages that `fetch.mjs` parses itself with the source's own pattern (`sources.json` → `listing`, owner audit 2026-10-21): they arrive as ordinary candidates and are never read by hand here. A listing whose pattern matches nothing fails with `listing pattern matched no entries`, which usually means the publisher changed its page layout: note it as `source: <source_id> listing layout changed` and carry on. If `manual[]` is empty, skip this step.
 
 For each page source:
 1. Open `url`. Public pages only; the paywall rules apply. If it fails to load, skip it, and note `source: <id> page unreadable` if it matters for judgment.
@@ -251,12 +254,13 @@ node pipeline/scripts/publish.mjs --run "$RUN"
 
 ```sh
 node pipeline/scripts/dropped.mjs
+node pipeline/scripts/watch.mjs
 node pipeline/scripts/validate.mjs
 node pipeline/scripts/validate.mjs --against-git-ref HEAD
 git status --porcelain
 ```
 
-- `dropped.mjs` rebuilds the Dropped page's data (`docs/data/dropped.json`) from the logs, including this run's. If it errors, run `git restore docs/data/dropped.json`, carry on, and add `dropped.json not rebuilt: <first line>` to the final output; the next run's rebuild catches up.
+- `dropped.mjs` rebuilds the Dropped page's data (`docs/data/dropped.json`) from the logs, including this run's. If it errors, run `git restore docs/data/dropped.json`, carry on, and add `dropped.json not rebuilt: <first line>` to the final output; the next run's rebuild catches up. `watch.mjs` does the same for the Global watch page (`docs/data/watch.json`, FILTER.md §4.4.6); on an error, `git restore docs/data/watch.json` and add `watch.json not rebuilt: <first line>`.
 - If `git rev-parse --verify HEAD` fails (the repository has no commits yet), skip the `--against-git-ref` line.
 - **Both validations must pass.** If either fails, restore the data to `HEAD`:
 
@@ -266,7 +270,7 @@ git status --porcelain
   ```
 
   Then go to step F with the reason `post-publish validation failed: <first error>`. If that path's own validation fails too, restore again and stop without committing.
-- **Only the expected paths may have changed:** `docs/data/archive.json`, `docs/data/runs.json`, `docs/data/dropped.json`, `pipeline/state/seen.json` and the new `pipeline/logs/…/$RUN.jsonl`. Restore any other modified tracked file with `git restore <path>`, and list it in the final output.
+- **Only the expected paths may have changed:** `docs/data/archive.json`, `docs/data/runs.json`, `docs/data/dropped.json`, `docs/data/watch.json`, `pipeline/state/seen.json` and the new `pipeline/logs/…/$RUN.jsonl`. Restore any other modified tracked file with `git restore <path>`, and list it in the final output.
 - **Read the status** from the run record `publish.mjs` appended: the last record in `docs/data/runs.json` with `run_id` equal to `$RUN`.
 
 The commit subject is `commit_message` from `publish.mjs` stdout, used verbatim. It is one of the SPEC §5 forms:
@@ -278,7 +282,7 @@ The commit subject is `commit_message` from `publish.mjs` stdout, used verbatim.
 | `failed` | `run: YYYY-MM-DD HH:MM ET (failed)` |
 
 ```sh
-git add docs/data/archive.json docs/data/runs.json docs/data/dropped.json pipeline/state/seen.json pipeline/logs
+git add docs/data/archive.json docs/data/runs.json docs/data/dropped.json docs/data/watch.json pipeline/state/seen.json pipeline/logs
 git commit -m "<commit_message>"
 ```
 

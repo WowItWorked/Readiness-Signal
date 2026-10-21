@@ -6,7 +6,7 @@
 
 import {
   CANDIDATE_ID_RE, DEDUP_OUTCOMES, DOMAINS, FUNNEL_KEYS, ITEM_ID_RE, ITEM_KEYS, MECHANISMS, REASON_CODE_RE, RUN_MECHANISM_KEYS,
-  RUN_STATUSES, SECTIONS, SEEN_VERDICTS, SOURCE_CLASSES, SOURCE_KEYS, THRESHOLD_LEVELS, VERDICTS,
+  RUN_STATUSES, SECTIONS, SEEN_VERDICTS, SOURCE_CLASSES, SOURCE_KEYS, THRESHOLD_LEVELS, VERDICTS, WATCH_JURISDICTIONS,
 } from './enums.mjs';
 import { findInstitutions } from './institutions.mjs';
 import { canonical } from './io.mjs';
@@ -1417,6 +1417,12 @@ export function isComposedHeadline(c) {
 }
 
 const NEAR_RE = /(?<![\p{L}\p{N}])NEAR(?![\p{L}\p{N}])/u;
+
+/** FILTER.md §4.4.6: the jurisdiction an RT_GLOBAL_WATCH reason opens with, or null. */
+export function watchJurisdictionOf(reason) {
+  const m = /^([^:]{2,20}): \S/.exec(String(reason ?? ''));
+  return m && WATCH_JURISDICTIONS.includes(m[1]) ? m[1] : null;
+}
 const REASON_HEAD_RE = /^(?:\[M[1-6]\] )?NEAR ([A-Z][A-Za-z0-9]*)(?:\/([a-z][a-z0-9_]*))?: /;
 const ALT_RE = /\[alt\b/;
 const ALT_TAIL_RE = / \[alt (EV|CS):([A-Z][A-Za-z0-9]*)(?:\/([a-z][a-z0-9_]*))?\]$/;
@@ -1536,7 +1542,12 @@ export function decisionStyleIssues(decisions, { candidates = [], archiveItems =
     if (scopeIssue) add('FILTER 8.3', a, `reason_code: ${scopeIssue}`);
     if (typeof j.reason !== 'string') return;
     voice(a, 'reason', j.reason);
-    if (NEAR_RE.test(j.reason)) {
+    // FILTER.md §4.4.6, §8.4: a Global watch record opens with its jurisdiction and is never NEAR
+    if (j.reason_code === 'RT_GLOBAL_WATCH') {
+      if (!watchJurisdictionOf(j.reason)) add('FILTER 8.4', a, `reason: a Global watch reason opens "<jurisdiction>: ", the jurisdiction one of ${WATCH_JURISDICTIONS.join(', ')}`);
+      if (NEAR_RE.test(j.reason)) add('FILTER 8.4', a, 'reason: RT_GLOBAL_WATCH is never NEAR');
+    }
+    if (NEAR_RE.test(j.reason) && j.reason_code !== 'RT_GLOBAL_WATCH') {
       const head = REASON_HEAD_RE.exec(j.reason);
       if (j.verdict === 'pass') add('FILTER 8.4', a, 'reason: "NEAR" marks a drop; a pass never carries it');
       else if (!head) add('FILTER 8.4', a, 'reason: write "NEAR <element>[/<knob>]: <text>" at the start (after an optional "[M#] "), so calibration counts it');

@@ -122,7 +122,29 @@ financial institution (`institutions.mjs`) is withheld (`headline: null`, `headl
 `headline_withheld`, `more_sources`, `rejudged`, `near` and `alt` appear only when they say something.
 Plain English (owner request 2026-10-21): each code carries the plain name of the test it fails and a
 one-sentence explanation (`pipeline/lib/dropped.mjs` CODE_EXPLAIN, ELEMENT_NAMES); `near` and `alt` restate
-a reason line's `NEAR …` and `[alt …]` markers in words.
+a reason line's `NEAR …` and `[alt …]` markers in words. Global watch records (`RT_GLOBAL_WATCH`) are
+never listed here: they have their own page (§3.3b).
+
+### 3.3b `docs/data/watch.json` (owner decision 2026-10-21)
+
+The Global watch page's data: regulatory signals from the jurisdictions FILTER.md §4.4.6 lists (the G20
+members outside the US, UK, EU and Canada, plus Singapore and Hong Kong) that held every Regulatory &
+Executive Trajectory element and were recorded as `RT_GLOBAL_WATCH`. They are never archive items.
+Derived, never hand-edited: `node pipeline/scripts/watch.mjs` (`pipeline/lib/watch.mjs`) rebuilds it
+whole from the logs after every publish (RUNBOOK step 13, BACKFILL.md §6), with the same folding as
+dropped.json: cluster members fold into their lead, a later judgment of a URL replaces or removes an
+earlier one, and a headline naming a financial institution is withheld. The jurisdiction and signal
+come from the reason line (`<jurisdiction>: <signal>`, FILTER.md §8.4).
+
+```json
+{ "schema_version": 1, "note": "…", "jurisdictions": ["Japan", "Singapore"],
+  "items": [ { "id": "c-…", "date": "2026-10-14", "jurisdiction": "Singapore",
+    "signal": "MAS; R3 … → …; R4 …", "publication": "…", "headline": "… | null",
+    "headline_withheld": true, "url": "https://…", "more_sources": 1,
+    "judged": "live | backfill", "run": "2026-10-14-0600 | 2026-10-14" } ] }
+```
+
+`jurisdictions` lists, in FILTER.md's order, those with at least one item.
 
 ### 3.4 Pipeline state and logs (committed, outside `/docs`)
 
@@ -326,10 +348,11 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
 - Section entry tests (report headers): 1 "Could a director or executive credibly ask 'what are we doing about
   this?' unprompted?" 2 "Has adversary capability changed, or has a control failed somewhere in a way that
   invalidates an assumption others rely on?" 3 "Is this a signal of where regulators or executives are
-  heading — a speech, testimony, consultation or supervisory direction in the US, UK or EU, a public statement by a
+  heading — a speech, testimony, consultation or supervisory direction in the US, UK, EU or Canada, a public statement by a
   leading bank executive, or a newly issued formal rule or exam notice? Reminders and restatements of existing rules
   do not count." (Owner decision 2026-10-03: new formal rules and exam notices are in scope in this section; the
-  brief had excluded formal rules and exam notices as "covered elsewhere".)
+  brief had excluded formal rules and exam notices as "covered elsewhere". Owner decision 2026-10-21:
+  Canada joins the US, UK and EU as a core jurisdiction, FILTER.md §4.4.6.)
 
 - Dropped (owner request 2026-10-21): a fifth nav page, between Archive and About, for audit. It loads
   `docs/data/dropped.json` the first time it opens (never with the other data). An intro says these are
@@ -339,6 +362,13 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   to the source in a new tab (or "Headline withheld: it names a financial institution." and the outlet);
   "Failed: <test>" with the plain-English explanation; the near-miss and other-section notes where present;
   the logged reason as "Filter notes"; how it was judged (live run or backfill pass, re-judged) and the code. Links are emitted only for plain https URLs.
+- Global watch (owner decision 2026-10-21): a nav page between Archive and Dropped. It loads
+  `docs/data/watch.json` the first time it opens. An intro says the signals come from the other G20
+  jurisdictions, Singapore and Hong Kong, passed the same tests as a core one, bind none of the site's
+  readers and are never published as items. Filters: jurisdiction (shown once there are two or more)
+  and month (newest first, with counts; the newest by default). Each row: date, jurisdiction, outlet,
+  extra sources; the headline linking to the source in a new tab (or withheld, as on Dropped); the
+  signal; how it was judged. No mechanism, question or issue language. Links only for plain https URLs.
 
 ### 7.3 About page copy (institution-neutral rewrite of the design)
 

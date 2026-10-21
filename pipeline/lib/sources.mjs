@@ -21,7 +21,7 @@ export const KNOWN_PAYWALLED_DOMAINS = Object.freeze([
 
 const KNOWN_KEYS = new Set([
   'id', 'publication', 'source_class', 'type', 'url', 'paywalled', 'region', 'lead_words', 'notes',
-  'enabled', 'prefilter', 'exclude_url_patterns', 'tier',
+  'enabled', 'prefilter', 'exclude_url_patterns', 'tier', 'listing',
 ]);
 /** News tiers for FILTER.md §2.7.4 and §2.9 source order: general or business press, or trade press. */
 export const NEWS_TIERS = Object.freeze(['general', 'trade']);
@@ -67,6 +67,10 @@ export function validateSources(doc, { allowHttp = false } = {}) {
     if (s.exclude_url_patterns !== undefined && (!Array.isArray(s.exclude_url_patterns) || s.exclude_url_patterns.some((p) => typeof p !== 'string' || p.trim().length < 3))) {
       errors.push(`${at} exclude_url_patterns: array of URL substrings, 3 or more characters each (e.g. "/event-info/")`);
     }
+    if (s.type === 'listing' || s.listing !== undefined) {
+      const issue = listingIssue(s);
+      if (issue) errors.push(`${at} listing: ${issue}`);
+    }
     if (s.type === 'cisa-kev' && s.source_class !== 'vendor_threat_research') warnings.push(`${at}: cisa-kev sources are normally vendor_threat_research`);
     if (s.tier !== undefined) {
       if (!NEWS_TIERS.includes(s.tier)) errors.push(`${at} tier: must be one of ${NEWS_TIERS.join(', ')} (FILTER.md 2.7.4)`);
@@ -74,6 +78,25 @@ export function validateSources(doc, { allowHttp = false } = {}) {
     }
   });
   return { errors, warnings };
+}
+
+/**
+ * A listing source (type "listing") carries `listing: { item, unescape? }`: `item` a regular
+ * expression with named groups title, date, and url or anchor (feed.mjs parseListing).
+ * Returns the problem, or null.
+ */
+function listingIssue(s) {
+  if (s.type !== 'listing') return 'only a source of type "listing" has a listing pattern';
+  const l = s.listing;
+  if (!l || typeof l !== 'object' || typeof l.item !== 'string') return 'required: { "item": "<pattern>" }';
+  let re;
+  try { re = new RegExp(l.item, 'g'); } catch (e) { return `item does not compile: ${e.message}`; }
+  const groups = new Set([...l.item.matchAll(/\(\?<([A-Za-z]\w*)>/g)].map((m) => m[1]));
+  if (!groups.has('title') || !groups.has('date')) return 'item needs named groups title and date';
+  if (groups.has('url') === groups.has('anchor')) return 'item needs exactly one of the named groups url or anchor';
+  if (l.unescape !== undefined && l.unescape !== 'json') return 'unescape: only "json"';
+  if (re.test('')) return 'item matches an empty string';
+  return null;
 }
 
 export function loadSources(file, opts) {

@@ -171,6 +171,33 @@ describe('brief overrides of the design', () => {
     assert.ok(render({ page: 'dropped' }, data, { dropped: null, droppedState: 'loading' }).includes('Loading the dropped-story log'));
   });
 
+  test('Global watch page: nav, intro, jurisdiction and month filters, escaped text, safe links (owner decision 2026-10-21)', () => {
+    const doc = {
+      schema_version: 1,
+      jurisdictions: ['Japan', 'Singapore'],
+      items: [
+        { id: 'c-4444444444', date: '2026-10-14', jurisdiction: 'Singapore', signal: `MAS; R3 none → AI model risk consultation ${EVIL}`, publication: 'Monetary Authority of Singapore', headline: 'Consultation on AI risk management', url: 'https://example.com/w', more_sources: 1, judged: 'live', run: '2026-10-14-0600' },
+        { id: 'c-5555555555', date: '2026-10-10', jurisdiction: 'Japan', signal: 'FSA; R3 cloud expectations', publication: 'Financial Services Agency', headline: 'Cloud guidance', url: 'javascript:alert(1)', judged: 'backfill', run: '2026-10-10' },
+        { id: 'c-6666666666', date: '2026-09-02', jurisdiction: 'Japan', signal: 'BOJ; older', publication: 'Bank of Japan', headline: 'Older signal', url: 'https://example.com/o', judged: 'live', run: '2026-09-02-0600' },
+        { id: 'c-7777777777', date: 'bad', jurisdiction: 'Japan', signal: 'skipped' },
+      ],
+    };
+    const watch = M.prepareWatch(doc);
+    assert.equal(watch.items.length, 3, 'malformed rows skipped');
+    const html = render({ page: 'watch' }, data, { watch, watchState: 'ready' });
+    assert.ok(html.includes('data-page="watch"') && html.includes('<h1 class="h1">Global watch</h1>') && html.includes('3 signals'));
+    assert.ok(html.includes('nothing here is published as an item'));
+    assert.ok(!html.includes(EVIL), 'signals are escaped');
+    assert.ok(html.includes('Consultation on AI risk management') && html.includes('Cloud guidance') && !html.includes('Older signal'), 'newest month by default');
+    assert.ok(!html.includes('href="javascript:'), 'unsafe links are never emitted');
+    const jp = render({ page: 'watch', watchJur: 'Japan' }, data, { watch, watchState: 'ready' });
+    assert.ok(jp.includes('Cloud guidance') && !jp.includes('Consultation on AI risk management'));
+    const none = render({ page: 'watch' }, data, { watch: M.prepareWatch({ items: [], jurisdictions: [] }), watchState: 'ready' });
+    assert.ok(none.includes('No signal from these jurisdictions has cleared the bar yet.') && none.includes('0 signals'));
+    assert.ok(render({ page: 'watch' }, data, { watch: null, watchState: 'loading' }).includes('Loading the Global watch log'));
+    assert.equal(M.parseHash('#watch').page, 'watch');
+  });
+
   test('section entry tests and mechanism asks', () => {
     const t = text(html);
     for (const S of M.SECTIONS) assert.ok(t.includes(V.esc(S.test)), S.key);

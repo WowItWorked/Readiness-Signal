@@ -540,7 +540,7 @@ test('backfillReasonCodes: FILTER §8.2 closed list plus the three BF_ drop code
   assert.equal(codes.get('CS_PASS_CONTROL_FAILURE'), 'pass');
   assert.equal(backfillReasonCodes(null), null);
   const live = backfillReasonCodes(fs.readFileSync(path.join(ROOT, 'pipeline', 'FILTER.md'), 'utf8'));
-  assert.equal(live.size, 52 + 3);
+  assert.equal(live.size, 53 + 3);
 });
 
 test('accessWallReason: bot interstitials and redirects to the home page; ordinary pages never', () => {

@@ -156,6 +156,8 @@ export function classifyFeedDate(input) {
   // That time is the publisher's wall time read as UTC: for UK sources in summer it is at most an
   // hour later than the real instant, which can only keep an entry in the window, never drop it.
   let s = s0.replace(/(\d{4})\s+[-–—]\s+(\d{1,2}:\d{2})/, '$1 $2');
+  // A date with a zone but no time, '21 Oct, 2026 +0530' (SEBI): midnight in that zone.
+  s = s.replace(/^([^:]*\d{4})\s+([+-]\d{4})$/, '$1 00:00:00 $2');
   const isoNoZone = /^(\d{4}-\d{2}-\d{2})[ T](\d{2}:\d{2}(?::\d{2})?)(\.\d+)?$/.exec(s);
   if (isoNoZone) {
     s = `${isoNoZone[1]}T${isoNoZone[2]}${isoNoZone[3] ?? ''}Z`;
@@ -421,6 +423,36 @@ export function parseFeed(raw, { baseUrl, leadWords = DEFAULT_LEAD_WORDS } = {})
   }
   const entries = format === 'atom' ? parseAtom(xml, baseUrl, leadWords) : parseRssLike(xml, format, baseUrl, leadWords);
   return { format, title: channelTitle, entries };
+}
+
+/**
+ * Parse a publisher's listing page with the source's own pattern (sources.json `listing`):
+ * a regular expression whose named groups capture each entry's `title`, `date` and either `url`
+ * (a link, resolved against the page) or `anchor` (an id on the page itself, kept as the entry's
+ * URL fragment). `unescape: "json"` first unescapes a list embedded in a JSON string. Entries
+ * with the same link count once; the page title is not read. Same entry shape as parseFeed.
+ * @param {string} raw  response body
+ * @param {{baseUrl: string, listing: {item: string, unescape?: 'json'}, leadWords?: number}} opts
+ */
+export function parseListing(raw, { baseUrl, listing, leadWords = DEFAULT_LEAD_WORDS }) {
+  let html = String(raw ?? '');
+  if (listing.unescape === 'json') html = html.replace(/\\"/g, '"').replace(/\\\//g, '/').replace(/\\n/g, '\n');
+  const re = new RegExp(listing.item, 'g');
+  const entries = [];
+  const links = new Set();
+  for (const m of html.matchAll(re)) {
+    const g = m.groups ?? {};
+    const title = collapseWhitespace(stripHtml(decodeEntities(g.title ?? '')));
+    const link = g.anchor
+      ? `${baseUrl.split('#')[0]}#${collapseWhitespace(decodeEntities(g.anchor))}`
+      : resolveUrl(decodeEntities(g.url ?? '').trim(), baseUrl);
+    if (!title || !link || links.has(link)) continue;
+    links.add(link);
+    const lead = g.lead ? makeLead(stripLeadingHeadline(collapseWhitespace(stripHtml(decodeEntities(g.lead))), title), leadWords) : '';
+    entries.push(entry(title, link, decodeEntities(g.date ?? '').trim(), lead));
+  }
+  if (!entries.length) throw new Error('listing pattern matched no entries (the page layout may have changed)');
+  return { format: 'listing', title: '', entries };
 }
 
 /** Effective lead length for a source entry (default 60; paywalled sources max 40). */

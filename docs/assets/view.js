@@ -47,7 +47,7 @@ const navAttrs = (page, preset = '', v = '') => ` data-act="nav" data-page="${pa
 // ---------------------------------------------------------------------------------------
 // Masthead and footer
 
-const NAV = [['dashboard', 'Dashboard'], ['report', 'Report'], ['archive', 'Archive'], ['dropped', 'Dropped'], ['about', 'About']];
+const NAV = [['dashboard', 'Dashboard'], ['report', 'Report'], ['archive', 'Archive'], ['watch', 'Global watch'], ['dropped', 'Dropped'], ['about', 'About']];
 
 function masthead(st) {
   const { ui } = st;
@@ -302,7 +302,7 @@ function introCard() {
 const INTRO_TESTS = {
   executive_visibility: 'a material incident a director would ask about.',
   capability_shift: 'a new attack capability or a failed control.',
-  regulatory_trajectory: 'where US, UK or EU supervisors are heading.',
+  regulatory_trajectory: 'where US, UK, EU and Canadian supervisors are heading.',
 };
 
 function dashboardMain(st) {
@@ -665,6 +665,7 @@ function aboutMain() {
         <a class="live-row" href="#dashboard"${navAttrs('dashboard')}><span class="live-k">Dashboard</span><span class="live-v">What the site is for, the bar and the asks in short, then the newest items, threads, trends and run log.</span></a>
         <a class="live-row" href="#report"${navAttrs('report', 'day')}><span class="live-k">Report</span><span class="live-v">The last 24 hours, week or month: a brief of the window, then its items by the three sections. Filter, expand and export.</span></a>
         <a class="live-row" href="#archive"${navAttrs('archive')}><span class="live-k">Archive</span><span class="live-v">Everything ever published, charted and listed by month, with search and a custom date range. Nothing is replaced.</span></a>
+        <a class="live-row" href="#watch"${navAttrs('watch')}><span class="live-k">Global watch</span><span class="live-v">Regulatory direction from the other G20 jurisdictions, Singapore and Hong Kong, tested to the same bar but never published as items. Context on the wider ecosystem.</span></a>
         <a class="live-row" href="#dropped"${navAttrs('dropped')}><span class="live-k">Dropped</span><span class="live-v">In-domain stories the filter read and set aside, by month and section, each with the reason logged when it was judged. For audit.</span></a>
       </div>
     </div>
@@ -729,6 +730,53 @@ function droppedMain(st) {
 }
 
 // ---------------------------------------------------------------------------------------
+// Global watch (owner decision 2026-10-21): regulatory direction beyond the core jurisdictions.
+
+function watchRow(r) {
+  const link = (text) => (r.href ? `<a class="drop-link" href="${esc(r.href)}" target="_blank" rel="noopener noreferrer">${esc(text)}</a>` : `<span>${esc(text)}</span>`);
+  const title = r.headline
+    ? link(r.headline)
+    : `<span class="drop-held">Headline withheld: it names a financial institution.</span> ${link(r.publication || 'Source')}`;
+  const judged = r.judged === 'backfill' ? `Backfill pass ${r.run}` : `Live run ${r.run}`;
+  return `<li class="drop-row" data-k="watch-${esc(r.id)}">
+      <div class="meta-line"><span>${esc(dropDate(r.date))}</span><span class="meta-sec">${esc(r.jurisdiction)}</span>${r.headline && r.publication ? `<span>${esc(r.publication)}</span>` : ''}${r.more_sources ? `<span>+${r.more_sources} more source${r.more_sources > 1 ? 's' : ''}</span>` : ''}</div>
+      <p class="drop-title">${title}</p>
+      <p class="drop-notes"><span class="drop-notes-k">Signal</span> ${esc(r.signal)}</p>
+      <p class="drop-by">${esc(judged)}</p>
+    </li>`;
+}
+
+function watchMain(st) {
+  const intro = `<section class="card drop-intro" aria-labelledby="watch-h">
+    <h2 class="h-19" id="watch-h">Beyond the core jurisdictions</h2>
+    <p class="drop-p">Regulatory direction from the other G20 jurisdictions, Singapore and Hong Kong. Each signal passed the same tests as a US, UK, EU or Canadian one: an eligible authority, a change of direction, a specific technology-risk topic, and a public text. None of it binds the institutions this site is written for, so nothing here is published as an item or carries a question to send. It shows where the wider ecosystem is heading.</p>
+  </section>`;
+  const head = (sub) => `<div class="title-row start"><h1 class="h1">Global watch</h1>${sub ? `<span class="list-sub">${esc(sub)}</span>` : ''}</div>`;
+  if (st.watchState === 'error') {
+    return `<main id="main" tabindex="-1" class="main" data-k="main-watch">${head('')}${intro}<p class="loading">The Global watch log could not be loaded. Reload to try again.</p></main>`;
+  }
+  if (!st.watch) {
+    return `<main id="main" tabindex="-1" class="main" data-k="main-watch">${head('')}${intro}<p class="loading">Loading the Global watch log…</p></main>`;
+  }
+  const v = M.watchView(st.watch, st.ui);
+  const jurBtns = v.jurs.length > 1
+    ? v.jurs.map((k) => `<button type="button" class="drop-btn" data-act="wjur" data-v="${esc(k)}" aria-pressed="${v.jur === k}">${esc(k === 'all' ? 'All' : k)} <span class="drop-n">${v.jurCount[k]}</span></button>`).join('')
+    : '';
+  const monBtns = v.months.map((m) => `<button type="button" class="drop-btn" data-act="wmonth" data-v="${m.key}" aria-pressed="${v.month === m.key}">${esc(m.label)} <span class="drop-n">${m.n}</span></button>`).join('');
+  const list = v.rows.length
+    ? `<ul class="drop-list">${v.rows.map(watchRow).join('')}</ul>`
+    : '<p class="loading">No signal from these jurisdictions has cleared the bar yet.</p>';
+  return `<main id="main" tabindex="-1" class="main" data-k="main-watch">
+  ${head(`${v.total} signal${v.total === 1 ? '' : 's'}`)}
+  ${intro}
+  <section class="card drop-card" aria-label="Global watch signals">
+    ${jurBtns || monBtns ? `<div class="drop-filters">${jurBtns ? `<div class="drop-group" role="group" aria-label="Jurisdiction">${jurBtns}</div>` : ''}${monBtns ? `<div class="drop-group" role="group" aria-label="Month">${monBtns}</div>` : ''}</div>` : ''}
+    ${list}
+  </section>
+</main>`;
+}
+
+// ---------------------------------------------------------------------------------------
 
 /**
  * Whole app body. st = { ui, data, now, error, loading }.
@@ -739,6 +787,7 @@ export function renderApp(st) {
   let main;
   if (ui.page === 'about') main = aboutMain();
   else if (ui.page === 'dropped') main = droppedMain(st);
+  else if (ui.page === 'watch') main = watchMain(st);
   else if (st.loading) main = loadingMain(ui.page);
   else if (st.error || !st.data) main = errorMain(ui.page);
   else if (ui.page === 'report' || ui.page === 'archive') main = listMain(st);
@@ -746,4 +795,4 @@ export function renderApp(st) {
   return `${masthead(st)}${main}${footer()}`;
 }
 
-export const PAGE_TITLES = { dashboard: 'Readiness Signal', report: 'Report · Readiness Signal', archive: 'Archive · Readiness Signal', dropped: 'Dropped · Readiness Signal', about: 'About · Readiness Signal' };
+export const PAGE_TITLES = { dashboard: 'Readiness Signal', report: 'Report · Readiness Signal', archive: 'Archive · Readiness Signal', watch: 'Global watch · Readiness Signal', dropped: 'Dropped · Readiness Signal', about: 'About · Readiness Signal' };

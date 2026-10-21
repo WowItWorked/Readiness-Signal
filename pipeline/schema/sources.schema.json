@@ -18,12 +18,22 @@
           "publication": { "type": "string", "minLength": 1, "description": "Name shown as the source publication." },
           "source_class": { "enum": ["news", "regulator", "standards_body", "industry_trade", "vendor_threat_research", "research_analysis"] },
           "type": {
-            "enum": ["feed", "cisa-kev", "page"],
-            "description": "feed: RSS 2.0 / Atom / RSS 1.0 (RDF), auto-detected. cisa-kev: the CISA KEV catalogue JSON (one candidate per CVE added in the window, url = the CISA catalogue entry for that CVE; the collector's headline is marked headline_composed and is omitted from item sources). page: read manually by the agent, listed as 'manual' in fetch-report.json; add what is found with add-manual.mjs."
+            "enum": ["feed", "cisa-kev", "page", "listing"],
+            "description": "feed: RSS 2.0 / Atom / RSS 1.0 (RDF), auto-detected. cisa-kev: the CISA KEV catalogue JSON (one candidate per CVE added in the window, url = the CISA catalogue entry for that CVE; the collector's headline is marked headline_composed and is omitted from item sources). page: read manually by the agent, listed as 'manual' in fetch-report.json; add what is found with add-manual.mjs. listing: a publisher's listing page parsed by the collector with the source's own pattern (listing.item), for publishers with no feed; a page whose layout changes fails loudly (no entries matched)."
           },
           "url": { "type": "string", "pattern": "^https://", "format": "uri" },
+          "listing": {
+            "type": "object",
+            "required": ["item"],
+            "additionalProperties": false,
+            "properties": {
+              "item": { "type": "string", "description": "Regular expression (JavaScript, applied globally) with named groups title, date, and url (a link) or anchor (an id on the page, kept as the URL fragment); optional lead." },
+              "unescape": { "enum": ["json"], "description": "json: the list sits inside a JSON string; unescape \\\" \\/ and \\n first." }
+            },
+            "description": "Only for type listing (pipeline/lib/feed.mjs parseListing)."
+          },
           "paywalled": { "type": "boolean", "description": "Paywalled publications: headline and lead-level reference only; lead capped at 40 words." },
-          "region": { "enum": ["US", "UK", "EU", "INTL"] },
+          "region": { "enum": ["US", "UK", "EU", "CA", "INTL", "WATCH"] },
           "lead_words": { "type": "integer", "minimum": 0, "maximum": 200, "default": 60, "description": "Words of description/summary kept as the lead. Paywalled sources: max 40." },
           "notes": { "type": "string" },
           "tier": {
