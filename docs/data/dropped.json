@@ -164,6 +164,32 @@
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
+      "id": "c-51d4875ab2",
+      "date": "2026-10-21",
+      "section": "regulatory_trajectory",
+      "code": "RT_NO_DIRECTION",
+      "reason": "NEAR R3: agentic-AI model-risk gap already in RS-260417-1800-01; a possible information request is only under consideration, no stated intention to act",
+      "publication": "Banking Dive",
+      "headline": "FDIC’s Hill mulls agentic AI deposit impact",
+      "url": "https://www.bankingdive.com/news/fdic-travis-hill-agentic-ai-deposit-impact-money2020/833573/",
+      "judged": "live",
+      "run": "2026-10-21-1400",
+      "near": "Near-miss: only “A change of direction” failed."
+    },
+    {
+      "id": "c-74ef3f48ee",
+      "date": "2026-10-21",
+      "section": "capability_shift",
+      "code": "CS_NO_SPECIFIC_CHANGE",
+      "reason": "C1 one actor adopting established AI-assisted tradecraft (jailbroken agent framework); no capability change; AI-assisted intrusion in RS-260225-1800-01 [alt EV:E2]",
+      "publication": "Palo Alto Networks Unit 42",
+      "headline": "“Next Exploit Opportunities”: How a Threat Actor Used AI to Help Plan and Execute Multiple Types of Cybercrime Activities",
+      "url": "https://unit42.paloaltonetworks.com/ai-assisted-cybercrime-analysis/",
+      "judged": "live",
+      "run": "2026-10-21-1400",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
       "id": "c-b2e14b3f72",
       "date": "2026-10-21",
       "section": "regulatory_trajectory",
@@ -187,6 +213,32 @@
       "more_sources": 1,
       "judged": "live",
       "run": "2026-10-21-1000",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-f4e575eb22",
+      "date": "2026-10-21",
+      "section": null,
+      "code": "GL_RESEARCH_EXCLUDED",
+      "reason": "G9 vendor quarterly statistics study; sample, size and period not established from headline and lead (RA3); trend piece, not an event",
+      "publication": "SecurityWeek",
+      "headline": "High-Severity Flaws Exploited in Three Days as Ransomware Dominates Q3: Rapid7",
+      "url": "https://www.securityweek.com/high-severity-flaws-exploited-in-three-days-as-ransomware-dominates-q3-rapid7/",
+      "judged": "live",
+      "run": "2026-10-21-1400"
+    },
+    {
+      "id": "c-f778ef1a30",
+      "date": "2026-10-21",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 critical PHP RCE flaws patched; authority has observed no exploitation; no routine-vulnerability exception holds [alt EV:E2]",
+      "publication": "CISA",
+      "headline": "Critical Vulnerabilities in PHP Require Immediate Patching",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching",
+      "more_sources": 2,
+      "judged": "live",
+      "run": "2026-10-21-1400",
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {

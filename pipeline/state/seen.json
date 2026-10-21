@@ -1260,6 +1260,48 @@
       "run_id": "2026-10-21-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://unit42.paloaltonetworks.com/ai-assisted-cybercrime-analysis": {
+      "first_seen": "2026-10-21T14:08:21-04:00",
+      "run_id": "2026-10-21-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankingdive.com/news/fdic-travis-hill-agentic-ai-deposit-impact-money2020/833573": {
+      "first_seen": "2026-10-21T14:08:21-04:00",
+      "run_id": "2026-10-21-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/high-severity-flaws-exploited-in-three-days-as-ransomware-dominates-q3-rapid7": {
+      "first_seen": "2026-10-21T14:08:21-04:00",
+      "run_id": "2026-10-21-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://securelist.com/tr/php2shell-critical-vulnerabilities-in-php/121596": {
+      "first_seen": "2026-10-21T14:08:21-04:00",
+      "run_id": "2026-10-21-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rapid7.com/blog/post/etr-cve-2026-109618-and-cve-2026-109619-critical-unauthenticated-remote-code-execution-in-php": {
+      "first_seen": "2026-10-21T14:08:21-04:00",
+      "run_id": "2026-10-21-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cbr.ru/eng/statistics/dkp/bank_lending_terms": {
+      "first_seen": "2026-10-21T14:08:21-04:00",
+      "run_id": "2026-10-21-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching": {
+      "first_seen": "2026-10-21T14:08:21-04:00",
+      "run_id": "2026-10-21-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
