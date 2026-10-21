@@ -47,7 +47,7 @@ const navAttrs = (page, preset = '', v = '') => ` data-act="nav" data-page="${pa
 // ---------------------------------------------------------------------------------------
 // Masthead and footer
 
-const NAV = [['dashboard', 'Dashboard'], ['report', 'Report'], ['archive', 'Archive'], ['about', 'About']];
+const NAV = [['dashboard', 'Dashboard'], ['report', 'Report'], ['archive', 'Archive'], ['dropped', 'Dropped'], ['about', 'About']];
 
 function masthead(st) {
   const { ui } = st;
@@ -665,9 +665,63 @@ function aboutMain() {
         <a class="live-row" href="#dashboard"${navAttrs('dashboard')}><span class="live-k">Dashboard</span><span class="live-v">What the site is for, the bar and the asks in short, then the newest items, threads, trends and run log.</span></a>
         <a class="live-row" href="#report"${navAttrs('report', 'day')}><span class="live-k">Report</span><span class="live-v">The last 24 hours, week or month: a brief of the window, then its items by the three sections. Filter, expand and export.</span></a>
         <a class="live-row" href="#archive"${navAttrs('archive')}><span class="live-k">Archive</span><span class="live-v">Everything ever published, charted and listed by month, with search and a custom date range. Nothing is replaced.</span></a>
+        <a class="live-row" href="#dropped"${navAttrs('dropped')}><span class="live-k">Dropped</span><span class="live-v">In-domain stories the filter read and set aside, by month and section, each with the reason logged when it was judged. For audit.</span></a>
       </div>
     </div>
   </article>
+</main>`;
+}
+
+// ---------------------------------------------------------------------------------------
+// Dropped (owner request 2026-10-21): what the filter read and set aside, with its reason.
+
+const DROP_SEC_LABEL = { all: 'All', executive_visibility: 'Executive Visibility', capability_shift: 'Capability & Control Shift', regulatory_trajectory: 'Regulatory & Executive Trajectory', gate: 'Evidence gates' };
+const DROP_MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const dropDate = (d) => { const [y, m, day] = d.split('-').map(Number); return `${day} ${DROP_MON[m - 1]} ${y}`; };
+
+function dropRow(r) {
+  const sec = M.SECTION_BY_KEY.get(r.section);
+  const link = (text) => (r.href ? `<a class="drop-link" href="${esc(r.href)}" target="_blank" rel="noopener noreferrer">${esc(text)}</a>` : `<span>${esc(text)}</span>`);
+  const title = r.headline
+    ? link(r.headline)
+    : `<span class="drop-held">Headline withheld: it names a financial institution.</span> ${link(r.publication || 'Source')}`;
+  const judged = r.judged === 'backfill' ? `Backfill pass ${r.run}${r.rejudged ? ', re-judged' : ''}` : `Live run ${r.run}`;
+  return `<li class="drop-row" data-k="drop-${esc(r.id)}">
+      <div class="meta-line"><span>${esc(dropDate(r.date))}</span><span class="meta-sec">${esc(sec ? sec.title : 'Evidence gate')}</span>${r.headline && r.publication ? `<span>${esc(r.publication)}</span>` : ''}${r.more_sources ? `<span>+${r.more_sources} more source${r.more_sources > 1 ? 's' : ''}</span>` : ''}</div>
+      <p class="drop-title">${title}</p>
+      <p class="drop-why"><span class="drop-code">${esc(r.label.charAt(0).toUpperCase() + r.label.slice(1))}</span> ${esc(r.reason)}</p>
+      <p class="drop-by">${esc(judged)} · ${esc(r.code)}</p>
+    </li>`;
+}
+
+function droppedMain(st) {
+  const intro = `<section class="card drop-intro" aria-labelledby="drop-h">
+    <h2 class="h-19" id="drop-h">Read, tested and set aside</h2>
+    <p class="drop-p">In-domain stories the filter judged and dropped, each with the reason logged when it was judged. Kept for audit: nothing here is published or recommended. Off-domain items, marketing, stale reposts, round-ups and stories later published are left out. Where a headline names a financial institution, only the outlet is shown.</p>
+  </section>`;
+  const head = (sub) => `<div class="title-row start"><h1 class="h1">Dropped</h1>${sub ? `<span class="list-sub">${esc(sub)}</span>` : ''}</div>`;
+  if (st.droppedState === 'error') {
+    return `<main id="main" tabindex="-1" class="main" data-k="main-dropped">${head('')}${intro}<p class="loading">The dropped-story log could not be loaded. Reload to try again.</p></main>`;
+  }
+  if (!st.dropped) {
+    return `<main id="main" tabindex="-1" class="main" data-k="main-dropped">${head('')}${intro}<p class="loading">Loading the dropped-story log…</p></main>`;
+  }
+  const v = M.droppedView(st.dropped, st.ui);
+  const secBtns = M.DROP_SECS.map((k) => `<button type="button" class="drop-btn" data-act="dsec" data-v="${k}" aria-pressed="${v.sec === k}"${v.secCount[k] ? '' : ' disabled'}>${esc(DROP_SEC_LABEL[k])} <span class="drop-n">${v.secCount[k]}</span></button>`).join('');
+  const monBtns = v.months.map((m) => `<button type="button" class="drop-btn" data-act="dmonth" data-v="${m.key}" aria-pressed="${v.month === m.key}">${esc(m.label)} <span class="drop-n">${m.n}</span></button>`).join('');
+  const list = v.rows.length
+    ? `<ul class="drop-list">${v.rows.map(dropRow).join('')}</ul>`
+    : '<p class="loading">Nothing dropped matches this filter.</p>';
+  return `<main id="main" tabindex="-1" class="main" data-k="main-dropped">
+  ${head(`${v.total} dropped stories`)}
+  ${intro}
+  <section class="card drop-card" aria-label="Dropped stories">
+    <div class="drop-filters">
+      <div class="drop-group" role="group" aria-label="Section">${secBtns}</div>
+      <div class="drop-group" role="group" aria-label="Month">${monBtns}</div>
+    </div>
+    ${list}
+  </section>
 </main>`;
 }
 
@@ -681,6 +735,7 @@ export function renderApp(st) {
   const { ui } = st;
   let main;
   if (ui.page === 'about') main = aboutMain();
+  else if (ui.page === 'dropped') main = droppedMain(st);
   else if (st.loading) main = loadingMain(ui.page);
   else if (st.error || !st.data) main = errorMain(ui.page);
   else if (ui.page === 'report' || ui.page === 'archive') main = listMain(st);
@@ -688,4 +743,4 @@ export function renderApp(st) {
   return `${masthead(st)}${main}${footer()}`;
 }
 
-export const PAGE_TITLES = { dashboard: 'Readiness Signal', report: 'Report · Readiness Signal', archive: 'Archive · Readiness Signal', about: 'About · Readiness Signal' };
+export const PAGE_TITLES = { dashboard: 'Readiness Signal', report: 'Report · Readiness Signal', archive: 'Archive · Readiness Signal', dropped: 'Dropped · Readiness Signal', about: 'About · Readiness Signal' };

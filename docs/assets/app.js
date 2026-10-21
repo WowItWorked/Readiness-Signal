@@ -9,6 +9,8 @@ const root = document.getElementById('app');
 const live = document.getElementById('live');
 
 let data = null;
+let dropped = null; // the Dropped page's log, loaded the first time the page opens
+let droppedState = 'idle';
 let loadError = null;
 let loading = true;
 let ui = M.defaultUi(new Date());
@@ -73,8 +75,9 @@ const clock = () => M.effectiveNow(data, new Date());
 
 function render() {
   hideTip();
+  if (ui.page === 'dropped' && droppedState === 'idle') loadDropped();
   const html = renderApp({
-    ui, data, now: clock(), error: loadError, loading,
+    ui, data, now: clock(), error: loadError, loading, dropped, droppedState,
   }).replace(/>\s+</g, '><');
   const t = document.createElement('template');
   t.innerHTML = html;
@@ -435,6 +438,8 @@ root.addEventListener('click', (e) => {
     case 'toggleall': toggleAll(); break;
     case 'print': printAs(d.mode); break;
     case 'copy': copyFor(d.id, d.kind); break;
+    case 'dsec': set({ dropSec: d.v, dropMonth: null }); break;
+    case 'dmonth': set({ dropMonth: d.v }); break;
     default: break;
   }
 });
@@ -509,6 +514,18 @@ async function fetchJson(url) {
   const res = await fetch(url, { cache: 'no-cache' });
   if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`);
   return res.json();
+}
+
+async function loadDropped() {
+  droppedState = 'loading';
+  try {
+    dropped = M.prepareDropped(await fetchJson('data/dropped.json'));
+    droppedState = 'ready';
+  } catch (err) {
+    droppedState = 'error';
+    console.error('Readiness Signal: dropped-story log failed to load.', err);
+  }
+  render();
 }
 
 async function boot() {

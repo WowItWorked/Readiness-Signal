@@ -68,7 +68,7 @@ export const SOURCE_CLASSES = Object.freeze([
   { key: 'research_analysis', label: 'Research & analysis' },
 ]);
 
-export const PAGES = Object.freeze(['dashboard', 'report', 'archive', 'about']);
+export const PAGES = Object.freeze(['dashboard', 'report', 'archive', 'dropped', 'about']);
 export const REPORT_SPANS = Object.freeze({ day: 1, week: 7, month: 30 });
 
 const byKey = (list) => new Map(list.map((x) => [x.key, x]));
@@ -524,7 +524,50 @@ export function defaultUi(now) {
   return {
     page: 'dashboard', repTime: 'day', archTime: 'all', from, to: todayEt(now), q: '',
     secs: [], doms: [], srcs: [], open: {}, copied: null, pop: null, printMode: null,
+    dropSec: 'all', dropMonth: null,
   };
+}
+
+// ---------------------------------------------------------------------------------------
+// Dropped (owner request 2026-10-21): in-domain stories the filter judged and dropped, with the
+// logged reason, from docs/data/dropped.json (built from pipeline/logs). For audit only.
+
+/** Section filter values on the Dropped page: all, one section, or the evidence gates. */
+export const DROP_SECS = Object.freeze(['all', 'executive_visibility', 'capability_shift', 'regulatory_trajectory', 'gate']);
+
+/** Validate and index dropped.json. Rows that do not parse are skipped, never guessed. */
+export function prepareDropped(doc) {
+  const codes = doc && typeof doc.codes === 'object' && doc.codes ? doc.codes : {};
+  const items = (Array.isArray(doc?.items) ? doc.items : [])
+    .filter((r) => r && typeof r.code === 'string' && typeof r.reason === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(String(r.date)))
+    .map((r) => ({
+      ...r,
+      month: r.date.slice(0, 7),
+      sec: SECTION_BY_KEY.has(r.section) ? r.section : 'gate',
+      label: typeof codes[r.code] === 'string' ? codes[r.code] : r.code,
+      href: safeHttps(r.url), // null unless a plain https URL: never a javascript: or data: link
+    }));
+  return { items };
+}
+
+/** The Dropped page for the current filters: section counts, months, and the chosen month's rows. */
+export function droppedView(dropped, ui) {
+  const all = dropped ? dropped.items : [];
+  const sec = DROP_SECS.includes(ui.dropSec) ? ui.dropSec : 'all';
+  const secCount = Object.fromEntries(DROP_SECS.map((k) => [k, k === 'all' ? all.length : all.filter((r) => r.sec === k).length]));
+  const inSec = sec === 'all' ? all : all.filter((r) => r.sec === sec);
+  const counts = new Map();
+  for (const r of inSec) counts.set(r.month, (counts.get(r.month) ?? 0) + 1);
+  const months = [...counts.keys()].sort().reverse().map((m) => ({ key: m, label: monthLabel(m), n: counts.get(m) }));
+  const month = months.some((m) => m.key === ui.dropMonth) ? ui.dropMonth : (months[0]?.key ?? null);
+  const rows = inSec.filter((r) => r.month === month);
+  return { total: all.length, sec, secCount, months, month, rows };
+}
+
+const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+function monthLabel(key) {
+  const [y, m] = key.split('-').map(Number);
+  return `${MONTH_NAMES[m - 1] ?? key} ${y}`;
 }
 
 /** Parse a location hash: a page name, an item id, or nothing. */
