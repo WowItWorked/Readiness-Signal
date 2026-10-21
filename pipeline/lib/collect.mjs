@@ -5,7 +5,7 @@
 // impersonates a browser, never retries under another identity and never works around a bot check
 // or access wall; a source that refuses the project user agent is reported failed, not bypassed.
 
-import { parseFeed, leadWordsFor, makeLead, collapseWhitespace } from './feed.mjs';
+import { parseFeed, parseListing, leadWordsFor, makeLead, collapseWhitespace } from './feed.mjs';
 import { candidateId, hostOf, normaliseUrl } from './url.mjs';
 import { etDateString, etWallToDate, toEtIso } from './time.mjs';
 
@@ -31,6 +31,7 @@ const MAX_BODY_BYTES = 15 * 1024 * 1024;
 const ACCEPT = {
   feed: 'application/rss+xml, application/atom+xml, application/rdf+xml;q=0.9, application/xml;q=0.9, text/xml;q=0.9, */*;q=0.5',
   json: 'application/json, */*;q=0.5',
+  html: 'text/html, application/xhtml+xml;q=0.9, */*;q=0.5',
 };
 
 /**
@@ -420,7 +421,7 @@ export async function collectSource(source, { since, now, timeoutMs, fetchImpl, 
   try {
     const res = await fetchWithRetry(source.url, {
       timeoutMs,
-      accept: source.type === 'cisa-kev' ? ACCEPT.json : ACCEPT.feed,
+      accept: source.type === 'cisa-kev' ? ACCEPT.json : source.type === 'listing' ? ACCEPT.html : ACCEPT.feed,
       fetchImpl,
     });
     report.http_status = res.status;
@@ -428,6 +429,8 @@ export async function collectSource(source, { since, now, timeoutMs, fetchImpl, 
     report.retry_status = res.retry_status;
     report.elapsed_ms = res.elapsed_ms;
     if (res.tooLarge) throw new Error('response larger than 15 MB');
+    // the cloud environment's egress proxy, not the publisher, refused the host (owner audit 2026-10-21)
+    if (!res.ok && res.status === 403 && /Blocked by egress policy/.test(res.text ?? '')) throw new Error('HTTP 403: blocked by the environment\'s network policy, not the publisher');
     if (!res.ok) throw new Error(`HTTP ${res.status}${retryNote(res)}`);
     let result;
     if (source.type === 'cisa-kev') {
@@ -436,7 +439,8 @@ export async function collectSource(source, { since, now, timeoutMs, fetchImpl, 
       report.format = 'kev-json';
       result = kevCandidates(source, json, { since, now });
     } else {
-      const parsed = parseFeed(res.text, { baseUrl: res.finalUrl || source.url, leadWords: leadWordsFor(source) });
+      const opts = { baseUrl: res.finalUrl || source.url, leadWords: leadWordsFor(source) };
+      const parsed = source.type === 'listing' ? parseListing(res.text, { ...opts, listing: source.listing }) : parseFeed(res.text, opts);
       report.format = parsed.format;
       result = feedCandidates(source, parsed, { since, now, replay });
     }

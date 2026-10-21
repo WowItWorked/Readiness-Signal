@@ -26,7 +26,7 @@ export const DEDUP_OUTCOMES = Object.freeze(['new', 'cluster_merged', 'same_stor
 
 export const SEEN_VERDICTS = Object.freeze(['published', 'dropped', 'duplicate']);
 
-export const SOURCE_TYPES = Object.freeze(['feed', 'cisa-kev', 'page']);
+export const SOURCE_TYPES = Object.freeze(['feed', 'cisa-kev', 'page', 'listing']);
 
 export const REGIONS = Object.freeze(['US', 'UK', 'EU', 'CA', 'INTL', 'WATCH']);
 

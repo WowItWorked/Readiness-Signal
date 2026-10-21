@@ -94,10 +94,13 @@ The script writes `pipeline/work/$RUN/candidates.json` and `pipeline/work/$RUN/f
 - **Exit 1, or exit 2 for any other reason,** is a script error: run it once more, then go to F with `fetch error: <first line>`.
 - Read `fetch-report.json` → `date_warnings`. Unreadable dates are kept as undated, so the window does not apply to them; implausible dates are skipped. Reposts (a feed listing an older document under a new date, such as a BIS central bankers' speech whose lead states the delivery date) keep their feed date: judge G7 by the date the lead states. Note affected sources as a source issue that bears on judgment: `source: <source_id> <what failed>`, for example `source: bis-cb-speeches reposts older speeches` (FILTER.md §9.1).
 - For each source with status `failed`, note any that matter for judgment (for example, a key regulator feed down) the same way.
+- A failure whose error reads `HTTP 403: blocked by the environment's network policy, not the publisher` comes from the cloud environment's network settings, not the publisher (owner audit 2026-10-21: BBC, the Guardian, the FT, the NYT, Politico and DW). These fail every run and are known; do not list them individually in the notes.
 
 ## 5. Page sources (manual)
 
 `fetch-report.json` → `manual[]` lists sources of type `page`, each with `{ id, publication, url, notes }`. The fetch script does not read them.
+
+Sources of type `listing` are publishers' listing pages that `fetch.mjs` parses itself with the source's own pattern (`sources.json` → `listing`, owner audit 2026-10-21): they arrive as ordinary candidates and are never read by hand here. A listing whose pattern matches nothing fails with `listing pattern matched no entries`, which usually means the publisher changed its page layout: note it as `source: <source_id> listing layout changed` and carry on. If `manual[]` is empty, skip this step.
 
 For each page source:
 1. Open `url`. Public pages only; the paywall rules apply. If it fails to load, skip it, and note `source: <id> page unreadable` if it matters for judgment.

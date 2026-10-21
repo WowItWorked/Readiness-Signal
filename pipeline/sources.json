@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "verified_on": "2026-10-02",
+  "verified_on": "2026-10-21",
   "sources": [
     {
       "id": "eba-news",
@@ -299,11 +299,14 @@
       "id": "fincen-news-releases",
       "publication": "FinCEN",
       "source_class": "regulator",
-      "type": "page",
+      "type": "listing",
       "url": "https://www.fincen.gov/news/press-releases",
       "paywalled": false,
       "region": "US",
-      "notes": "News Releases listing page. FinCEN has no RSS (every rss.xml/feed path returns 404, and the GovDelivery topic IDs are not public). This listing announces FinCEN alerts, advisories, financial trend analyses and AML rulemaking, which are essential for the fraud domain (e.g. digital-asset scam and deepfake typologies). Entries carry datetime attributes. Node fetch had one intermittent connect timeout; curl was reliable."
+      "notes": "News Releases listing page. FinCEN has no RSS (every rss.xml/feed path returns 404, and the GovDelivery topic IDs are not public). This listing announces FinCEN alerts, advisories, financial trend analyses and AML rulemaking, which are essential for the fraud domain (e.g. digital-asset scam and deepfake typologies). Entries carry datetime attributes. Node fetch had one intermittent connect timeout; curl was reliable. Listing (owner audit 2026-10-21): parsed automatically by the collector with the pattern in listing.item (feed.mjs parseListing) instead of being read by hand; it had been logged unread in about half of the live runs. A layout change fails loudly (\"matched no entries\").",
+      "listing": {
+        "item": "<time datetime=\"(?<date>[^\"]+)\"[^>]*>[^<]*</time>[^<]*</div>\\s*<div class=\"fincen-news-article__title\">\\s*<a href=\"(?<url>[^\"]+)\"[^>]*>(?<title>[\\s\\S]*?)</a>(?:\\s*</div>\\s*<div class=\"fincen-news-article__body\">(?<lead>[\\s\\S]*?)</div>)?"
+      }
     },
     {
       "id": "hfsc-news",
@@ -319,11 +322,14 @@
       "id": "nydfs-industry-letters",
       "publication": "New York State Department of Financial Services",
       "source_class": "regulator",
-      "type": "page",
+      "type": "listing",
       "url": "https://www.dfs.ny.gov/industry_guidance/industry_letters",
       "paywalled": false,
       "region": "US",
-      "notes": "Industry Letters listing page. NYDFS has no RSS (rss.xml returns 404; GovDelivery bulletins.rss returns 406). This page is the canonical channel for Part 500 cyber guidance and AI letters (e.g. 2026-05-21 frontier-AI cyber risk letter, 2026-09-10 cyber risk-assessment guidance). It lists the full archive of about 300 links, with URLs in both /industry_guidance/ and /industry-guidance/ forms; diff on new slugs."
+      "notes": "Industry Letters listing page. NYDFS has no RSS (rss.xml returns 404; GovDelivery bulletins.rss returns 406). This page is the canonical channel for Part 500 cyber guidance and AI letters (e.g. 2026-05-21 frontier-AI cyber risk letter, 2026-09-10 cyber risk-assessment guidance). It lists the full archive of about 300 links, with URLs in both /industry_guidance/ and /industry-guidance/ forms; diff on new slugs. Listing (owner audit 2026-10-21): parsed automatically by the collector with the pattern in listing.item (feed.mjs parseListing) instead of being read by hand; it had been logged unread in about half of the live runs. A layout change fails loudly (\"matched no entries\").",
+      "listing": {
+        "item": "<tr>\\s*<td>\\s*(?<date>\\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01]))\\s*</td>\\s*<td>\\s*<a href=\"(?<url>[^\"]+)\"[^>]*>(?<title>[\\s\\S]*?)</a>"
+      }
     },
     {
       "id": "occ-bulletins",
@@ -389,11 +395,14 @@
       "id": "enisa-publications",
       "publication": "ENISA",
       "source_class": "standards_body",
-      "type": "page",
+      "type": "listing",
       "url": "https://www.enisa.europa.eu/publications",
       "paywalled": false,
       "region": "EU",
-      "notes": "Publications listing page. ENISA has no working RSS: the legacy /RSS paths and /news/rss return 404, and the rss-feeds page returns 403. Classed as standards_body (EU cyber agency issuing technical guidance and threat landscapes). Examples: ENISA Threat Landscape 2026, NIS2 Technical Implementation Guidance, 'ENISA's view on cybersecurity in the frontier AI era'. 10 entries with datetime attributes."
+      "notes": "Publications listing page. ENISA has no working RSS: the legacy /RSS paths and /news/rss return 404, and the rss-feeds page returns 403. Classed as standards_body (EU cyber agency issuing technical guidance and threat landscapes). Examples: ENISA Threat Landscape 2026, NIS2 Technical Implementation Guidance, 'ENISA's view on cybersecurity in the frontier AI era'. 10 entries with datetime attributes. Listing (owner audit 2026-10-21): parsed automatically by the collector with the pattern in listing.item (feed.mjs parseListing) instead of being read by hand; it had been logged unread in about half of the live runs. A layout change fails loudly (\"matched no entries\").",
+      "listing": {
+        "item": "<h3>\\s*<a href=\"(?<url>/publications/[^\"]+?)\\s*\"[^>]*>(?<title>[\\s\\S]*?)</a>\\s*</h3>\\s*<p class=\"metadata\">\\s*<span class=\"date\">\\s*<time datetime=\"(?<date>[^\"]+)\"(?:[\\s\\S]*?<div class=\"content\">(?<lead>[\\s\\S]*?)</div>)?"
+      }
     },
     {
       "id": "bis-fsi-publications",
@@ -439,11 +448,14 @@
       "id": "iosco-media-releases",
       "publication": "IOSCO",
       "source_class": "standards_body",
-      "type": "page",
+      "type": "listing",
       "url": "https://www.iosco.org/media_room/?subsection=media_releases",
       "paywalled": false,
       "region": "INTL",
-      "notes": "Media releases listing page. IOSCO's RSS (iosco.org/rss/rss.xml) is stale (last item 2023-05-24) and /rss/news.xml returns 403. This listing works with the declared UA and shows 20 releases per page, each with a date and a PDF link (IOSCONEWSnnn.pdf), e.g. the 2026-09-08 CPMI-IOSCO FMI cyber-resilience toolkit."
+      "notes": "Media releases listing page. IOSCO's RSS (iosco.org/rss/rss.xml) is stale (last item 2023-05-24) and /rss/news.xml returns 403. This listing works with the declared UA and shows 20 releases per page, each with a date and a PDF link (IOSCONEWSnnn.pdf), e.g. the 2026-09-08 CPMI-IOSCO FMI cyber-resilience toolkit. Listing (owner audit 2026-10-21): parsed automatically by the collector with the pattern in listing.item (feed.mjs parseListing) instead of being read by hand; it had been logged unread in about half of the live runs. A layout change fails loudly (\"matched no entries\").",
+      "listing": {
+        "item": "<strong>\\s*<a href=\"(?<url>[^\"]+)\"[^>]*class=\"text-reset\">(?<title>[\\s\\S]*?)</a>\\s*</strong>\\s*<br\\s*/?>\\s*(?<date>\\d{1,2} [A-Z][a-z]{2} \\d{4})"
+      }
     },
     {
       "id": "pcissc-blog",
@@ -499,11 +511,14 @@
       "id": "ebf-policy-insights",
       "publication": "European Banking Federation",
       "source_class": "industry_trade",
-      "type": "page",
+      "type": "listing",
       "url": "https://ebf.eu/news-insights/policy-insights",
       "paywalled": false,
       "region": "EU",
-      "notes": "Page source: the EBF site (now ebf.eu, Drupal) exposes no feed (/feed and /rss.xml return 404). The policy-insights listing carries EBF consultation responses and position papers (AMLA, FATF R16 payment transparency, EBA/DDA). It is the EU banking-industry voice on DORA, the AI Act and PSR files. The sibling listing https://ebf.eu/news-insights/news (about 9 entries, mostly press releases) is optional. The www.ebf.eu host rate-limits (429), so use the bare ebf.eu host."
+      "notes": "Page source: the EBF site (now ebf.eu, Drupal) exposes no feed (/feed and /rss.xml return 404). The policy-insights listing carries EBF consultation responses and position papers (AMLA, FATF R16 payment transparency, EBA/DDA). It is the EU banking-industry voice on DORA, the AI Act and PSR files. The sibling listing https://ebf.eu/news-insights/news (about 9 entries, mostly press releases) is optional. The www.ebf.eu host rate-limits (429), so use the bare ebf.eu host. Listing (owner audit 2026-10-21): parsed automatically by the collector with the pattern in listing.item (feed.mjs parseListing) instead of being read by hand; it had been logged unread in about half of the live runs. A layout change fails loudly (\"matched no entries\").",
+      "listing": {
+        "item": "<a href=\"(?<url>/news-insights/[^\"]+)\" rel=\"bookmark\"[\\s\\S]{0,600}?<h2 class=\"node__title\">\\s*<span>(?<title>[\\s\\S]*?)</span>\\s*</h2>\\s*<div class=\"field field--name-field-publication-date[^\"]*\">(?<date>[^<]+)</div>"
+      }
     },
     {
       "id": "fairinstitute-blog",
@@ -549,11 +564,14 @@
       "id": "ukfinance-press-releases",
       "publication": "UK Finance",
       "source_class": "industry_trade",
-      "type": "page",
+      "type": "listing",
       "url": "https://www.ukfinance.org.uk/news-and-insight/press-release",
       "paywalled": false,
       "region": "UK",
-      "notes": "Page source: UK Finance has no usable feed. Its /rss.xml is an all-content feed (people profiles, events) that crowds out press releases. Essential for UK fraud data (Annual Fraud Report, APP reimbursement), tokenised deposits, and payments trends. Akamai allows the honest ReadinessSignal UA, the only user agent the pipeline sends. Newest entry is dated 24 Sep 2026."
+      "notes": "Page source: UK Finance has no usable feed. Its /rss.xml is an all-content feed (people profiles, events) that crowds out press releases. Essential for UK fraud data (Annual Fraud Report, APP reimbursement), tokenised deposits, and payments trends. Akamai allows the honest ReadinessSignal UA, the only user agent the pipeline sends. Newest entry is dated 24 Sep 2026. Listing (owner audit 2026-10-21): parsed automatically by the collector with the pattern in listing.item (feed.mjs parseListing) instead of being read by hand; it had been logged unread in about half of the live runs. A layout change fails loudly (\"matched no entries\").",
+      "listing": {
+        "item": "uppercase mb-0 text-blue-100 text-xs\">\\s*(?<date>\\d{1,2} [A-Z][a-z]{2} \\d{4})\\s*</div>[\\s\\S]{0,800}?<h3 class=\"card_title[^\"]*\">\\s*<a [^>]*href=\"(?<url>/news-and-insight/press-release/[^\"]+)\"[^>]*>(?<title>[\\s\\S]*?)</a>(?:\\s*</h3>\\s*<div class=\"card_content[^\"]*\">(?<lead>[\\s\\S]*?)</div>)?"
+      }
     },
     {
       "id": "aba-bankingjournal-cybersecurity",
@@ -603,17 +621,20 @@
       "url": "https://fsscc.org/feed/",
       "paywalled": false,
       "region": "US",
-      "notes": "Abbreviation: FSSCC. US sector coordinating council: reconnection framework, CISA/NCIRP responses, PQC guidance, cloud steering-group letters. Very low cadence; the last post was 2025-12-16. The feed works and costs little, but drop it if it is still silent at the next review."
+      "notes": "Abbreviation: FSSCC. US sector coordinating council: reconnection framework, CISA/NCIRP responses, PQC guidance, cloud steering-group letters. Very low cadence; the last post was 2025-12-16. The feed works and costs little, but drop it if it is still silent at the next review. 2026-10-21: the whole fsscc.org site is offline (\"temporarily unavailable\" while it responds to a web-software vulnerability); the feed path returns 404 until it is restored."
     },
     {
       "id": "nacha-news",
       "publication": "Nacha",
       "source_class": "industry_trade",
-      "type": "page",
+      "type": "listing",
       "url": "https://www.nacha.org/news",
       "paywalled": false,
       "region": "US",
-      "notes": "Page source: Nacha's /rss.xml only carries Same Day ACH case studies, which are off-topic. The news listing has ACH rule changes (fraud monitoring, funds availability, IAT), Payments Innovation Alliance cybersecurity and stablecoin work, and risk-management guidance. It also includes partner announcements, which are noise. Newest entry is dated 1 Oct 2026."
+      "notes": "Nacha's /rss.xml only carries Same Day ACH case studies, which are off-topic. The news listing has ACH rule changes (fraud monitoring, funds availability, IAT), Payments Innovation Alliance cybersecurity and stablecoin work, and risk-management guidance. It also includes partner announcements, which are noise. Newest entry is dated 1 Oct 2026. Listing (owner audit 2026-10-21): parsed automatically by the collector with the pattern in listing.item (feed.mjs parseListing) instead of being read by hand; it had been logged unread in about half of the live runs. A layout change fails loudly (\"matched no entries\").",
+      "listing": {
+        "item": "<h2 class=\"podcastArticle-title\">\\s*<a href=\"(?<url>/news/[^\"]+)\">\\s*(?:<!--[\\s\\S]*?-->\\s*)*<span[^>]*>(?<title>[\\s\\S]*?)</span>[\\s\\S]{0,400}?<div class=\"podcastArticle-date\">(?<date>[A-Z][a-z]+ \\d{1,2}, \\d{4})</div>"
+      }
     },
     {
       "id": "dw-business",
@@ -623,7 +644,7 @@
       "url": "https://rss.dw.com/rdf/rss-en-bus",
       "paywalled": false,
       "region": "EU",
-      "notes": "DW English business section. General or business press for E3 (FILTER 2.7.4): Germany's international public broadcaster. Free to read. Low volume (20 items over about a month): EU markets, banking and corporate stories, occasional cyber and AI-policy items. RSS 1.0 (RDF); links carry a ?maca= tracking parameter. Verified 2026-10-02 with the project UA: HTTP 200, RDF, 20 items, newest 2026-10-02. No DW technology feed works (rss-en-sci returns an empty body).",
+      "notes": "DW English business section. General or business press for E3 (FILTER 2.7.4): Germany's international public broadcaster. Free to read. Low volume (20 items over about a month): EU markets, banking and corporate stories, occasional cyber and AI-policy items. RSS 1.0 (RDF); links carry a ?maca= tracking parameter. Verified 2026-10-02 with the project UA: HTTP 200, RDF, 20 items, newest 2026-10-02. No DW technology feed works (rss-en-sci returns an empty body). Blocked 2026-10-21: the cloud environment the pipeline runs in refuses this host (\"Blocked by egress policy\"), so it has failed every run. Kept registered in case the owner allows the host in the environment network settings; the reachable general outlets added that day stand in.",
       "prefilter": "strict",
       "tier": "general"
     },
@@ -646,7 +667,7 @@
       "url": "https://www.politico.eu/section/technology/feed/",
       "paywalled": false,
       "region": "EU",
-      "notes": "EU tech and AI policy (EU AI safety stance, digital sovereignty, Commission tech files). It is the only working EU tech-policy news feed found; Euractiv returns 403.",
+      "notes": "EU tech and AI policy (EU AI safety stance, digital sovereignty, Commission tech files). It is the only working EU tech-policy news feed found; Euractiv returns 403. Blocked 2026-10-21: the cloud environment the pipeline runs in refuses this host (\"Blocked by egress policy\"), so it has failed every run. Kept registered in case the owner allows the host in the environment network settings; the reachable general outlets added that day stand in.",
       "tier": "general"
     },
     {
@@ -670,7 +691,7 @@
       "paywalled": true,
       "region": "UK",
       "lead_words": 30,
-      "notes": "BBC News business section. General or business press for E3 (FILTER 2.7.4): UK national broadcaster. Broad (economy, energy, retail), so prefilter strict; carries UK bank outages, retail cyberattacks and fraud stories. Paywall: free in the UK and most regions, but bbc.com has shown a dynamic paywall to US visitors since June 2025 and the routine may run from a US address, so treated as headline-and-lead only (set paywalled false only if the routine is confirmed to run outside the US). The www.bbc.co.uk URL redirects to feeds.bbci.co.uk; it is registered on www.bbc.co.uk so article URLs (www.bbc.co.uk/news/articles/...) match this source for add-manual.mjs --extra. Verified 2026-10-02 with the project UA: HTTP 200 after redirect, RSS, 55 items, 38 in the last 72 h, newest 2026-10-02.",
+      "notes": "BBC News business section. General or business press for E3 (FILTER 2.7.4): UK national broadcaster. Broad (economy, energy, retail), so prefilter strict; carries UK bank outages, retail cyberattacks and fraud stories. Paywall: free in the UK and most regions, but bbc.com has shown a dynamic paywall to US visitors since June 2025 and the routine may run from a US address, so treated as headline-and-lead only (set paywalled false only if the routine is confirmed to run outside the US). The www.bbc.co.uk URL redirects to feeds.bbci.co.uk; it is registered on www.bbc.co.uk so article URLs (www.bbc.co.uk/news/articles/...) match this source for add-manual.mjs --extra. Verified 2026-10-02 with the project UA: HTTP 200 after redirect, RSS, 55 items, 38 in the last 72 h, newest 2026-10-02. Blocked 2026-10-21: the cloud environment the pipeline runs in refuses this host (\"Blocked by egress policy\"), so it has failed every run. Kept registered in case the owner allows the host in the environment network settings; the reachable general outlets added that day stand in.",
       "prefilter": "strict",
       "tier": "general"
     },
@@ -683,7 +704,7 @@
       "paywalled": true,
       "region": "UK",
       "lead_words": 30,
-      "notes": "BBC News technology section. General or business press for E3 (FILTER 2.7.4): UK national broadcaster. AI, cyber, data and platform stories. Paywall and URL notes as bbc-news-business (dynamic paywall for US visitors; the www.bbc.co.uk URL redirects to feeds.bbci.co.uk). Verified 2026-10-02 with the project UA: HTTP 200 after redirect, RSS, 21 items over about 4 weeks, 13 in the last 72 h, newest 2026-10-02.",
+      "notes": "BBC News technology section. General or business press for E3 (FILTER 2.7.4): UK national broadcaster. AI, cyber, data and platform stories. Paywall and URL notes as bbc-news-business (dynamic paywall for US visitors; the www.bbc.co.uk URL redirects to feeds.bbci.co.uk). Verified 2026-10-02 with the project UA: HTTP 200 after redirect, RSS, 21 items over about 4 weeks, 13 in the last 72 h, newest 2026-10-02. Blocked 2026-10-21: the cloud environment the pipeline runs in refuses this host (\"Blocked by egress policy\"), so it has failed every run. Kept registered in case the owner allows the host in the environment network settings; the reachable general outlets added that day stand in.",
       "tier": "general"
     },
     {
@@ -727,7 +748,7 @@
       "paywalled": true,
       "region": "UK",
       "lead_words": 30,
-      "notes": "FT cyber-security topic feed, headline and standfirst only. Major exchange hacks, AI-enabled cybercrime, UK security warnings. The narrowest FT feed with this signal; the FT banks and fintech topic feeds work but are noisier.",
+      "notes": "FT cyber-security topic feed, headline and standfirst only. Major exchange hacks, AI-enabled cybercrime, UK security warnings. The narrowest FT feed with this signal; the FT banks and fintech topic feeds work but are noisier. Blocked 2026-10-21: the cloud environment the pipeline runs in refuses this host (\"Blocked by egress policy\"), so it has failed every run. Kept registered in case the owner allows the host in the environment network settings; the reachable general outlets added that day stand in.",
       "tier": "general"
     },
     {
@@ -738,7 +759,7 @@
       "url": "https://www.theguardian.com/uk/business/rss",
       "paywalled": false,
       "region": "UK",
-      "notes": "The Guardian business section, UK edition. General or business press for E3 (FILTER 2.7.4): UK national newspaper. Free to read (reader-funded, no paywall). Broad (economy, markets, retail, energy), so prefilter strict; carries UK bank IT failures, retail and supplier cyberattacks, and fraud and scam coverage. Use the /uk/ edition path: /business/rss redirects to an edition chosen by location. Verified 2026-10-02 with the project UA: HTTP 200, RSS, 40 items over about 3 days, newest 2026-10-02.",
+      "notes": "The Guardian business section, UK edition. General or business press for E3 (FILTER 2.7.4): UK national newspaper. Free to read (reader-funded, no paywall). Broad (economy, markets, retail, energy), so prefilter strict; carries UK bank IT failures, retail and supplier cyberattacks, and fraud and scam coverage. Use the /uk/ edition path: /business/rss redirects to an edition chosen by location. Verified 2026-10-02 with the project UA: HTTP 200, RSS, 40 items over about 3 days, newest 2026-10-02. Blocked 2026-10-21: the cloud environment the pipeline runs in refuses this host (\"Blocked by egress policy\"), so it has failed every run. Kept registered in case the owner allows the host in the environment network settings; the reachable general outlets added that day stand in.",
       "prefilter": "strict",
       "tier": "general"
     },
@@ -750,7 +771,7 @@
       "url": "https://www.theguardian.com/uk/technology/rss",
       "paywalled": false,
       "region": "UK",
-      "notes": "The Guardian technology section, UK edition. General or business press for E3 (FILTER 2.7.4): UK national newspaper. Free to read. AI, cyber, data protection and platform regulation. Narrower tag feeds also work (technology/hacking/rss, technology/data-computer-security/rss, about 20 items a month) if this one proves too noisy. Verified 2026-10-02 with the project UA: HTTP 200, RSS, 32 items, 17 in the last 72 h, newest 2026-10-02.",
+      "notes": "The Guardian technology section, UK edition. General or business press for E3 (FILTER 2.7.4): UK national newspaper. Free to read. AI, cyber, data protection and platform regulation. Narrower tag feeds also work (technology/hacking/rss, technology/data-computer-security/rss, about 20 items a month) if this one proves too noisy. Verified 2026-10-02 with the project UA: HTTP 200, RSS, 32 items, 17 in the last 72 h, newest 2026-10-02. Blocked 2026-10-21: the cloud environment the pipeline runs in refuses this host (\"Blocked by egress policy\"), so it has failed every run. Kept registered in case the owner allows the host in the environment network settings; the reachable general outlets added that day stand in.",
       "tier": "general"
     },
     {
@@ -926,7 +947,7 @@
       "paywalled": true,
       "region": "US",
       "lead_words": 30,
-      "notes": "NYT Technology section, headline and lead only (metered paywall). General or business press for E3 (FILTER 2.7.4): US national newspaper. AI, platform, cyber and crypto stories; some items are cross-filed from Business. Verified 2026-10-02 with the project UA: HTTP 200, RSS, 29 items over about a week, 20 in the last 72 h, newest 2026-10-02. NYT Business (nyt/Business.xml) also works but is high volume (50 items in 2 days).",
+      "notes": "NYT Technology section, headline and lead only (metered paywall). General or business press for E3 (FILTER 2.7.4): US national newspaper. AI, platform, cyber and crypto stories; some items are cross-filed from Business. Verified 2026-10-02 with the project UA: HTTP 200, RSS, 29 items over about a week, 20 in the last 72 h, newest 2026-10-02. NYT Business (nyt/Business.xml) also works but is high volume (50 items in 2 days). Blocked 2026-10-21: the cloud environment the pipeline runs in refuses this host (\"Blocked by egress policy\"), so it has failed every run. Kept registered in case the owner allows the host in the environment network settings; the reachable general outlets added that day stand in.",
       "tier": "general"
     },
     {
@@ -948,7 +969,7 @@
       "url": "https://rss.politico.com/technology.xml",
       "paywalled": false,
       "region": "US",
-      "notes": "US tech and AI policy: White House AI accords, state frontier-AI laws, congressional AI moves. Carries the AI-governance signal for US firms. It is mostly political, so expect a low FS hit rate.",
+      "notes": "US tech and AI policy: White House AI accords, state frontier-AI laws, congressional AI moves. Carries the AI-governance signal for US firms. It is mostly political, so expect a low FS hit rate. Blocked 2026-10-21: the cloud environment the pipeline runs in refuses this host (\"Blocked by egress policy\"), so it has failed every run. Kept registered in case the owner allows the host in the environment network settings; the reachable general outlets added that day stand in.",
       "tier": "general"
     },
     {
@@ -970,8 +991,8 @@
       "url": "https://techcrunch.com/category/security/feed/",
       "paywalled": false,
       "region": "US",
-      "notes": "Security category only. Strong original breach reporting, including fintech and consumer-data breaches, plus urgent-patch stories. Some startup-funding items are noise.",
-      "tier": "general"
+      "notes": "Security category only. Strong original breach reporting, including fintech and consumer-data breaches, plus urgent-patch stories. Some startup-funding items are noise. Re-tiered trade 2026-10-21 (owner audit): FILTER.md 2.7.4 classes technology titles as trade press.",
+      "tier": "trade"
     },
     {
       "id": "therecord-news",
@@ -994,6 +1015,102 @@
       "region": "US",
       "lead_words": 30,
       "notes": "Technology section, headline and standfirst only. This is the current Dow Jones feed host; the old feeds.a.dj.com URLs have been frozen since 2025-01-27. Mostly AI and big-tech business, with occasional major cyber or AI-risk scoops. No public Risk & Compliance Journal or WSJ Pro Cyber feed exists.",
+      "tier": "general"
+    },
+    {
+      "id": "fortune-news",
+      "publication": "Fortune",
+      "source_class": "news",
+      "type": "feed",
+      "url": "https://fortune.com/feed/",
+      "paywalled": false,
+      "region": "US",
+      "notes": "Fortune main feed. General or business press for E3 (FILTER 2.7.4): US national business publication. Broad (business, finance, tech, AI), so prefilter strict. Some Fortune articles are subscriber-only: a page showing a subscription prompt is headline-and-lead only. Added 2026-10-21 (owner audit) to replace general outlets the environment blocks. Verified 2026-10-21 through the pipeline collector with the project UA.",
+      "prefilter": "strict",
+      "tier": "general"
+    },
+    {
+      "id": "cbs-moneywatch",
+      "publication": "CBS News",
+      "source_class": "news",
+      "type": "feed",
+      "url": "https://www.cbsnews.com/latest/rss/moneywatch",
+      "paywalled": false,
+      "region": "US",
+      "notes": "CBS News MoneyWatch. General or business press for E3 (FILTER 2.7.4): US national broadcaster. Consumer finance, banks, fraud and scams, outages. Free to read. Added 2026-10-21 (owner audit) to replace general outlets the environment blocks. Verified 2026-10-21 through the pipeline collector with the project UA.",
+      "prefilter": "strict",
+      "tier": "general"
+    },
+    {
+      "id": "cbs-technology",
+      "publication": "CBS News",
+      "source_class": "news",
+      "type": "feed",
+      "url": "https://www.cbsnews.com/latest/rss/technology",
+      "paywalled": false,
+      "region": "US",
+      "notes": "CBS News technology section. General or business press for E3 (FILTER 2.7.4): US national broadcaster. Cyberattacks, AI and outages. Free to read. Added 2026-10-21 (owner audit) to replace general outlets the environment blocks. Verified 2026-10-21 through the pipeline collector with the project UA.",
+      "prefilter": "strict",
+      "tier": "general"
+    },
+    {
+      "id": "foxbusiness-technology",
+      "publication": "Fox Business",
+      "source_class": "news",
+      "type": "feed",
+      "url": "https://moxie.foxbusiness.com/google-publisher/technology.xml",
+      "paywalled": false,
+      "region": "US",
+      "notes": "Fox Business technology feed. General or business press for E3 (FILTER 2.7.4): US national business news network. Free to read. Added 2026-10-21 (owner audit) to replace general outlets the environment blocks. Verified 2026-10-21 through the pipeline collector with the project UA.",
+      "prefilter": "strict",
+      "tier": "general"
+    },
+    {
+      "id": "npr-business",
+      "publication": "NPR",
+      "source_class": "news",
+      "type": "feed",
+      "url": "https://feeds.npr.org/1006/rss.xml",
+      "paywalled": false,
+      "region": "US",
+      "notes": "NPR business feed. General or business press for E3 (FILTER 2.7.4): US national broadcaster. Free to read. Added 2026-10-21 (owner audit) to replace general outlets the environment blocks. Verified 2026-10-21 through the pipeline collector with the project UA.",
+      "prefilter": "strict",
+      "tier": "general"
+    },
+    {
+      "id": "npr-technology",
+      "publication": "NPR",
+      "source_class": "news",
+      "type": "feed",
+      "url": "https://feeds.npr.org/1019/rss.xml",
+      "paywalled": false,
+      "region": "US",
+      "notes": "NPR technology feed. General or business press for E3 (FILTER 2.7.4): US national broadcaster. Free to read. Added 2026-10-21 (owner audit) to replace general outlets the environment blocks. Verified 2026-10-21 through the pipeline collector with the project UA.",
+      "prefilter": "strict",
+      "tier": "general"
+    },
+    {
+      "id": "marketwatch-top-stories",
+      "publication": "MarketWatch",
+      "source_class": "news",
+      "type": "feed",
+      "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories",
+      "paywalled": false,
+      "region": "US",
+      "notes": "MarketWatch top stories (Dow Jones public feed). General or business press for E3 (FILTER 2.7.4): US national business news service. Mostly markets, so prefilter strict. Some articles are metered. Added 2026-10-21 (owner audit) to replace general outlets the environment blocks. Verified 2026-10-21 through the pipeline collector with the project UA.",
+      "prefilter": "strict",
+      "tier": "general"
+    },
+    {
+      "id": "thehill-technology",
+      "publication": "The Hill",
+      "source_class": "news",
+      "type": "feed",
+      "url": "https://thehill.com/policy/technology/feed/",
+      "paywalled": false,
+      "region": "US",
+      "notes": "The Hill technology policy section. General or business press for E3 (FILTER 2.7.4): US national political newspaper. Covers federal AI, cyber and technology-restriction actions (e.g. agency bans). Free to read. Added 2026-10-21 (owner audit) to replace general outlets the environment blocks. Verified 2026-10-21 through the pipeline collector with the project UA.",
+      "prefilter": "strict",
       "tier": "general"
     },
     {
@@ -1080,21 +1197,28 @@
       "id": "aws-post-event-summaries",
       "publication": "Amazon Web Services",
       "source_class": "vendor_threat_research",
-      "type": "page",
+      "type": "listing",
       "url": "https://aws.amazon.com/premiumsupport/technology/pes/",
       "paywalled": false,
       "region": "US",
-      "notes": "AWS Post-Event Summaries listing page. No feed. Listing page of AWS's formal post-event summaries, published only for major multi-customer disruptions (for example the October 2025 DynamoDB US-EAST-1 outage). Rarely changes, so cheap to diff. Essential cloud concentration-risk post-mortems."
+      "notes": "AWS Post-Event Summaries listing page. No feed. Listing page of AWS's formal post-event summaries, published only for major multi-customer disruptions (for example the October 2025 DynamoDB US-EAST-1 outage). Rarely changes, so cheap to diff. Essential cloud concentration-risk post-mortems. Listing (owner audit 2026-10-21): parsed automatically by the collector with the pattern in listing.item (feed.mjs parseListing) instead of being read by hand; it had been logged unread in about half of the live runs. A layout change fails loudly (\"matched no entries\").",
+      "listing": {
+        "unescape": "json",
+        "item": "<li>\\s*<a href=\"(?<url>[^\"]+)\">(?<title>Summary of[\\s\\S]*?)</a>(?:&nbsp;|\\s)*(?<date>[A-Z][a-z]+ \\d{1,2}, \\d{4})"
+      }
     },
     {
       "id": "azure-post-incident-reviews",
       "publication": "Microsoft Azure",
       "source_class": "vendor_threat_research",
-      "type": "page",
+      "type": "listing",
       "url": "https://azure.status.microsoft/en-us/status/history/",
       "paywalled": false,
       "region": "US",
-      "notes": "Azure status history page (Post Incident Reviews). No feed: the status RSS carries live incidents only. Server-rendered history page of preliminary and final PIRs with Tracking IDs and root-cause sections. Essential for cloud concentration risk."
+      "notes": "Azure status history page (Post Incident Reviews). No feed: the status RSS carries live incidents only. Server-rendered history page of preliminary and final PIRs with Tracking IDs and root-cause sections. Essential for cloud concentration risk. Listing (owner audit 2026-10-21): parsed automatically by the collector with the pattern in listing.item (feed.mjs parseListing) instead of being read by hand; it had been logged unread in about half of the live runs. A layout change fails loudly (\"matched no entries\").",
+      "listing": {
+        "item": "data-target=\"#(?<anchor>incident-history-collapse-[^\"]+)\"[\\s\\S]{0,400}?<span class=\"hide-text\">(?<date>\\d{2}/\\d{2}/\\d{4})</span>\\s*<div class=\"col-md-8 incident-history-title\">(?<title>[\\s\\S]*?)</div>"
+      }
     },
     {
       "id": "certcc-vulnerability-notes",
