@@ -274,6 +274,41 @@ function barCard(d) {
   </section>`;
 }
 
+/**
+ * The dashboard's opening (owner change 2026-10-20, replacing the four-reading brief): what the
+ * site is for, the bar an item must clear, and what each item asks of the reader.
+ */
+function introCard() {
+  const tests = M.SECTIONS.map((S) => `<li class="intro-test"><span class="badge badge-22 badge-${S.mark}" aria-hidden="true">${S.n}</span><span><span class="intro-th">${esc(S.title)}</span> ${esc(INTRO_TESTS[S.key])}</span></li>`).join('');
+  const asks = M.MECHANISMS.map((m) => `<li class="intro-ask"${mechAttr(m.key)}>${mechTag(m.key)}<span class="intro-at">${esc(m.about)}</span></li>`).join('');
+  return `<section class="card intro" aria-labelledby="intro-h">
+    <div class="intro-lead">
+      <h2 class="h-19" id="intro-h">What this site is for</h2>
+      <p class="intro-p">Readiness Signal reads public sources on technology risk in financial services four times a day and publishes only the developments that should change what a risk or control owner checks, measures, covers or is ready to answer. Most runs publish nothing: a silent run is a result, not a gap.</p>
+    </div>
+    <div class="intro-cols">
+      <div class="intro-col">
+        <h3 class="intro-h3">The thresholds</h3>
+        <p class="intro-s">An item is published only if it clears one of three tests. Unknown counts as not met; borderline counts as a drop.</p>
+        <ul class="intro-list">${tests}</ul>
+      </div>
+      <div class="intro-col">
+        <h3 class="intro-h3">The recommendations</h3>
+        <p class="intro-s">Each item carries one ask, and none states or implies any institution’s position.</p>
+        <ul class="intro-list">${asks}</ul>
+      </div>
+    </div>
+    <a class="intro-more" href="#about"${navAttrs('about')}>How the bar and the asks work</a>
+  </section>`;
+}
+
+/** One line per entry test for the dashboard's opening: what clears it, in short. */
+const INTRO_TESTS = {
+  executive_visibility: 'A material outage, breach, loss, penalty or confirmed campaign, reported by general press, that a director would ask about unprompted.',
+  capability_shift: 'Attackers can now do something new, or a control others rely on has failed, including repeated or pre-patch exploitation of widely used edge devices.',
+  regulatory_trajectory: 'A signal of where US, UK or EU supervisors are heading: a speech, consultation, supervisory finding, or a newly issued rule or exam notice.',
+};
+
 function dashboardMain(st) {
   const d = M.dashboard(st.data, st.now);
   return `<main id="main" tabindex="-1" class="main dash" data-k="main-dashboard">
@@ -281,7 +316,7 @@ function dashboardMain(st) {
     <h1 class="h1">Dashboard</h1>
     ${d.scope ? `<span class="list-sub">${esc(d.scope)}</span>` : ''}
   </div>
-  ${briefCard(d.brief)}
+  ${introCard()}
   <div class="dash-grid">
     ${latestCard(d)}
     ${additionsCard(d)}
@@ -631,7 +666,7 @@ function aboutMain() {
     <div class="about-sec">
       <h2 class="h-19">Where things live</h2>
       <div class="lives">
-        <a class="live-row" href="#dashboard"${navAttrs('dashboard')}><span class="live-k">Dashboard</span><span class="live-v">A brief of what is building, where the signal concentrates and what the archive asks, with the threads, trends and run log behind it.</span></a>
+        <a class="live-row" href="#dashboard"${navAttrs('dashboard')}><span class="live-k">Dashboard</span><span class="live-v">What the site is for, the bar and the asks in short, then the newest items, threads, trends and run log.</span></a>
         <a class="live-row" href="#report"${navAttrs('report', 'day')}><span class="live-k">Report</span><span class="live-v">The last 24 hours, week or month: a brief of the window, then its items by the three sections. Filter, expand and export.</span></a>
         <a class="live-row" href="#archive"${navAttrs('archive')}><span class="live-k">Archive</span><span class="live-v">Everything ever published, charted and listed by month, with search and a custom date range. Nothing is replaced.</span></a>
       </div>

@@ -237,7 +237,11 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   development haloed) and steps to the earlier and later developments.
 - Dashboard (owner change 2026-10-06, replacing the design's 7-day counts, which said little with so few items):
   analysis, not counts, all computed in `model.js` from `archive.json` and `runs.json` (never at build time).
-  1. A brief of four readings in plain sentences: **Building** (the update thread with the most developments in
+  1. (Owner change 2026-10-20: the dashboard now opens with "What this site is for": the site's purpose in
+     one paragraph, the three entry tests in one line each with "unknown counts as not met; borderline counts
+     as a drop", and the four mechanism asks, linking to About. The four readings below are no longer shown on
+     the dashboard; `model.js` still computes them, the Report's brief uses them, and the bar panel uses the
+     bar reading.) Formerly a brief of four readings in plain sentences: **Building** (the update thread with the most developments in
      the last 90 days: size, start, last 30 days), **Concentrating** (the domain on the most items
      from the last 90 days against the 90 days before; domains with nothing in 90 days), **Asking** (how many of
      the last 90 days' items ask for action, by mechanism, against the 90 days before) and **The bar** (the last 7
