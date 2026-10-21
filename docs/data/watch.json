@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "note": "Derived from pipeline/logs by pipeline/scripts/watch.mjs; rebuilt whole after every publish. The logs are the record. Global watch signals are never archive items.",
+  "jurisdictions": [],
+  "items": []
+}

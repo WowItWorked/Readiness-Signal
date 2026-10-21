@@ -251,12 +251,13 @@ node pipeline/scripts/publish.mjs --run "$RUN"
 
 ```sh
 node pipeline/scripts/dropped.mjs
+node pipeline/scripts/watch.mjs
 node pipeline/scripts/validate.mjs
 node pipeline/scripts/validate.mjs --against-git-ref HEAD
 git status --porcelain
 ```
 
-- `dropped.mjs` rebuilds the Dropped page's data (`docs/data/dropped.json`) from the logs, including this run's. If it errors, run `git restore docs/data/dropped.json`, carry on, and add `dropped.json not rebuilt: <first line>` to the final output; the next run's rebuild catches up.
+- `dropped.mjs` rebuilds the Dropped page's data (`docs/data/dropped.json`) from the logs, including this run's. If it errors, run `git restore docs/data/dropped.json`, carry on, and add `dropped.json not rebuilt: <first line>` to the final output; the next run's rebuild catches up. `watch.mjs` does the same for the Global watch page (`docs/data/watch.json`, FILTER.md §4.4.6); on an error, `git restore docs/data/watch.json` and add `watch.json not rebuilt: <first line>`.
 - If `git rev-parse --verify HEAD` fails (the repository has no commits yet), skip the `--against-git-ref` line.
 - **Both validations must pass.** If either fails, restore the data to `HEAD`:
 
@@ -266,7 +267,7 @@ git status --porcelain
   ```
 
   Then go to step F with the reason `post-publish validation failed: <first error>`. If that path's own validation fails too, restore again and stop without committing.
-- **Only the expected paths may have changed:** `docs/data/archive.json`, `docs/data/runs.json`, `docs/data/dropped.json`, `pipeline/state/seen.json` and the new `pipeline/logs/…/$RUN.jsonl`. Restore any other modified tracked file with `git restore <path>`, and list it in the final output.
+- **Only the expected paths may have changed:** `docs/data/archive.json`, `docs/data/runs.json`, `docs/data/dropped.json`, `docs/data/watch.json`, `pipeline/state/seen.json` and the new `pipeline/logs/…/$RUN.jsonl`. Restore any other modified tracked file with `git restore <path>`, and list it in the final output.
 - **Read the status** from the run record `publish.mjs` appended: the last record in `docs/data/runs.json` with `run_id` equal to `$RUN`.
 
 The commit subject is `commit_message` from `publish.mjs` stdout, used verbatim. It is one of the SPEC §5 forms:
@@ -278,7 +279,7 @@ The commit subject is `commit_message` from `publish.mjs` stdout, used verbatim.
 | `failed` | `run: YYYY-MM-DD HH:MM ET (failed)` |
 
 ```sh
-git add docs/data/archive.json docs/data/runs.json docs/data/dropped.json pipeline/state/seen.json pipeline/logs
+git add docs/data/archive.json docs/data/runs.json docs/data/dropped.json docs/data/watch.json pipeline/state/seen.json pipeline/logs
 git commit -m "<commit_message>"
 ```
 

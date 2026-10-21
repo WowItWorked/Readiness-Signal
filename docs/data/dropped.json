@@ -103,9 +103,9 @@
       "explain": "A rule or exam notice that is not new: a reminder, restatement, correction, extension or re-publication, or first issued too long ago."
     },
     "RT_JURISDICTION": {
-      "label": "issuer outside the US, UK and EU, or a global standard setter while rt_standard_setters is none",
+      "label": "issuer outside the US, UK, EU, Canada and the Global watch jurisdictions, or a global standard setter while rt_standard_setters is none",
       "test": "An eligible issuer or speaker",
-      "explain": "The issuer is outside the US, UK and EU."
+      "explain": "The issuer is outside the US, UK, EU and Canada, and outside the Global watch list."
     },
     "RT_NOT_SPECIFIC": {
       "label": "no specific topic and behaviour; for a formal instrument, no specific technology-risk obligation or examination content (R4f)",

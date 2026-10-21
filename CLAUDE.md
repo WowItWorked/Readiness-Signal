@@ -14,6 +14,7 @@ Read `SPEC.md` before changing anything; it is the build contract. Hard rules:
 - The archive (`docs/data/archive.json`) and run log (`docs/data/runs.json`) are append-only.
   Only `pipeline/scripts/publish.mjs` writes them. `docs/data/dropped.json` (the Dropped page) is
   derived from `pipeline/logs`: only `pipeline/scripts/dropped.mjs` writes it, rebuilding it whole.
+  Likewise `docs/data/watch.json` (the Global watch page): only `pipeline/scripts/watch.mjs` writes it.
 - Backfill passes follow `pipeline/BACKFILL.md` (binding) and write only through
   `pipeline/scripts/backfill.mjs publish`; run a pass only when the owner asks for that month.
 - `.design-handoff/` is local design reference; never commit it or copy its sample content.

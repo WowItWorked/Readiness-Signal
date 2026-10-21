@@ -11,6 +11,8 @@ const live = document.getElementById('live');
 let data = null;
 let dropped = null; // the Dropped page's log, loaded the first time the page opens
 let droppedState = 'idle';
+let watch = null; // the Global watch log, loaded the first time the page opens
+let watchState = 'idle';
 let loadError = null;
 let loading = true;
 let ui = M.defaultUi(new Date());
@@ -76,8 +78,9 @@ const clock = () => M.effectiveNow(data, new Date());
 function render() {
   hideTip();
   if (ui.page === 'dropped' && droppedState === 'idle') loadDropped();
+  if (ui.page === 'watch' && watchState === 'idle') loadWatch();
   const html = renderApp({
-    ui, data, now: clock(), error: loadError, loading, dropped, droppedState,
+    ui, data, now: clock(), error: loadError, loading, dropped, droppedState, watch, watchState,
   }).replace(/>\s+</g, '><');
   const t = document.createElement('template');
   t.innerHTML = html;
@@ -440,6 +443,8 @@ root.addEventListener('click', (e) => {
     case 'copy': copyFor(d.id, d.kind); break;
     case 'dsec': set({ dropSec: d.v, dropMonth: null }); break;
     case 'dmonth': set({ dropMonth: d.v }); break;
+    case 'wjur': set({ watchJur: d.v, watchMonth: null }); break;
+    case 'wmonth': set({ watchMonth: d.v }); break;
     default: break;
   }
 });
@@ -524,6 +529,18 @@ async function loadDropped() {
   } catch (err) {
     droppedState = 'error';
     console.error('Readiness Signal: dropped-story log failed to load.', err);
+  }
+  render();
+}
+
+async function loadWatch() {
+  watchState = 'loading';
+  try {
+    watch = M.prepareWatch(await fetchJson('data/watch.json'));
+    watchState = 'ready';
+  } catch (err) {
+    watchState = 'error';
+    console.error('Readiness Signal: Global watch log failed to load.', err);
   }
   render();
 }

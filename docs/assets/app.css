@@ -442,6 +442,7 @@ main[tabindex="-1"]:focus { outline: none; }
 .drop-intro > .h-19 { margin: 0; }
 .drop-p { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink); max-width: 80ch; text-wrap: pretty; }
 .drop-card { padding: 0; }
+.drop-card > .loading { margin: 0; padding: 18px var(--card-x); }
 .drop-filters { display: flex; flex-direction: column; gap: 10px; padding: 16px var(--card-x); border-bottom: 1px solid var(--rule-soft); }
 .drop-group { display: flex; flex-wrap: wrap; gap: 6px; }
 .drop-btn {

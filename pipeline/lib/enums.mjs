@@ -28,7 +28,16 @@ export const SEEN_VERDICTS = Object.freeze(['published', 'dropped', 'duplicate']
 
 export const SOURCE_TYPES = Object.freeze(['feed', 'cisa-kev', 'page']);
 
-export const REGIONS = Object.freeze(['US', 'UK', 'EU', 'INTL']);
+export const REGIONS = Object.freeze(['US', 'UK', 'EU', 'CA', 'INTL', 'WATCH']);
+
+/**
+ * FILTER.md §4.4.6 (owner decision 2026-10-21): Global watch jurisdictions, named exactly as an
+ * RT_GLOBAL_WATCH reason opens ("<jurisdiction>: ..."). Canada is core, never watch.
+ */
+export const WATCH_JURISDICTIONS = Object.freeze([
+  'Argentina', 'Australia', 'Brazil', 'China', 'India', 'Indonesia', 'Japan', 'Mexico', 'Russia',
+  'Saudi Arabia', 'South Africa', 'South Korea', 'Türkiye', 'Singapore', 'Hong Kong',
+]);
 
 export const THRESHOLD_LEVELS = Object.freeze(['high', 'medium', 'low']);
 

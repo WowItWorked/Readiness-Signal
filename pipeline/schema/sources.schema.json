@@ -23,7 +23,7 @@
           },
           "url": { "type": "string", "pattern": "^https://", "format": "uri" },
           "paywalled": { "type": "boolean", "description": "Paywalled publications: headline and lead-level reference only; lead capped at 40 words." },
-          "region": { "enum": ["US", "UK", "EU", "INTL"] },
+          "region": { "enum": ["US", "UK", "EU", "CA", "INTL", "WATCH"] },
           "lead_words": { "type": "integer", "minimum": 0, "maximum": 200, "default": 60, "description": "Words of description/summary kept as the lead. Paywalled sources: max 40." },
           "notes": { "type": "string" },
           "tier": {

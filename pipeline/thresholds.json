@@ -149,14 +149,14 @@
       "element": "E2d",
       "launch": 25000000,
       "loosening_steps": [5000000],
-      "description": "Minimum penalty (USD) by a US, UK or EU authority for a technology-risk failure whose public order discloses the failure mechanism. The item never names the firm."
+      "description": "Minimum penalty (USD) by a US, UK, EU or Canadian authority for a technology-risk failure whose public order discloses the failure mechanism. The item never names the firm."
     },
     "ev_campaign_confirmation": {
       "value": "authority",
       "element": "E2e",
       "launch": "authority",
       "loosening_steps": ["authority_or_research"],
-      "description": "Who must confirm an active campaign against financial services, or against a provider, product or infrastructure used by many financial institutions, for E2e. authority: a US, UK or EU authority, including a national cyber agency. authority_or_research: also two independent technical research teams publishing artefacts. A tightening review may set it to off (no E2e limb)."
+      "description": "Who must confirm an active campaign against financial services, or against a provider, product or infrastructure used by many financial institutions, for E2e. authority: a US, UK, EU or Canadian authority, including a national cyber agency. authority_or_research: also two independent technical research teams publishing artefacts. A tightening review may set it to off (no E2e limb)."
     },
     "ev_provider_control_failure": {
       "value": false,
@@ -170,7 +170,7 @@
       "element": "E2g, E4g",
       "launch": "off",
       "loosening_steps": ["exclusion_orders", "orders_and_designations"],
-      "description": "Which US, UK or EU national government security restrictions on a named technology provider's commercially available products meet E2g (and so E4g). off: none. exclusion_orders: a government-wide order, rule or enacted law excluding or removing them from government systems or procurement. orders_and_designations: also a sanctions designation, export-control entity listing or equivalent designation of the provider, and one department's or agency's binding ban on its own systems. Never, at any value: proposals, investigations, advisories, sub-national actions, trade-only restrictions, or restatements of an existing restriction."
+      "description": "Which US, UK, EU or Canadian national government security restrictions on a named technology provider's commercially available products meet E2g (and so E4g). off: none. exclusion_orders: a government-wide order, rule or enacted law excluding or removing them from government systems or procurement. orders_and_designations: also a sanctions designation, export-control entity listing or equivalent designation of the provider, and one department's or agency's binding ban on its own systems. Never, at any value: proposals, investigations, advisories, sub-national actions, trade-only restrictions, or restatements of an existing restriction."
     },
     "ev_common_threat_nexus": {
       "value": false,
@@ -223,7 +223,7 @@
       "element": "C6",
       "launch": ["persistence", "security_control_negated", "mitigation_ineffective", "distribution_channel"],
       "loosening_steps": [["persistence", "security_control_negated", "mitigation_ineffective", "distribution_channel", "bank_common_escalation", "pre_patch_mass_exploitation"]],
-      "description": "A vulnerability passes C6 only if at least one listed exception holds; exploitation or a known-exploited listing alone is routine. bank_common_escalation (added 2026-10-20, revision 2): confirmed exploitation of a remote-access or VPN gateway, edge firewall, application delivery controller, email security gateway or remote-support tool from a leading vendor, plus one escalation signal from public evidence in the run: a second distinct exploited flaw in the same product line within 30 days, 7 or more days of pre-patch exploitation giving administrative or root control, or a US, UK or EU authority naming financial institutions as targets; such a candidate takes the escalation path (FILTER.md 4.3). pre_patch_mass_exploitation (loosening step): mass exploitation of a product widely deployed in financial services with no patch for 72 hours or more."
+      "description": "A vulnerability passes C6 only if at least one listed exception holds; exploitation or a known-exploited listing alone is routine. bank_common_escalation (added 2026-10-20, revision 2): confirmed exploitation of a remote-access or VPN gateway, edge firewall, application delivery controller, email security gateway or remote-support tool from a leading vendor, plus one escalation signal from public evidence in the run: a second distinct exploited flaw in the same product line within 30 days, 7 or more days of pre-patch exploitation giving administrative or root control, or a US, UK, EU or Canadian authority naming financial institutions as targets; such a candidate takes the escalation path (FILTER.md 4.3). pre_patch_mass_exploitation (loosening step): mass exploitation of a product widely deployed in financial services with no patch for 72 hours or more."
     },
     "cs_admit_measurement_evidence": {
       "value": false,
@@ -234,7 +234,7 @@
     }
   },
   "regulatory_trajectory": {
-    "description": "Section 3 entry test: a signal of where regulators or executives are heading (a speech, testimony, consultation or supervisory direction in the US, UK or EU, a public statement by a leading bank executive, or a newly issued formal rule or exam notice); reminders and restatements of existing rules do not count. Soft signals need R1-R5 (FILTER.md 4.4.3; bank executives 4.4.4); formal rules and exam notices need R1, R1f, R2, R3f, R4f and R5 (FILTER.md 4.4.5; scope set by formal_instrument_scope). Empty is expected. Fixed, never knobs: the US, UK and EU jurisdiction scope for authorities, R3, R4, R5, R3b, and the formal-instrument elements R1f, R3f (apart from its max_event_age_days window) and R4f.",
+    "description": "Section 3 entry test: a signal of where regulators or executives are heading (a speech, testimony, consultation or supervisory direction in the US, UK, EU or Canada, a public statement by a leading bank executive, or a newly issued formal rule or exam notice); reminders and restatements of existing rules do not count. Soft signals need R1-R5 (FILTER.md 4.4.3; bank executives 4.4.4); formal rules and exam notices need R1, R1f, R2, R3f, R4f and R5 (FILTER.md 4.4.5; scope set by formal_instrument_scope). Empty is expected. Fixed, never knobs: the US, UK, EU and Canadian jurisdiction scope for authorities and the Global watch route (FILTER.md 4.4.6), R3, R4, R5, R3b, and the formal-instrument elements R1f, R3f (apart from its max_event_age_days window) and R4f.",
     "rt_speaker_tier": {
       "value": "principal",
       "element": "R2",
@@ -254,7 +254,7 @@
       "element": "R2",
       "launch": false,
       "loosening_steps": [true],
-      "description": "When true, US, UK and EU national cyber, technology-standards and AI authorities (for example NIST, CISA, the US National Cyber Director's office, NCSC, ENISA, the EU AI Office) are eligible issuers for consultation drafts and statements of policy direction on technology or controls widely used in financial services. When false, they fail R2 (RT_SPEAKER_INELIGIBLE); their advisories and directives are evidence under EV and CS either way."
+      "description": "When true, US, UK, EU and Canadian national cyber, technology-standards and AI authorities (for example NIST, CISA, the US National Cyber Director's office, NCSC, ENISA, the EU AI Office, the Canadian Centre for Cyber Security) are eligible issuers for consultation drafts and statements of policy direction on technology or controls widely used in financial services. When false, they fail R2 (RT_SPEAKER_INELIGIBLE); their advisories and directives are evidence under EV and CS either way."
     },
     "rt_implementing_consultations": {
       "value": false,
