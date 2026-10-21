@@ -156,6 +156,8 @@ export function classifyFeedDate(input) {
   // That time is the publisher's wall time read as UTC: for UK sources in summer it is at most an
   // hour later than the real instant, which can only keep an entry in the window, never drop it.
   let s = s0.replace(/(\d{4})\s+[-–—]\s+(\d{1,2}:\d{2})/, '$1 $2');
+  // A date with a zone but no time, '21 Oct, 2026 +0530' (SEBI): midnight in that zone.
+  s = s.replace(/^([^:]*\d{4})\s+([+-]\d{4})$/, '$1 00:00:00 $2');
   const isoNoZone = /^(\d{4}-\d{2}-\d{2})[ T](\d{2}:\d{2}(?::\d{2})?)(\.\d+)?$/.exec(s);
   if (isoNoZone) {
     s = `${isoNoZone[1]}T${isoNoZone[2]}${isoNoZone[3] ?? ''}Z`;

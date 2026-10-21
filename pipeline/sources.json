@@ -1395,6 +1395,336 @@
       "paywalled": false,
       "region": "US",
       "notes": "U.S. Office of Financial Research. Treasury OFR working papers, briefs and blog posts on financial-system data, monitoring and forecasting methods. Original data and transparent methods. Low volume."
+    },
+    {
+      "id": "osfi-news",
+      "publication": "Office of the Superintendent of Financial Institutions (OSFI)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.osfi-bsif.gc.ca/en/rss.xml",
+      "paywalled": false,
+      "region": "CA",
+      "notes": "Canada. Core jurisdiction (FILTER.md 4.4.6). Feed: OSFI's site-wide English news feed (news releases, statements, speeches, guidance and actuarial reports). Low noise, about 1-3 items a week. At test time 2026-10-21 it had 10 items, newest dated 2026-10-19."
+    },
+    {
+      "id": "boc-press-releases",
+      "publication": "Bank of Canada",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.bankofcanada.ca/content_type/press-releases/feed/",
+      "paywalled": false,
+      "region": "CA",
+      "notes": "Canada. Core jurisdiction (FILTER.md 4.4.6). Feed: Bank of Canada press releases (RSS 1.0/RDF, dates in dc:date), including rate announcements and FAD releases. Low volume, low noise. At test time 2026-10-21 it had 10 items, newest dated 2026-09-10."
+    },
+    {
+      "id": "boc-speeches",
+      "publication": "Bank of Canada",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.bankofcanada.ca/content_type/speeches/feed/",
+      "paywalled": false,
+      "region": "CA",
+      "notes": "Canada. Core jurisdiction (FILTER.md 4.4.6). Feed: speeches by the Governor and Deputy Governors (RSS 1.0/RDF, dc:date). Low volume, low noise. At test time 2026-10-21 it had 10 items, newest dated 2026-10-01."
+    },
+    {
+      "id": "boc-publications",
+      "publication": "Bank of Canada",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.bankofcanada.ca/content_type/publications/feed/",
+      "paywalled": false,
+      "region": "CA",
+      "notes": "Canada. Core jurisdiction (FILTER.md 4.4.6). Feed: Bank of Canada publications (MPR, FSR, surveys, staff papers; RSS 1.0/RDF, dc:date). Moderate noise from research papers. The site-wide /feed/ also lists future-dated events and is not recommended. At test time 2026-10-21 it had 10 items, newest dated 2026-10-19."
+    },
+    {
+      "id": "fintrac-news",
+      "publication": "Financial Transactions and Reports Analysis Centre of Canada (FINTRAC)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://fintrac-canafe.canada.ca/rss/rss-eng.xml",
+      "paywalled": false,
+      "region": "CA",
+      "notes": "Canada. Core jurisdiction (FILTER.md 4.4.6). Feed: FINTRAC news (penalties, advisories, guidance updates) plus partner police and securities-commission releases, so it is noisy. Very long feed (311 items). It passed at first test, but later the same day the whole FINTRAC site returned 403 and then 502, so the pipeline should tolerate outages. At test time 2026-10-21 it had 311 items, newest dated 2026-10-16."
+    },
+    {
+      "id": "fcac-news",
+      "publication": "Financial Consumer Agency of Canada (FCAC)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://api.io.canada.ca/io-server/gc/news/en/v2?sort=publishedDate&orderBy=desc&publishedDate%3E=2021-07-23&pick=50&format=atom&dept=financialconsumeragency&atomtitle=Financial%20Consumer%20Agency%20of%20Canada",
+      "paywalled": false,
+      "region": "CA",
+      "notes": "Canada. Core jurisdiction (FILTER.md 4.4.6). Feed: Canada.ca news API (Atom) filtered to FCAC: news releases and statements. Low volume, low noise. At test time 2026-10-21 it had 50 items, newest dated 2026-07-22."
+    },
+    {
+      "id": "fin-canada-news",
+      "publication": "Department of Finance Canada",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://api.io.canada.ca/io-server/gc/news/en/v2?sort=publishedDate&orderBy=desc&publishedDate%3E=2021-07-23&pick=50&format=atom&dept=departmentfinance&atomtitle=Department%20of%20Finance%20Canada",
+      "paywalled": false,
+      "region": "CA",
+      "notes": "Canada. Core jurisdiction (FILTER.md 4.4.6). Feed: Canada.ca news API (Atom) filtered to Finance Canada: news releases, statements, backgrounders and media advisories. Several items a week, with some ministerial-itinerary noise. At test time 2026-10-21 it had 50 items, newest dated 2026-10-20."
+    },
+    {
+      "id": "cse-cyber-centre-news",
+      "publication": "Communications Security Establishment (incl. Canadian Centre for Cyber Security)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://api.io.canada.ca/io-server/gc/news/en/v2?sort=publishedDate&orderBy=desc&publishedDate%3E=2021-07-23&pick=50&format=atom&dept=communicationssecurity&atomtitle=Communications%20Security%20Establishment",
+      "paywalled": false,
+      "region": "CA",
+      "notes": "Canada. Core jurisdiction (FILTER.md 4.4.6). Feed: Canada.ca news API (Atom) filtered to CSE, which carries Canadian Centre for Cyber Security statements and releases (not technical alerts/advisories). Low volume. The Cyber Centre's own cyber.gc.ca feeds return 403 to this user agent. At test time 2026-10-21 it had 39 items, newest dated 2026-10-01."
+    },
+    {
+      "id": "csa-news",
+      "publication": "Canadian Securities Administrators (CSA)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.securities-administrators.ca/news/feed/",
+      "paywalled": false,
+      "region": "CA",
+      "notes": "Canada. Core jurisdiction (FILTER.md 4.4.6). Feed: CSA news releases (WordPress). Low noise. The site root /feed/ returns 0 items, so use /news/feed/. At test time 2026-10-21 it had 10 items, newest dated 2026-10-15."
+    },
+    {
+      "id": "osc-news",
+      "publication": "Ontario Securities Commission (OSC)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://feeds.feedburner.com/rss_osc_headlines_en",
+      "paywalled": false,
+      "region": "CA",
+      "notes": "Canada. Core jurisdiction (FILTER.md 4.4.6). Feed: OSC news headlines (FeedBurner feed linked from osc.ca), including CSA releases relevant to Ontario. Low to moderate noise. At test time 2026-10-21 it had 15 items, newest dated 2026-10-15."
+    },
+    {
+      "id": "osc-consultations",
+      "publication": "Ontario Securities Commission (OSC)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://feeds.feedburner.com/rss_osc_requests_comments_letters_en",
+      "paywalled": false,
+      "region": "CA",
+      "notes": "Canada. Core jurisdiction (FILTER.md 4.4.6). Feed: OSC/CSA requests for comment (consultations). Very low volume, high signal. At test time 2026-10-21 it had 4 items, newest dated 2026-09-30."
+    },
+    {
+      "id": "rba-media-releases",
+      "publication": "Reserve Bank of Australia (RBA)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.rba.gov.au/rss/rss-cb-media-releases.xml",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Australia. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: RBA media releases (RSS-CB/RDF). Contains only the latest item, so poll at least daily. At test time 2026-10-21 it had 1 items, newest dated 2026-10-14."
+    },
+    {
+      "id": "rba-speeches",
+      "publication": "Reserve Bank of Australia (RBA)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.rba.gov.au/rss/rss-cb-speeches.xml",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Australia. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: RBA speeches (RSS-CB/RDF). Contains only the latest item, so poll at least daily. At test time 2026-10-21 it had 1 items, newest dated 2026-09-22."
+    },
+    {
+      "id": "apra-news",
+      "publication": "Australian Prudential Regulation Authority (APRA)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.apra.gov.au/rss.xml",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Australia. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: APRA site-wide updates feed. Noisy because it is dominated by statistical publications and page updates, with media releases mixed in. There is no type-specific feed. At test time 2026-10-21 it had 10 items, newest dated 2026-10-15."
+    },
+    {
+      "id": "boj-whats-new",
+      "publication": "Bank of Japan",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.boj.or.jp/en/rss/whatsnew.xml",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Japan. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: BoJ English 'What's New' (statements, speeches, releases and statistics). Noisy because of statistical releases. At test time 2026-10-21 it had 46 items, newest dated 2026-10-16."
+    },
+    {
+      "id": "jfsa-news",
+      "publication": "Financial Services Agency (Japan)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.fsa.go.jp/fsaEnNewsList_rss2.xml",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Japan. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: JFSA English news list (press releases, consultations, international items). Low noise. At test time 2026-10-21 it had 10 items, newest dated 2026-10-20."
+    },
+    {
+      "id": "bok-press-releases",
+      "publication": "Bank of Korea",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.bok.or.kr/eng/bbs/E0000634/news.rss?menuNo=400423",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "South Korea. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: BoK English press releases (from the BoK RSS list). Includes many statistical releases, so moderate noise. At test time 2026-10-21 it had 100 items, newest dated 2026-10-21."
+    },
+    {
+      "id": "rbi-press-releases",
+      "publication": "Reserve Bank of India (RBI)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.rbi.org.in/pressreleases_rss.xml",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "India. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: RBI press releases. High volume (daily auctions and operations), so noisy. At test time 2026-10-21 it had 10 items, newest dated 2026-10-21."
+    },
+    {
+      "id": "rbi-notifications",
+      "publication": "Reserve Bank of India (RBI)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.rbi.org.in/notifications_rss.xml",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "India. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: RBI notifications and circulars to regulated entities. Moderate volume, high regulatory signal. At test time 2026-10-21 it had 10 items, newest dated 2026-10-19."
+    },
+    {
+      "id": "rbi-speeches",
+      "publication": "Reserve Bank of India (RBI)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.rbi.org.in/speeches_rss.xml",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "India. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: RBI speeches. Low volume. At test time 2026-10-21 it had 10 items, newest dated 2026-10-21."
+    },
+    {
+      "id": "sebi-all",
+      "publication": "Securities and Exchange Board of India (SEBI)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.sebi.gov.in/sebirss.xml",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "India. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: SEBI combined feed (press releases, circulars, regulations, and orders and recovery proceedings). Very noisy, dominated by enforcement orders. pubDate uses a non-RFC format ('21 Oct, 2026 +0530') that needs a lenient date parser. At test time 2026-10-21 it had 30 items, newest dated 2026-10-21."
+    },
+    {
+      "id": "bcb-copom-statements",
+      "publication": "Banco Central do Brasil",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.bcb.gov.br/api/feed/sitebcb/sitefeedsen/copomstatements",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Brazil. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: BCB English Copom (monetary policy) statements (Atom), about every 6 weeks. The English press-release feed (sitefeedsen/pressreleases) is stale (last item 2024-06-05), and copomminutes and inflationreport also work. At test time 2026-10-21 it had 10 items, newest dated 2026-09-16."
+    },
+    {
+      "id": "sarb-publications",
+      "publication": "South African Reserve Bank (SARB)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.resbank.co.za/bin/sarb/solr/publications/rss",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "South Africa. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: SARB publications feed, including consultation papers ('Publication for comment'), Prudential Authority documents, statements and reports. Moderate noise. At test time 2026-10-21 it had 25 items, newest dated 2026-10-21."
+    },
+    {
+      "id": "cbrt-press-releases",
+      "publication": "Central Bank of the Republic of Türkiye (CBRT)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Bottom+Menu/Other/RSS/Press+Releases",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Türkiye. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: CBRT English press releases. Served with Content-Type text/html, although the body is RSS. Low to moderate noise. At test time 2026-10-21 it had 20 items, newest dated 2026-10-09."
+    },
+    {
+      "id": "cbrt-governor-remarks",
+      "publication": "Central Bank of the Republic of Türkiye (CBRT)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Bottom+Menu/Other/RSS/Remarks+by+Governor",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Türkiye. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: CBRT Governor's speeches and presentations. Served as text/html with an RSS body. Low volume. At test time 2026-10-21 it had 30 items, newest dated 2026-10-14."
+    },
+    {
+      "id": "cbr-press",
+      "publication": "Bank of Russia",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.cbr.ru/rss/EngRssPress",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Russia. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: Bank of Russia English press releases. Includes routine items such as rate-monitoring results, so moderate noise. At test time 2026-10-21 it had 12 items, newest dated 2026-10-21."
+    },
+    {
+      "id": "cbr-news",
+      "publication": "Bank of Russia",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.cbr.ru/rss/EngRssNews",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Russia. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: Bank of Russia English news (regulation, supervision, statistics). High volume (100 items) and noisy. At test time 2026-10-21 it had 100 items, newest dated 2026-10-21."
+    },
+    {
+      "id": "hkma-press-releases",
+      "publication": "Hong Kong Monetary Authority (HKMA)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.hkma.gov.hk/eng/other-information/rss/rss_press-release.xml",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Hong Kong. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: HKMA press releases. High volume (bond tenders, statistics) and noisy, with a very long feed. At test time 2026-10-21 it had 426 items, newest dated 2026-10-21."
+    },
+    {
+      "id": "hkma-circulars",
+      "publication": "Hong Kong Monetary Authority (HKMA)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.hkma.gov.hk/eng/other-information/rss/rss_circulars.xml",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Hong Kong. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: HKMA circulars to authorized institutions. High regulatory signal and a long feed. (rss_guidelines-and-circulars.xml is stale since 2019. Use this one.) At test time 2026-10-21 it had 215 items, newest dated 2026-10-15."
+    },
+    {
+      "id": "hkma-speeches",
+      "publication": "Hong Kong Monetary Authority (HKMA)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.hkma.gov.hk/eng/other-information/rss/rss_speeches.xml",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Hong Kong. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: HKMA speeches. Low volume. At test time 2026-10-21 it had 47 items, newest dated 2026-10-16."
+    },
+    {
+      "id": "sfc-press-releases",
+      "publication": "Securities and Futures Commission (Hong Kong)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.sfc.hk/en/RSS-Feeds/Press-releases",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Hong Kong. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: SFC press releases (short rolling window, so poll daily). Moderate noise from enforcement items. At test time 2026-10-21 it had 7 items, newest dated 2026-10-16."
+    },
+    {
+      "id": "sfc-circulars",
+      "publication": "Securities and Futures Commission (Hong Kong)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.sfc.hk/en/RSS-Feeds/Circulars",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Hong Kong. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: SFC circulars to intermediaries (short rolling window). High signal. At test time 2026-10-21 it had 5 items, newest dated 2026-10-13."
+    },
+    {
+      "id": "sfc-consultations",
+      "publication": "Securities and Futures Commission (Hong Kong)",
+      "source_class": "regulator",
+      "type": "feed",
+      "url": "https://www.sfc.hk/en/RSS-Feeds/Consultations-and-Conclusions",
+      "paywalled": false,
+      "region": "WATCH",
+      "notes": "Hong Kong. Global watch (FILTER.md 4.4.6): RT-form items are judged to RT_GLOBAL_WATCH, never published. Feed: SFC consultation papers and conclusions (short rolling window). High signal. At test time 2026-10-21 it had 5 items, newest dated 2026-10-12."
     }
   ]
 }

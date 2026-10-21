@@ -15,6 +15,7 @@ function entryDate(text) {
 
 test('dates: Drupal "Weekday, Month D, YYYY - HH:MM", CEST/CET, date-only strings, implausible and unparsed', () => {
   assert.equal(parseFeedDate('Friday, October 2, 2026 - 11:58'), '2026-10-02T11:58:00.000Z');
+  assert.equal(parseFeedDate('21 Oct, 2026 +0530'), '2026-10-20T18:30:00.000Z', 'date and zone, no time (SEBI)');
   assert.equal(parseFeedDate('Monday, September 28, 2026 – 14:29'), '2026-09-28T14:29:00.000Z');
   assert.equal(parseFeedDate('Sun, 27 Sep 2026 19:40:52 CEST'), '2026-09-27T17:40:52.000Z');
   assert.equal(parseFeedDate('Thu, 05 Nov 2026 10:00:00 CET'), '2026-11-05T09:00:00.000Z');
