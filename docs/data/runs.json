@@ -2866,6 +2866,47 @@
         "awareness_only": 0
       },
       "notes": "source: fed-testimony implausible dates skipped"
+    },
+    {
+      "run_id": "2026-10-22-1800",
+      "slot": "2026-10-22T18:00:00-04:00",
+      "started_at": "2026-10-22T18:06:38-04:00",
+      "finished_at": "2026-10-22T18:08:01-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 160,
+        "sources_failed": 13,
+        "fetched": 4452,
+        "in_window": 201,
+        "unseen": 191,
+        "stage1_pass": 1,
+        "stage2_pass": 0,
+        "dedup_dropped": 1,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 0,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: darkreading-news article page blocked (403), read at headline and lead"
     }
   ]
 }
