@@ -1404,6 +1404,42 @@
       "run_id": "2026-10-22-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://therecord.media/china-cyber-connectwise-ai": {
+      "first_seen": "2026-10-22T14:07:25-04:00",
+      "run_id": "2026-10-22-1400",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://techcrunch.com/2026/10/22/chinese-hackers-spied-on-thousands-of-companies-after-breaching-it-giant-connectwise": {
+      "first_seen": "2026-10-22T14:07:25-04:00",
+      "run_id": "2026-10-22-1400",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.americanbanker.com/news/gould-banks-preparing-for-rogue-ai-agents-for-months": {
+      "first_seen": "2026-10-22T14:07:25-04:00",
+      "run_id": "2026-10-22-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/china-nexus-actor-attack-connectwise-cloud-backup/833727": {
+      "first_seen": "2026-10-22T14:07:25-04:00",
+      "run_id": "2026-10-22-1400",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.paymentsdive.com/news/treasury-suspicious-payments-student-financial-aid-fraud/833736": {
+      "first_seen": "2026-10-22T14:07:25-04:00",
+      "run_id": "2026-10-22-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.dfs.ny.gov/industry_guidance/industry_letters/il20261022-cyber-php-patching": {
+      "first_seen": "2026-10-22T14:07:25-04:00",
+      "run_id": "2026-10-22-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
