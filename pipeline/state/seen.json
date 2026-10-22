@@ -1338,6 +1338,30 @@
       "run_id": "2026-10-21-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.axios.com/2026/10/22/ai-agents-banks-unauthorized-accounts-access": {
+      "first_seen": "2026-10-22T06:07:38-04:00",
+      "run_id": "2026-10-22-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cert.europa.eu/publications/security-advisories/2026-019": {
+      "first_seen": "2026-10-22T06:07:38-04:00",
+      "run_id": "2026-10-22-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://csrc.nist.gov/pubs/sp/800/100/r1/ipd": {
+      "first_seen": "2026-10-22T06:07:38-04:00",
+      "run_id": "2026-10-22-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.boj.or.jp/en/statistics/dl/loan/loos/release/loos2610.pdf": {
+      "first_seen": "2026-10-22T06:07:38-04:00",
+      "run_id": "2026-10-22-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

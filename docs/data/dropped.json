@@ -125,6 +125,43 @@
   },
   "items": [
     {
+      "id": "c-0444151850",
+      "date": "2026-10-22",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6: vulnerability advisory with no exception shown; the lead states no exploitation and no persistence or control negation [alt EV:E2]",
+      "publication": "CERT-EU",
+      "headline": "2026-019: Critical Vulnerability in GitLab Community and Enterprise Editions",
+      "url": "https://cert.europa.eu/publications/security-advisories/2026-019/",
+      "judged": "live",
+      "run": "2026-10-22-0600",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-2b0ec6efcf",
+      "date": "2026-10-22",
+      "section": "regulatory_trajectory",
+      "code": "RT_SPEAKER_INELIGIBLE",
+      "reason": "R2: consultation draft from a technology-standards authority while rt_cyber_agencies is false",
+      "publication": "NIST",
+      "headline": "SP 800-100 Rev. 1, Information Security Handbook: A Guide for Executive LeadershipInitial Public Draft",
+      "url": "https://csrc.nist.gov/pubs/sp/800/100/r1/ipd",
+      "judged": "live",
+      "run": "2026-10-22-0600"
+    },
+    {
+      "id": "c-4a2eb27641",
+      "date": "2026-10-22",
+      "section": null,
+      "code": "GL_UNVERIFIABLE",
+      "reason": "G8: substance rests on unnamed sources, with no confirmation by an affected party or an authority in the lead",
+      "publication": "Axios",
+      "headline": "Scoop: Unvetted AI agents are accessing U.S. bank accounts",
+      "url": "https://www.axios.com/2026/10/22/ai-agents-banks-unauthorized-accounts-access",
+      "judged": "live",
+      "run": "2026-10-22-0600"
+    },
+    {
       "id": "c-14b3cfa34d",
       "date": "2026-10-21",
       "section": "regulatory_trajectory",
@@ -164,6 +201,19 @@
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
+      "id": "c-2a7f1d12a9",
+      "date": "2026-10-21",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 patch issued 21 Oct; no persistence, control negation, ineffective patch or channel compromise; PHP not a bank-common escalation category [alt EV:E2]",
+      "publication": "Fortune",
+      "headline": "AI tools discovered the PHP vulnerability that could take down 70% of the internet. Now, the race is on to patch it before AI-powered hackers attack",
+      "url": "https://fortune.com/2026/10/21/ai-tools-discovered-the-php-vulnerability-that-could-take-down-70-of-the-internet-now-the-race-is-on-to-patch-it-before-ai-powered-hackers-attack/",
+      "judged": "live",
+      "run": "2026-10-21-1800",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
       "id": "c-51d4875ab2",
       "date": "2026-10-21",
       "section": "regulatory_trajectory",
@@ -188,6 +238,18 @@
       "judged": "live",
       "run": "2026-10-21-1400",
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-9adc78e9a9",
+      "date": "2026-10-21",
+      "section": "regulatory_trajectory",
+      "code": "RT_INSTRUMENT_INELIGIBLE",
+      "reason": "R1 speech by a standard setter's regional representative; speeches admitted only from chairs and secretaries-general at a later step, not at current setting",
+      "publication": "Bank for International Settlements",
+      "headline": "Artificial intelligence, monetary policy and financial stability",
+      "url": "https://www.bis.org/speeches/20261021-artificial-intelligence-monetary-policy-and-financial-stability",
+      "judged": "live",
+      "run": "2026-10-21-1800"
     },
     {
       "id": "c-b2e14b3f72",
