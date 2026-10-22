@@ -1362,6 +1362,48 @@
       "run_id": "2026-10-22-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/gitlab-warns-of-new-max-severity-code-execution-vulnerability": {
+      "first_seen": "2026-10-22T10:09:20-04:00",
+      "run_id": "2026-10-22-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.finextra.com/pressarticle/111407/650bn-lost-to-money-laundering-in-us-in-2025": {
+      "first_seen": "2026-10-22T10:09:20-04:00",
+      "run_id": "2026-10-22-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/machine-speed-attacks-require-machine-speed-detection-and-response": {
+      "first_seen": "2026-10-22T10:09:20-04:00",
+      "run_id": "2026-10-22-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.theregister.com/security/2026/10/22/microsoft-says-connectwise-breach-let-chinese-spies-loose-on-2250-cloud-tenants/5304687": {
+      "first_seen": "2026-10-22T10:09:20-04:00",
+      "run_id": "2026-10-22-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.eba.europa.eu/publications-and-media/press-releases/eba-extends-some-consultation-deadlines-due-website-maintenance": {
+      "first_seen": "2026-10-22T10:09:20-04:00",
+      "run_id": "2026-10-22-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63845": {
+      "first_seen": "2026-10-22T10:09:20-04:00",
+      "run_id": "2026-10-22-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.enisa.europa.eu/publications/enisa-technical-advisory-for-software-bill-of-materials": {
+      "first_seen": "2026-10-22T10:09:20-04:00",
+      "run_id": "2026-10-22-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
