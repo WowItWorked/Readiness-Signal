@@ -1530,6 +1530,24 @@
       "run_id": "2026-10-23-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/cybersecurity-insurance-market-ai-supply-chain/833841": {
+      "first_seen": "2026-10-23T14:07:31-04:00",
+      "run_id": "2026-10-23-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.americanbanker.com/news/banks-dodge-early-damage-from-php2shell-flaws": {
+      "first_seen": "2026-10-23T14:07:31-04:00",
+      "run_id": "2026-10-23-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13744&Mode=0": {
+      "first_seen": "2026-10-23T14:07:31-04:00",
+      "run_id": "2026-10-23-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
