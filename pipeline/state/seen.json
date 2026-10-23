@@ -1446,6 +1446,48 @@
       "run_id": "2026-10-22-1800",
       "verdict": "duplicate",
       "item_id": null
+    },
+    "https://www.darkreading.com/cyberattacks-data-breaches/state-bank-india-customer-pii-data-leak": {
+      "first_seen": "2026-10-23T06:06:18-04:00",
+      "run_id": "2026-10-23-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/litellm-compromised-in-fresh-supply-chain-attack": {
+      "first_seen": "2026-10-23T06:06:18-04:00",
+      "run_id": "2026-10-23-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/news/press-releases/fca-restricts-6-firms-following-concerns-over-anti-money-laundering-controls": {
+      "first_seen": "2026-10-23T06:06:18-04:00",
+      "run_id": "2026-10-23-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://csrc.nist.gov/pubs/sp/800/221/r1/ipd": {
+      "first_seen": "2026-10-23T06:06:18-04:00",
+      "run_id": "2026-10-23-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankofengland.co.uk/speech/2026/october/physical-shocks-and-economic-resilience-speech-by-james-talbot": {
+      "first_seen": "2026-10-23T06:06:18-04:00",
+      "run_id": "2026-10-23-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://kb.cert.org/vuls/id/763488": {
+      "first_seen": "2026-10-23T06:06:18-04:00",
+      "run_id": "2026-10-23-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.pr261023~a3d201c97c.en.html": {
+      "first_seen": "2026-10-23T06:06:18-04:00",
+      "run_id": "2026-10-23-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
