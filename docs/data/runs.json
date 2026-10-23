@@ -2948,6 +2948,47 @@
         "awareness_only": 0
       },
       "notes": "source: fed-testimony implausible dates skipped; source: esma-news, bpi-posts feeds failed"
+    },
+    {
+      "run_id": "2026-10-23-1000",
+      "slot": "2026-10-23T10:00:00-04:00",
+      "started_at": "2026-10-23T10:06:50-04:00",
+      "finished_at": "2026-10-23T10:09:03-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 162,
+        "sources_failed": 11,
+        "fetched": 4529,
+        "in_window": 191,
+        "unseen": 187,
+        "stage1_pass": 7,
+        "stage2_pass": 0,
+        "dedup_dropped": 1,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 2,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 3,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: esma-news, bpi-posts feeds failed; source: fed-testimony implausible dates skipped"
     }
   ]
 }

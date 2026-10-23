@@ -1488,6 +1488,48 @@
       "run_id": "2026-10-23-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://fortune.com/2026/10/23/nasdaq-ceo-national-strategy-global-fraud-losses-reach-579b": {
+      "first_seen": "2026-10-23T10:06:50-04:00",
+      "run_id": "2026-10-23-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/china-apt-uses-ai-pentest-tool-artex-in-connectwise-attacks": {
+      "first_seen": "2026-10-23T10:06:50-04:00",
+      "run_id": "2026-10-23-1000",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://orx.org/blog/financial-firms-affected-ai-uncovers-php-security-vulnerabilities": {
+      "first_seen": "2026-10-23T10:06:50-04:00",
+      "run_id": "2026-10-23-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://research.checkpoint.com/2026/infostealer-riding-the-ai-train": {
+      "first_seen": "2026-10-23T10:06:50-04:00",
+      "run_id": "2026-10-23-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://fortune.com/2026/10/23/david-solomon-frontier-models-not-needed-small-business": {
+      "first_seen": "2026-10-23T10:06:50-04:00",
+      "run_id": "2026-10-23-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sec.gov/newsroom/press-releases/2026-109-sec-announces-fiscal-year-2027-examination-priorities": {
+      "first_seen": "2026-10-23T10:06:50-04:00",
+      "run_id": "2026-10-23-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63858": {
+      "first_seen": "2026-10-23T10:06:50-04:00",
+      "run_id": "2026-10-23-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
