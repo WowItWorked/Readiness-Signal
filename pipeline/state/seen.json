@@ -1548,6 +1548,18 @@
       "run_id": "2026-10-23-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.banking.senate.gov/newsroom/minority/warren-urges-fed-fdic-and-occ-to-rescind-policies-leaving-americas-banks-vulnerable-to-cyberattacks-ai-threats": {
+      "first_seen": "2026-10-23T18:06:44-04:00",
+      "run_id": "2026-10-23-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/abandoned-popcorn-time-app-exposed-millions-of-device-to-rce-attacks": {
+      "first_seen": "2026-10-23T18:06:44-04:00",
+      "run_id": "2026-10-23-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
