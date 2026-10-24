@@ -3153,6 +3153,47 @@
         "awareness_only": 0
       },
       "notes": "source: esma-news, bpi-posts feeds failed; source: ft-cyber-security and other news feeds blocked (403); source: fed-testimony 3 entries implausible dates skipped"
+    },
+    {
+      "run_id": "2026-10-24-1400",
+      "slot": "2026-10-24T14:00:00-04:00",
+      "started_at": "2026-10-24T14:06:33-04:00",
+      "finished_at": "2026-10-24T14:07:14-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 159,
+        "sources_failed": 14,
+        "fetched": 4395,
+        "in_window": 36,
+        "unseen": 36,
+        "stage1_pass": 0,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 0,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: esma-news, bpi-posts feeds failed; source: ft-cyber-security and other news feeds blocked (403); source: fed-testimony 3 entries implausible dates skipped"
     }
   ]
 }
