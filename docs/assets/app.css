@@ -431,13 +431,18 @@ main[tabindex="-1"]:focus { outline: none; }
 .intro-col { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .intro-h3 { margin: 0; font-size: 14px; font-weight: 600; color: var(--navy); }
 .intro-s { margin-left: 6px; font-size: 12.5px; font-weight: 400; color: var(--muted); }
-.intro-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
-.intro-test, .intro-ask { display: flex; gap: 8px; align-items: center; font-size: 13.5px; line-height: 1.4; color: var(--ink); min-width: 0; }
+/* Thresholds and recommendations share one row rhythm (same gap, 24 px minimum row = badge height)
+   so row n on the left lines up with row n on the right; the asks' tags share a column via subgrid
+   so their descriptions start on one vertical line. */
+.intro-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.intro-test, .intro-ask { display: flex; gap: 8px; align-items: center; min-height: 24px; font-size: 13.5px; line-height: 1.4; color: var(--ink); min-width: 0; }
 .intro-test > .badge, .intro-ask > :first-child { flex: none; }
-.intro-asks { display: grid; grid-template-columns: repeat(2, minmax(0, max-content)); gap: 6px 18px; }
-@media (max-width: 459.98px) { .intro-asks { grid-template-columns: minmax(0, 1fr); } }
+/* A wrapped threshold keeps its badge and first line on the row line, level with the ask beside it. */
+.intro-test { align-items: flex-start; }
+.intro-test > :last-child { padding-top: 2.5px; }
+.intro-asks { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 10px; }
+.intro-ask { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; justify-items: start; }
 .intro-th { font-weight: 600; }
-.intro-more { align-self: flex-start; margin-top: 2px; font-size: 13px; font-weight: 600; color: var(--navy); }
 .drop-intro { display: flex; flex-direction: column; gap: 8px; padding: 18px var(--card-x) 16px; margin-bottom: 16px; }
 .drop-intro > .h-19 { margin: 0; }
 .drop-p { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink); max-width: 80ch; text-wrap: pretty; }
