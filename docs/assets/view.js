@@ -292,7 +292,6 @@ function introCard() {
       <div class="intro-col">
         <h3 class="intro-h3">The recommendations <span class="intro-s">One ask per item.</span></h3>
         <ul class="intro-list intro-asks">${asks}</ul>
-        <a class="intro-more" href="#about"${navAttrs('about')}>How the bar and the asks work</a>
       </div>
     </div>
   </section>`;
