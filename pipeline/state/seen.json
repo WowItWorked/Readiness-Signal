@@ -1602,6 +1602,24 @@
       "run_id": "2026-10-26-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.finextra.com/newsarticle/48648/uk-fs-sector-embraces-genai": {
+      "first_seen": "2026-10-26T14:09:08-04:00",
+      "run_id": "2026-10-26-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://research.checkpoint.com/2026/26th-october-threat-intelligence-report": {
+      "first_seen": "2026-10-26T14:09:08-04:00",
+      "run_id": "2026-10-26-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.canada.ca/en/department-finance/news/2026/10/statement-by-the-minister-of-finance-and-national-revenue-on-the-establishment-of-the-defence-security-and-resilience-bank.html": {
+      "first_seen": "2026-10-26T14:09:08-04:00",
+      "run_id": "2026-10-26-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
