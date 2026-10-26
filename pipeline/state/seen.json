@@ -1620,6 +1620,36 @@
       "run_id": "2026-10-26-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets": {
+      "first_seen": "2026-10-26T18:08:11-04:00",
+      "run_id": "2026-10-26-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.wsj.com/tech/ai/banks-blackstone-form-63-billion-financing-vehicle-for-broadcom-ai-tech-0438f6d2": {
+      "first_seen": "2026-10-26T18:08:11-04:00",
+      "run_id": "2026-10-26-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.darkreading.com/application-security/in-the-wild-attack-ai-agents-trust-markdown": {
+      "first_seen": "2026-10-26T18:08:11-04:00",
+      "run_id": "2026-10-26-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.theregister.com/security/2026/10/26/litellm-supply-chain-attack-started-with-an-exposed-master-key/5305544": {
+      "first_seen": "2026-10-26T18:08:11-04:00",
+      "run_id": "2026-10-26-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/anthropic-files-for-potentially-the-biggest-ipo-ever-as-ceo-warns-of-risk-to-humanity-from-ai": {
+      "first_seen": "2026-10-26T18:08:11-04:00",
+      "run_id": "2026-10-26-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
