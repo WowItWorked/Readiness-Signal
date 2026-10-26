@@ -1566,6 +1566,24 @@
       "run_id": "2026-10-25-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.axios.com/2026/10/25/anthropic-claude-georgia-voter-data": {
+      "first_seen": "2026-10-26T06:11:30-04:00",
+      "run_id": "2026-10-26-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bok.or.kr/eng/bbs/E0000634/view.do?nttId=11065896&menuNo=400423": {
+      "first_seen": "2026-10-26T06:11:30-04:00",
+      "run_id": "2026-10-26-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.pr261026~bde7b6d11a.en.html": {
+      "first_seen": "2026-10-26T06:11:30-04:00",
+      "run_id": "2026-10-26-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
