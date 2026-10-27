@@ -1674,6 +1674,48 @@
       "run_id": "2026-10-27-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.euronews.com/2026/10/27/australia-warns-of-unprecedented-ai-powered-cyberattacks-heres-whats-driving-them": {
+      "first_seen": "2026-10-27T10:44:02-04:00",
+      "run_id": "2026-10-27-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://research.checkpoint.com/2026/tricks-from-the-past-deployed-via-signed-chatgpt-and-claude-binaries": {
+      "first_seen": "2026-10-27T10:44:02-04:00",
+      "run_id": "2026-10-27-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://securelist.com/cloud-infrastructure-isolation-bypass/121609": {
+      "first_seen": "2026-10-27T10:44:02-04:00",
+      "run_id": "2026-10-27-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261027-asia-pacific-and-europe-building-resilience-and-growth-age-geopolitics-and-fragmentation": {
+      "first_seen": "2026-10-27T10:44:02-04:00",
+      "run_id": "2026-10-27-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.nist.gov/blogs/cybersecurity-insights/design-tenets-agent-identity-management-systems": {
+      "first_seen": "2026-10-27T10:44:02-04:00",
+      "run_id": "2026-10-27-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.nist.gov/news-events/news/2026/10/nist-report-provides-guidelines-transition-post-quantum-cryptography": {
+      "first_seen": "2026-10-27T10:44:02-04:00",
+      "run_id": "2026-10-27-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/publications/bulletin-140-building-ai-credit--structures-and-spillovers": {
+      "first_seen": "2026-10-27T10:44:02-04:00",
+      "run_id": "2026-10-27-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

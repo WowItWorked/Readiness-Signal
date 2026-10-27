@@ -47,6 +47,11 @@
       "test": "Consequence floor",
       "explain": "The consequence is below every floor, or its size was not confirmed: no outage, data loss, financial loss, penalty, confirmed campaign or government technology restriction of the required scale."
     },
+    "EV_NOT_AN_EVENT": {
+      "label": "not a specific dated event",
+      "test": "A dated event",
+      "explain": "Not a dated event: a trend piece, survey, forecast or explainer."
+    },
     "EV_NO_PROMINENCE": {
       "label": "prominence not met",
       "test": "Prominence",
@@ -125,6 +130,81 @@
   },
   "items": [
     {
+      "id": "c-30acb33730",
+      "date": "2026-10-27",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 container-orchestration vulnerability chain from a pentest case; no exception in cs_routine_vuln_exceptions holds [alt EV:E2]",
+      "publication": "Kaspersky",
+      "headline": "An insecure neighbor: how a vulnerability chain led to an isolation bypass in cloud infrastructure",
+      "url": "https://securelist.com/cloud-infrastructure-isolation-bypass/121609/",
+      "judged": "live",
+      "run": "2026-10-27-1000",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-3c41aad096",
+      "date": "2026-10-27",
+      "section": "executive_visibility",
+      "code": "EV_NOT_AN_EVENT",
+      "reason": "E1 agency warning on AI-assisted attacks, a trend piece with no dated incident or loss; page read at headline and lead [alt CS:C1]",
+      "publication": "Euronews",
+      "headline": "Australia warns of ‘unprecedented’ AI-powered cyberattacks. Here’s what’s driving them",
+      "url": "https://www.euronews.com/2026/10/27/australia-warns-of-unprecedented-ai-powered-cyberattacks-heres-whats-driving-them",
+      "judged": "live",
+      "run": "2026-10-27-1000",
+      "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
+    },
+    {
+      "id": "c-5dbe689af7",
+      "date": "2026-10-27",
+      "section": "capability_shift",
+      "code": "CS_NO_SPECIFIC_CHANGE",
+      "reason": "C1 fake GitHub lure repos delivering malware via signed binaries is an established technique; the actor's choice of AI-tool lures is no change in capability [alt EV:E2]",
+      "publication": "Check Point Research",
+      "headline": "Tricks from the Past deployed via signed ChatGPT and Claude binaries",
+      "url": "https://research.checkpoint.com/2026/tricks-from-the-past-deployed-via-signed-chatgpt-and-claude-binaries/",
+      "judged": "live",
+      "run": "2026-10-27-1000",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-73a3b51577",
+      "date": "2026-10-27",
+      "section": "regulatory_trajectory",
+      "code": "RT_SPEAKER_INELIGIBLE",
+      "reason": "R2 national technology-standards authority report on post-quantum migration; ineligible while rt_cyber_agencies is false",
+      "publication": "NIST",
+      "headline": "NIST Report Provides Guidelines for Transition to Post-Quantum Cryptography Standards",
+      "url": "https://www.nist.gov/news-events/news/2026/10/nist-report-provides-guidelines-transition-post-quantum-cryptography",
+      "judged": "live",
+      "run": "2026-10-27-1000"
+    },
+    {
+      "id": "c-7e75b9009b",
+      "date": "2026-10-27",
+      "section": "regulatory_trajectory",
+      "code": "RT_SPEAKER_INELIGIBLE",
+      "reason": "R2 national technology-standards authority blog post; ineligible while rt_cyber_agencies is false",
+      "publication": "NIST",
+      "headline": "Design Tenets for Agent Identity Management Systems",
+      "url": "https://www.nist.gov/blogs/cybersecurity-insights/design-tenets-agent-identity-management-systems",
+      "judged": "live",
+      "run": "2026-10-27-1000"
+    },
+    {
+      "id": "c-7f7509f6cb",
+      "date": "2026-10-27",
+      "section": "regulatory_trajectory",
+      "code": "RT_NO_DIRECTION",
+      "reason": "R1 speech; R2 EU member-state central bank deputy head; R3 restates cyber and operational resilience priorities, the DORA framework and board accountability for AI, no new direction",
+      "publication": "Bank for International Settlements",
+      "headline": "Strength through resilience, adaptability and trust - insurance for a stronger Europe",
+      "url": "https://www.bis.org/speeches/20261027-strength-through-resilience-adaptability-and-trust-insurance-stronger-europe",
+      "judged": "live",
+      "run": "2026-10-27-0600"
+    },
+    {
       "id": "c-2ce636418e",
       "date": "2026-10-26",
       "section": "capability_shift",
@@ -135,6 +215,45 @@
       "url": "https://www.axios.com/2026/10/25/anthropic-claude-georgia-voter-data",
       "judged": "live",
       "run": "2026-10-26-0600",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-3bd252fd29",
+      "date": "2026-10-26",
+      "section": "capability_shift",
+      "code": "CS_NO_SPECIFIC_CHANGE",
+      "reason": "C1 unrotated exposed key as supply chain attack entry is established failure mode, no before-to-now stated in headline or lead [alt EV:E2]",
+      "publication": "The Register",
+      "headline": "LiteLLM supply chain attack started with an exposed master key",
+      "url": "https://www.theregister.com/security/2026/10/26/litellm-supply-chain-attack-started-with-an-exposed-master-key/5305544",
+      "judged": "live",
+      "run": "2026-10-26-1800",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-631b090256",
+      "date": "2026-10-26",
+      "section": "capability_shift",
+      "code": "CS_NO_SPECIFIC_CHANGE",
+      "reason": "C1 page blocked; headline and lead only: prompt injection through agent instruction files, no before-to-now or artefacts stated; unknown is not met [alt EV:E2]",
+      "publication": "Dark Reading",
+      "headline": "In-the-Wild Attack Abuses AI Agents' Trust in Markdown",
+      "url": "https://www.darkreading.com/application-security/in-the-wild-attack-ai-agents-trust-markdown",
+      "judged": "live",
+      "run": "2026-10-26-1800",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-9954d1a67a",
+      "date": "2026-10-26",
+      "section": "capability_shift",
+      "code": "CS_NO_SPECIFIC_CHANGE",
+      "reason": "C1 page blocked; headline and lead only: token theft for cloud secrets in a supply chain attack is established technique, no before-to-now stated [alt EV:E2]",
+      "publication": "Dark Reading",
+      "headline": "'Gheist' Weaponizes GitHub Tokens to Steal Cloud Secrets",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets",
+      "judged": "live",
+      "run": "2026-10-26-1800",
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
