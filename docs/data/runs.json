@@ -3562,6 +3562,47 @@
         "awareness_only": 0
       },
       "notes": "source: bis-cb-speeches reposts older speeches; source: darkreading-news pages blocked, headline and lead only"
+    },
+    {
+      "run_id": "2026-10-27-0600",
+      "slot": "2026-10-27T06:00:00-04:00",
+      "started_at": "2026-10-27T06:06:48-04:00",
+      "finished_at": "2026-10-27T06:08:05-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 162,
+        "sources_failed": 11,
+        "fetched": 4591,
+        "in_window": 277,
+        "unseen": 269,
+        "stage1_pass": 4,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 0,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: bis-cb-speeches reposts older speeches"
     }
   ]
 }

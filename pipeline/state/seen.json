@@ -1650,6 +1650,30 @@
       "run_id": "2026-10-26-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.euronews.com/2026/10/27/rogue-ai-cyberattacks-and-weapons-the-risks-anthropic-is-warning-investors-about-ahead-of-": {
+      "first_seen": "2026-10-27T06:06:48-04:00",
+      "run_id": "2026-10-27-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261027-strength-through-resilience-adaptability-and-trust-insurance-stronger-europe": {
+      "first_seen": "2026-10-27T06:06:48-04:00",
+      "run_id": "2026-10-27-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.pr261027~506ef03145.en.html": {
+      "first_seen": "2026-10-27T06:06:48-04:00",
+      "run_id": "2026-10-27-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261027-taking-action-nature-investing-economic-resilience-and-prosperity": {
+      "first_seen": "2026-10-27T06:06:48-04:00",
+      "run_id": "2026-10-27-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
