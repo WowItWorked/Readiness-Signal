@@ -1788,6 +1788,36 @@
       "run_id": "2026-10-28-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.darkreading.com/application-security/ghostaction-hacking-wave-fizzles-attackers-github": {
+      "first_seen": "2026-10-28T18:07:09-04:00",
+      "run_id": "2026-10-28-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/japan-airlines-warns-of-breach-country-grapples-with-incidents": {
+      "first_seen": "2026-10-28T18:07:09-04:00",
+      "run_id": "2026-10-28-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-41709": {
+      "first_seen": "2026-10-28T18:07:09-04:00",
+      "run_id": "2026-10-28-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.talosintelligence.com/uat-11473-keydrift": {
+      "first_seen": "2026-10-28T18:07:09-04:00",
+      "run_id": "2026-10-28-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.banking.senate.gov/newsroom/minority/as-anthropic-discloses-concerns-of-ai-posing-existential-risks-to-humanity-warren-presses-for-answers-about-the-impacts-of-an-ipo": {
+      "first_seen": "2026-10-28T18:07:09-04:00",
+      "run_id": "2026-10-28-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
