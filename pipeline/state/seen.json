@@ -1758,6 +1758,36 @@
       "run_id": "2026-10-28-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.finextra.com/newsarticle/48662/coinbase-says-customer-contact-data-exposed-in-third-party-breach": {
+      "first_seen": "2026-10-28T14:06:51-04:00",
+      "run_id": "2026-10-28-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/volt-typhoon-hides-zero-day-attacks-using-silent-train-framework": {
+      "first_seen": "2026-10-28T14:06:51-04:00",
+      "run_id": "2026-10-28-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://thehill.com/policy/technology/6178280-treasury-department-sanctions-north-korean-it-scheme": {
+      "first_seen": "2026-10-28T14:06:51-04:00",
+      "run_id": "2026-10-28-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sophos.com/en-us/blog/node2shell-cve-2026-111497-in-active-exploitation": {
+      "first_seen": "2026-10-28T14:06:51-04:00",
+      "run_id": "2026-10-28-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USTREAS/bulletins/430c4f4": {
+      "first_seen": "2026-10-28T14:06:51-04:00",
+      "run_id": "2026-10-28-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

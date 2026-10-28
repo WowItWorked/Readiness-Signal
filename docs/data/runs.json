@@ -3808,6 +3808,47 @@
         "awareness_only": 0
       },
       "notes": "source: fed-testimony 3 entries with implausible dates skipped"
+    },
+    {
+      "run_id": "2026-10-28-1400",
+      "slot": "2026-10-28T14:00:00-04:00",
+      "started_at": "2026-10-28T14:06:51-04:00",
+      "finished_at": "2026-10-28T14:08:40-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 161,
+        "sources_failed": 12,
+        "fetched": 4484,
+        "in_window": 242,
+        "unseen": 236,
+        "stage1_pass": 5,
+        "stage2_pass": 0,
+        "dedup_dropped": 1,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 2,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 2,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: bleepingcomputer-news page blocked; source: sophos-xops-threat-research page unreadable"
     }
   ]
 }
