@@ -1734,6 +1734,30 @@
       "run_id": "2026-10-28-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure": {
+      "first_seen": "2026-10-28T10:08:46-04:00",
+      "run_id": "2026-10-28-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.pcisecuritystandards.org/payment-security-resources-for-merchants": {
+      "first_seen": "2026-10-28T10:08:46-04:00",
+      "run_id": "2026-10-28-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63878": {
+      "first_seen": "2026-10-28T10:08:46-04:00",
+      "run_id": "2026-10-28-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_SpeechesView.aspx?id=1586": {
+      "first_seen": "2026-10-28T10:08:46-04:00",
+      "run_id": "2026-10-28-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
