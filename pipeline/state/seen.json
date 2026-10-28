@@ -1716,6 +1716,24 @@
       "run_id": "2026-10-27-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/hackers-start-probing-fresh-oracle-ebs-vulnerability": {
+      "first_seen": "2026-10-28T06:07:58-04:00",
+      "run_id": "2026-10-28-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63875": {
+      "first_seen": "2026-10-28T06:07:58-04:00",
+      "run_id": "2026-10-28-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rba.gov.au/speeches/2026/sp-gov-2026-10-28.html": {
+      "first_seen": "2026-10-28T06:07:58-04:00",
+      "run_id": "2026-10-28-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
