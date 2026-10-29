@@ -1818,6 +1818,36 @@
       "run_id": "2026-10-28-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/chinese-hackers-quietly-used-low-severity-esxi-logging-flaw-as-zero-day": {
+      "first_seen": "2026-10-29T06:07:19-04:00",
+      "run_id": "2026-10-29-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/attackers-exploit-second-cisco-firewall-vpn-zero-day-since-august": {
+      "first_seen": "2026-10-29T06:07:19-04:00",
+      "run_id": "2026-10-29-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.talosintelligence.com/nik-c2-new-ai-enabled-framework": {
+      "first_seen": "2026-10-29T06:07:19-04:00",
+      "run_id": "2026-10-29-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.eba.europa.eu/publications-and-media/press-releases/eba-advises-targeted-simplifications-taxonomy-disclosures": {
+      "first_seen": "2026-10-29T06:07:19-04:00",
+      "run_id": "2026-10-29-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/media-releases/20261029-cpmi-publishes-analysis-how-central-banks-support-payment-system-safety-and-efficiency-and": {
+      "first_seen": "2026-10-29T06:07:19-04:00",
+      "run_id": "2026-10-29-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
