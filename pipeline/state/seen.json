@@ -1848,6 +1848,72 @@
       "run_id": "2026-10-29-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/cisco-warns-of-firewall-zero-day-exploited-to-crash-ssl-vpn-devices": {
+      "first_seen": "2026-10-29T10:26:01-04:00",
+      "run_id": "2026-10-29-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankingdive.com/news/bank-of-america-gopalkrishnan-capital-one-natarajan-manage-ai-costs/873146": {
+      "first_seen": "2026-10-29T10:26:01-04:00",
+      "run_id": "2026-10-29-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/cisco-sd-wan-zero-day-exploitation-tied-to-volt-typhoons-silent-train-network": {
+      "first_seen": "2026-10-29T10:26:01-04:00",
+      "run_id": "2026-10-29-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/hackers-steal-2-6-million-records-from-sonys-japanese-isp-so-net": {
+      "first_seen": "2026-10-29T10:26:01-04:00",
+      "run_id": "2026-10-29-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.eiopa.europa.eu/eiopa-risk-dashboard-highlights-market-and-cyber-risks-key-concerns-europes-insurers-2026-10-29_en": {
+      "first_seen": "2026-10-29T10:26:01-04:00",
+      "run_id": "2026-10-29-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261029-economic-resilience-thinner-buffers-emerging-risks-globally-where-does-india-stand": {
+      "first_seen": "2026-10-29T10:26:01-04:00",
+      "run_id": "2026-10-29-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.talosintelligence.com/ir-trends-q3-2026": {
+      "first_seen": "2026-10-29T10:26:01-04:00",
+      "run_id": "2026-10-29-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sophos.com/en-us/blog/ai-used-in-aur0ra-ransomware-testing-and-execution": {
+      "first_seen": "2026-10-29T10:26:01-04:00",
+      "run_id": "2026-10-29-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.esma.europa.eu/press-news/esma-news/esma-proposes-simpler-eu-taxonomy-reporting": {
+      "first_seen": "2026-10-29T10:26:01-04:00",
+      "run_id": "2026-10-29-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63881": {
+      "first_seen": "2026-10-29T10:26:01-04:00",
+      "run_id": "2026-10-29-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261029-opening-statement-senate-economics-legislation-committee-supplementary-budget-estimates": {
+      "first_seen": "2026-10-29T10:26:01-04:00",
+      "run_id": "2026-10-29-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

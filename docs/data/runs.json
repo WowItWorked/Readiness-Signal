@@ -3931,6 +3931,47 @@
         "awareness_only": 0
       },
       "notes": "source: securityweek-news and cisco-talos article pages blocked, headline and lead only"
+    },
+    {
+      "run_id": "2026-10-29-1000",
+      "slot": "2026-10-29T10:00:00-04:00",
+      "started_at": "2026-10-29T10:26:01-04:00",
+      "finished_at": "2026-10-29T10:28:55-04:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 161,
+        "sources_failed": 12,
+        "fetched": 4374,
+        "in_window": 126,
+        "unseen": 121,
+        "stage1_pass": 11,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 1,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 3,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: securityweek-news and cisco-talos article pages blocked, headline and lead only; source: sophos-xops page read via fetch tool"
     }
   ]
 }
