@@ -1938,6 +1938,36 @@
       "run_id": "2026-10-29-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.sec.gov/newsroom/press-releases/2026-110-two-entities-charged-130-million-fraud-scheme-used-false-sec-filings-boost-investor-confidence": {
+      "first_seen": "2026-10-29T18:06:14-04:00",
+      "run_id": "2026-10-29-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://bankingjournal.aba.com/2026/10/sec-charges-two-entities-in-130-million-fraud-scheme-using-false-filings-to-boost-investor-confidence": {
+      "first_seen": "2026-10-29T18:06:14-04:00",
+      "run_id": "2026-10-29-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/polymarket-halts-trading-after-crypto-draining-script-breach-25m-traced": {
+      "first_seen": "2026-10-29T18:06:14-04:00",
+      "run_id": "2026-10-29-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-76418": {
+      "first_seen": "2026-10-29T18:06:14-04:00",
+      "run_id": "2026-10-29-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-97229": {
+      "first_seen": "2026-10-29T18:06:14-04:00",
+      "run_id": "2026-10-29-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
