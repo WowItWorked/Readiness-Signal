@@ -1914,6 +1914,30 @@
       "run_id": "2026-10-29-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.banking.senate.gov/newsroom/minority/warren-calls-on-doj-to-conduct-a-criminal-investigation-into-bank-of-americas-failure-to-follow-anti-money-laundering-laws": {
+      "first_seen": "2026-10-29T14:07:38-04:00",
+      "run_id": "2026-10-29-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.microsoft.com/en-us/security/blog/2026/10/29/tracking-ai-adoption-in-north-korean-threat-actor-tradecraft": {
+      "first_seen": "2026-10-29T14:07:38-04:00",
+      "run_id": "2026-10-29-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.canada.ca/en/department-finance/news/2026/10/joint-statement-on-the-establishment-of-the-defence-security-and-resilience-bank-dsrb.html": {
+      "first_seen": "2026-10-29T14:07:38-04:00",
+      "run_id": "2026-10-29-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fsb.org/2026/10/strengthening-the-crisis-preparedness-community-in-an-interconnected-world": {
+      "first_seen": "2026-10-29T14:07:38-04:00",
+      "run_id": "2026-10-29-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
