@@ -2121,6 +2121,71 @@
       ],
       "backfilled": true,
       "update_of": null
+    },
+    {
+      "id": "RS-261030-0600-01",
+      "timestamp": "2026-10-30T06:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "A crypto exchange confirmed a $6.3bn hack and says its probe may involve an engineer's compromised laptop.",
+      "domains": [
+        "cyber",
+        "resilience"
+      ],
+      "source_class": "news",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "The preliminary account describes one compromised workstation reaching a service container that could submit unauthorised withdrawals, with no evidence of a wallet key leak, so the reported loss came through an operational access path rather than a cryptographic failure."
+        },
+        {
+          "domain": "resilience",
+          "text": "Deposits and withdrawals were suspended while the investigation continued, and the company reported freezing just under half of the stolen assets, so a security incident also became a customer-facing availability event with a stated reopening timetable."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The entry point is described only as a possible compromised engineer laptop, with a technical post-mortem still to come, so no confirmed control failure exists to test (AW1). The $6.3bn loss and analytics firms' attribution to North Korean actors are public facts that questions will cite (AW4). This changes if the post-mortem confirms how a compromised endpoint reached a service able to submit withdrawals.",
+      "sources": [
+        {
+          "publication": "MarketWatch",
+          "url": "https://www.marketwatch.com/story/heres-when-binance-plans-to-reopen-after-whats-believed-to-be-the-largest-ever-6-3-billion-hack-d3cb8154",
+          "published": "2026-10-30",
+          "source_class": "news"
+        },
+        {
+          "publication": "The Record",
+          "url": "https://therecord.media/binance-hit-by-record-6-billion-crypto-hack",
+          "published": "2026-10-30",
+          "source_class": "news"
+        },
+        {
+          "publication": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/29/binance-pauses-withdrawals-as-hackers-suspected-of-stealing-billions-in-crypto/",
+          "published": "2026-10-29",
+          "source_class": "news"
+        },
+        {
+          "publication": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/binance-probes-potential-58-billion-crypto-theft-hack/",
+          "published": "2026-10-29",
+          "source_class": "news"
+        },
+        {
+          "publication": "SecurityWeek",
+          "url": "https://www.securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor/",
+          "published": "2026-10-30",
+          "source_class": "news"
+        },
+        {
+          "publication": "Finextra",
+          "url": "https://www.finextra.com/newsarticle/48674/hackers-steal-63bn-in-crypto-assets-from-binance",
+          "published": "2026-10-30",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
     }
   ]
 }

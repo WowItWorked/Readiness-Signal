@@ -1968,6 +1968,96 @@
       "run_id": "2026-10-29-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/binance-links-63-billion-crypto-theft-to-compromised-devops-laptop": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "published",
+      "item_id": "RS-261030-0600-01"
+    },
+    "https://therecord.media/binance-hit-by-record-6-billion-crypto-hack": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "published",
+      "item_id": "RS-261030-0600-01"
+    },
+    "https://www.bleepingcomputer.com/news/security/binance-probes-potential-58-billion-crypto-theft-hack": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "published",
+      "item_id": "RS-261030-0600-01"
+    },
+    "https://www.finextra.com/newsarticle/48674/hackers-steal-63bn-in-crypto-assets-from-binance": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "published",
+      "item_id": "RS-261030-0600-01"
+    },
+    "https://www.securityweek.com/2-million-drained-from-polymarket-traders-in-new-supply-chain-attack": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/6-billion-binance-hack-bears-hallmarks-of-north-koreas-tradertraitor": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "published",
+      "item_id": "RS-261030-0600-01"
+    },
+    "https://www.securityweek.com/max-severity-gitlab-vulnerability-exploited-against-alpine-linux": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.marketwatch.com/story/heres-when-binance-plans-to-reopen-after-whats-believed-to-be-the-largest-ever-6-3-billion-hack-d3cb8154": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "published",
+      "item_id": "RS-261030-0600-01"
+    },
+    "https://techcrunch.com/2026/10/29/binance-pauses-withdrawals-as-hackers-suspected-of-stealing-billions-in-crypto": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "published",
+      "item_id": "RS-261030-0600-01"
+    },
+    "https://apps.sfc.hk/edistributionWeb/gateway/EN/news-and-announcements/news/doc?refNo=26PR179": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://securelist.com/practical-filter-generation/121697": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.pr261030~e92c3c838c.en.html": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://apps.sfc.hk/edistributionWeb/gateway/EN/circular/doc?refNo=26EC70": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fsa.go.jp/en/news/2026/20261030-3.html": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.resbank.co.za/en/home/publications/publication-detail-pages/prudential-authority/pa-insurers/pa-post-insurance/act-notices/2026/notice-of-the-amendment-of-the-designation-of-discovery-insurance-group0": {
+      "first_seen": "2026-10-30T06:06:32-04:00",
+      "run_id": "2026-10-30-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
