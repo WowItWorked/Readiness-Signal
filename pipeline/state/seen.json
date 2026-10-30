@@ -2082,6 +2082,48 @@
       "run_id": "2026-10-30-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://therecord.media/florida-warns-5-million-affected-financial-aid-site-breach": {
+      "first_seen": "2026-10-30T14:07:10-04:00",
+      "run_id": "2026-10-30-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-111357": {
+      "first_seen": "2026-10-30T14:07:10-04:00",
+      "run_id": "2026-10-30-1400",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.eiopa.europa.eu/eiopa-publishes-its-final-advice-enhancements-insurers-corporate-disclosures-under-eu-taxonomy-2026-10-30_en": {
+      "first_seen": "2026-10-30T14:07:10-04:00",
+      "run_id": "2026-10-30-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.americanbanker.com/news/extortion-group-leaks-keys-to-bank-vendors-fed-firewall": {
+      "first_seen": "2026-10-30T14:07:10-04:00",
+      "run_id": "2026-10-30-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/binance-hack-north-korea-cryptocurrency-theft/873304": {
+      "first_seen": "2026-10-30T14:07:10-04:00",
+      "run_id": "2026-10-30-1400",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-118527": {
+      "first_seen": "2026-10-30T14:07:10-04:00",
+      "run_id": "2026-10-30-1400",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.microsoft.com/en-us/security/blog/2026/10/30/help-desk-impersonation-ad-cs-abuse-investigating-esc1-esc8-intrusion-paths": {
+      "first_seen": "2026-10-30T14:07:10-04:00",
+      "run_id": "2026-10-30-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
