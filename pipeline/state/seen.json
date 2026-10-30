@@ -2058,6 +2058,30 @@
       "run_id": "2026-10-30-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://techcrunch.com/2026/10/30/north-korean-hackers-blamed-for-stealing-record-6-3b-in-binance-breach": {
+      "first_seen": "2026-10-30T10:29:20-04:00",
+      "run_id": "2026-10-30-1000",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.npr.org/2026/10/30/g-s1-150902/blockchain-intelligence-firms-link-north-korea-to-6-3b-hack-on-binance": {
+      "first_seen": "2026-10-30T10:29:20-04:00",
+      "run_id": "2026-10-30-1000",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/hackers-now-exploiting-max-severity-gitlab-flaw-in-attacks": {
+      "first_seen": "2026-10-30T10:29:20-04:00",
+      "run_id": "2026-10-30-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/drupal-warns-of-critical-commerce-core-flaw-exploited-in-attacks": {
+      "first_seen": "2026-10-30T10:29:20-04:00",
+      "run_id": "2026-10-30-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
