@@ -2124,6 +2124,42 @@
       "run_id": "2026-10-30-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.npr.org/2026/10/30/nx-s1-6023175/hackers-steal-over-6-billion-from-crypto-exchange-binance-in-staggering-heist": {
+      "first_seen": "2026-10-30T18:07:18-04:00",
+      "run_id": "2026-10-30-1800",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.americanbanker.com/news/6b-binance-heist-provokes-stablecoin-freeze-dilemma": {
+      "first_seen": "2026-10-30T18:07:18-04:00",
+      "run_id": "2026-10-30-1800",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.cnbc.com/2026/10/30/binance-hack-stolen-crypto-recovery.html": {
+      "first_seen": "2026-10-30T18:07:18-04:00",
+      "run_id": "2026-10-30-1800",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://cyberscoop.com/china-vapor-panda-agentic-ai-artex-campaign-crowdstrike": {
+      "first_seen": "2026-10-30T18:07:18-04:00",
+      "run_id": "2026-10-30-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USTREAS/bulletins/43121e6": {
+      "first_seen": "2026-10-30T18:07:18-04:00",
+      "run_id": "2026-10-30-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USTREAS/bulletins/4311e66": {
+      "first_seen": "2026-10-30T18:07:18-04:00",
+      "run_id": "2026-10-30-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
