@@ -2178,6 +2178,12 @@
       "run_id": "2026-10-31-1400",
       "verdict": "duplicate",
       "item_id": null
+    },
+    "https://www.npr.org/2026/10/31/nx-s1-6024426/binance-crypto-heist-cyber-criminals-north-korea": {
+      "first_seen": "2026-10-31T18:06:48-04:00",
+      "run_id": "2026-10-31-1800",
+      "verdict": "duplicate",
+      "item_id": null
     }
   }
 }
