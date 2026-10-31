@@ -2166,6 +2166,12 @@
       "run_id": "2026-10-31-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer": {
+      "first_seen": "2026-10-31T10:07:03-04:00",
+      "run_id": "2026-10-31-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
