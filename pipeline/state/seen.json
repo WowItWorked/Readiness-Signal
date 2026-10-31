@@ -2160,6 +2160,12 @@
       "run_id": "2026-10-30-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor": {
+      "first_seen": "2026-10-31T06:06:31-04:00",
+      "run_id": "2026-10-31-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
