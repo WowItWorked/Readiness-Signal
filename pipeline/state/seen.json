@@ -2184,6 +2184,12 @@
       "run_id": "2026-10-31-1800",
       "verdict": "duplicate",
       "item_id": null
+    },
+    "https://www.euronews.com/2026/11/01/fbi-blames-north-korea-for-63-billion-binance-crypto-hack": {
+      "first_seen": "2026-11-01T06:06:41-05:00",
+      "run_id": "2026-11-01-0600",
+      "verdict": "duplicate",
+      "item_id": null
     }
   }
 }
