@@ -2190,6 +2190,12 @@
       "run_id": "2026-11-01-0600",
       "verdict": "duplicate",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/fbi-links-63-billion-binance-crypto-heist-to-north-korean-hackers": {
+      "first_seen": "2026-11-01T18:07:00-05:00",
+      "run_id": "2026-11-01-1800",
+      "verdict": "duplicate",
+      "item_id": null
     }
   }
 }
