@@ -2316,6 +2316,42 @@
       "run_id": "2026-11-02-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.darkreading.com/cyberattacks-data-breaches/binance-hack-test-attack-paths": {
+      "first_seen": "2026-11-02T18:06:39-05:00",
+      "run_id": "2026-11-02-1800",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USFDIC/bulletins/4315895": {
+      "first_seen": "2026-11-02T18:06:39-05:00",
+      "run_id": "2026-11-02-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.americanbanker.com/news/happen-banks-scott-sanborn-talks-agentic-ai-and-rate-risk": {
+      "first_seen": "2026-11-02T18:06:39-05:00",
+      "run_id": "2026-11-02-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://fortune.com/2026/11/02/pentagon-rogue-freezers-cyberattacks-france-hacks-supermarkets-europe": {
+      "first_seen": "2026-11-02T18:06:39-05:00",
+      "run_id": "2026-11-02-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.microsoft.com/en-us/security/blog/2026/11/02/exploited-vulnerabilities-common-data-driven-analysis-real-world-attacks": {
+      "first_seen": "2026-11-02T18:06:39-05:00",
+      "run_id": "2026-11-02-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USTREAS/bulletins/43161a8": {
+      "first_seen": "2026-11-02T18:06:39-05:00",
+      "run_id": "2026-11-02-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
