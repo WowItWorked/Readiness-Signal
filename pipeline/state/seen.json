@@ -2280,6 +2280,42 @@
       "run_id": "2026-11-02-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://fortune.com/2026/11/02/bitcoin-giant-strategy-binance-hack-65-million-holdings": {
+      "first_seen": "2026-11-02T14:07:36-05:00",
+      "run_id": "2026-11-02-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://research.checkpoint.com/2026/2nd-november-threat-intelligence-report": {
+      "first_seen": "2026-11-02T14:07:36-05:00",
+      "run_id": "2026-11-02-1400",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USFDIC/bulletins/4315879": {
+      "first_seen": "2026-11-02T14:07:36-05:00",
+      "run_id": "2026-11-02-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/fintech-platform-sageworks-taken-offline-after-suspected-cyberattack": {
+      "first_seen": "2026-11-02T14:07:36-05:00",
+      "run_id": "2026-11-02-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261102-ai-adoption-europe": {
+      "first_seen": "2026-11-02T14:07:36-05:00",
+      "run_id": "2026-11-02-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261102-capital-needs-ai-and-ai-needs-capital-europes-opportunity-more-growth": {
+      "first_seen": "2026-11-02T14:07:36-05:00",
+      "run_id": "2026-11-02-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
