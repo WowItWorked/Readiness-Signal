@@ -2196,6 +2196,36 @@
       "run_id": "2026-11-01-1800",
       "verdict": "duplicate",
       "item_id": null
+    },
+    "https://www.securityweek.com/ivanti-patches-two-more-zero-days-exploited-in-connect-secure-attack-chain": {
+      "first_seen": "2026-11-02T06:11:17-05:00",
+      "run_id": "2026-11-02-0600",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://securelist.com/tr/cyberstrikeai-attacks/121715": {
+      "first_seen": "2026-11-02T06:11:17-05:00",
+      "run_id": "2026-11-02-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.ecb.europa.eu/pub/pdf/scpwps/ecb.wp3304~9082a5f181.en.pdf": {
+      "first_seen": "2026-11-02T06:11:17-05:00",
+      "run_id": "2026-11-02-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261102-4": {
+      "first_seen": "2026-11-02T06:11:17-05:00",
+      "run_id": "2026-11-02-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://apps.sfc.hk/edistributionWeb/gateway/EN/news-and-announcements/news/doc?refNo=26PR182": {
+      "first_seen": "2026-11-02T06:11:17-05:00",
+      "run_id": "2026-11-02-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
