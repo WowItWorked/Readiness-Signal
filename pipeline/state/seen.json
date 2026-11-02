@@ -2226,6 +2226,60 @@
       "run_id": "2026-11-02-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.theregister.com/security/2026/11/02/fbi-pins-63b-binance-crypto-heist-on-north-korean-hackers/5306889": {
+      "first_seen": "2026-11-02T10:21:29-05:00",
+      "run_id": "2026-11-02-1000",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://fortune.com/2026/11/02/binance-hack-ai-north-korean-cybercrime-black-october": {
+      "first_seen": "2026-11-02T10:21:29-05:00",
+      "run_id": "2026-11-02-1000",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.finextra.com/newsarticle/48683/binance-users-withdraw-5bn-in-wake-of-hack": {
+      "first_seen": "2026-11-02T10:21:29-05:00",
+      "run_id": "2026-11-02-1000",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.rapid7.com/blog/post/etr-additional-ivanti-connect-secure-zero-days-exploited-in-the-wild-cve-2026-111357-cve-2026-118527": {
+      "first_seen": "2026-11-02T10:21:29-05:00",
+      "run_id": "2026-11-02-1000",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/over-1-000-gitlab-servers-vulnerable-to-code-execution-attacks": {
+      "first_seen": "2026-11-02T10:21:29-05:00",
+      "run_id": "2026-11-02-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/florida-student-aid-website-hack-puts-data-of-4-9-million-people-at-risk": {
+      "first_seen": "2026-11-02T10:21:29-05:00",
+      "run_id": "2026-11-02-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/malicious-claude-code-extension-served-in-cursor-supply-chain-attack": {
+      "first_seen": "2026-11-02T10:21:29-05:00",
+      "run_id": "2026-11-02-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cloud.google.com/blog/topics/threat-intelligence/llmjacking-monetizing-compromised-cloud-models": {
+      "first_seen": "2026-11-02T10:21:29-05:00",
+      "run_id": "2026-11-02-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.resbank.co.za/en/home/publications/publication-detail-pages/Financial-Markets/markets-data/SABOR-Historical-Data/2026/historical-data--south-african-benchmark-overnight-rate---februa": {
+      "first_seen": "2026-11-02T10:21:29-05:00",
+      "run_id": "2026-11-02-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
