@@ -2352,6 +2352,42 @@
       "run_id": "2026-11-02-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.ncsc.gov.uk/news/cyber-chief-uk-facing-ai-powered-attacks-on-critical-infrastructure-in-two-years": {
+      "first_seen": "2026-11-03T06:06:47-05:00",
+      "run_id": "2026-11-03-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.euronews.com/2026/11/03/north-korea-slams-fbi-claims-it-was-behind-5bn-binance-hack-and-test-fires-missiles": {
+      "first_seen": "2026-11-03T06:06:47-05:00",
+      "run_id": "2026-11-03-0600",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.securityweek.com/uk-cyber-chief-says-the-uk-will-face-ai-cyberattacks-on-critical-infrastructure-by-2028": {
+      "first_seen": "2026-11-03T06:06:47-05:00",
+      "run_id": "2026-11-03-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/uk-ncsc-predicts-rise-cyberattacks-coming-months": {
+      "first_seen": "2026-11-03T06:06:47-05:00",
+      "run_id": "2026-11-03-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/harvard-university-data-breach-exposed-info-of-851-000-accounts": {
+      "first_seen": "2026-11-03T06:06:47-05:00",
+      "run_id": "2026-11-03-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/credit-unions-supporting-sustainable-growth-and-resilience-discussion-paper": {
+      "first_seen": "2026-11-03T06:06:47-05:00",
+      "run_id": "2026-11-03-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
