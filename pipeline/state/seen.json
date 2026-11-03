@@ -2388,6 +2388,36 @@
       "run_id": "2026-11-03-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.theregister.com/security/2026/11/03/britain-on-notice-ai-powered-ransomware-attacks-to-arrive-by-2028/5307200": {
+      "first_seen": "2026-11-03T10:08:01-05:00",
+      "run_id": "2026-11-03-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/critical-node-red-flaw-exploited-in-attacks": {
+      "first_seen": "2026-11-03T10:08:01-05:00",
+      "run_id": "2026-11-03-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.pcisecuritystandards.org/the-ai-exchange-innovators-in-payment-security-featuring-shopify": {
+      "first_seen": "2026-11-03T10:08:01-05:00",
+      "run_id": "2026-11-03-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63908": {
+      "first_seen": "2026-11-03T10:08:01-05:00",
+      "run_id": "2026-11-03-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63907": {
+      "first_seen": "2026-11-03T10:08:01-05:00",
+      "run_id": "2026-11-03-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
