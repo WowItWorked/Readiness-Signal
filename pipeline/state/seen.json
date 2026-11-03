@@ -2454,6 +2454,42 @@
       "run_id": "2026-11-03-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://techcrunch.com/2026/11/03/researchers-warned-of-north-korean-hacking-tactics-years-before-record-6-3b-binance-heist": {
+      "first_seen": "2026-11-03T18:06:30-05:00",
+      "run_id": "2026-11-03-1800",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/binance-says-fake-job-interview-led-to-63-billion-crypto-heist": {
+      "first_seen": "2026-11-03T18:06:30-05:00",
+      "run_id": "2026-11-03-1800",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://thehill.com/policy/technology/6194069-binance-hack-north-korea-tradertraitor": {
+      "first_seen": "2026-11-03T18:06:30-05:00",
+      "run_id": "2026-11-03-1800",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.theregister.com/security/2026/11/03/north-korean-fake-job-interview-led-to-63b-binance-heist/5307398": {
+      "first_seen": "2026-11-03T18:06:30-05:00",
+      "run_id": "2026-11-03-1800",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/workos-says-attacker-used-artex-ai-to-breach-internal-sales-app": {
+      "first_seen": "2026-11-03T18:06:30-05:00",
+      "run_id": "2026-11-03-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://techcrunch.com/2026/11/03/ted-schleins-ballistic-ventures-seeks-490m-for-new-funds-amid-ai-driven-cybersecurity-boom": {
+      "first_seen": "2026-11-03T18:06:30-05:00",
+      "run_id": "2026-11-03-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
