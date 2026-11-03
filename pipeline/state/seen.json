@@ -2418,6 +2418,42 @@
       "run_id": "2026-11-03-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.finextra.com/newsarticle/48694/binance-says-hackers-used-fake-job-interviews-and-ai-tools-in-63bn-hack": {
+      "first_seen": "2026-11-03T14:08:45-05:00",
+      "run_id": "2026-11-03-1400",
+      "verdict": "published",
+      "item_id": "RS-261103-1400-01"
+    },
+    "https://www.cnbc.com/2026/11/03/binance-co-ceo-teng-says-hackers-used-fake-job-interviews-to-steal-6point3-billion-in-crypto.html": {
+      "first_seen": "2026-11-03T14:08:45-05:00",
+      "run_id": "2026-11-03-1400",
+      "verdict": "published",
+      "item_id": "RS-261103-1400-01"
+    },
+    "https://therecord.media/binance-cryptocurrency-theft-months-long-campaign-nkorea": {
+      "first_seen": "2026-11-03T14:08:45-05:00",
+      "run_id": "2026-11-03-1400",
+      "verdict": "published",
+      "item_id": "RS-261103-1400-01"
+    },
+    "https://www.euronews.com/2026/11/03/uk-likely-to-face-ai-powered-cyberattacks-on-critical-infrastructure-by-2028-cyber-chief-w": {
+      "first_seen": "2026-11-03T14:08:45-05:00",
+      "run_id": "2026-11-03-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://fortune.com/2026/11/03/binance-hack-details-linkedin": {
+      "first_seen": "2026-11-03T14:08:45-05:00",
+      "run_id": "2026-11-03-1400",
+      "verdict": "published",
+      "item_id": "RS-261103-1400-01"
+    },
+    "https://techcrunch.com/2026/11/03/crowdstrike-to-shell-out-nearly-500m-for-2-ai-security-startups-as-the-market-for-securing-agents-takes-off": {
+      "first_seen": "2026-11-03T14:08:45-05:00",
+      "run_id": "2026-11-03-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

@@ -2186,6 +2186,59 @@
       ],
       "backfilled": false,
       "update_of": null
+    },
+    {
+      "id": "RS-261103-1400-01",
+      "timestamp": "2026-11-03T14:00:00-05:00",
+      "section": "executive_visibility",
+      "claim": "A crypto exchange says attackers used a fake recruiter coding task and internal AI tools to reach a wallet transaction-authorisation system.",
+      "domains": [
+        "ai",
+        "cyber"
+      ],
+      "source_class": "news",
+      "mechanism": "kri_kpi",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "The report describes internal AI tools as the pivot between a compromised engineer's device and the system authorising wallet transactions, so permissions granted to such tools become part of the path to high-value authorisation, a path that reviews of people and service accounts alone do not show."
+        },
+        {
+          "domain": "cyber",
+          "text": "The reported entry steps were a coding exercise with hidden malware set by fake recruiters and a tampered package installer reached while searching for a coding tool, followed by months of movement. The earlier account had described only a possible compromised laptop."
+        }
+      ],
+      "validation_question": "Is the number of internal AI tools able to read credentials or deployment tokens for transaction-authorising systems measured, against a zero threshold, and reported to the CISO?",
+      "candidate_issue_statement": "If the number of internal AI tools able to read credentials or deployment tokens for transaction-authorising systems is not measured against a threshold, a compromised workstation can reach payment authorisation through an AI tool unnoticed, enabling unauthorised high-value transfers.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Fortune",
+          "url": "https://fortune.com/2026/11/03/binance-hack-details-linkedin/",
+          "published": "2026-11-03",
+          "source_class": "news"
+        },
+        {
+          "publication": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/03/binance-co-ceo-teng-says-hackers-used-fake-job-interviews-to-steal-6point3-billion-in-crypto.html",
+          "published": "2026-11-03",
+          "source_class": "news"
+        },
+        {
+          "publication": "The Record",
+          "url": "https://therecord.media/binance-cryptocurrency-theft-months-long-campaign-nkorea",
+          "published": "2026-11-03",
+          "source_class": "news"
+        },
+        {
+          "publication": "Finextra",
+          "url": "https://www.finextra.com/newsarticle/48694/binance-says-hackers-used-fake-job-interviews-and-ai-tools-in-63bn-hack",
+          "published": "2026-11-03",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": false,
+      "update_of": "RS-261030-0600-01"
     }
   ]
 }

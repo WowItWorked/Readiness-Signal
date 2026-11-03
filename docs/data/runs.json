@@ -4793,6 +4793,49 @@
         "awareness_only": 0
       },
       "notes": "source: bis-cb-speeches reposts older speeches; source: fed-testimony implausible dates skipped"
+    },
+    {
+      "run_id": "2026-11-03-1400",
+      "slot": "2026-11-03T14:00:00-05:00",
+      "started_at": "2026-11-03T14:08:45-05:00",
+      "finished_at": "2026-11-03T14:11:18-05:00",
+      "status": "published",
+      "items": [
+        "RS-261103-1400-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 163,
+        "sources_failed": 10,
+        "fetched": 4590,
+        "in_window": 313,
+        "unseen": 304,
+        "stage1_pass": 6,
+        "stage2_pass": 1,
+        "dedup_dropped": 3,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 1,
+          "passed": 1
+        },
+        "capability_shift": {
+          "tested": 0,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 1,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: bis-cb-speeches reposts older speeches; source: fed-testimony implausible dates skipped"
     }
   ]
 }
