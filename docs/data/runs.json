@@ -4999,6 +4999,47 @@
         "awareness_only": 0
       },
       "notes": "source: 3 CISA feeds failed; source: 9 news feeds blocked (dw, politico, bbc, ft, guardian, nyt)"
+    },
+    {
+      "run_id": "2026-11-04-1800",
+      "slot": "2026-11-04T18:00:00-05:00",
+      "started_at": "2026-11-04T18:06:22-05:00",
+      "finished_at": "2026-11-04T18:06:55-05:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 161,
+        "sources_failed": 12,
+        "fetched": 4471,
+        "in_window": 192,
+        "unseen": 184,
+        "stage1_pass": 0,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 0,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: 3 CISA feeds failed; source: 9 news feeds blocked (dw, politico, bbc, ft, guardian, nyt)"
     }
   ]
 }
