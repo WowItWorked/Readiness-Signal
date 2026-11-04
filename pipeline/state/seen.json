@@ -2538,6 +2538,36 @@
       "run_id": "2026-11-04-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://therecord.media/french-bank-confirms-cyber-heist": {
+      "first_seen": "2026-11-04T14:06:01-05:00",
+      "run_id": "2026-11-04-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://bpi.com/stronger-together-how-banks-collaborate-on-cybersecurity": {
+      "first_seen": "2026-11-04T14:06:01-05:00",
+      "run_id": "2026-11-04-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankingdive.com/news/banking-ai-agents-threaten-customer-relationships-human-personetics/873706": {
+      "first_seen": "2026-11-04T14:06:01-05:00",
+      "run_id": "2026-11-04-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cbsnews.com/news/cyberattack-france-blood-bank": {
+      "first_seen": "2026-11-04T14:06:01-05:00",
+      "run_id": "2026-11-04-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USTREAS/bulletins/431a6b8": {
+      "first_seen": "2026-11-04T14:06:01-05:00",
+      "run_id": "2026-11-04-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
