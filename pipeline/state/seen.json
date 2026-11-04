@@ -2502,6 +2502,42 @@
       "run_id": "2026-11-04-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.finextra.com/newsarticle/48700/crdit-mutuel-arka-confirms-cyberattack-after-reports-of-133m-crypto-theft": {
+      "first_seen": "2026-11-04T10:06:57-05:00",
+      "run_id": "2026-11-04-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.finextra.com/pressarticle/111568/thirdeye-partners-idpal-to-bring-kyc-tech-to-australia-and-new-zealand": {
+      "first_seen": "2026-11-04T10:06:57-05:00",
+      "run_id": "2026-11-04-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.finextra.com/pressarticle/111565/thirdeye-selects-id-pal-to-power-kyc-and-kyb-across-anz": {
+      "first_seen": "2026-11-04T10:06:57-05:00",
+      "run_id": "2026-11-04-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/google-calendar-phishing-campaign-hijacks-sessions-bypasses-mfa": {
+      "first_seen": "2026-11-04T10:06:57-05:00",
+      "run_id": "2026-11-04-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/ai-linked-breaches-mount-as-workos-northflank-trigger-dev-disclose-hacks": {
+      "first_seen": "2026-11-04T10:06:57-05:00",
+      "run_id": "2026-11-04-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/publications/newsletters/primary-market-bulletin-67": {
+      "first_seen": "2026-11-04T10:06:57-05:00",
+      "run_id": "2026-11-04-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
