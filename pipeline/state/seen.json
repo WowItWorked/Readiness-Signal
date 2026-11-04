@@ -2490,6 +2490,18 @@
       "run_id": "2026-11-03-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/rigged-coding-assignment-abused-ai-tool-opened-path-to-6-billion-binance-heist": {
+      "first_seen": "2026-11-04T06:06:30-05:00",
+      "run_id": "2026-11-04-0600",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/news/blogs/act-now-be-resilient-quantum-future": {
+      "first_seen": "2026-11-04T06:06:30-05:00",
+      "run_id": "2026-11-04-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
