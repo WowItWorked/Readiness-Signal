@@ -2646,6 +2646,18 @@
       "run_id": "2026-11-05-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/fake-openai-spacex-events-used-to-steal-microsoft-google-accounts": {
+      "first_seen": "2026-11-05T18:06:09-05:00",
+      "run_id": "2026-11-05-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://labs.watchtowr.com/barracuda-networks-is-your-new-best-friend-barracuda-email-security-gateway-pre-auth-remote-root-rce-cve-2026-116606-cve-2026-111560": {
+      "first_seen": "2026-11-05T18:06:09-05:00",
+      "run_id": "2026-11-05-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
