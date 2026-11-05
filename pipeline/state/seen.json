@@ -2622,6 +2622,30 @@
       "run_id": "2026-11-05-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.americanbanker.com/news/occ-banks-need-strong-controls-when-delegating-to-ai-agents": {
+      "first_seen": "2026-11-05T14:07:22-05:00",
+      "run_id": "2026-11-05-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/ai-agents-got-root-on-linux-via-948-kernel-flaws-in-openai-research": {
+      "first_seen": "2026-11-05T14:07:22-05:00",
+      "run_id": "2026-11-05-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns": {
+      "first_seen": "2026-11-05T14:07:22-05:00",
+      "run_id": "2026-11-05-1400",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USTREAS/bulletins/431c714": {
+      "first_seen": "2026-11-05T14:07:22-05:00",
+      "run_id": "2026-11-05-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
