@@ -2604,6 +2604,24 @@
       "run_id": "2026-11-05-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://research.checkpoint.com/2026/chatgpt-lockdown-mode-bypass-phishing-malware-delivery-and-silent-data-exfiltration": {
+      "first_seen": "2026-11-05T10:06:17-05:00",
+      "run_id": "2026-11-05-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13751&Mode=0": {
+      "first_seen": "2026-11-05T10:06:17-05:00",
+      "run_id": "2026-11-05-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.finextra.com/blogposting/33404/building-doras-ict-risk-records-into-a-legacy-estate": {
+      "first_seen": "2026-11-05T10:06:17-05:00",
+      "run_id": "2026-11-05-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
