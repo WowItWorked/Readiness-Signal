@@ -2568,6 +2568,42 @@
       "run_id": "2026-11-04-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://therecord.media/chainalysis-all-users-hit-by-agentic-cyberattack": {
+      "first_seen": "2026-11-05T06:06:46-05:00",
+      "run_id": "2026-11-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/news/press-releases/fca-explore-quantum-computing-tackle-financial-crime": {
+      "first_seen": "2026-11-05T06:06:46-05:00",
+      "run_id": "2026-11-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://securelist.com/storm-2603-fileless-toolshell-attack/121467": {
+      "first_seen": "2026-11-05T06:06:46-05:00",
+      "run_id": "2026-11-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63924": {
+      "first_seen": "2026-11-05T06:06:46-05:00",
+      "run_id": "2026-11-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63922": {
+      "first_seen": "2026-11-05T06:06:46-05:00",
+      "run_id": "2026-11-05-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankingsupervision.europa.eu/press/speeches/date/2026/html/ssm.sp261105~717ce34d36.en.html": {
+      "first_seen": "2026-11-05T06:06:46-05:00",
+      "run_id": "2026-11-05-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
