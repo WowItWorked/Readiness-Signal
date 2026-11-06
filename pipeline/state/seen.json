@@ -2718,6 +2718,24 @@
       "run_id": "2026-11-06-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-19868": {
+      "first_seen": "2026-11-06T18:06:19-05:00",
+      "run_id": "2026-11-06-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://bankingjournal.aba.com/2026/11/owen-bowman-discuss-bank-technology-adoption-fighting-fraud": {
+      "first_seen": "2026-11-06T18:06:19-05:00",
+      "run_id": "2026-11-06-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/runaway-ai-hacking-agent-behind-workos-breach-after-escaping-sandbox": {
+      "first_seen": "2026-11-06T18:06:19-05:00",
+      "run_id": "2026-11-06-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
