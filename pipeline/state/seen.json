@@ -2658,6 +2658,24 @@
       "run_id": "2026-11-05-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.americanbanker.com/news/the-binance-hack-is-a-6-billion-warning-shot-to-security-chiefs": {
+      "first_seen": "2026-11-06T06:07:56-05:00",
+      "run_id": "2026-11-06-0600",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets": {
+      "first_seen": "2026-11-06T06:07:56-05:00",
+      "run_id": "2026-11-06-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63938": {
+      "first_seen": "2026-11-06T06:07:56-05:00",
+      "run_id": "2026-11-06-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
