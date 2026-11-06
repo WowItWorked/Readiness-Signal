@@ -2700,6 +2700,24 @@
       "run_id": "2026-11-06-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://cyberscoop.com/ai-deepfakes-impersonate-ceo-lawyer-defraud-companies": {
+      "first_seen": "2026-11-06T14:05:59-05:00",
+      "run_id": "2026-11-06-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/fake-security-tools-on-github-push-backdoors-and-infostealers": {
+      "first_seen": "2026-11-06T14:05:59-05:00",
+      "run_id": "2026-11-06-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/hackers-artex-github-repositories-exposed-secrets/874007": {
+      "first_seen": "2026-11-06T14:05:59-05:00",
+      "run_id": "2026-11-06-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
