@@ -2676,6 +2676,30 @@
       "run_id": "2026-11-06-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://therecord.media/ceo-spoofing-scammers-charged": {
+      "first_seen": "2026-11-06T10:10:33-05:00",
+      "run_id": "2026-11-06-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/d-link-warns-of-multiple-zero-days-in-dgs-3130-series-switches": {
+      "first_seen": "2026-11-06T10:10:33-05:00",
+      "run_id": "2026-11-06-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/openai-says-new-gpt-6-cyber-model-hunts-flaws-without-crossing-the-line": {
+      "first_seen": "2026-11-06T10:10:33-05:00",
+      "run_id": "2026-11-06-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.finextra.com/videoarticle/3643/binance-what-the-largest-ever-crypto-hack-means-for-cyber-resilience": {
+      "first_seen": "2026-11-06T10:10:33-05:00",
+      "run_id": "2026-11-06-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
