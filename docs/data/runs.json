@@ -5408,6 +5408,47 @@
         "awareness_only": 0
       },
       "notes": "source: securityweek-news and microsoft-threat-intelligence pages blocked, headline and lead only; source: fed-testimony 3 implausible dates; source: 13 feeds failed, 160 ok"
+    },
+    {
+      "run_id": "2026-11-07-1000",
+      "slot": "2026-11-07T10:00:00-05:00",
+      "started_at": "2026-11-07T10:06:28-05:00",
+      "finished_at": "2026-11-07T10:06:59-05:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 162,
+        "sources_failed": 11,
+        "fetched": 4436,
+        "in_window": 27,
+        "unseen": 26,
+        "stage1_pass": 0,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 0,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: fed-testimony 3 implausible dates; source: 11 feeds failed, 162 ok; S1-GAP: securityweek-news an exploited firewall VPN login flaw"
     }
   ]
 }
