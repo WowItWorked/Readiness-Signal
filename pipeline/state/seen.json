@@ -2748,6 +2748,12 @@
       "run_id": "2026-11-07-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/hackers-pull-off-133-million-french-bank-heist-via-service-provider": {
+      "first_seen": "2026-11-07T14:06:50-05:00",
+      "run_id": "2026-11-07-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
