@@ -2754,6 +2754,12 @@
       "run_id": "2026-11-07-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/iris-ohyama-data-cloud-breach-exposes-info-of-77-million-customers": {
+      "first_seen": "2026-11-08T14:05:59-05:00",
+      "run_id": "2026-11-08-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
