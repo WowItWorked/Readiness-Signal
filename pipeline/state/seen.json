@@ -2820,6 +2820,30 @@
       "run_id": "2026-11-09-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/binance-denies-data-breach-after-alleged-shinyhunters-claims": {
+      "first_seen": "2026-11-09T14:05:21-05:00",
+      "run_id": "2026-11-09-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://research.checkpoint.com/2026/9th-november-threat-intelligence-report": {
+      "first_seen": "2026-11-09T14:05:21-05:00",
+      "run_id": "2026-11-09-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://kb.cert.org/vuls/id/188754": {
+      "first_seen": "2026-11-09T14:05:21-05:00",
+      "run_id": "2026-11-09-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.osfi-bsif.gc.ca/en/chief-actuary-government-canada-releases-19th-actuarial-report-old-age-security-program": {
+      "first_seen": "2026-11-09T14:05:21-05:00",
+      "run_id": "2026-11-09-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
