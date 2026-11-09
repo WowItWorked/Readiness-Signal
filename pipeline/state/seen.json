@@ -2844,6 +2844,18 @@
       "run_id": "2026-11-09-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.finextra.com/newsarticle/48730/fca-explores-use-of-quantum-computing-to-tackle-financial-crime": {
+      "first_seen": "2026-11-09T18:05:25-05:00",
+      "run_id": "2026-11-09-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.theregister.com/security/2026/11/09/attackers-backdoor-trusted-aws-integrations-to-steal-secrets/5308553": {
+      "first_seen": "2026-11-09T18:05:25-05:00",
+      "run_id": "2026-11-09-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
