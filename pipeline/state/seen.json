@@ -2760,6 +2760,18 @@
       "run_id": "2026-11-08-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.proofpoint.com/us/blog/threat-insight/BluePhishing-Initial-Access-via-Third-Party-Agent-Blueprint-Consent": {
+      "first_seen": "2026-11-09T06:06:01-05:00",
+      "run_id": "2026-11-09-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://csrc.nist.gov/pubs/sp/2400-102/e2026/ipd": {
+      "first_seen": "2026-11-09T06:06:01-05:00",
+      "run_id": "2026-11-09-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
