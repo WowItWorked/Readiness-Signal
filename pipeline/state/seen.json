@@ -2970,6 +2970,48 @@
       "run_id": "2026-11-10-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USFDIC/bulletins/432604b": {
+      "first_seen": "2026-11-10T18:05:38-05:00",
+      "run_id": "2026-11-10-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-20320": {
+      "first_seen": "2026-11-10T18:05:38-05:00",
+      "run_id": "2026-11-10-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/hackers-exploit-trusted-aws-access-to-breach-multiple-cloud-environments": {
+      "first_seen": "2026-11-10T18:05:38-05:00",
+      "run_id": "2026-11-10-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/exploited-outlook-zero-day-among-1094-flaws-patched-by-microsoft": {
+      "first_seen": "2026-11-10T18:05:38-05:00",
+      "run_id": "2026-11-10-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-124194": {
+      "first_seen": "2026-11-10T18:05:38-05:00",
+      "run_id": "2026-11-10-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-125350": {
+      "first_seen": "2026-11-10T18:05:38-05:00",
+      "run_id": "2026-11-10-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.londonpolice.ca/news/posts/internet-child-exploitation-ice-unit-investigation-26-79823": {
+      "first_seen": "2026-11-10T18:05:38-05:00",
+      "run_id": "2026-11-10-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
