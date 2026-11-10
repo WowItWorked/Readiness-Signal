@@ -2916,6 +2916,60 @@
       "run_id": "2026-11-10-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/binance-warns-of-ios-flaw-that-could-leak-crypto-wallet-secrets": {
+      "first_seen": "2026-11-10T14:05:43-05:00",
+      "run_id": "2026-11-10-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/critical-xen-orchestra-auth-bypass-flaw-exploited-to-hijack-vm-servers": {
+      "first_seen": "2026-11-10T14:05:43-05:00",
+      "run_id": "2026-11-10-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.darkreading.com/cyber-risk/ai-coding-agents-leak-secrets-github": {
+      "first_seen": "2026-11-10T14:05:43-05:00",
+      "run_id": "2026-11-10-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://techcrunch.com/2026/11/10/n-able-takes-its-remote-access-service-offline-after-researcher-publishes-dozens-of-zero-day-bugs": {
+      "first_seen": "2026-11-10T14:05:43-05:00",
+      "run_id": "2026-11-10-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sophos.com/en-us/blog/artex-attackers-apply-agentic-ai": {
+      "first_seen": "2026-11-10T14:05:43-05:00",
+      "run_id": "2026-11-10-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.pcisecuritystandards.org/pci-ssc-publishes-new-guidance-on-understanding-pci-dss-third-party-service-providers": {
+      "first_seen": "2026-11-10T14:05:43-05:00",
+      "run_id": "2026-11-10-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://rcmp.ca/en/news/2026/11/4358530": {
+      "first_seen": "2026-11-10T14:05:43-05:00",
+      "run_id": "2026-11-10-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/news/press-releases/man-sentenced-over-154m-fake-takeover-bid-targeting-uk-listed-company": {
+      "first_seen": "2026-11-10T14:05:43-05:00",
+      "run_id": "2026-11-10-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.osc.ca/en/news-events/news/osc-publishes-first-article-its-q-bits-series-alongside-technical-report-quantum-computing-risks-and": {
+      "first_seen": "2026-11-10T14:05:43-05:00",
+      "run_id": "2026-11-10-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
