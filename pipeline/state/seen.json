@@ -2880,6 +2880,42 @@
       "run_id": "2026-11-10-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.euronews.com/2026/11/10/ai-is-industrialising-cyberattacks-and-shrinking-the-time-for-exploitation-says-eu-cyberse": {
+      "first_seen": "2026-11-10T10:05:50-05:00",
+      "run_id": "2026-11-10-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://techcrunch.com/2026/11/10/cyberattacks-threaten-to-make-open-source-ai-a-little-less-open-hugging-face-exec-warns": {
+      "first_seen": "2026-11-10T10:05:50-05:00",
+      "run_id": "2026-11-10-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/over-a-dozen-organizations-hit-in-qubole-supply-chain-attack": {
+      "first_seen": "2026-11-10T10:05:50-05:00",
+      "run_id": "2026-11-10-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rapid7.com/blog/post/etr-critical-vulnerabilities-in-n-able-n-central-prompt-hosted-shutdown": {
+      "first_seen": "2026-11-10T10:05:50-05:00",
+      "run_id": "2026-11-10-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://research.checkpoint.com/2026/not-all-that-glitters-is-gold-tracking-copperdragons-sparrow-framework-around-the-globe": {
+      "first_seen": "2026-11-10T10:05:50-05:00",
+      "run_id": "2026-11-10-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.enisa.europa.eu/publications/2026-report-on-the-state-of-cybersecurity-in-the-union": {
+      "first_seen": "2026-11-10T10:05:50-05:00",
+      "run_id": "2026-11-10-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

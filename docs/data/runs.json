@@ -5899,6 +5899,46 @@
         "awareness_only": 0
       },
       "notes": "source: bis-cb-speeches reposts older speeches"
+    },
+    {
+      "run_id": "2026-11-10-1000",
+      "slot": "2026-11-10T10:00:00-05:00",
+      "started_at": "2026-11-10T10:05:50-05:00",
+      "finished_at": "2026-11-10T10:07:14-05:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 162,
+        "sources_failed": 11,
+        "fetched": 4541,
+        "in_window": 274,
+        "unseen": 271,
+        "stage1_pass": 6,
+        "stage2_pass": 0,
+        "dedup_dropped": 1,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 1,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 3,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
     }
   ]
 }
