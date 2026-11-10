@@ -2856,6 +2856,30 @@
       "run_id": "2026-11-09-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/fireworks-ai-discloses-new-breach-after-cloud-provider-hack": {
+      "first_seen": "2026-11-10T06:05:42-05:00",
+      "run_id": "2026-11-10-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/n-able-takes-cloud-platform-offline-after-30-plus-zero-days-published": {
+      "first_seen": "2026-11-10T06:05:42-05:00",
+      "run_id": "2026-11-10-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/n-able-takes-n-central-offline-as-researcher-drops-over-30-zero-days": {
+      "first_seen": "2026-11-10T06:05:42-05:00",
+      "run_id": "2026-11-10-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/amendments-to-the-large-exposures-framework-part-2-policy-statement": {
+      "first_seen": "2026-11-10T06:05:42-05:00",
+      "run_id": "2026-11-10-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
