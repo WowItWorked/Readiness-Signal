@@ -6146,6 +6146,47 @@
         "awareness_only": 0
       },
       "notes": "source: 9 feeds blocked by network policy (403) incl. bbc, guardian, ft, nyt; source: bpi-posts not a feed; source: fed-testimony implausible dates skipped"
+    },
+    {
+      "run_id": "2026-11-11-1800",
+      "slot": "2026-11-11T18:00:00-05:00",
+      "started_at": "2026-11-11T18:05:51-05:00",
+      "finished_at": "2026-11-11T18:06:22-05:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 161,
+        "sources_failed": 12,
+        "fetched": 4439,
+        "in_window": 147,
+        "unseen": 144,
+        "stage1_pass": 0,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 0,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: fed-testimony implausible dates skipped; source: 12 feeds failed incl. ft-cyber-security, theregister-security, bleepingcomputer-news"
     }
   ]
 }
