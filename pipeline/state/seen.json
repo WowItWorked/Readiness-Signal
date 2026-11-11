@@ -3078,6 +3078,18 @@
       "run_id": "2026-11-11-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks": {
+      "first_seen": "2026-11-11T14:05:59-05:00",
+      "run_id": "2026-11-11-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/critical-xen-orchestra-flaws-exploited-in-attacks": {
+      "first_seen": "2026-11-11T14:05:59-05:00",
+      "run_id": "2026-11-11-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
