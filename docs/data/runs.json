@@ -6021,6 +6021,49 @@
         "awareness_only": 0
       },
       "notes": "source: bbc-news-business 403 network policy; source: guardian-business 403 network policy; source: ft-cyber-security 403 network policy; source: bpi-posts not a feed; source: bis-cb-speeches reposts older speeches"
+    },
+    {
+      "run_id": "2026-11-11-0600",
+      "slot": "2026-11-11T06:00:00-05:00",
+      "started_at": "2026-11-11T06:05:42-05:00",
+      "finished_at": "2026-11-11T06:08:11-05:00",
+      "status": "published",
+      "items": [
+        "RS-261111-0600-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 163,
+        "sources_failed": 10,
+        "fetched": 4510,
+        "in_window": 239,
+        "unseen": 228,
+        "stage1_pass": 9,
+        "stage2_pass": 1,
+        "dedup_dropped": 1,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 3,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 2,
+          "passed": 1
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 1,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: cisco-talos page blocked, lead only; ambiguity: Barracuda gateway flaw pair vs C6(i)"
     }
   ]
 }

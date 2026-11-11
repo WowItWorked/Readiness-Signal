@@ -3012,6 +3012,60 @@
       "run_id": "2026-11-10-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/cisa-flags-cisco-broadworks-flaw-as-actively-exploited-in-attacks": {
+      "first_seen": "2026-11-11T06:05:42-05:00",
+      "run_id": "2026-11-11-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/threat-actors-exploit-openwave-cisco-broadworks-vulnerabilities": {
+      "first_seen": "2026-11-11T06:05:42-05:00",
+      "run_id": "2026-11-11-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/recently-patched-barracuda-vulnerabilities-exploited-in-attacks": {
+      "first_seen": "2026-11-11T06:05:42-05:00",
+      "run_id": "2026-11-11-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://securelist.com/citrus-ransomware/121879": {
+      "first_seen": "2026-11-11T06:05:42-05:00",
+      "run_id": "2026-11-11-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.talosintelligence.com/microsoft-patch-tuesday-for-november-2026": {
+      "first_seen": "2026-11-11T06:05:42-05:00",
+      "run_id": "2026-11-11-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.federalregister.gov/documents/2026/11/12/2026-23060/federal-reserve-bank-capital-stock": {
+      "first_seen": "2026-11-11T06:05:42-05:00",
+      "run_id": "2026-11-11-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/publications/multi-firm-reviews/operational-resilience-trading-venues": {
+      "first_seen": "2026-11-11T06:05:42-05:00",
+      "run_id": "2026-11-11-0600",
+      "verdict": "published",
+      "item_id": "RS-261111-0600-01"
+    },
+    "https://www.fca.org.uk/publications/good-and-poor-practice/operational-resilience-demonstrating-resilience-practice": {
+      "first_seen": "2026-11-11T06:05:42-05:00",
+      "run_id": "2026-11-11-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261111-3": {
+      "first_seen": "2026-11-11T06:05:42-05:00",
+      "run_id": "2026-11-11-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

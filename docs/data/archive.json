@@ -2239,6 +2239,42 @@
       ],
       "backfilled": false,
       "update_of": "RS-261030-0600-01"
+    },
+    {
+      "id": "RS-261111-0600-01",
+      "timestamp": "2026-11-11T06:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "The FCA reports some trading venues lacked evidence of validated rollback plans for system changes.",
+      "domains": [
+        "resilience",
+        "third_party"
+      ],
+      "source_class": "regulator",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "Change testing that confirms a release went live, without proving rollback or recovery of dependent services, leaves recoverability unproven at the point of highest change risk; the FCA reported limited evidence of tested dependencies or validated rollback among the venues it reviewed."
+        },
+        {
+          "domain": "third_party",
+          "text": "The same review reported venues with incomplete views of how third parties depend on each other and with only high-level exit strategies, which makes scoping and recovering from a provider failure during a change window harder to evidence."
+        }
+      ],
+      "validation_question": "Does change approval for systems supporting important business services require tested rollback, including dependent services, with the test date recorded?",
+      "candidate_issue_statement": "Where change approval does not require tested rollback of dependent services, a failed change can extend an outage beyond impact tolerance because recovery steps were unproven.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Financial Conduct Authority",
+          "url": "https://www.fca.org.uk/publications/multi-firm-reviews/operational-resilience-trading-venues",
+          "headline": "Operational resilience of trading venues",
+          "published": "2026-11-11",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
     }
   ]
 }
