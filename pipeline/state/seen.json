@@ -3132,6 +3132,54 @@
       "run_id": "2026-11-12-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.theregister.com/security/2026/11/12/hackers-exploiting-screenconnect-plugin-flaw-to-spread-malware-across-hundreds-of-pcs/5309361": {
+      "first_seen": "2026-11-12T10:05:34-05:00",
+      "run_id": "2026-11-12-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sentinelone.com/labs/labscon26-replay-let-s-get-physical-why-cybersecurity-needs-hardware-based-security-to-survive-ai": {
+      "first_seen": "2026-11-12T10:05:34-05:00",
+      "run_id": "2026-11-12-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/notion-customer-data-compromised-in-fireworks-ai-hack": {
+      "first_seen": "2026-11-12T10:05:34-05:00",
+      "run_id": "2026-11-12-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/kazakhstan-hackers-central-asia": {
+      "first_seen": "2026-11-12T10:05:34-05:00",
+      "run_id": "2026-11-12-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/publications/working-paper-1395-marcobis-ai-agentic-econometric-analysis-central-bankers": {
+      "first_seen": "2026-11-12T10:05:34-05:00",
+      "run_id": "2026-11-12-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://research.checkpoint.com/2026/php2shell-exploitation-on-check-point-gateway": {
+      "first_seen": "2026-11-12T10:05:34-05:00",
+      "run_id": "2026-11-12-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://kb.cert.org/vuls/id/944667": {
+      "first_seen": "2026-11-12T10:05:34-05:00",
+      "run_id": "2026-11-12-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.federalreserve.gov/newsevents/speech/barr20261112a.htm": {
+      "first_seen": "2026-11-12T10:05:34-05:00",
+      "run_id": "2026-11-12-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
