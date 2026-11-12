@@ -6269,6 +6269,47 @@
         "awareness_only": 0
       },
       "notes": "source: bis-cb-speeches reposts older speeches; source: 12 feeds failed incl. ft-cyber-security, guardian-technology, americanbanker-cybersecurity; ambiguity: chained gateway flaws not read as an escalation run"
+    },
+    {
+      "run_id": "2026-11-12-1400",
+      "slot": "2026-11-12T14:00:00-05:00",
+      "started_at": "2026-11-12T14:05:32-05:00",
+      "finished_at": "2026-11-12T14:07:02-05:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 161,
+        "sources_failed": 12,
+        "fetched": 4421,
+        "in_window": 190,
+        "unseen": 177,
+        "stage1_pass": 6,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 6,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: bis-cb-speeches reposts older speeches; source: 12 feeds failed incl. ft-cyber-security, guardian-technology, americanbanker-cybersecurity"
     }
   ]
 }

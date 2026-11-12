@@ -3180,6 +3180,42 @@
       "run_id": "2026-11-12-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://therecord.media/connectwise-screenconnect-breaches-third-party-tool": {
+      "first_seen": "2026-11-12T14:05:32-05:00",
+      "run_id": "2026-11-12-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://unit42.paloaltonetworks.com/cairn-framework-ai-autonomous-attacks": {
+      "first_seen": "2026-11-12T14:05:32-05:00",
+      "run_id": "2026-11-12-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cert.europa.eu/publications/security-advisories/2026-020": {
+      "first_seen": "2026-11-12T14:05:32-05:00",
+      "run_id": "2026-11-12-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.microsoft.com/en-us/security/blog/2026/11/12/trained-to-betray-how-post-training-supply-chain-attacks-hijack-coding-agents": {
+      "first_seen": "2026-11-12T14:05:32-05:00",
+      "run_id": "2026-11-12-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/new-windows-signdrop-zero-day-gives-hackers-system-privileges": {
+      "first_seen": "2026-11-12T14:05:32-05:00",
+      "run_id": "2026-11-12-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://kb.cert.org/vuls/id/685399": {
+      "first_seen": "2026-11-12T14:05:32-05:00",
+      "run_id": "2026-11-12-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
