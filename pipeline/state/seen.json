@@ -3090,6 +3090,48 @@
       "run_id": "2026-11-11-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/hackers-deploy-malware-in-fresh-screenconnect-campaign": {
+      "first_seen": "2026-11-12T06:06:03-05:00",
+      "run_id": "2026-11-12-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/maersk-confirms-data-theft-amid-5-million-extortion-attempt": {
+      "first_seen": "2026-11-12T06:06:03-05:00",
+      "run_id": "2026-11-12-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/active-screenconnect-attacks-breach-msps-impact-dozens-of-organizations": {
+      "first_seen": "2026-11-12T06:06:03-05:00",
+      "run_id": "2026-11-12-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.darkreading.com/cybersecurity-operations/japan-emergency-funding-cybersecurity-ai-assisted-breaches": {
+      "first_seen": "2026-11-12T06:06:03-05:00",
+      "run_id": "2026-11-12-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261112-competitiveness-and-resilience-financial-sector-oxymoron-or-complementarity": {
+      "first_seen": "2026-11-12T06:06:03-05:00",
+      "run_id": "2026-11-12-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.enisa.europa.eu/publications/joint-advisory-on-the-use-of-frontier-ai-models-for-code-review": {
+      "first_seen": "2026-11-12T06:06:03-05:00",
+      "run_id": "2026-11-12-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261112-foundations-innovative-and-resilient-capital-markets": {
+      "first_seen": "2026-11-12T06:06:03-05:00",
+      "run_id": "2026-11-12-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
