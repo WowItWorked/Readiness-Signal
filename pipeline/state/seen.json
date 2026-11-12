@@ -3216,6 +3216,48 @@
       "run_id": "2026-11-12-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://thehill.com/policy/technology/6217605-north-korean-hackers-stole-crypto": {
+      "first_seen": "2026-11-12T18:06:14-05:00",
+      "run_id": "2026-11-12-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/new-worm-like-sckit-malware-targets-msps-in-screenconnect-attacks": {
+      "first_seen": "2026-11-12T18:06:14-05:00",
+      "run_id": "2026-11-12-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cyberscoop.com/connectwise-screenconnect-sckit-attack": {
+      "first_seen": "2026-11-12T18:06:14-05:00",
+      "run_id": "2026-11-12-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/hackers-compromise-4-800-github-accounts-to-steal-cloud-credentials": {
+      "first_seen": "2026-11-12T18:06:14-05:00",
+      "run_id": "2026-11-12-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.foxbusiness.com/technology/microsoft-365-hit-multi-region-connectivity-issues-amid-elevated-infrastructure-load": {
+      "first_seen": "2026-11-12T18:06:14-05:00",
+      "run_id": "2026-11-12-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/stolen-binance-crypto-recovered-doj-facestealer-disrupted": {
+      "first_seen": "2026-11-12T18:06:14-05:00",
+      "run_id": "2026-11-12-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/new-n-able-4everable2shell-zero-day-exploited-hours-after-poc-released": {
+      "first_seen": "2026-11-12T18:06:14-05:00",
+      "run_id": "2026-11-12-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
