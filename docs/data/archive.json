@@ -2275,6 +2275,42 @@
       ],
       "backfilled": false,
       "update_of": null
+    },
+    {
+      "id": "RS-261113-1800-01",
+      "timestamp": "2026-11-13T18:00:00-05:00",
+      "section": "capability_shift",
+      "claim": "Microsoft says attackers abused managed service providers' ScreenConnect instances to install rogue remote-access clients and a worm on customer endpoints.",
+      "domains": [
+        "third_party",
+        "cyber"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "third_party",
+          "text": "A supplier's remote-support console held standing administrative reach into customer endpoints, and that reach was used to add a second client that connects to attacker infrastructure. Hardening the supplier's own console leaves such an added client in place."
+        },
+        {
+          "domain": "cyber",
+          "text": "Microsoft describes persistence through scheduled tasks and registry run entries, so deleting the added client alone does not end access. The toolkit is also designed to steal technician browser session cookies and use the console to distribute payloads, which Microsoft describes as design rather than confirmed infections."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The access route is a supplier's remote-management tool used as designed, a path that third-party risk and outsourcing expectations address through controls on supplier privileged access and remote-support software. What changed is the tooling: a worm that persists after the added client is removed and a design to reach technicians through the console. This changes if technician-side compromise is confirmed at customers.",
+      "sources": [
+        {
+          "publication": "Microsoft Threat Intelligence",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/11/13/sckit-abuses-screenconnect-deploy-remote-access-target-technician-sessions/",
+          "headline": "SCKit abuses ScreenConnect to deploy remote access and target technician sessions",
+          "published": "2026-11-13",
+          "source_class": "vendor_threat_research"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
     }
   ]
 }

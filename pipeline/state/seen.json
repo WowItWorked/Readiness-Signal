@@ -3372,6 +3372,42 @@
       "run_id": "2026-11-13-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USFDIC/bulletins/432ad8b": {
+      "first_seen": "2026-11-13T18:06:17-05:00",
+      "run_id": "2026-11-13-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.occ.gov/news-issuances/bulletins/2026/bulletin-2026-57.html": {
+      "first_seen": "2026-11-13T18:06:17-05:00",
+      "run_id": "2026-11-13-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.occ.gov/news-issuances/news-releases/2026/nr-ia-2026-100.html": {
+      "first_seen": "2026-11-13T18:06:17-05:00",
+      "run_id": "2026-11-13-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.microsoft.com/en-us/security/blog/2026/11/13/sckit-abuses-screenconnect-deploy-remote-access-target-technician-sessions": {
+      "first_seen": "2026-11-13T18:06:17-05:00",
+      "run_id": "2026-11-13-1800",
+      "verdict": "published",
+      "item_id": "RS-261113-1800-01"
+    },
+    "https://www.canada.ca/en/department-finance/news/2026/11/selection-process-opens-for-defence-security-and-resilience-banks-host-city.html": {
+      "first_seen": "2026-11-13T18:06:17-05:00",
+      "run_id": "2026-11-13-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261113a.htm": {
+      "first_seen": "2026-11-13T18:06:17-05:00",
+      "run_id": "2026-11-13-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
