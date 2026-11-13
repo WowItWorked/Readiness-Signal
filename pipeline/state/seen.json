@@ -3258,6 +3258,54 @@
       "run_id": "2026-11-12-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/check-point-patches-zero-day-that-lets-hackers-get-root-access": {
+      "first_seen": "2026-11-13T06:05:36-05:00",
+      "run_id": "2026-11-13-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cyberscoop.com/us-seizes-north-korea-hacking-infrastructure-binance": {
+      "first_seen": "2026-11-13T06:05:36-05:00",
+      "run_id": "2026-11-13-0600",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.securityweek.com/php2shell-exploited-in-destructive-check-point-gateway-attacks": {
+      "first_seen": "2026-11-13T06:05:36-05:00",
+      "run_id": "2026-11-13-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/fbi-says-us-seized-1-2-billion-worth-of-cryptocurrency-stolen-from-binance": {
+      "first_seen": "2026-11-13T06:05:36-05:00",
+      "run_id": "2026-11-13-0600",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.euronews.com/2026/11/12/microsoft-outage-hits-outlook-teams-and-copilot-disrupting-thousands": {
+      "first_seen": "2026-11-13T06:05:36-05:00",
+      "run_id": "2026-11-13-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/hackers-exploit-new-n-central-zero-day-hours-after-poc-publication": {
+      "first_seen": "2026-11-13T06:05:36-05:00",
+      "run_id": "2026-11-13-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.npr.org/2026/11/13/nx-s1-6039350/microsoft-investigating-widespread-outage-that-took-email-and-other-apps-offline": {
+      "first_seen": "2026-11-13T06:05:36-05:00",
+      "run_id": "2026-11-13-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://github.blog/news-insights/company-news/github-availability-report-october-2026": {
+      "first_seen": "2026-11-13T06:05:36-05:00",
+      "run_id": "2026-11-13-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

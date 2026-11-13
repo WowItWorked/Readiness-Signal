@@ -6351,6 +6351,47 @@
         "awareness_only": 0
       },
       "notes": "ambiguity: general-press status of a national political outlet for E3; source: fed-testimony skipped 3 entries with implausible dates"
+    },
+    {
+      "run_id": "2026-11-13-0600",
+      "slot": "2026-11-13T06:00:00-05:00",
+      "started_at": "2026-11-13T06:05:36-05:00",
+      "finished_at": "2026-11-13T06:07:57-05:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 161,
+        "sources_failed": 12,
+        "fetched": 4524,
+        "in_window": 314,
+        "unseen": 301,
+        "stage1_pass": 8,
+        "stage2_pass": 0,
+        "dedup_dropped": 4,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 1,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 2,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "ambiguity: seizure story's lead also reports a separate state-attributed $400m theft; ambiguity: edge-gateway escalation signal unestablished; source: bis-cb-speeches reposts older speeches"
     }
   ]
 }
