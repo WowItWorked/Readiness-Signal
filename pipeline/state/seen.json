@@ -3342,6 +3342,36 @@
       "run_id": "2026-11-13-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://orx.org/blog/microsoft-365-outage-global-business-disruption-and-implications": {
+      "first_seen": "2026-11-13T14:06:00-05:00",
+      "run_id": "2026-11-13-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-123039": {
+      "first_seen": "2026-11-13T14:06:00-05:00",
+      "run_id": "2026-11-13-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/university-of-texas-arlington-warns-data-breach": {
+      "first_seen": "2026-11-13T14:06:00-05:00",
+      "run_id": "2026-11-13-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.marketwatch.com/story/microsoft-stock-slumps-on-outage-that-includes-the-copilot-tool-it-has-been-heavily-promoting-4007dc4f": {
+      "first_seen": "2026-11-13T14:06:00-05:00",
+      "run_id": "2026-11-13-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sec.gov/newsroom/press-releases/2026-114-sec-proposes-executive-director-compensation-disclosure-reforms": {
+      "first_seen": "2026-11-13T14:06:00-05:00",
+      "run_id": "2026-11-13-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
