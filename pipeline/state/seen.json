@@ -3306,6 +3306,42 @@
       "run_id": "2026-11-13-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.cnbc.com/2026/11/13/us-seizes-binance-hack-crypto.html": {
+      "first_seen": "2026-11-13T10:05:41-05:00",
+      "run_id": "2026-11-13-1000",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.securityweek.com/microsoft-struggles-to-restore-email-and-other-services-in-a-global-outage": {
+      "first_seen": "2026-11-13T10:05:41-05:00",
+      "run_id": "2026-11-13-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://techcrunch.com/2026/11/13/uber-confirms-hackers-stole-thousands-of-drivers-license-information-in-data-breach": {
+      "first_seen": "2026-11-13T10:05:41-05:00",
+      "run_id": "2026-11-13-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cbsnews.com/news/microsoft-battling-major-outage": {
+      "first_seen": "2026-11-13T10:05:41-05:00",
+      "run_id": "2026-11-13-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://thehill.com/policy/technology/6218199-microsoft-outage-recovery-process": {
+      "first_seen": "2026-11-13T10:05:41-05:00",
+      "run_id": "2026-11-13-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63973": {
+      "first_seen": "2026-11-13T10:05:41-05:00",
+      "run_id": "2026-11-13-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
