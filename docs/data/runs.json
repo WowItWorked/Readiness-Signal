@@ -6517,6 +6517,47 @@
         "awareness_only": 1
       },
       "notes": "source: fed-testimony 3 entries with implausible dates skipped; source: connectwise advisory pages blocked (403), vendor research relied on"
+    },
+    {
+      "run_id": "2026-11-14-0600",
+      "slot": "2026-11-14T06:00:00-05:00",
+      "started_at": "2026-11-14T06:06:07-05:00",
+      "finished_at": "2026-11-14T06:06:45-05:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 159,
+        "sources_failed": 14,
+        "fetched": 4398,
+        "in_window": 105,
+        "unseen": 95,
+        "stage1_pass": 1,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 1,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 0,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: 13 feeds failed or blocked (network policy 403, 404s); source: fincen-news-releases listing pattern matched nothing"
     }
   ]
 }

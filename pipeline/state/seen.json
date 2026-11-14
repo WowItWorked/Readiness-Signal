@@ -3408,6 +3408,12 @@
       "run_id": "2026-11-13-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.wsj.com/tech/microsoft-service-restored-after-outage-dddae34b": {
+      "first_seen": "2026-11-14T06:06:07-05:00",
+      "run_id": "2026-11-14-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
