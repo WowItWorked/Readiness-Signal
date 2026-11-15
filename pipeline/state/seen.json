@@ -3414,6 +3414,18 @@
       "run_id": "2026-11-14-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.federalregister.gov/documents/2026/11/16/2026-23286/privacy-of-consumer-financial-information": {
+      "first_seen": "2026-11-15T06:05:52-05:00",
+      "run_id": "2026-11-15-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_SpeechesView.aspx?id=1590": {
+      "first_seen": "2026-11-15T06:05:52-05:00",
+      "run_id": "2026-11-15-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
