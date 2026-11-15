@@ -3426,6 +3426,12 @@
       "run_id": "2026-11-15-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/fbi-warns-artex-ai-hacking-tool-is-powering-global-cyberattacks": {
+      "first_seen": "2026-11-15T14:06:15-05:00",
+      "run_id": "2026-11-15-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
