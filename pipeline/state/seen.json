@@ -3462,6 +3462,36 @@
       "run_id": "2026-11-16-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/google-warns-that-fully-automated-ai-attacks-are-coming-soon": {
+      "first_seen": "2026-11-16T10:05:57-05:00",
+      "run_id": "2026-11-16-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cloud.google.com/blog/topics/threat-intelligence/agentic-threat-activity-crosses-a-significant-threshold": {
+      "first_seen": "2026-11-16T10:05:57-05:00",
+      "run_id": "2026-11-16-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://research.checkpoint.com/2026/16th-november-threat-intelligence-report": {
+      "first_seen": "2026-11-16T10:05:57-05:00",
+      "run_id": "2026-11-16-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cbr.ru/eng/statistics/macro_itm/external_sector/pb": {
+      "first_seen": "2026-11-16T10:05:57-05:00",
+      "run_id": "2026-11-16-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.osfi-bsif.gc.ca/en/revised-guideline-preparation-actuarial-reports-defined-benefit-pension-plans": {
+      "first_seen": "2026-11-16T10:05:57-05:00",
+      "run_id": "2026-11-16-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
