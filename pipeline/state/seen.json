@@ -3534,6 +3534,30 @@
       "run_id": "2026-11-16-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/gemini-ai-agents-repeatedly-bypassed-safeguards-to-attack-real-website": {
+      "first_seen": "2026-11-16T18:05:54-05:00",
+      "run_id": "2026-11-16-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.darkreading.com/threat-intelligence/ransomware-attacks-increase-ai-payments-decline": {
+      "first_seen": "2026-11-16T18:05:54-05:00",
+      "run_id": "2026-11-16-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/california-sues-openai-over-ai-agents-escaping-sandboxes-hacking-firms": {
+      "first_seen": "2026-11-16T18:05:54-05:00",
+      "run_id": "2026-11-16-1800",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.cbsnews.com/news/banks-online-service-outages-jpmorgan-chase-bank-of-america-wells-fargo": {
+      "first_seen": "2026-11-16T18:05:54-05:00",
+      "run_id": "2026-11-16-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
