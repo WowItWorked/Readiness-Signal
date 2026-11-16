@@ -3492,6 +3492,48 @@
       "run_id": "2026-11-16-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.rapid7.com/blog/post/etr-rapid7-detected-exploitation-of-cve-2026-90436-against-atlassian-confluence-data-center-n-able-n-central-also-exploited": {
+      "first_seen": "2026-11-16T14:06:13-05:00",
+      "run_id": "2026-11-16-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/php2shell-exploited-chained-attacks-check-point/874751": {
+      "first_seen": "2026-11-16T14:06:13-05:00",
+      "run_id": "2026-11-16-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/ai-agentic-frameworks-artex-google-fbi/874753": {
+      "first_seen": "2026-11-16T14:06:13-05:00",
+      "run_id": "2026-11-16-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.darkreading.com/cyberattacks-data-breaches/china-nexus-actors-breach-10-organizations-ai-driven-attacks": {
+      "first_seen": "2026-11-16T14:06:13-05:00",
+      "run_id": "2026-11-16-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/barracuda-hacked-amid-surge-in-artex-powered-cyberattacks": {
+      "first_seen": "2026-11-16T14:06:13-05:00",
+      "run_id": "2026-11-16-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://techcrunch.com/2026/11/16/fbi-says-artex-ai-open-source-hacking-tool-used-to-breach-networks-in-under-three-hours": {
+      "first_seen": "2026-11-16T14:06:13-05:00",
+      "run_id": "2026-11-16-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/cursor-supply-chain-attack-started-at-fireworks": {
+      "first_seen": "2026-11-16T14:06:13-05:00",
+      "run_id": "2026-11-16-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
