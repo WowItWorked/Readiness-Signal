@@ -3432,6 +3432,36 @@
       "run_id": "2026-11-15-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/microsoft-rules-out-cyberattack-in-outage-warns-of-phishing-campaign": {
+      "first_seen": "2026-11-16T06:05:52-05:00",
+      "run_id": "2026-11-16-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.iosco.org/news/pdf/IOSCONEWS808.pdf": {
+      "first_seen": "2026-11-16T06:05:52-05:00",
+      "run_id": "2026-11-16-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.federalreserve.gov/newsevents/speech/barr20261116a.htm": {
+      "first_seen": "2026-11-16T06:05:52-05:00",
+      "run_id": "2026-11-16-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261116-3": {
+      "first_seen": "2026-11-16T06:05:52-05:00",
+      "run_id": "2026-11-16-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.ecb.europa.eu/press/key/date/2026/html/ecb.sp261116~db374b56ab.en.html": {
+      "first_seen": "2026-11-16T06:05:52-05:00",
+      "run_id": "2026-11-16-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
