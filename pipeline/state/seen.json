@@ -3624,6 +3624,36 @@
       "run_id": "2026-11-17-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/ai-framework-autonomously-weaponized-flaws-in-real-attacks-google-says": {
+      "first_seen": "2026-11-17T14:05:51-05:00",
+      "run_id": "2026-11-17-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.microsoft.com/en-us/security/blog/2026/11/17/the-risks-of-device-code-authentication-for-ai-coding-agents": {
+      "first_seen": "2026-11-17T14:05:51-05:00",
+      "run_id": "2026-11-17-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rapid7.com/blog/post/etr-cve-2026-114938-reported-critical-pre-authentication-remote-code-execution-java-17": {
+      "first_seen": "2026-11-17T14:05:51-05:00",
+      "run_id": "2026-11-17-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.osc.ca/en/news-events/news/new-csa-research-identifies-anti-fraud-content-can-help-investors-avoid-online-investment-scams": {
+      "first_seen": "2026-11-17T14:05:51-05:00",
+      "run_id": "2026-11-17-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cloud.google.com/blog/topics/threat-intelligence/cold-relic-a-case-study-in-impersonation-and-compromise": {
+      "first_seen": "2026-11-17T14:05:51-05:00",
+      "run_id": "2026-11-17-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
