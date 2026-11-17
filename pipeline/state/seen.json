@@ -3594,6 +3594,36 @@
       "run_id": "2026-11-17-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.fca.org.uk/news/press-releases/fca-charges-individual-money-laundering": {
+      "first_seen": "2026-11-17T10:06:05-05:00",
+      "run_id": "2026-11-17-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/court-clears-brothers-of-25-million-ethereum-crypto-heist-charges": {
+      "first_seen": "2026-11-17T10:06:05-05:00",
+      "run_id": "2026-11-17-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/fandango-warns-ticket-buyers-of-payment-card-data-exposure": {
+      "first_seen": "2026-11-17T10:06:05-05:00",
+      "run_id": "2026-11-17-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/msp-screenconnect-servers-targeted-in-month-long-campaign": {
+      "first_seen": "2026-11-17T10:06:05-05:00",
+      "run_id": "2026-11-17-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.pcisecuritystandards.org/the-quantum-leap-preparing-for-post-quantum-cryptography-featuring-verisec": {
+      "first_seen": "2026-11-17T10:06:05-05:00",
+      "run_id": "2026-11-17-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
