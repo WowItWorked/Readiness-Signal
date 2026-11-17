@@ -3654,6 +3654,12 @@
       "run_id": "2026-11-17-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://unit42.paloaltonetworks.com/optimjack-supply-chain-attack": {
+      "first_seen": "2026-11-17T18:06:27-05:00",
+      "run_id": "2026-11-17-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
