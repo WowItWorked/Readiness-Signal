@@ -2311,6 +2311,42 @@
       ],
       "backfilled": false,
       "update_of": null
+    },
+    {
+      "id": "RS-261118-1000-01",
+      "timestamp": "2026-11-18T10:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "The PRA's chief executive says cyber resilience will weigh more in supervision, with a new council of authorities and CEOs.",
+      "domains": [
+        "resilience",
+        "cyber"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "A council of authorities and chief executives of systemically important firms and infrastructure providers adds a sector-level forum for shared vulnerabilities, with assurance of recovery from severe disruption involving a material technology rebuild named as an early priority."
+        },
+        {
+          "domain": "cyber",
+          "text": "Supervision is to give operational and cyber resilience, including core cyber hygiene, materially greater weight, and a joint PRA and FCA consultation announced in the speech is described as drawing on the NCSC Cyber Assessment Framework to clarify how preparedness is demonstrated."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The speech announces a council meeting and a consultation but gives no proposal text, expectation or timetable to test against. Cyber hygiene and recovery from severe disruption sit within resilience categories that supervisory frameworks describe. No control or metric follows until consultation text is published. This changes if that text sets specific recovery-testing expectations.",
+      "sources": [
+        {
+          "publication": "Bank of England",
+          "url": "https://www.bankofengland.co.uk/speech/2026/november/katharine-braddick-speech-at-the-uk-finance-annual-dinner",
+          "headline": "Transparency and predictability: a foundation for future resilience − speech by Katharine Braddick",
+          "published": "2026-11-18",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
     }
   ]
 }
