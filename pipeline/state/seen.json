@@ -3768,6 +3768,30 @@
       "run_id": "2026-11-18-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/coinbase-blocks-47-million-in-transfers-to-elon-musk-deepfake-scam": {
+      "first_seen": "2026-11-18T18:05:47-05:00",
+      "run_id": "2026-11-18-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://fortune.com/2026/11/18/gao-ai-chatbots-attack-plans-hassan-patching-nsa-outages": {
+      "first_seen": "2026-11-18T18:05:47-05:00",
+      "run_id": "2026-11-18-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/data-breach-impacts-40-irish-credit-unions-in-reported-it-provider-hack": {
+      "first_seen": "2026-11-18T18:05:47-05:00",
+      "run_id": "2026-11-18-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://techcrunch.com/2026/11/18/palmer-luckey-warns-ai-powered-cyberattacks-are-outpacing-defenses-its-time-to-start-running": {
+      "first_seen": "2026-11-18T18:05:47-05:00",
+      "run_id": "2026-11-18-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
