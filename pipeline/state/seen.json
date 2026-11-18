@@ -3660,6 +3660,48 @@
       "run_id": "2026-11-17-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.foxbusiness.com/technology/cybersecurity-expert-sounds-alarm-over-us-infrastructure-vulnerabilities-amid-widespread-outages": {
+      "first_seen": "2026-11-18T06:05:51-05:00",
+      "run_id": "2026-11-18-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/critical-perforce-puppet-rce-exploited-in-attacks": {
+      "first_seen": "2026-11-18T06:05:51-05:00",
+      "run_id": "2026-11-18-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.talosintelligence.com/java4shell": {
+      "first_seen": "2026-11-18T06:05:51-05:00",
+      "run_id": "2026-11-18-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cert.europa.eu/publications/security-advisories/2026-021": {
+      "first_seen": "2026-11-18T06:05:51-05:00",
+      "run_id": "2026-11-18-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sophos.com/en-us/blog/java4shell-could-allow-remote-code-execution": {
+      "first_seen": "2026-11-18T06:05:51-05:00",
+      "run_id": "2026-11-18-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/11/20261118-3": {
+      "first_seen": "2026-11-18T06:05:51-05:00",
+      "run_id": "2026-11-18-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.pr261118~83c5c60158.en.html": {
+      "first_seen": "2026-11-18T06:05:51-05:00",
+      "run_id": "2026-11-18-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
