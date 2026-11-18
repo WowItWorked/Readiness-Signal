@@ -3732,6 +3732,42 @@
       "run_id": "2026-11-18-1000",
       "verdict": "published",
       "item_id": "RS-261118-1000-01"
+    },
+    "https://techcrunch.com/2026/11/18/more-banks-says-customers-using-ai-agents-are-on-their-own-even-if-they-get-hacked": {
+      "first_seen": "2026-11-18T14:06:09-05:00",
+      "run_id": "2026-11-18-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/microsofts-agent-framework-pypi-package-compromised-to-steal-credentials": {
+      "first_seen": "2026-11-18T14:06:09-05:00",
+      "run_id": "2026-11-18-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/apache-warns-of-roller-rce-vulnerability-exploited-in-attacks": {
+      "first_seen": "2026-11-18T14:06:09-05:00",
+      "run_id": "2026-11-18-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://insidecybersecurity.com/daily-news/former-nsc-cyber-official-neuberger-sees-opportunity-si-force-work-critical": {
+      "first_seen": "2026-11-18T14:06:09-05:00",
+      "run_id": "2026-11-18-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/media-releases/20261118-basel-committee-discusses-risks-and-vulnerabilities-faced-global-banking-system": {
+      "first_seen": "2026-11-18T14:06:09-05:00",
+      "run_id": "2026-11-18-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cert.europa.eu/publications/security-advisories/2026-022": {
+      "first_seen": "2026-11-18T14:06:09-05:00",
+      "run_id": "2026-11-18-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
