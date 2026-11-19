@@ -72,7 +72,7 @@ export const CODE_EXPLAIN = Object.freeze({
   EV_NO_SECTOR_NEXUS: 'No link to financial services: the incident is outside the sector and its cause would not carry over to institutions.',
   EV_NO_EXEC_QUESTION: 'There is no question a director would ask unprompted about their own organisation.',
   RT_INSTRUMENT_INELIGIBLE: 'Not a kind of document the section admits: a press release, report, work programme or note rather than a speech, consultation, supervisory direction or new rule.',
-  RT_JURISDICTION: 'The issuer is outside the US, UK, EU and Canada, and outside the Global watch list.',
+  RT_JURISDICTION: 'The issuer is outside the US, UK, EU and Canada, and outside the Regulatory Watch list.',
   RT_SPEAKER_INELIGIBLE: 'The speaker or issuer does not qualify: staff below the senior tier, a trade body, or an authority type the section does not admit.',
   RT_NO_DIRECTION: 'No change of direction: it restates an existing position, repeats a published signal, or asks questions without signalling intent.',
   RT_EXEC_OWN_POSITION: 'A bank executive speaking about their own institution rather than the sector.',

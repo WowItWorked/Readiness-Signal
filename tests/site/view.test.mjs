@@ -171,7 +171,7 @@ describe('brief overrides of the design', () => {
     assert.ok(render({ page: 'dropped' }, data, { dropped: null, droppedState: 'loading' }).includes('Loading the dropped-story log'));
   });
 
-  test('Global watch page: nav, intro, jurisdiction and month filters, escaped text, safe links (owner decision 2026-10-21)', () => {
+  test('Regulatory Watch page: nav, intro, jurisdiction and month filters, escaped text, safe links (owner decision 2026-10-21)', () => {
     const doc = {
       schema_version: 1,
       jurisdictions: ['Japan', 'Singapore'],
@@ -185,7 +185,7 @@ describe('brief overrides of the design', () => {
     const watch = M.prepareWatch(doc);
     assert.equal(watch.items.length, 3, 'malformed rows skipped');
     const html = render({ page: 'watch' }, data, { watch, watchState: 'ready' });
-    assert.ok(html.includes('data-page="watch"') && html.includes('<h1 class="h1">Global watch</h1>') && html.includes('3 signals'));
+    assert.ok(html.includes('data-page="watch"') && html.includes('<h1 class="h1">Regulatory Watch</h1>') && html.includes('3 signals'));
     assert.ok(html.includes('nothing here is published as an item'));
     assert.ok(!html.includes(EVIL), 'signals are escaped');
     assert.ok(html.includes('Consultation on AI risk management') && html.includes('Cloud guidance') && !html.includes('Older signal'), 'newest month by default');
@@ -194,7 +194,7 @@ describe('brief overrides of the design', () => {
     assert.ok(jp.includes('Cloud guidance') && !jp.includes('Consultation on AI risk management'));
     const none = render({ page: 'watch' }, data, { watch: M.prepareWatch({ items: [], jurisdictions: [] }), watchState: 'ready' });
     assert.ok(none.includes('No signal from these jurisdictions has cleared the bar yet.') && none.includes('0 signals'));
-    assert.ok(render({ page: 'watch' }, data, { watch: null, watchState: 'loading' }).includes('Loading the Global watch log'));
+    assert.ok(render({ page: 'watch' }, data, { watch: null, watchState: 'loading' }).includes('Loading the Regulatory Watch log'));
     assert.equal(M.parseHash('#watch').page, 'watch');
   });
 

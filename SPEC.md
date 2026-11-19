@@ -130,7 +130,7 @@ never listed here: they have their own page (§3.3b).
 
 ### 3.3b `docs/data/watch.json` (owner decision 2026-10-21)
 
-The Global watch page's data: regulatory signals from the jurisdictions FILTER.md §4.4.6 lists (the G20
+The Regulatory Watch page's data (FILTER.md §4.4.6 calls it the Global watch): regulatory signals from the jurisdictions FILTER.md §4.4.6 lists (the G20
 members outside the US, UK, EU and Canada, plus Singapore and Hong Kong) that held every Regulatory &
 Executive Trajectory element and were recorded as `RT_GLOBAL_WATCH`. They are never archive items.
 Derived, never hand-edited: `node pipeline/scripts/watch.mjs` (`pipeline/lib/watch.mjs`) rebuilds it
@@ -366,7 +366,9 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   to the source in a new tab (or "Headline withheld: it names a financial institution." and the outlet);
   "Failed: <test>" with the plain-English explanation; the near-miss and other-section notes where present;
   the logged reason as "Filter notes"; how it was judged (live run or backfill pass, re-judged) and the code. Links are emitted only for plain https URLs.
-- Global watch (owner decision 2026-10-21): a nav page between Archive and Dropped. It loads
+- Regulatory Watch (owner decision 2026-10-21; named Global watch until the owner renamed it on 2026-11-19, and still
+  FILTER.md §4.4.6's Global watch): a nav page between Archive and Dropped, at `#watch`, titled
+  "Regulatory Watch · Readiness Signal". It loads
   `docs/data/watch.json` the first time it opens. An intro says the signals come from the other G20
   jurisdictions, Singapore and Hong Kong, passed the same tests as a core one, bind none of the site's
   readers and are never published as items. Filters: jurisdiction (shown once there are two or more)
