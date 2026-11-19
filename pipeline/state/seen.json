@@ -3942,6 +3942,42 @@
       "run_id": "2026-11-19-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.rapid7.com/blog/post/etr-cve-2026-123890-critical-authentication-bypass-vmware-vcenter": {
+      "first_seen": "2026-11-19T18:06:17-05:00",
+      "run_id": "2026-11-19-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/hackers-steal-data-of-16-million-sbc-medical-group-customers": {
+      "first_seen": "2026-11-19T18:06:17-05:00",
+      "run_id": "2026-11-19-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.darkreading.com/vulnerabilities-threats/navigating-vulnerability-hysteria-ai-era": {
+      "first_seen": "2026-11-19T18:06:17-05:00",
+      "run_id": "2026-11-19-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/newly-patched-vmware-vcenter-flaw-exploited-as-zero-day-by-chinese-apt": {
+      "first_seen": "2026-11-19T18:06:17-05:00",
+      "run_id": "2026-11-19-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.theregister.com/security/2026/11/19/chase-visa-mastercard-confirm-third-party-cyberattacks-that-may-have-exposed-customers-info/5311175": {
+      "first_seen": "2026-11-19T18:06:17-05:00",
+      "run_id": "2026-11-19-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/five-warning-signs-of-ransomware-breach-before-encryption-or-data-theft": {
+      "first_seen": "2026-11-19T18:06:17-05:00",
+      "run_id": "2026-11-19-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
