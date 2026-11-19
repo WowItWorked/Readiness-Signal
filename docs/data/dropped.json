@@ -72,11 +72,6 @@
       "test": "Enough public facts",
       "explain": "Too few facts to test any part of the bar."
     },
-    "GL_NO_MECHANISM": {
-      "label": "a section passed but no mechanism guard holds",
-      "test": "A justified action for the reader",
-      "explain": "It passed a section, but no action (a question, an indicator or an awareness rationale) could be justified."
-    },
     "GL_PAYWALL_INSUFFICIENT": {
       "label": "elements not establishable from headlines, leads and public sources",
       "test": "Enough public facts",
@@ -874,19 +869,6 @@
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
-      "id": "c-8bb1c9bcc5",
-      "date": "2026-11-13",
-      "section": "regulatory_trajectory",
-      "code": "RT_INSTRUMENT_NOT_NEW",
-      "reason": "R1 notice; R1f class of firms; R2 four US agencies; R3f fails: comment-period extension of a proposal, not a first final issuance",
-      "publication": "Office of the Comptroller of the Currency",
-      "headline": "Agencies Extend Comment Period for Proposed Third-Party Risk Management Guidance",
-      "url": "https://www.occ.gov/news-issuances/news-releases/2026/nr-ia-2026-100.html",
-      "more_sources": 3,
-      "judged": "live",
-      "run": "2026-11-13-1800"
-    },
-    {
       "id": "c-a47df275eb",
       "date": "2026-11-13",
       "section": "capability_shift",
@@ -1169,18 +1151,6 @@
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
-      "id": "c-ddbdaec833",
-      "date": "2026-11-12",
-      "section": "regulatory_trajectory",
-      "code": "RT_SPEAKER_INELIGIBLE",
-      "reason": "R2 EU cyber agency position document while rt_cyber_agencies is false",
-      "publication": "ENISA",
-      "headline": "Joint Advisory on the Use of Frontier AI Models for Code Review",
-      "url": "https://www.enisa.europa.eu/publications/joint-advisory-on-the-use-of-frontier-ai-models-for-code-review",
-      "judged": "live",
-      "run": "2026-11-12-0600"
-    },
-    {
       "id": "c-f4e8f04a47",
       "date": "2026-11-12",
       "section": "capability_shift",
@@ -1258,19 +1228,6 @@
       "judged": "live",
       "run": "2026-11-11-1400",
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
-    },
-    {
-      "id": "c-6d06908948",
-      "date": "2026-11-11",
-      "section": "regulatory_trajectory",
-      "code": "RT_NO_DIRECTION",
-      "reason": "NEAR R3: builds on March 2026 insights, same themes with stress on evidence quality, no new area or escalation; R1, R2, R4, R5 held",
-      "publication": "Financial Conduct Authority",
-      "headline": "Operational resilience: demonstrating resilience in practice",
-      "url": "https://www.fca.org.uk/publications/good-and-poor-practice/operational-resilience-demonstrating-resilience-practice",
-      "judged": "live",
-      "run": "2026-11-11-0600",
-      "near": "Near-miss: only “A change of direction” failed."
     },
     {
       "id": "c-932cae2e92",
@@ -1623,20 +1580,6 @@
       "run": "2026-11-09-0600"
     },
     {
-      "id": "c-4c2a67455f",
-      "date": "2026-11-09",
-      "section": "capability_shift",
-      "code": "CS_NARROW",
-      "reason": "NEAR C4: deprecated data-platform supplier; no public evidence of mainstream use or use by many financial institutions (D1); C1 supplier-access, C2 observed, C3 a held [alt EV:E2]",
-      "publication": "The Register",
-      "headline": "Attackers backdoor trusted AWS integrations to steal secrets",
-      "url": "https://www.theregister.com/security/2026/11/09/attackers-backdoor-trusted-aws-integrations-to-steal-secrets/5308553",
-      "judged": "live",
-      "run": "2026-11-09-1800",
-      "near": "Near-miss: only “Widely used in financial services” failed.",
-      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
-    },
-    {
       "id": "c-92c78b5ae5",
       "date": "2026-11-09",
       "section": "executive_visibility",
@@ -1700,19 +1643,6 @@
       "judged": "live",
       "run": "2026-11-08-1400",
       "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
-    },
-    {
-      "id": "c-4ce6e4ea6f",
-      "date": "2026-11-07",
-      "section": "capability_shift",
-      "code": "CS_NO_SPECIFIC_CHANGE",
-      "reason": "C1: actor adopts an AI offensive framework already abused; lead gives no before-to-now capability change (page blocked; headline and lead only) [alt EV:E2]",
-      "publication": "Microsoft Threat Intelligence",
-      "headline": "ARTEX abuse expands as cybercriminals target financial sector",
-      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/06/artex-abuse-expands-as-cybercriminals-target-financial-sector/",
-      "judged": "live",
-      "run": "2026-11-07-0600",
-      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
       "id": "c-b7e94ee8d5",
@@ -2698,18 +2628,6 @@
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
-      "id": "c-73a3b51577",
-      "date": "2026-10-27",
-      "section": "regulatory_trajectory",
-      "code": "RT_SPEAKER_INELIGIBLE",
-      "reason": "R2 national technology-standards authority report on post-quantum migration; ineligible while rt_cyber_agencies is false",
-      "publication": "NIST",
-      "headline": "NIST Report Provides Guidelines for Transition to Post-Quantum Cryptography Standards",
-      "url": "https://www.nist.gov/news-events/news/2026/10/nist-report-provides-guidelines-transition-post-quantum-cryptography",
-      "judged": "live",
-      "run": "2026-10-27-1000"
-    },
-    {
       "id": "c-7e75b9009b",
       "date": "2026-10-27",
       "section": "regulatory_trajectory",
@@ -2874,19 +2792,6 @@
       "judged": "live",
       "run": "2026-10-23-1000",
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
-    },
-    {
-      "id": "c-7585d6c3d9",
-      "date": "2026-10-23",
-      "section": "regulatory_trajectory",
-      "code": "RT_NOT_SPECIFIC",
-      "reason": "NEAR R4f: R1 exam priorities; R1f, R2 US supervisor; R3f new (2026-10-23; archive: none); R4f only generic focus areas, no examination content; R5 page public",
-      "publication": "U.S. Securities and Exchange Commission",
-      "headline": "SEC Announces Fiscal Year 2027 Examination Priorities",
-      "url": "https://www.sec.gov/newsroom/press-releases/2026-109-sec-announces-fiscal-year-2027-examination-priorities",
-      "judged": "live",
-      "run": "2026-10-23-1000",
-      "near": "Near-miss: only “Technology-risk substance” failed."
     },
     {
       "id": "c-91662a8b43",
@@ -5523,20 +5428,6 @@
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
-      "id": "c-189177c257",
-      "date": "2026-09-11",
-      "section": "regulatory_trajectory",
-      "code": "RT_NOT_SPECIFIC",
-      "reason": "NEAR R4f: R1 exam-allocation statement; R1f core providers to community banks; R2 OCC, Fed, FDIC; R3f new (11 Sep; archive: none); R5 public; tech factors rank provider exams, no new duty or procedure",
-      "publication": "Office of the Comptroller of the Currency",
-      "headline": "Interagency Statement: Risk-Based Supervision of Certain Services Provided by Core Providers to Community Banking Organizations",
-      "url": "https://www.occ.gov/news-issuances/bulletins/2026/bulletin-2026-47.html",
-      "more_sources": 1,
-      "judged": "backfill",
-      "run": "2026-09",
-      "near": "Near-miss: only “Technology-risk substance” failed."
-    },
-    {
       "id": "c-32767b6225",
       "date": "2026-09-11",
       "section": "capability_shift",
@@ -5548,19 +5439,6 @@
       "judged": "backfill",
       "run": "2026-09",
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
-    },
-    {
-      "id": "c-801d63c5c4",
-      "date": "2026-09-11",
-      "section": "regulatory_trajectory",
-      "code": "RT_NOT_SPECIFIC",
-      "reason": "NEAR R4: R1 proposed guidance; R2 4 US agencies; R3 replace 2023 TPRM guidance (archive: none); R5 public; principles-based, risk-tiered rewrite sets no specific technology-risk behaviour",
-      "publication": "Board of Governors of the Federal Reserve System",
-      "headline": "Agencies seek comment on proposed third-party risk management guidance and issue statement on community bank engagement with core service providers",
-      "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260911a.htm",
-      "judged": "backfill",
-      "run": "2026-09",
-      "near": "Near-miss: only “A specific topic and expectation” failed."
     },
     {
       "id": "c-12610f0ba6",
@@ -7528,19 +7406,6 @@
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
-      "id": "c-c65515efea",
-      "date": "2026-07-16",
-      "section": "regulatory_trajectory",
-      "code": "GL_NO_MECHANISM",
-      "reason": "R1 exam procedure; R1f all supervised banks; R2 Fed, FDIC, OCC; R3f new 16 Jul; R4f on-site review, 72h agency breach notice; R5 public. No guard: no bank duty (CI1, K1), P3 and AW bases fail",
-      "publication": "Federal Reserve",
-      "headline": "Agencies issue joint statement on handling of highly sensitive information during bank examinations",
-      "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260716a.htm",
-      "more_sources": 2,
-      "judged": "backfill",
-      "run": "2026-07"
-    },
-    {
       "id": "c-df8a25c8e7",
       "date": "2026-07-16",
       "section": "capability_shift",
@@ -7845,18 +7710,6 @@
       "headline": "UK financial system strengthened with new safeguards for major technology providers",
       "url": "https://www.gov.uk/government/news/uk-financial-system-strengthened-with-new-safeguards-for-major-technology-providers",
       "more_sources": 3,
-      "judged": "backfill",
-      "run": "2026-07"
-    },
-    {
-      "id": "c-cb09200658",
-      "date": "2026-07-10",
-      "section": "regulatory_trajectory",
-      "code": "RT_INSTRUMENT_NOT_NEW",
-      "reason": "R3f: OCC and FDIC bulletins (FDIC FIL-34-2026, 9 Jul) only urge use of FinCEN 314(b) guidance first issued 12 Jun 2026, beyond the 14-day step; no new expectation",
-      "publication": "American Banker",
-      "headline": "OCC, FDIC encourage banks to share data on fraud",
-      "url": "https://www.americanbanker.com/news/occ-fdic-encourage-banks-to-share-data-on-fraud",
       "judged": "backfill",
       "run": "2026-07"
     },
