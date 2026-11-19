@@ -572,7 +572,7 @@ describe('states', () => {
   });
 
   test('site uses no storage APIs and only relative URLs', () => {
-    const files = ['app.js', 'model.js', 'view.js'].map((f) => readFileSync(new URL(`../../docs/assets/${f}`, import.meta.url), 'utf8')).join('\n');
+    const files = ['app.js', 'model.js', 'view.js', 'tracker.js'].map((f) => readFileSync(new URL(`../../docs/assets/${f}`, import.meta.url), 'utf8')).join('\n');
     assert.ok(!/localStorage|sessionStorage|indexedDB|document\.cookie/.test(files));
     assert.ok(files.includes("fetchJson('data/archive.json')") && files.includes("fetchJson('data/runs.json')"));
     assert.ok(files.includes("cache: 'no-cache'"));
