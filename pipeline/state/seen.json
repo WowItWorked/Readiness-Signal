@@ -3864,6 +3864,54 @@
       "run_id": "2026-11-19-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/critical-apache-roller-axis-vulnerabilities-exploited-in-attacks": {
+      "first_seen": "2026-11-19T10:06:28-05:00",
+      "run_id": "2026-11-19-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.theregister.com/security/2026/11/19/cyberattack-on-service-provider-exposes-payee-data-at-40-irish-credit-unions/5310979": {
+      "first_seen": "2026-11-19T10:06:28-05:00",
+      "run_id": "2026-11-19-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/hackers-exploit-cisco-expressway-vulnerability-soon-after-poc-release": {
+      "first_seen": "2026-11-19T10:06:28-05:00",
+      "run_id": "2026-11-19-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261119-some-potential-financial-stability-implications-artificial-intelligence": {
+      "first_seen": "2026-11-19T10:06:28-05:00",
+      "run_id": "2026-11-19-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USTREAS/bulletins/43360ff": {
+      "first_seen": "2026-11-19T10:06:28-05:00",
+      "run_id": "2026-11-19-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cloud.google.com/blog/topics/threat-intelligence/armory-castle-exploits-vsphere": {
+      "first_seen": "2026-11-19T10:06:28-05:00",
+      "run_id": "2026-11-19-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261119-customer-centre-building-responsible-resilient-and-sustainable-microfinance-sector": {
+      "first_seen": "2026-11-19T10:06:28-05:00",
+      "run_id": "2026-11-19-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bis.org/speeches/20261119-ai-forecasts-gdp-well-economists": {
+      "first_seen": "2026-11-19T10:06:28-05:00",
+      "run_id": "2026-11-19-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
