@@ -10,7 +10,7 @@ Read `SPEC.md` before changing anything; it is the build contract. Hard rules:
 - Public sources only; paywalled publications are headline-and-lead reference only.
 - No generated text may state or imply any specific financial institution's position. No
   first-person voice in generated fields. Validation questions and issue language are generic.
-  The one exception is the Risk tracker demo (`#tracker`, SPEC §7.6): example responses for a
+  The one exception is the Tracker demo (`#tracker`, SPEC §7.6): example responses for a
   fictional institution, labelled as a demo, held in memory only.
 - No monospace type anywhere. Sans with tabular numerals instead.
 - The archive (`docs/data/archive.json`) and run log (`docs/data/runs.json`) are append-only.

@@ -48,7 +48,7 @@ const navAttrs = (page, preset = '', v = '') => ` data-act="nav" data-page="${pa
 // ---------------------------------------------------------------------------------------
 // Masthead and footer
 
-const NAV = [['dashboard', 'Dashboard'], ['report', 'Report'], ['archive', 'Archive'], ['watch', 'Global watch'], ['dropped', 'Dropped'], ['tracker', 'Risk tracker'], ['about', 'About']];
+const NAV = [['dashboard', 'Dashboard'], ['report', 'Report'], ['archive', 'Archive'], ['watch', 'Global watch'], ['dropped', 'Dropped'], ['tracker', 'Tracker'], ['about', 'About']];
 
 function masthead(st) {
   const { ui } = st;
@@ -667,7 +667,7 @@ function aboutMain() {
         <a class="live-row" href="#archive"${navAttrs('archive')}><span class="live-k">Archive</span><span class="live-v">Everything ever published, charted and listed by month, with search and a custom date range. Nothing is replaced.</span></a>
         <a class="live-row" href="#watch"${navAttrs('watch')}><span class="live-k">Global watch</span><span class="live-v">Regulatory direction from the other G20 jurisdictions, Singapore and Hong Kong, tested to the same bar but never published as items. Context on the wider ecosystem.</span></a>
         <a class="live-row" href="#dropped"${navAttrs('dropped')}><span class="live-k">Dropped</span><span class="live-v">In-domain stories the filter read and set aside, by month and section, each with the reason logged when it was judged. For audit.</span></a>
-        <a class="live-row" href="#tracker"${navAttrs('tracker')}><span class="live-k">Risk tracker</span><span class="live-v">A demo with a fictional institution: each read-across notifies that domain’s risk owner, who records whether a control is in place and tracks the steps to close any gap. Example data only; nothing is saved.</span></a>
+        <a class="live-row" href="#tracker"${navAttrs('tracker')}><span class="live-k">Tracker</span><span class="live-v">A demo with a fictional institution: each read-across notifies that domain’s risk owner, who records whether a control is in place and the disposition, from issue and remediation plan to risk acceptance or validated closure. Filter by domain, date, status and more. Example data only; nothing is saved.</span></a>
       </div>
     </div>
   </article>
@@ -797,4 +797,4 @@ export function renderApp(st) {
   return `${masthead(st)}${main}${footer()}`;
 }
 
-export const PAGE_TITLES = { dashboard: 'Readiness Signal', report: 'Report · Readiness Signal', archive: 'Archive · Readiness Signal', watch: 'Global watch · Readiness Signal', dropped: 'Dropped · Readiness Signal', tracker: 'Risk tracker · Readiness Signal', about: 'About · Readiness Signal' };
+export const PAGE_TITLES = { dashboard: 'Readiness Signal', report: 'Report · Readiness Signal', archive: 'Archive · Readiness Signal', watch: 'Global watch · Readiness Signal', dropped: 'Dropped · Readiness Signal', tracker: 'Tracker · Readiness Signal', about: 'About · Readiness Signal' };
