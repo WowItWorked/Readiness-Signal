@@ -48,7 +48,7 @@ const navAttrs = (page, preset = '', v = '') => ` data-act="nav" data-page="${pa
 // ---------------------------------------------------------------------------------------
 // Masthead and footer
 
-const NAV = [['dashboard', 'Dashboard'], ['report', 'Report'], ['archive', 'Archive'], ['watch', 'Regulatory Watch'], ['tracker', 'Tracker'], ['about', 'About']];
+const NAV = [['dashboard', 'Dashboard'], ['report', 'Report'], ['tracker', 'Risk Tracker'], ['watch', 'Regulatory Watch'], ['archive', 'Archive'], ['about', 'About']];
 
 function masthead(st) {
   const { ui } = st;
@@ -674,7 +674,7 @@ function aboutMain() {
         <a class="live-row" href="#archive"${navAttrs('archive')}><span class="live-k">Archive</span><span class="live-v">Everything ever published, charted and listed by month, with search and a custom date range. Nothing is replaced.</span></a>
         <a class="live-row" href="#watch"${navAttrs('watch')}><span class="live-k">Regulatory Watch</span><span class="live-v">Regulatory direction from the other G20 jurisdictions, Singapore and Hong Kong, tested to the same bar but never published as items. Context on the wider ecosystem.</span></a>
         <a class="live-row" href="#dropped"${navAttrs('dropped')}><span class="live-k">Dropped</span><span class="live-v">In-domain stories the filter read and set aside, by month and section, each with the reason logged when it was judged. For audit.</span></a>
-        <a class="live-row" href="#tracker"${navAttrs('tracker')}><span class="live-k">Tracker</span><span class="live-v">A demo with a fictional institution: each read-across notifies that domain’s risk owner, who records whether a control is in place and the disposition, from issue and remediation plan to risk acceptance or validated closure. Filter by domain, date, status and more. Example data only; nothing is saved.</span></a>
+        <a class="live-row" href="#tracker"${navAttrs('tracker')}><span class="live-k">Risk Tracker</span><span class="live-v">A demo with a fictional institution: each read-across notifies that domain’s risk owner, who records whether a control is in place and the disposition, from issue and remediation plan to risk acceptance or validated closure. Filter by domain, date, status and more. Example data only; nothing is saved.</span></a>
       </div>
     </div>
   </article>
@@ -742,45 +742,50 @@ function droppedMain(st) {
 // Regulatory Watch (owner decision 2026-10-21, renamed from Global watch 2026-11-19): regulatory
 // direction beyond the core jurisdictions (FILTER.md §4.4.6, the Global watch).
 
-function watchRow(r) {
-  const link = (text) => (r.href ? `<a class="drop-link" href="${esc(r.href)}" target="_blank" rel="noopener noreferrer">${esc(text)}</a>` : `<span>${esc(text)}</span>`);
-  const title = r.headline
-    ? link(r.headline)
-    : `<span class="drop-held">Headline withheld: it names a financial institution.</span> ${link(r.publication || 'Source')}`;
-  const judged = r.judged === 'backfill' ? `Backfill pass ${r.run}` : `Live run ${r.run}`;
-  return `<li class="drop-row" data-k="watch-${esc(r.id)}">
-      <div class="meta-line"><span>${esc(dropDate(r.date))}</span><span class="meta-sec">${esc(r.jurisdiction)}</span>${r.headline && r.publication ? `<span>${esc(r.publication)}</span>` : ''}${r.more_sources ? `<span>+${r.more_sources} more source${r.more_sources > 1 ? 's' : ''}</span>` : ''}</div>
-      <p class="drop-title">${title}</p>
-      <p class="drop-notes"><span class="drop-notes-k">Signal</span> ${esc(r.signal)}</p>
-      <p class="drop-by">${esc(judged)}</p>
+const REG_JUR_LABEL = { all: 'All', US: 'United States', UK: 'United Kingdom', EU: 'European Union', Canada: 'Canada', International: 'International', Other: 'Other' };
+const REG_ACT_LABEL = { all: 'All', asks: 'Asks for action', aware: 'Awareness only' };
+const regDay = (r) => (r.kind === 'item' ? M.fmtDate(r.date) : dropDate(r.date)).replace(/ \d{4}$/, '');
+
+/** One line per regulatory item: the date, what the authority did, who and where, and whether it asks for action. */
+function regRow(r) {
+  const published = r.kind === 'item';
+  const claim = published
+    ? `<a class="reg-claim" href="${href(r.href)}">${esc(r.claim)}</a>`
+    : (r.href ? `<a class="reg-claim" href="${esc(r.href)}" target="_blank" rel="noopener noreferrer">${esc(r.claim)}</a>` : `<span class="reg-claim">${esc(r.claim)}</span>`);
+  const topics = r.domains.map((d) => M.DOMAIN_BY_KEY.get(d)?.label).filter(Boolean).join(', ');
+  const tag = published
+    ? `<span class="reg-tag${r.asks ? ' asks' : ''}">${r.asks ? 'Asks for action' : 'Awareness only'}</span>`
+    : '<span class="reg-tag watch">Watch only</span>';
+  return `<li class="reg-row" data-k="reg-${esc(r.id)}">
+      <span class="reg-date">${esc(regDay(r))}</span>
+      <div class="reg-main">
+        <p class="reg-line">${claim}</p>
+        <div class="meta-line"><span class="meta-sec">${esc(r.place || REG_JUR_LABEL[r.jur])}</span>${r.authority ? `<span>${esc(r.authority)}</span>` : ''}${topics ? `<span>${esc(topics)}</span>` : ''}</div>
+      </div>
+      ${tag}
     </li>`;
 }
 
 function watchMain(st) {
-  const intro = `<section class="card drop-intro" aria-labelledby="watch-h">
-    <h2 class="h-19" id="watch-h">Beyond the core jurisdictions</h2>
-    <p class="drop-p">Regulatory direction from the other G20 jurisdictions, Singapore and Hong Kong. Each signal passed the same tests as a US, UK, EU or Canadian one: an eligible authority, a change of direction, a specific technology-risk topic, and a public text. None of it binds the institutions this site is written for, so nothing here is published as an item or carries a question to send. It shows where the wider ecosystem is heading.</p>
-  </section>`;
-  const head = (sub) => `<div class="title-row start"><h1 class="h1">Regulatory Watch</h1>${sub ? `<span class="list-sub">${esc(sub)}</span>` : ''}</div>`;
-  if (st.watchState === 'error') {
-    return `<main id="main" tabindex="-1" class="main" data-k="main-watch">${head('')}${intro}<p class="loading">The Regulatory Watch log could not be loaded. Reload to try again.</p></main>`;
-  }
-  if (!st.watch) {
-    return `<main id="main" tabindex="-1" class="main" data-k="main-watch">${head('')}${intro}<p class="loading">Loading the Regulatory Watch log…</p></main>`;
-  }
-  const v = M.watchView(st.watch, st.ui);
-  const jurBtns = v.jurs.length > 1
-    ? v.jurs.map((k) => `<button type="button" class="drop-btn" data-act="wjur" data-v="${esc(k)}" aria-pressed="${v.jur === k}">${esc(k === 'all' ? 'All' : k)} <span class="drop-n">${v.jurCount[k]}</span></button>`).join('')
-    : '';
-  const monBtns = v.months.map((m) => `<button type="button" class="drop-btn" data-act="wmonth" data-v="${m.key}" aria-pressed="${v.month === m.key}">${esc(m.label)} <span class="drop-n">${m.n}</span></button>`).join('');
-  const list = v.rows.length
-    ? `<ul class="drop-list">${v.rows.map(watchRow).join('')}</ul>`
-    : '<p class="loading">No signal from these jurisdictions has cleared the bar yet.</p>';
+  const v = M.regulatoryView(st.data, st.watch, st.ui, st.now);
+  const btn = (act, key, label, n, on) => `<button type="button" class="drop-btn" data-act="${act}" data-v="${esc(key)}" aria-pressed="${on}"${n || on ? '' : ' disabled'}>${esc(label)} <span class="drop-n">${n}</span></button>`;
+  const jurBtns = M.REG_JURS.filter((k) => k === 'all' || v.jurCount[k] || v.jur === k).map((k) => btn('wjur', k, REG_JUR_LABEL[k], v.jurCount[k], v.jur === k)).join('');
+  const topicBtns = v.topics.filter((t) => t.key === 'all' || t.n || v.topic === t.key).map((t) => btn('wtopic', t.key, t.label, t.n, v.topic === t.key)).join('');
+  const actBtns = M.REG_ACTS.map((k) => btn('wact', k, REG_ACT_LABEL[k], v.actCount[k], v.act === k)).join('');
+  const group = (label, buttons) => `<div class="reg-filter"><span class="reg-filter-k">${label}</span><div class="drop-group" role="group" aria-label="${label}">${buttons}</div></div>`;
+  const list = v.groups.length
+    ? v.groups.map((g) => `<h2 class="reg-month">${esc(g.label)} <span class="drop-n">${g.rows.length}</span></h2><ul class="reg-list">${g.rows.map(regRow).join('')}</ul>`).join('')
+    : `<p class="loading">${v.total ? 'No regulatory item matches these filters.' : 'No regulatory item has been published yet.'}</p>`;
+  const note = st.watchState === 'error' ? '<p class="reg-note">Signals from other jurisdictions could not be loaded. Reload to try again.</p>' : '';
   return `<main id="main" tabindex="-1" class="main" data-k="main-watch">
-  ${head(`${v.total} signal${v.total === 1 ? '' : 's'}`)}
-  ${intro}
-  <section class="card drop-card" aria-label="Regulatory Watch signals">
-    ${jurBtns || monBtns ? `<div class="drop-filters">${jurBtns ? `<div class="drop-group" role="group" aria-label="Jurisdiction">${jurBtns}</div>` : ''}${monBtns ? `<div class="drop-group" role="group" aria-label="Month">${monBtns}</div>` : ''}</div>` : ''}
+  <div class="title-row start"><h1 class="h1">Regulatory Watch</h1><span class="list-sub">${esc(`${M.plural(v.total, 'regulatory item')} · ${v.asks} ask for action · ${v.recent} in the last 30 days`)}</span></div>
+  <section class="card drop-intro" aria-labelledby="watch-h">
+    <h2 class="h-19" id="watch-h">Everything from regulators, in one list</h2>
+    <p class="drop-p">Every published item that comes from a regulator, supervisor, standard setter or government authority, newest first. Narrow it by jurisdiction, by topic, or to the items that ask for action. Each line opens the full item in the archive. Signals from jurisdictions beyond the US, UK, EU and Canada appear as Watch only: they bind none of the institutions this site is written for, so nothing there is published as an item.</p>
+  </section>
+  <section class="card drop-card" aria-label="Regulatory items">
+    <div class="drop-filters">${group('Jurisdiction', jurBtns)}${group('Topic', topicBtns)}${group('Action', actBtns)}</div>
+    ${note}
     ${list}
   </section>
 </main>`;
@@ -797,13 +802,13 @@ export function renderApp(st) {
   let main;
   if (ui.page === 'about') main = aboutMain();
   else if (ui.page === 'dropped') main = droppedMain(st);
-  else if (ui.page === 'watch') main = watchMain(st);
   else if (st.loading) main = loadingMain(ui.page);
   else if (st.error || !st.data) main = errorMain(ui.page);
+  else if (ui.page === 'watch') main = watchMain(st);
   else if (ui.page === 'report' || ui.page === 'archive') main = listMain(st);
   else if (ui.page === 'tracker') main = trackerMain(st);
   else main = dashboardMain(st);
   return `${masthead(st)}${main}${footer()}`;
 }
 
-export const PAGE_TITLES = { dashboard: 'Readiness Signal', report: 'Report · Readiness Signal', archive: 'Archive · Readiness Signal', watch: 'Regulatory Watch · Readiness Signal', dropped: 'Dropped · Archive · Readiness Signal', tracker: 'Tracker · Readiness Signal', about: 'About · Readiness Signal' };
+export const PAGE_TITLES = { dashboard: 'Readiness Signal', report: 'Report · Readiness Signal', archive: 'Archive · Readiness Signal', watch: 'Regulatory Watch · Readiness Signal', dropped: 'Dropped · Archive · Readiness Signal', tracker: 'Risk Tracker · Readiness Signal', about: 'About · Readiness Signal' };

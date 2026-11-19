@@ -378,6 +378,21 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   and month (newest first, with counts; the newest by default). Each row: date, jurisdiction, outlet,
   extra sources; the headline linking to the source in a new tab (or withheld, as on Dropped); the
   signal; how it was judged. No mechanism, question or issue language. Links only for plain https URLs.
+- Regulatory Watch as one list (owner request 2026-11-19, replacing the layout in the bullet above): the page
+  lists every published item that is regulatory, meaning its section is `regulatory_trajectory` or its
+  `source_class` is `regulator` or `standards_body`, together with the Global watch signals, newest first under
+  month headings. It is written to be read at an executive level: one line per item with the day, the claim
+  (linking to the item, `#<item id>`; a watch signal links to its source in a new tab), the jurisdiction, the
+  issuing authority, the topics (domain labels) and one tag: "Asks for action", "Awareness only" or, for a
+  watch signal, "Watch only". The title line counts the items, those that ask for action and those in the last
+  30 days. Three filters, each a row of buttons with counts that respect the other two: Jurisdiction (All,
+  United States, United Kingdom, European Union, Canada, International, Other; empty ones hidden), Topic (All and
+  the seven domains) and Action (All, Asks for action, Awareness only). The jurisdiction is derived on the site
+  from the primary source's publication name, then the other sources, then the claim (`regJurisdiction` in
+  `docs/assets/model.js`); a watch signal sits under Other and shows its own jurisdiction's name. The list renders
+  from the archive at once; `docs/data/watch.json` still loads the first time the page opens and its signals join
+  when it arrives. Nothing here changes what is published.
+- Primary nav order (owner request 2026-11-19): Dashboard, Report, Risk Tracker, Regulatory Watch, Archive, About.
 
 ### 7.3 About page copy (institution-neutral rewrite of the design)
 
@@ -442,7 +457,7 @@ The owner asked for a tracker for demonstrations, simulated rather than built ou
 and asked for fuller filters and enough fields to track the disposition of new issues in full. It is the one
 place the site shows control and remediation positions, and only for a fictional institution (§1, constraint 3).
 
-- **Page and nav:** `#tracker`, nav label "Tracker", titled "Tracker · Readiness Signal". The page opens with a
+- **Page and nav:** `#tracker`, nav label "Risk Tracker" (owner request 2026-11-19; "Tracker" before), titled "Risk Tracker · Readiness Signal", with the same page heading. The page opens with a
   "Demo" label and says it is a simulation with a fictional institution (`DEMO_ORG`, "Example Bank") and
   fictional owners, that the items are real and every response is example data, and that nothing is saved or
   sent.

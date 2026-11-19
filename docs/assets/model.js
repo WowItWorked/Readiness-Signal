@@ -63,7 +63,7 @@ export const SOURCE_CLASSES = Object.freeze([
   { key: 'research_analysis', label: 'Research & analysis' },
 ]);
 
-export const PAGES = Object.freeze(['dashboard', 'report', 'archive', 'watch', 'dropped', 'tracker', 'about']);
+export const PAGES = Object.freeze(['dashboard', 'report', 'tracker', 'watch', 'archive', 'dropped', 'about']);
 export const REPORT_SPANS = Object.freeze({ day: 1, week: 7, month: 30 });
 
 const byKey = (list) => new Map(list.map((x) => [x.key, x]));
@@ -519,7 +519,7 @@ export function defaultUi(now) {
   return {
     page: 'dashboard', repTime: 'day', archTime: 'all', from, to: todayEt(now), q: '',
     secs: [], doms: [], srcs: [], open: {}, copied: null, pop: null, printMode: null,
-    dropSec: 'all', dropMonth: null, watchJur: 'all', watchMonth: null,
+    dropSec: 'all', dropMonth: null, watchJur: 'all', watchMonth: null, watchTopic: 'all', watchAct: 'all',
   };
 }
 
@@ -591,6 +591,83 @@ export function watchView(watch, ui) {
   const month = months.some((m) => m.key === ui.watchMonth) ? ui.watchMonth : (months[0]?.key ?? null);
   const rows = inJur.filter((r) => r.month === month);
   return { total: all.length, jurs, jur, jurCount, months, month, rows };
+}
+
+// ---------------------------------------------------------------------------------------
+// Regulatory Watch as one list (owner request 2026-11-19): every published item that comes from a
+// regulator, supervisor, standard setter or government authority, plus the Global watch signals,
+// newest first, filterable by jurisdiction, topic and whether the item asks for action.
+
+export const REG_JURS = Object.freeze(['all', 'US', 'UK', 'EU', 'Canada', 'International', 'Other']);
+export const REG_ACTS = Object.freeze(['all', 'asks', 'aware']);
+// Read in order: the first rule that matches the issuer's name decides. UK comes before US so that
+// "HM Treasury" is not read as the US Treasury.
+const REG_JUR_RULES = [
+  ['International', /Financial Stability Board|Bank for International Settlements|Basel Committee|IOSCO|CPMI|\bFSB\b|\bBIS\b|\bG20\b/i],
+  ['Canada', /Canad|\bOSFI\b/i],
+  ['UK', /Prudential Regulation Authority|Financial Conduct Authority|Bank of England|HM Treasury|\bUK\b|National Cyber Security Centre|House of Commons|Information Commissioner/i],
+  ['EU', /\bECB\b|Europe|\bEBA\b|\bESMA\b|\bEIOPA\b|\bENISA\b|\bESRB\b|\bEU\b|Agencia Española|BaFin|Banque de France|Banca d.Italia/i],
+  ['US', /Federal Reserve|Comptroller of the Currency|\bOCC\b|Federal Deposit|\bFDIC\b|Securities and Exchange|\bSEC\b|Treasury|\bNIST\b|\bCISA\b|Homeland Security|New York State|FinCEN|\bCFPB\b|\bNCUA\b|U\.S\.|\bUS\b|Federal Trade|Department of Justice|\bFBI\b/i],
+];
+const regJurOf = (text) => (REG_JUR_RULES.find(([, re]) => re.test(text)) ?? [null])[0];
+
+/** True for an item in the regulatory section, or one whose primary source is an authority or standard setter. */
+export const isRegulatory = (it) => it.section === 'regulatory_trajectory' || it.source_class === 'regulator' || it.source_class === 'standards_body';
+
+/** US, UK, EU, Canada, International or Other: from the primary source's name, then the other sources, then the claim. */
+export function regJurisdiction(it) {
+  const first = it.sources[0]?.publication ?? '';
+  return regJurOf(first) ?? regJurOf(it.sources.slice(1).map((s) => s.publication).join(' ')) ?? regJurOf(it.claim) ?? 'Other';
+}
+
+/**
+ * The Regulatory Watch page for the current filters. `watch` (the Global watch log) may be null
+ * while it loads; its signals join the list as "Watch only" rows under Other.
+ */
+export function regulatoryView(data, watch, ui, now = new Date()) {
+  const published = (data ? data.items : []).filter(isRegulatory).map((it) => ({
+    kind: 'item', id: it.id, ts: it.ts, month: it.month, date: it.date, claim: it.claim,
+    authority: it.sources[0]?.publication ?? '', jur: regJurisdiction(it), place: null,
+    domains: it.domains, asks: asksForAction(it), mechanism: it.mechanism, href: `#${it.id}`,
+  }));
+  const signals = (watch ? watch.items : []).map((r) => ({
+    kind: 'watch', id: r.id, ts: Date.parse(`${r.date}T12:00:00Z`), month: r.month, date: r.date,
+    claim: r.headline || r.signal, authority: r.publication ?? '', jur: 'Other', place: r.jurisdiction,
+    domains: [], asks: false, mechanism: null, href: r.href, signal: r.signal,
+  }));
+  const all = [...published, ...signals].sort((a, b) => b.ts - a.ts);
+  const jur = REG_JURS.includes(ui.watchJur) ? ui.watchJur : 'all';
+  const act = REG_ACTS.includes(ui.watchAct) ? ui.watchAct : 'all';
+  const topic = DOMAIN_BY_KEY.has(ui.watchTopic) ? ui.watchTopic : 'all';
+  const byJur = (r) => jur === 'all' || r.jur === jur;
+  const byAct = (r) => act === 'all' || (act === 'asks' ? r.asks : r.kind === 'item' && !r.asks);
+  const byTopic = (r) => topic === 'all' || r.domains.includes(topic);
+  // each group's counts respect the other two filters, so a count is what choosing it would show
+  const jurCount = Object.fromEntries(REG_JURS.map((k) => [k, all.filter((r) => (k === 'all' || r.jur === k) && byAct(r) && byTopic(r)).length]));
+  const actCount = {
+    all: all.filter((r) => byJur(r) && byTopic(r)).length,
+    asks: all.filter((r) => byJur(r) && byTopic(r) && r.asks).length,
+    aware: all.filter((r) => byJur(r) && byTopic(r) && r.kind === 'item' && !r.asks).length,
+  };
+  const topics = [{ key: 'all', label: 'All', n: all.filter((r) => byJur(r) && byAct(r)).length },
+    ...DOMAINS.map((d) => ({ key: d.key, label: d.label, n: all.filter((r) => byJur(r) && byAct(r) && r.domains.includes(d.key)).length }))];
+  const rows = all.filter((r) => byJur(r) && byAct(r) && byTopic(r));
+  const groups = [];
+  for (const r of rows) {
+    if (!groups.length || groups.at(-1).key !== r.month) groups.push({ key: r.month, label: monthLabelLong(r.month), rows: [] });
+    groups.at(-1).rows.push(r);
+  }
+  const since = now.getTime() - 30 * 86400000;
+  return {
+    total: all.length, asks: all.filter((r) => r.asks).length, recent: all.filter((r) => r.ts >= since).length,
+    shown: rows.length, jur, act, topic, jurCount, actCount, topics, groups,
+  };
+}
+
+const MONTH_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+function monthLabelLong(key) {
+  const [y, m] = key.split('-').map(Number);
+  return `${MONTH_LONG[m - 1] ?? key} ${y}`;
 }
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

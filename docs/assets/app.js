@@ -470,8 +470,10 @@ root.addEventListener('click', (e) => {
     case 'copy': copyFor(d.id, d.kind); break;
     case 'dsec': set({ dropSec: d.v, dropMonth: null }); break;
     case 'dmonth': set({ dropMonth: d.v }); break;
-    case 'wjur': set({ watchJur: d.v, watchMonth: null }); break;
+    case 'wjur': set({ watchJur: d.v }); break;
     case 'wmonth': set({ watchMonth: d.v }); break;
+    case 'wtopic': set({ watchTopic: d.v }); break;
+    case 'wact': set({ watchAct: d.v }); break;
     default:
       if (d.act.startsWith('trk-') && trk && el.tagName === 'BUTTON') trackerAct(d, undefined, el, 'click');
       break;

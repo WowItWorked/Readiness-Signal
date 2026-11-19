@@ -524,7 +524,7 @@ export function trackerMain(st) {
     body = sel ? detail(trk, data, sel) : `${trk.owner === 'all' ? overview(trk, data) : ''}${registerCard(trk, data)}`;
   }
   return `<main id="main" tabindex="-1" class="main" data-k="main-tracker">
-  <div class="title-row start"><h1 class="h1">Tracker</h1><span class="list-sub">Demo · example data</span></div>
+  <div class="title-row start"><h1 class="h1">Risk Tracker</h1><span class="list-sub">Demo · example data</span></div>
   ${intro}
   ${body}
 </main>`;

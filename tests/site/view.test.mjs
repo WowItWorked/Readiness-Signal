@@ -177,7 +177,7 @@ describe('brief overrides of the design', () => {
     assert.ok(render({ page: 'dropped' }, data, { dropped: null, droppedState: 'loading' }).includes('Loading the dropped-story log'));
   });
 
-  test('Regulatory Watch page: nav, intro, jurisdiction and month filters, escaped text, safe links (owner decision 2026-10-21)', () => {
+  test('Regulatory Watch page: every regulatory item and watch signal in one list, three filters, escaped text, safe links (owner request 2026-11-19)', () => {
     const doc = {
       schema_version: 1,
       jurisdictions: ['Japan', 'Singapore'],
@@ -191,16 +191,44 @@ describe('brief overrides of the design', () => {
     const watch = M.prepareWatch(doc);
     assert.equal(watch.items.length, 3, 'malformed rows skipped');
     const html = render({ page: 'watch' }, data, { watch, watchState: 'ready' });
-    assert.ok(html.includes('data-page="watch"') && html.includes('<h1 class="h1">Regulatory Watch</h1>') && html.includes('3 signals'));
-    assert.ok(html.includes('nothing here is published as an item'));
+    const regulatory = data.items.filter(M.isRegulatory);
+    assert.ok(regulatory.length > 0, 'the fixture archive holds regulatory items');
+    const all = M.regulatoryView(data, watch, {});
+    assert.equal(all.total, regulatory.length + 3, 'published regulatory items plus the watch signals');
+    assert.ok(html.includes('data-page="watch"') && html.includes('<h1 class="h1">Regulatory Watch</h1>') && html.includes(`${all.total} regulatory items`));
+    assert.ok(html.includes('Everything from regulators, in one list') && html.includes('nothing there is published as an item'));
     assert.ok(!html.includes(EVIL), 'signals are escaped');
-    assert.ok(html.includes('Consultation on AI risk management') && html.includes('Cloud guidance') && !html.includes('Older signal'), 'newest month by default');
+    // every regulatory item is listed, linked to itself, with whether it asks for action
+    for (const it of regulatory) assert.ok(html.includes(`href="#${it.id}"`), it.id);
+    assert.ok(html.includes('Asks for action') && html.includes('Awareness only') && html.includes('Watch only'));
+    // watch signals join the list, every month shown, under their own jurisdiction's name
+    assert.ok(html.includes('Consultation on AI risk management') && html.includes('Cloud guidance') && html.includes('Older signal'));
+    assert.ok(html.includes('<span class="meta-sec">Singapore</span>'));
     assert.ok(!html.includes('href="javascript:'), 'unsafe links are never emitted');
-    const jp = render({ page: 'watch', watchJur: 'Japan' }, data, { watch, watchState: 'ready' });
-    assert.ok(jp.includes('Cloud guidance') && !jp.includes('Consultation on AI risk management'));
-    const none = render({ page: 'watch' }, data, { watch: M.prepareWatch({ items: [], jurisdictions: [] }), watchState: 'ready' });
-    assert.ok(none.includes('No signal from these jurisdictions has cleared the bar yet.') && none.includes('0 signals'));
-    assert.ok(render({ page: 'watch' }, data, { watch: null, watchState: 'loading' }).includes('Loading the Regulatory Watch log'));
+    // three filters: jurisdiction, topic, action
+    assert.ok(html.includes('data-act="wjur"') && html.includes('data-act="wtopic"') && html.includes('data-act="wact"'));
+    const other = render({ page: 'watch', watchJur: 'Other' }, data, { watch, watchState: 'ready' });
+    assert.ok(other.includes('Cloud guidance'));
+    const asks = M.regulatoryView(data, watch, { watchAct: 'asks' });
+    assert.equal(asks.shown, regulatory.filter(M.asksForAction).length, 'Asks for action leaves out awareness items and watch signals');
+    const aware = M.regulatoryView(data, watch, { watchAct: 'aware' });
+    assert.equal(aware.shown, regulatory.filter((it) => !M.asksForAction(it)).length);
+    const topic = M.regulatoryView(data, watch, { watchTopic: 'cyber' });
+    assert.equal(topic.shown, regulatory.filter((it) => it.domains.includes('cyber')).length);
+    assert.equal(M.regulatoryView(data, watch, { watchJur: 'nowhere', watchTopic: 'x', watchAct: 'y' }).shown, all.total, 'unknown filter values fall back to All');
+    // jurisdiction is read from the issuer's name, then the claim
+    const jur = (publication, claim = 'A claim.') => M.regJurisdiction({ sources: [{ publication }], claim });
+    assert.equal(jur('Office of the Comptroller of the Currency'), 'US');
+    assert.equal(jur('HM Treasury'), 'UK');
+    assert.equal(jur('Prudential Regulation Authority'), 'UK');
+    assert.equal(jur('ECB Banking Supervision'), 'EU');
+    assert.equal(jur('Financial Stability Board'), 'International');
+    assert.equal(jur('The Guardian', 'UK Commons Treasury Committee urges AI-specific stress tests.'), 'UK');
+    assert.equal(jur('Example Daily'), 'Other');
+    // the list works before the watch log arrives, and says so if it fails
+    const early = render({ page: 'watch' }, data, { watch: null, watchState: 'loading' });
+    assert.ok(early.includes(`${regulatory.length} regulatory items`) && !early.includes('Cloud guidance'));
+    assert.ok(render({ page: 'watch' }, data, { watch: null, watchState: 'error' }).includes('Signals from other jurisdictions could not be loaded.'));
     assert.equal(M.parseHash('#watch').page, 'watch');
   });
 

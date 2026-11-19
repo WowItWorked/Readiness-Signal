@@ -122,10 +122,10 @@ describe('Tracker demo', () => {
     assert.ok(page.includes(`href="#${x.itemId}"`), 'links back to the item');
     const mitigated = act(act(d, { act: 'trk-control', key: x.key, v: 'in_place' }), { act: 'trk-disp', f: 'disposition', key: x.key }, 'mitigated');
     assert.ok(!render(mitigated).includes('Remediation plan'), 'no plan once a control mitigates it');
-    assert.equal(V.PAGE_TITLES.tracker, 'Tracker · Readiness Signal');
-    assert.match(html, /data-page="tracker"[^>]*>Tracker<\/a>/, 'the nav label is Tracker');
+    assert.equal(V.PAGE_TITLES.tracker, 'Risk Tracker · Readiness Signal');
+    assert.match(html, /data-page="tracker"[^>]*>Risk Tracker<\/a>/, 'the nav label is Risk Tracker');
     assert.deepEqual(M.parseHash('#tracker'), { page: 'tracker' });
-    assert.ok(render(null).includes('<h1 class="h1">Tracker</h1>'), 'renders before the demo is seeded');
+    assert.ok(render(null).includes('<h1 class="h1">Risk Tracker</h1>'), 'renders before the demo is seeded');
   });
 
   test('escapes every data-derived string, including what the viewer types', () => {

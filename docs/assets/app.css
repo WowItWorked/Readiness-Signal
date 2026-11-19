@@ -459,6 +459,26 @@ main[tabindex="-1"]:focus { outline: none; }
 a.drop-btn { display: inline-block; text-decoration: none; }
 .drop-btn[aria-current="page"] { background: var(--active-bg); font-weight: 600; border-color: var(--navy); }
 .arch-tabs { margin: 12px 0 14px; }
+.reg-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+.reg-filter-k { flex: 0 0 96px; font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.reg-month { margin: 0; padding: 14px var(--card-x) 8px; font-family: var(--sans); font-size: 12.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--navy); background: var(--quiet); border-top: 1px solid var(--rule-soft); border-bottom: 1px solid var(--rule-soft); }
+.reg-list { list-style: none; margin: 0; padding: 0; }
+.reg-row { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: start; gap: 4px 14px; padding: 12px var(--card-x); border-bottom: 1px solid var(--rule-soft); }
+.reg-list:last-child > .reg-row:last-child { border-bottom: 0; }
+.reg-date { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; white-space: nowrap; }
+.reg-main { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.reg-line { margin: 0; font-size: 15.5px; line-height: 1.4; overflow-wrap: anywhere; }
+.reg-claim { color: var(--ink); text-decoration: none; font-weight: 500; }
+a.reg-claim:hover { text-decoration: underline; }
+.reg-tag { font-size: 12px; white-space: nowrap; padding: 2px 9px; border-radius: var(--r-pill); border: 1px solid var(--rule-soft); color: var(--muted); background: #fff; margin-top: 1px; }
+.reg-tag.asks { background: var(--navy); border-color: var(--navy); color: #fff; font-weight: 600; }
+.reg-tag.watch { border-style: dashed; }
+.reg-note { margin: 0; padding: 12px var(--card-x); font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--rule-soft); }
+@media (max-width: 640px) {
+  .reg-row { grid-template-columns: 48px minmax(0, 1fr); }
+  .reg-tag { grid-column: 2; justify-self: start; }
+  .reg-filter-k { flex-basis: 100%; }
+}
 .drop-n { color: var(--muted); font-variant-numeric: tabular-nums; margin-left: 3px; }
 .drop-list { list-style: none; margin: 0; padding: 0; }
 .drop-row { display: flex; flex-direction: column; gap: 5px; padding: 14px var(--card-x); border-bottom: 1px solid var(--rule-soft); min-width: 0; }
