@@ -63,7 +63,7 @@ export const SOURCE_CLASSES = Object.freeze([
   { key: 'research_analysis', label: 'Research & analysis' },
 ]);
 
-export const PAGES = Object.freeze(['dashboard', 'report', 'archive', 'watch', 'dropped', 'about']);
+export const PAGES = Object.freeze(['dashboard', 'report', 'archive', 'watch', 'dropped', 'tracker', 'about']);
 export const REPORT_SPANS = Object.freeze({ day: 1, week: 7, month: 30 });
 
 const byKey = (list) => new Map(list.map((x) => [x.key, x]));

@@ -27,6 +27,9 @@ when nothing clears. Items are append-only; editions never overwrite.
    setting (stricter):** no financial institution is named in any generated field, claims
    included; a category form is used ("a large US bank", "a G-SIB chief executive").
    Knob `claims_may_name_institutions` in `pipeline/thresholds.json` (launch `false`).
+   **One exception (owner decision 2026-11-19):** the Risk tracker demo page (§7.6) shows control and
+   remediation responses for a fictional institution, labelled as a demo with example data. It never names
+   or describes a real institution, and it changes no generated field.
 4. **Desktop and mobile.** Every page works from 320 px to 1600 px wide, touch and mouse.
 5. **No monospace type** anywhere (owner preference). Use the sans with tabular numerals.
 
@@ -241,7 +244,8 @@ Lint (errors unless marked warn):
 
 Files: `docs/index.html`, `docs/assets/app.css`, `docs/assets/model.js` (pure logic, no DOM,
 importable by Node tests), `docs/assets/view.js` (rendering + escaping), `docs/assets/app.js`
-(entry: load data, hash routing, events), `docs/favicon.svg`, `docs/.nojekyll`.
+(entry: load data, hash routing, events), `docs/assets/tracker.js` (the Risk tracker demo, §7.6: its logic
+and rendering, DOM-free), `docs/favicon.svg`, `docs/.nojekyll`.
 
 ### 7.1 Field mapping from the design
 
@@ -266,7 +270,7 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
 
 ### 7.2 Behaviour (brief wins over design)
 
-- Pages via hash: `#dashboard` (default), `#report`, `#archive`, `#about`, `#<item id>` (reveal:
+- Pages via hash: `#dashboard` (default), `#report`, `#archive`, `#watch`, `#dropped`, `#tracker` (§7.6), `#about`, `#<item id>` (reveal:
   ≤ 24 h → report day, ≤ 7 d → week, ≤ 30 d → month, else archive all-time; clears filters that would hide it; expands; scrolls).
   The age carries one hour of slack, so an item at a window edge is still inside the window when it renders. If the
   chosen view still does not show the item, the all-time archive with every filter and the search cleared, for that
@@ -426,6 +430,37 @@ stay as above; the visual layer changes:
   others. The brand green remains emphasis only: the logo's cap, the masthead bars' crossings, the active nav
   mark and link-hover underlines.
 - Text meets WCAG AA on every background; animation respects `prefers-reduced-motion`; no monospace.
+
+### 7.6 Risk tracker demo (owner decision 2026-11-19)
+
+The owner asked for a risk tracker for demonstrations, simulated rather than built out. It is the one place
+the site shows control and remediation positions, and only for a fictional institution (§1, constraint 3).
+
+- **Page and nav:** `#tracker`, nav label "Risk tracker", titled "Risk tracker · Readiness Signal". The page
+  opens with a "Demo" label and says it is a simulation with a fictional institution (`DEMO_ORG`, "Example
+  Bank") and fictional owners, that the items are real and every response is example data, and that nothing is
+  saved or sent.
+- **Owners:** one role per domain (Head of Cyber Risk, Head of Fraud Risk, Head of AI and Model Risk, Head of
+  Data Risk, Head of Operational Resilience, Head of Third-Party Risk, Head of Risk Quantification). Roles only;
+  no person is named.
+- **Notifications:** every `interpretation[]` entry of every archive item notifies that domain's owner, newest
+  first, dated by the item. Unread ones are marked new. A notification can show the message its owner would have
+  received; nothing is sent.
+- **Acknowledgement:** for each notification the owner answers whether a control manages the risk: yes, partly,
+  no, or not applicable, with an optional control reference or note.
+- **Closing a gap:** for "partly" or "no", the page recommends steps: first what the item asks (its validation
+  question and issue language, or the indicator check), then a generic playbook for the domain. The owner adds
+  them, or their own steps, to a remediation plan. Each step has a status (not started, in progress, done) and a
+  due date; unfinished steps past their date are overdue. A gap whose steps are all done is closed.
+- **Overview:** per owner, new notifications, gaps open, steps done and overdue steps; totals across owners.
+- **State:** memory only (constraint 1 holds). The demo is seeded the same way on every load: per domain the
+  two newest notifications are unread, the first two older action items carry an example gap (one with no
+  control and a three-step plan, one partly covered), everything else is covered, and awareness-only items are
+  not applicable. "Reset demo" restores the seed.
+- **Visual:** states are told apart by label and form (solid, outline, dashed), never by red, amber or green
+  (§7.5).
+- **Constraints:** the tracker reads the archive and never writes it; it adds nothing to any item, run record or
+  log. The playbook and recommendation text are generic and institution-neutral, with no first person.
 
 ## 8. Tests and tooling
 

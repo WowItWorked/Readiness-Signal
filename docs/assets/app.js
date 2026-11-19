@@ -4,6 +4,7 @@
 
 import * as M from './model.js';
 import { renderApp, PAGE_TITLES } from './view.js';
+import * as T from './tracker.js';
 
 const root = document.getElementById('app');
 const live = document.getElementById('live');
@@ -13,6 +14,7 @@ let dropped = null; // the Dropped page's log, loaded the first time the page op
 let droppedState = 'idle';
 let watch = null; // the Global watch log, loaded the first time the page opens
 let watchState = 'idle';
+let trk = null; // the risk tracker demo, seeded the first time its page opens (memory only)
 let loadError = null;
 let loading = true;
 let ui = M.defaultUi(new Date());
@@ -79,8 +81,9 @@ function render() {
   hideTip();
   if (ui.page === 'dropped' && droppedState === 'idle') loadDropped();
   if (ui.page === 'watch' && watchState === 'idle') loadWatch();
+  if (ui.page === 'tracker' && data && !trk) trk = T.initTracker(data, M.todayEt(clock()));
   const html = renderApp({
-    ui, data, now: clock(), error: loadError, loading, dropped, droppedState, watch, watchState,
+    ui, data, now: clock(), error: loadError, loading, dropped, droppedState, watch, watchState, trk,
   }).replace(/>\s+</g, '><');
   const t = document.createElement('template');
   t.innerHTML = html;
@@ -445,7 +448,9 @@ root.addEventListener('click', (e) => {
     case 'dmonth': set({ dropMonth: d.v }); break;
     case 'wjur': set({ watchJur: d.v, watchMonth: null }); break;
     case 'wmonth': set({ watchMonth: d.v }); break;
-    default: break;
+    default:
+      if (d.act.startsWith('trk-') && trk && el.tagName === 'BUTTON') trackerAct(d, undefined, el);
+      break;
   }
 });
 
@@ -476,9 +481,30 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+/** Apply a tracker action; keep focus on the control that was used, or its replacement. */
+function trackerAct(d, value, el) {
+  const before = trk;
+  trk = T.trackerAct(trk, d, value, data);
+  if (trk === before) return;
+  if (d.act === 'trk-open' || d.act === 'trk-back' || d.act === 'trk-owner') {
+    const focusFor = { 'trk-open': ['.trk-back'], 'trk-back': ['.trk-note'], 'trk-owner': [`.trk-intro [data-act="trk-owner"][data-v="${trk.owner}"]`] };
+    pendingFocus = focusFor[d.act];
+    window.scrollTo(0, Math.min(window.scrollY, (root.querySelector('.trk-intro') || root).offsetTop));
+  } else if (el && el.tagName === 'BUTTON' && !document.body.contains(el)) {
+    pendingFocus = ['.trk-addrow .trk-input'];
+  }
+  render();
+}
+
 const onField = (e) => {
   const el = e.target;
   const act = el.dataset && el.dataset.act;
+  if (act && act.startsWith('trk-') && trk) {
+    // text fields follow every keystroke; a date applies once it is a whole date (or cleared)
+    if (act === 'trk-due' && e.type === 'input' && el.value && el === document.activeElement) return;
+    trackerAct(el.dataset, el.value);
+    return;
+  }
   if (act === 'q') { if (el.value !== ui.q) set({ q: el.value }); } else if (act === 'from' || act === 'to') setDate(act, el.value);
 };
 root.addEventListener('input', onField);
