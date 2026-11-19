@@ -48,13 +48,13 @@ const navAttrs = (page, preset = '', v = '') => ` data-act="nav" data-page="${pa
 // ---------------------------------------------------------------------------------------
 // Masthead and footer
 
-const NAV = [['dashboard', 'Dashboard'], ['report', 'Report'], ['archive', 'Archive'], ['watch', 'Regulatory Watch'], ['dropped', 'Dropped'], ['tracker', 'Tracker'], ['about', 'About']];
+const NAV = [['dashboard', 'Dashboard'], ['report', 'Report'], ['archive', 'Archive'], ['watch', 'Regulatory Watch'], ['tracker', 'Tracker'], ['about', 'About']];
 
 function masthead(st) {
   const { ui } = st;
   const nav = ui.printMode ? '' : `
     <nav class="nav" aria-label="Primary">${NAV.map(([k, l]) => {
-    const on = ui.page === k;
+    const on = ui.page === k || (k === 'archive' && ui.page === 'dropped');
     return `<a href="#${k}"${navAttrs(k)}${on ? ' class="on" aria-current="page"' : ''}>${l}</a>`;
   }).join('')}</nav>`;
   return `<header class="mast" data-k="mast">
@@ -574,6 +574,12 @@ function archiveChartCard(c, ui) {
   </section>`;
 }
 
+/**
+ * The Archive's two sections (owner request 2026-11-19): what was published, and what the filter read and
+ * dropped. Dropped keeps its own hash (#dropped) and loads its log only when opened.
+ */
+const archTabs = (page) => `<nav class="arch-tabs drop-group" aria-label="Archive sections">${[['archive', 'Published'], ['dropped', 'Dropped']].map(([k, l]) => `<a class="drop-btn" href="#${k}"${navAttrs(k)}${page === k ? ' aria-current="page"' : ''}>${l}</a>`).join('')}</nav>`;
+
 function listMain(st) {
   const { ui, data, now } = st;
   const lm = M.listModel(data, ui, now);
@@ -595,6 +601,7 @@ function listMain(st) {
       <h1 class="h1">${lm.title}</h1>
       <span class="list-sub">${esc(lm.sub)}</span>
     </div>
+    ${ui.page === 'archive' && !ui.printMode ? archTabs('archive') : ''}
     ${lead}
   </div>
   ${empty}
@@ -675,7 +682,8 @@ function aboutMain() {
 }
 
 // ---------------------------------------------------------------------------------------
-// Dropped (owner request 2026-10-21): what the filter read and set aside, with its reason.
+// Dropped (owner request 2026-10-21): what the filter read and set aside, with its reason. A section of
+// the Archive since the owner's request of 2026-11-19, no longer a nav page of its own.
 
 const DROP_SEC_LABEL = { all: 'All', executive_visibility: 'Executive Visibility', capability_shift: 'Capability & Control Shift', regulatory_trajectory: 'Regulatory & Executive Trajectory', gate: 'Evidence gates' };
 const DROP_MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -701,10 +709,10 @@ function dropRow(r) {
 
 function droppedMain(st) {
   const intro = `<section class="card drop-intro" aria-labelledby="drop-h">
-    <h2 class="h-19" id="drop-h">Read, tested and set aside</h2>
+    <h2 class="h-19" id="drop-h">Dropped: read, tested and set aside</h2>
     <p class="drop-p">In-domain stories the filter judged and dropped, each with a plain-English reason and the filter’s own notes from when it was judged. Kept for audit: nothing here is published or recommended. Off-domain items, marketing, stale reposts, round-ups and stories later published are left out. Where a headline names a financial institution, only the outlet is shown.</p>
   </section>`;
-  const head = (sub) => `<div class="title-row start"><h1 class="h1">Dropped</h1>${sub ? `<span class="list-sub">${esc(sub)}</span>` : ''}</div>`;
+  const head = (sub) => `<div class="title-row start"><h1 class="h1">Archive</h1>${sub ? `<span class="list-sub">${esc(sub)}</span>` : ''}</div>${archTabs('dropped')}`;
   if (st.droppedState === 'error') {
     return `<main id="main" tabindex="-1" class="main" data-k="main-dropped">${head('')}${intro}<p class="loading">The dropped-story log could not be loaded. Reload to try again.</p></main>`;
   }
@@ -798,4 +806,4 @@ export function renderApp(st) {
   return `${masthead(st)}${main}${footer()}`;
 }
 
-export const PAGE_TITLES = { dashboard: 'Readiness Signal', report: 'Report · Readiness Signal', archive: 'Archive · Readiness Signal', watch: 'Regulatory Watch · Readiness Signal', dropped: 'Dropped · Readiness Signal', tracker: 'Tracker · Readiness Signal', about: 'About · Readiness Signal' };
+export const PAGE_TITLES = { dashboard: 'Readiness Signal', report: 'Report · Readiness Signal', archive: 'Archive · Readiness Signal', watch: 'Regulatory Watch · Readiness Signal', dropped: 'Dropped · Archive · Readiness Signal', tracker: 'Tracker · Readiness Signal', about: 'About · Readiness Signal' };

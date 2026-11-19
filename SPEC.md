@@ -358,7 +358,10 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   brief had excluded formal rules and exam notices as "covered elsewhere". Owner decision 2026-10-21:
   Canada joins the US, UK and EU as a core jurisdiction, FILTER.md §4.4.6.)
 
-- Dropped (owner request 2026-10-21): a fifth nav page, between Archive and About, for audit. It loads
+- Dropped (owner request 2026-10-21; a section of the Archive since the owner's request of 2026-11-19): for audit.
+  The Archive shows two section links under its title, Published (`#archive`) and Dropped (`#dropped`); Dropped has
+  no entry in the primary nav, where Archive stays the current page, and its tab title is
+  "Dropped · Archive · Readiness Signal". The Report shows no section links. It loads
   `docs/data/dropped.json` the first time it opens (never with the other data). An intro says these are
   in-domain stories the filter judged and dropped, kept for audit, nothing published or recommended, and
   what is left out. Filters: section (All, the three sections, Evidence gates) and month (newest first, with
@@ -367,7 +370,7 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   "Failed: <test>" with the plain-English explanation; the near-miss and other-section notes where present;
   the logged reason as "Filter notes"; how it was judged (live run or backfill pass, re-judged) and the code. Links are emitted only for plain https URLs.
 - Regulatory Watch (owner decision 2026-10-21; named Global watch until the owner renamed it on 2026-11-19, and still
-  FILTER.md §4.4.6's Global watch): a nav page between Archive and Dropped, at `#watch`, titled
+  FILTER.md §4.4.6's Global watch): a nav page after Archive, at `#watch`, titled
   "Regulatory Watch · Readiness Signal". It loads
   `docs/data/watch.json` the first time it opens. An intro says the signals come from the other G20
   jurisdictions, Singapore and Hong Kong, passed the same tests as a core one, bind none of the site's

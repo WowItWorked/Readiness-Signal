@@ -157,8 +157,14 @@ describe('brief overrides of the design', () => {
     };
     const dropped = M.prepareDropped(doc);
     const html = render({ page: 'dropped' }, data, { dropped, droppedState: 'ready' });
-    assert.ok(html.includes('data-page="dropped"'), 'in the nav');
-    assert.ok(html.includes('<h1 class="h1">Dropped</h1>') && html.includes('3 dropped stories'));
+    // a section of the Archive (owner request 2026-11-19): no nav entry of its own, the Archive entry stays current
+    assert.ok(!html.split('<main')[0].includes('data-page="dropped"'), 'not in the primary nav');
+    assert.ok(/<a href="#archive"[^>]*aria-current="page"[^>]*>Archive<\/a>/.test(html), 'Archive is the current nav entry');
+    assert.ok(/<a class="drop-btn" href="#dropped"[^>]*aria-current="page">Dropped<\/a>/.test(html), 'Dropped is the current Archive section');
+    assert.ok(html.includes('<h1 class="h1">Archive</h1>') && html.includes('3 dropped stories'));
+    const arch = render({ page: 'archive' }, data);
+    assert.ok(/<a class="drop-btn" href="#archive"[^>]*aria-current="page">Published<\/a>/.test(arch) && arch.includes('href="#dropped"'), 'the Archive links to its Dropped section');
+    assert.ok(!render({ page: 'report' }, data).includes('arch-tabs'), 'the Report has no Archive sections');
     assert.ok(html.includes('Kept for audit: nothing here is published or recommended.'));
     assert.ok(!html.includes(EVIL), 'headlines are escaped');
     assert.ok(html.includes('Headline withheld: it names a financial institution.'));
