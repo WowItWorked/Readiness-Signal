@@ -2846,6 +2846,150 @@
       ],
       "backfilled": true,
       "update_of": "RS-260911-1000-01"
+    },
+    {
+      "id": "RS-261119-0600-02",
+      "timestamp": "2026-11-19T06:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "ECB supervisors will inspect banks' cybersecurity and third-party risk management and assess responses to AI-enabled cyber threats in 2027-29.",
+      "domains": [
+        "cyber",
+        "third_party",
+        "ai"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "The ECB reports that 92% of significant institutions showed deficiencies in cybersecurity, third-party risk management and ICT risk controls in its 2026 review, and makes remediation of material ICT deficiencies one of two priorities, with on-site inspections and threat-led penetration testing among the planned activities."
+        },
+        {
+          "domain": "third_party",
+          "text": "Planned activities include targeted reviews of dependencies on cloud-based service providers, so reliance on cloud suppliers becomes a named object of supervisory work alongside inspections of third-party risk management."
+        },
+        {
+          "domain": "ai",
+          "text": "Supervisors will assess how institutions respond to AI-enabled cyber threats and how prepared they are for migration to post-quantum cryptography, which places both topics inside the supervisory programme for 2027-29."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The priorities set what ECB supervisors will examine in 2027-29: remediation of ICT deficiencies, cybersecurity and third-party inspections, penetration testing, cloud dependency reviews and responses to AI-enabled threats. They state supervisory activities and add no obligation or threshold for institutions beyond agreed remediation dates. This changes if the ECB publishes expectations or findings from the planned reviews.",
+      "sources": [
+        {
+          "publication": "ECB Banking Supervision",
+          "url": "https://www.bankingsupervision.europa.eu/press/pr/date/2026/html/ssm.pr261119~4cb883c88e.en.html",
+          "headline": "ECB keeps capital requirements broadly stable for 2027, focuses its priorities on banks’ financial and operational resilience",
+          "published": "2026-11-19",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261119-0600-03",
+      "timestamp": "2026-11-19T06:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "UK regulators publish non-binding effective practices for managing quantum computing's risk to firms' cryptography, including cryptographic inventories.",
+      "domains": [
+        "cyber",
+        "third_party"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "The regulators state that a sufficiently capable quantum computer could undermine the public-key cryptography protecting transactions, records and authentication, and that data intercepted now may be decrypted later, so data with a long confidentiality life is exposed before any such computer exists."
+        },
+        {
+          "domain": "third_party",
+          "text": "The practices treat suppliers' readiness as part of the migration: the publication lists, as something to assess, whether third parties providing cryptographic functions support post-quantum methods on a timetable compatible with a firm's own plan."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The practices are stated to sit outside the regulators' formal expectations and carry no deadline; the regulators say no cryptographically relevant quantum computer is known to exist. They describe cryptographic inventories, migration plans and board reporting as options for firms. No expectation, definition or timetable exists to test against. This changes if the regulators set migration dates or fold the practices into formal expectations.",
+      "sources": [
+        {
+          "publication": "Prudential Regulation Authority",
+          "url": "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/effective-practices-cyber-risk-and-resilience-management-relating-to-quantum-computing",
+          "headline": "Effective practices: Cyber risk and resilience management relating to quantum computing",
+          "published": "2026-11-19",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261119-0600-04",
+      "timestamp": "2026-11-19T06:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "UK regulators say AI lets attackers exploit vulnerabilities within hours or days, and publish non-binding practices for continuous exposure management.",
+      "domains": [
+        "cyber",
+        "ai"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "The regulators state that discovery was historically the bottleneck in vulnerability management and that AI removes it, so the constraint moves to prioritising, validating and remediating exposures, a change the publication describes as a move to continuous exposure management."
+        },
+        {
+          "domain": "ai",
+          "text": "Citing the UK AI Security Institute, the publication reports that AI performance in some tested areas doubles about every eight months and that some capabilities needed to evade human control are emerging, and it lists human oversight among its practices."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The practices are stated to be separate from the regulators' formal expectations and carry no deadline. They describe exposure management, compensating controls, containment and recovery from AI-enabled attacks as options for firms. No expectation or timetable exists to test against, and the speed statements are the regulators' assessment. This changes if the practices are folded into the final cyber guidance.",
+      "sources": [
+        {
+          "publication": "Prudential Regulation Authority",
+          "url": "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/effective-practices-cyber-risk-and-resilience-management-relating-to-artificial-intelligence",
+          "headline": "Effective practices: Cyber risk and resilience management relating to artificial intelligence (AI)",
+          "published": "2026-11-19",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261119-1000-01",
+      "timestamp": "2026-11-19T10:00:00-05:00",
+      "section": "executive_visibility",
+      "claim": "The SEC charges eight entities with taking more than $37m from US investors through fake advisers and crypto trading platforms.",
+      "domains": [
+        "fraud"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "fraud",
+          "text": "The complaint describes social media advertisements leading to group chats, then payments to a trading platform that did not exist; the entities made fake SEC certificates and real regulatory filings and directed sceptical investors to them. The scheme ran from August 2024 to May 2026 through four adviser and platform pairs."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The SEC alleges an investment fraud run through social media, group chats and fake platforms between August 2024 and May 2026, with losses above $37m. The technique is impersonation of registered firms, which investor alerts from the SEC already describe; the change is in scale and in the use of real regulatory filings. This changes if the case discloses how payments reached the platforms.",
+      "sources": [
+        {
+          "publication": "U.S. Securities and Exchange Commission",
+          "url": "https://www.sec.gov/newsroom/press-releases/2026-115-sec-eight-entities-used-fake-crypto-asset-trading-platforms-steal-more-37-million-us-investors",
+          "headline": "SEC: Eight Entities Used Fake Crypto Asset Trading Platforms to Steal More Than $37 Million From U.S. Investors",
+          "published": "2026-11-19",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
     }
   ]
 }
