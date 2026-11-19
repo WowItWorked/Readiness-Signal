@@ -16,15 +16,19 @@
 // claim is an error, at true a warning.
 // Writes logs/YYYY/MM/<run_id>.jsonl, seen.json, archive.json and runs.json, each atomically (temp
 // + rename) and as one unit: if any write fails, the files already written are restored.
+// A real run (default paths) then rebuilds docs/data/dropped.json and docs/data/watch.json by
+// running dropped.mjs and watch.mjs, and prints `git add: …`, the exact staging line for the commit.
 // --dry-run prints everything and writes nothing, except with --seen-out F (owner replays only,
 // RUNBOOK section C): the seen.json this run would leave is written to F, outside docs/data,
 // pipeline/state and pipeline/logs, so the next replayed run can be fetched with --seen F.
 
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { parseCli, runMain, log, out, printIssues, UsageError } from '../lib/cli.mjs';
 import { exists, readJson, toJsonlText, toJsonText, writeFilesAtomically, writeJsonAtomic } from '../lib/io.mjs';
-import { DEFAULT_PATHS, runLogPath, runWorkPaths } from '../lib/paths.mjs';
+import { DEFAULT_PATHS, REPO_ROOT, runLogPath, runWorkPaths } from '../lib/paths.mjs';
 import {
   assignIds, buildLogRows, computeFunnel, emptyStage2BySection, fetchUnhealthy, finaliseItem,
   mechanismDistribution, seenConflicts, stage2BySection, updateSeen,
@@ -302,7 +306,31 @@ runMain(async () => {
   const commit = record.status === 'published'
     ? `edition: ${runId.slice(0, 10)} ${hhmm} ET (+${n} items)`
     : `run: ${runId.slice(0, 10)} ${hhmm} ET (${record.status})`;
+  const rebuilt = rebuildPages(paths);
+  // The exact staging line for RUNBOOK step 14: every file this run changed, the pages included.
+  const gitAdd = `git add ${[...written, ...rebuilt].map((p) => path.relative(process.cwd(), p) || p).join(' ')}`;
+  log(`  git add: ${gitAdd}`);
   log(`  commit message: ${commit}`);
-  out({ ...summary, written, commit_message: commit });
+  out({ ...summary, written, rebuilt, git_add: gitAdd, commit_message: commit });
   return 0;
 });
+
+/**
+ * A real run (the default data paths; tests always override them) rebuilds the Dropped and
+ * Regulatory Watch pages' data with their own scripts, the only writers of those files, so a run
+ * never leaves the pages behind. The scheduled routine skipped RUNBOOK step 13's rebuild from
+ * 5 Nov 2026, and the Dropped page fell two weeks behind. A failed rebuild leaves the old file
+ * (both scripts write atomically) and is reported; the next run catches up.
+ */
+function rebuildPages(paths) {
+  if (paths.archive !== DEFAULT_PATHS.archive || paths.logsDir !== DEFAULT_PATHS.logsDir) return [];
+  const scripts = path.dirname(fileURLToPath(import.meta.url));
+  const done = [];
+  for (const name of ['dropped', 'watch']) {
+    const r = spawnSync(process.execPath, [path.join(scripts, `${name}.mjs`)], { cwd: REPO_ROOT, encoding: 'utf8', windowsHide: true });
+    if (r.status === 0) done.push(path.join(REPO_ROOT, 'docs', 'data', `${name}.json`));
+    else log(`  warn  ${name}.json not rebuilt: ${String(r.stderr || r.stdout || r.error || '').trim().split('\n')[0]}`);
+  }
+  for (const p of done) log(`  rebuilt ${p}`);
+  return done;
+}

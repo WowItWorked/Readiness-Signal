@@ -10,6 +10,9 @@ import { judgment, makeCandidate, makeDraft, makeSurvivor, readJson, rmrf, runSc
 const RUN = '2026-10-02-1400';
 const STARTED = '2026-10-02T14:03:12-04:00';
 const NOW = '2026-10-02T14:21:40-04:00';
+// A test run must never rebuild the real pages (publish.mjs rebuilds them only on default paths).
+const REAL_DROPPED = new URL('../../docs/data/dropped.json', import.meta.url);
+const DROPPED_MTIME = fs.statSync(REAL_DROPPED).mtimeMs;
 
 function scenario() {
   const gw1 = makeCandidate({ url: 'https://news.example.com/gateway-zero-day?utm_source=rss', headline: 'Gateway zero-day exploited against several sectors', lead: 'Threat actors are actively exploiting a pre-authentication flaw in Example Gateway devices, the vendor said.' });
@@ -191,6 +194,11 @@ test('silent run: no survivors and no decisions file records a silent run', () =
     assert.equal(rec.funnel.published, 0);
     assert.equal(readJson(ws.archive).items.length, 0);
     assert.equal(r.json.commit_message, 'run: 2026-10-02 14:00 ET (silent)');
+    // git_add stages exactly what was written; with test paths the real pages are never rebuilt
+    assert.deepEqual(r.json.rebuilt, []);
+    assert.ok(r.json.git_add.startsWith('git add '));
+    for (const w of r.json.written) assert.ok(r.json.git_add.includes(path.relative(process.cwd(), w)), w);
+    assert.equal(fs.statSync(REAL_DROPPED).mtimeMs, DROPPED_MTIME, 'the real dropped.json is untouched');
   } finally {
     rmrf(ws.dir);
   }

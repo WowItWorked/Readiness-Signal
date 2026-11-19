@@ -243,7 +243,7 @@ node pipeline/scripts/publish.mjs --run "$RUN" --dry-run
 node pipeline/scripts/publish.mjs --run "$RUN"
 ```
 
-- **Exit 0:** `publish.mjs` has appended the items (if any) to `docs/data/archive.json`, appended the run record to `docs/data/runs.json`, written `pipeline/logs/YYYY/MM/$RUN.jsonl` and updated `pipeline/state/seen.json`. Its stdout JSON includes `commit_message`.
+- **Exit 0:** `publish.mjs` has appended the items (if any) to `docs/data/archive.json`, appended the run record to `docs/data/runs.json`, written `pipeline/logs/YYYY/MM/$RUN.jsonl`, updated `pipeline/state/seen.json`, and rebuilt `docs/data/dropped.json` and `docs/data/watch.json` by running `dropped.mjs` and `watch.mjs`. Its stdout JSON includes `commit_message` and `git_add`, the exact staging line for step 13. A `warn  dropped.json not rebuilt: …` (or `watch.json`) line means that page keeps its old data: add it to the final output.
 - **Validation error:** return to step 11.
 - **`a run record for slot … already exists`:** another run recorded this slot. Stop, commit nothing, and report it.
 - **`has not started yet`, or `started_at … falls in slot`:** `$RUN` is wrong. Stop, commit nothing, and report it.
@@ -281,10 +281,16 @@ The commit subject is `commit_message` from `publish.mjs` stdout, used verbatim.
 | `silent` | `run: YYYY-MM-DD HH:MM ET (silent)` |
 | `failed` | `run: YYYY-MM-DD HH:MM ET (failed)` |
 
+Stage with `git_add` from `publish.mjs` stdout, run verbatim: it lists every file the run changed, `docs/data/dropped.json` and `docs/data/watch.json` included. Never shorten it. Only if `git_add` is missing, stage the full list:
+
 ```sh
+<git_add>        # e.g. git add pipeline/logs/2026/11/2026-11-19-1400.jsonl pipeline/state/seen.json docs/data/runs.json docs/data/dropped.json docs/data/watch.json
+# fallback only:
 git add docs/data/archive.json docs/data/runs.json docs/data/dropped.json docs/data/watch.json pipeline/state/seen.json pipeline/logs
 git commit -m "<commit_message>"
 ```
+
+Before pushing, `git status --porcelain docs/data` must print nothing. If it lists `docs/data/dropped.json` or `docs/data/watch.json`, they were left out: stage them and `git commit --amend --no-edit` (this commit is not pushed yet).
 
 ## 14. Push (fetch, rebase, retry up to 3 times)
 
