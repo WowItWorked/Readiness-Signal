@@ -25,12 +25,12 @@ const MONTHS = ['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06'
 const DAYS = ['2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04'];
 const UNTIL = '2026-10-04T18:00:00-04:00';
 const SECTIONS = ['capability_shift', 'regulatory_trajectory'];
-// re-judge series (BACKFILL.md §1a): 2026-10-05 to 2026-10-20, every section, the last ending at 18:00
+// re-judge series (BACKFILL.md §1a): 2026-10-05 to 2026-10-20, every section, the last ending at 14:00
 const REJUDGE = Array.from({ length: 16 }, (_, i) => `2026-10-${String(5 + i).padStart(2, '0')}`);
 const REJUDGE_UNTIL = '2026-10-20T18:00:00-04:00';
-// owner recall review of 2026-11-19 (BACKFILL.md §1b): single days, every section, the last ending at 18:00
+// owner recall review of 2026-11-19 (BACKFILL.md §1b): single days, every section, the last ending at 14:00
 const RECALL = ['2026-10-23', '2026-10-27', '2026-10-28', '2026-11-04', '2026-11-06', '2026-11-09', '2026-11-11', '2026-11-12', '2026-11-13', '2026-11-19'];
-const RECALL_UNTIL = '2026-11-19T18:00:00-05:00';
+const RECALL_UNTIL = '2026-11-19T14:00:00-05:00';
 const ALL_SECTIONS = ['executive_visibility', 'capability_shift', 'regulatory_trajectory'];
 
 // ---------------------------------------------------------------- PASSES and windows

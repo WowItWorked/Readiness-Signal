@@ -78,7 +78,7 @@ export const PASSES = Object.freeze({
     return [day, rejudge(day === '2026-10-20' ? { until: '2026-10-20T18:00:00-04:00' } : {})];
   })),
   // owner recall review (BACKFILL.md §1b): single days, overlapping the live runs' windows by design
-  ...Object.fromEntries(RECALL_DAYS.map((day) => [day, recall(day === '2026-11-19' ? { until: '2026-11-19T18:00:00-05:00' } : {})])),
+  ...Object.fromEntries(RECALL_DAYS.map((day) => [day, recall(day === '2026-11-19' ? { until: '2026-11-19T14:00:00-05:00' } : {})])),
 });
 
 /**

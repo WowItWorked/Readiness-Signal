@@ -90,7 +90,7 @@ that pass under version 6 were drafted as items, and the owner approved all 16 f
 |---|---|---|
 | 2026-07, 2026-09 (existing month passes) | unchanged | unchanged: `publish --append-missing --rejudge` for the ticked candidates |
 | 2026-10-23, 2026-10-27, 2026-10-28, 2026-11-04, 2026-11-06, 2026-11-09, 2026-11-11, 2026-11-12, 2026-11-13 (day passes) | each calendar day 00:00 – 23:59 | `executive_visibility`, `capability_shift`, `regulatory_trajectory` |
-| 2026-11-19 (day) | 2026-11-19 00:00 – 18:00 (`until` 2026-11-19T18:00:00-05:00) | all three |
+| 2026-11-19 (day) | 2026-11-19 00:00 – 14:00 (`until` 2026-11-19T14:00:00-05:00; owner, 2026-11-19: "Don't wait for cut off", so the pass ends at the last slot already past) | all three |
 
 - **Only the ticked stories.** These are not full re-judge passes: each day pass registers the sources of
   the stories the owner ticked for that day (`add`, discovery `feed` for the live runs' candidates and
