@@ -14,7 +14,7 @@ let dropped = null; // the Dropped page's log, loaded the first time the page op
 let droppedState = 'idle';
 let watch = null; // the Global watch log, loaded the first time the page opens
 let watchState = 'idle';
-let trk = null; // the risk tracker demo, seeded the first time its page opens (memory only)
+let trk = null; // the Tracker demo, seeded the first time its page opens (memory only)
 let loadError = null;
 let loading = true;
 let ui = M.defaultUi(new Date());
@@ -36,6 +36,12 @@ function morphNode(a, b) {
   }
   for (const { name } of Array.from(a.attributes)) if (!b.hasAttribute(name)) a.removeAttribute(name);
   for (const { name, value } of Array.from(b.attributes)) if (a.getAttribute(name) !== value) a.setAttribute(name, value);
+  if (a.nodeName === 'TEXTAREA') {
+    // Like an input: state follows typing, so a field being typed in already matches.
+    const v = b.textContent;
+    if (a.value !== v) a.value = v;
+    return;
+  }
   if (a.nodeName === 'INPUT') {
     // Typing updates state first, so a field the user is typing in already matches and is
     // left alone (focus and caret survive). A focused date field may hold a partial entry
@@ -46,6 +52,12 @@ function morphNode(a, b) {
     return;
   }
   morphChildren(a, b);
+  if (a.nodeName === 'SELECT') {
+    // The selected attribute sets only the default; set the live value to match the render.
+    const o = b.querySelector('option[selected]') || b.querySelector('option');
+    const v = o ? o.getAttribute('value') ?? o.textContent : '';
+    if (a.value !== v) a.value = v;
+  }
 }
 
 function morphChildren(from, to) {
@@ -77,7 +89,19 @@ function morphChildren(from, to) {
 /** Render clock: the viewer's, or the pipeline's latest write if the viewer's runs behind. */
 const clock = () => M.effectiveNow(data, new Date());
 
+let rendering = false;
+let renderAgain = false;
+
 function render() {
+  // Moving a focused field during the morph can fire its change event, whose handler renders:
+  // never morph inside a morph; render once more when this one ends instead.
+  if (rendering) { renderAgain = true; return; }
+  rendering = true;
+  try { renderOnce(); } finally { rendering = false; }
+  if (renderAgain) { renderAgain = false; render(); }
+}
+
+function renderOnce() {
   hideTip();
   if (ui.page === 'dropped' && droppedState === 'idle') loadDropped();
   if (ui.page === 'watch' && watchState === 'idle') loadWatch();
@@ -449,7 +473,7 @@ root.addEventListener('click', (e) => {
     case 'wjur': set({ watchJur: d.v, watchMonth: null }); break;
     case 'wmonth': set({ watchMonth: d.v }); break;
     default:
-      if (d.act.startsWith('trk-') && trk && el.tagName === 'BUTTON') trackerAct(d, undefined, el);
+      if (d.act.startsWith('trk-') && trk && el.tagName === 'BUTTON') trackerAct(d, undefined, el, 'click');
       break;
   }
 });
@@ -482,16 +506,16 @@ document.addEventListener('keydown', (e) => {
 });
 
 /** Apply a tracker action; keep focus on the control that was used, or its replacement. */
-function trackerAct(d, value, el) {
+function trackerAct(d, value, el, type) {
   const before = trk;
-  trk = T.trackerAct(trk, d, value, data);
+  trk = T.trackerAct(trk, d, value, data, { type, at: M.fmtFull(clock()) });
   if (trk === before) return;
-  if (d.act === 'trk-open' || d.act === 'trk-back' || d.act === 'trk-owner') {
+  if (type === 'click' && (d.act === 'trk-open' || d.act === 'trk-back' || d.act === 'trk-owner')) {
     const focusFor = { 'trk-open': ['.trk-back'], 'trk-back': ['.trk-note'], 'trk-owner': [`.trk-intro [data-act="trk-owner"][data-v="${trk.owner}"]`] };
     pendingFocus = focusFor[d.act];
     window.scrollTo(0, Math.min(window.scrollY, (root.querySelector('.trk-intro') || root).offsetTop));
   } else if (el && el.tagName === 'BUTTON' && !document.body.contains(el)) {
-    pendingFocus = ['.trk-addrow .trk-input'];
+    pendingFocus = ['.trk-addrow .trk-input', '.trk-filters .trk-input'];
   }
   render();
 }
@@ -500,9 +524,10 @@ const onField = (e) => {
   const el = e.target;
   const act = el.dataset && el.dataset.act;
   if (act && act.startsWith('trk-') && trk) {
-    // text fields follow every keystroke; a date applies once it is a whole date (or cleared)
-    if (act === 'trk-due' && e.type === 'input' && el.value && el === document.activeElement) return;
-    trackerAct(el.dataset, el.value);
+    // Text follows every keystroke and is logged once on change; a date applies on change, once
+    // it is a whole date (or cleared); a select applies on change.
+    if (e.type === 'input' && (el.type === 'date' || el.tagName === 'SELECT')) return;
+    trackerAct(el.dataset, el.value, el, e.type);
     return;
   }
   if (act === 'q') { if (el.value !== ui.q) set({ q: el.value }); } else if (act === 'from' || act === 'to') setDate(act, el.value);

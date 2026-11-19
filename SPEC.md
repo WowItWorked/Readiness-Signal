@@ -27,7 +27,7 @@ when nothing clears. Items are append-only; editions never overwrite.
    setting (stricter):** no financial institution is named in any generated field, claims
    included; a category form is used ("a large US bank", "a G-SIB chief executive").
    Knob `claims_may_name_institutions` in `pipeline/thresholds.json` (launch `false`).
-   **One exception (owner decision 2026-11-19):** the Risk tracker demo page (§7.6) shows control and
+   **One exception (owner decision 2026-11-19):** the Tracker demo page (§7.6) shows control and
    remediation responses for a fictional institution, labelled as a demo with example data. It never names
    or describes a real institution, and it changes no generated field.
 4. **Desktop and mobile.** Every page works from 320 px to 1600 px wide, touch and mouse.
@@ -244,7 +244,7 @@ Lint (errors unless marked warn):
 
 Files: `docs/index.html`, `docs/assets/app.css`, `docs/assets/model.js` (pure logic, no DOM,
 importable by Node tests), `docs/assets/view.js` (rendering + escaping), `docs/assets/app.js`
-(entry: load data, hash routing, events), `docs/assets/tracker.js` (the Risk tracker demo, §7.6: its logic
+(entry: load data, hash routing, events), `docs/assets/tracker.js` (the Tracker demo, §7.6: its logic
 and rendering, DOM-free), `docs/favicon.svg`, `docs/.nojekyll`.
 
 ### 7.1 Field mapping from the design
@@ -431,35 +431,50 @@ stay as above; the visual layer changes:
   mark and link-hover underlines.
 - Text meets WCAG AA on every background; animation respects `prefers-reduced-motion`; no monospace.
 
-### 7.6 Risk tracker demo (owner decision 2026-11-19)
+### 7.6 Tracker demo (owner decisions 2026-11-19)
 
-The owner asked for a risk tracker for demonstrations, simulated rather than built out. It is the one place
-the site shows control and remediation positions, and only for a fictional institution (§1, constraint 3).
+The owner asked for a tracker for demonstrations, simulated rather than built out, then renamed it "Tracker"
+and asked for fuller filters and enough fields to track the disposition of new issues in full. It is the one
+place the site shows control and remediation positions, and only for a fictional institution (§1, constraint 3).
 
-- **Page and nav:** `#tracker`, nav label "Risk tracker", titled "Risk tracker · Readiness Signal". The page
-  opens with a "Demo" label and says it is a simulation with a fictional institution (`DEMO_ORG`, "Example
-  Bank") and fictional owners, that the items are real and every response is example data, and that nothing is
-  saved or sent.
+- **Page and nav:** `#tracker`, nav label "Tracker", titled "Tracker · Readiness Signal". The page opens with a
+  "Demo" label and says it is a simulation with a fictional institution (`DEMO_ORG`, "Example Bank") and
+  fictional owners, that the items are real and every response is example data, and that nothing is saved or
+  sent.
 - **Owners:** one role per domain (Head of Cyber Risk, Head of Fraud Risk, Head of AI and Model Risk, Head of
   Data Risk, Head of Operational Resilience, Head of Third-Party Risk, Head of Risk Quantification). Roles only;
   no person is named.
 - **Notifications:** every `interpretation[]` entry of every archive item notifies that domain's owner, newest
   first, dated by the item. Unread ones are marked new. A notification can show the message its owner would have
   received; nothing is sent.
-- **Acknowledgement:** for each notification the owner answers whether a control manages the risk: yes, partly,
-  no, or not applicable, with an optional control reference or note.
-- **Closing a gap:** for "partly" or "no", the page recommends steps: first what the item asks (its validation
-  question and issue language, or the indicator check), then a generic playbook for the domain. The owner adds
-  them, or their own steps, to a remediation plan. Each step has a status (not started, in progress, done) and a
-  due date; unfinished steps past their date are overdue. A gap whose steps are all done is closed.
-- **Overview:** per owner, new notifications, gaps open, steps done and overdue steps; totals across owners.
+- **Filters** (on the notification register, for all owners or one): search (claim, read-across, issue ID,
+  title); domain; notified within (any time, 24 hours, 7 days, 30 days, or a from–to date range); status (new,
+  awaiting decision, issue open, has overdue steps, risk accepted, issue closed, covered); disposition (or none
+  recorded); what the item asks; rating (or not rated). A clear-filters control shows how many are active.
+- **Acknowledgement:** whether a control manages the risk: yes, partly, no or not applicable, with a control
+  reference or note. The answer suggests a disposition; the owner decides.
+- **Disposition record:** disposition (under assessment; issue raised, remediation required; risk accepted;
+  mitigated by an existing control; not applicable; duplicate of an existing issue), the institution's own risk
+  rating (low, moderate, high, critical: a label, never a colour), issue ID, title, accountable owner, control
+  owner, date identified, gap and root cause, and notes. An issue adds target and revised target dates; a
+  duplicate, the existing issue ID; a risk acceptance, approver, expiry date and rationale.
+- **Closing a gap:** for an issue, or a partial or missing control, the page recommends steps: first what the
+  item asks (its validation question and issue language, or the indicator check), then a generic playbook for
+  the domain. The owner adds them, or their own steps, to a remediation plan. Each step has a status (not
+  started, in progress, done), an owner and a due date; unfinished steps past their date are overdue. An issue
+  adds validation and closure: validated by, validation date, date closed and closure evidence. An issue is
+  closed when it has a closed date or all its steps are done.
+- **Activity:** every decision, status change, step change and committed edit is logged with its time (ET),
+  newest first.
+- **Overview** (all owners): per owner, new notifications, open issues, steps done and overdue steps; totals for
+  new notifications, open issues, overdue steps, accepted risks and closed issues.
 - **State:** memory only (constraint 1 holds). The demo is seeded the same way on every load: per domain the
-  two newest notifications are unread, the first two older action items carry an example gap (one with no
-  control and a three-step plan, one partly covered), everything else is covered, and awareness-only items are
-  not applicable. "Reset demo" restores the seed.
+  two newest notifications are unread; of the older action items, the first has an open issue with a three-step
+  plan (one step overdue), the second a closed and validated issue, the third an accepted risk; other action
+  items are mitigated and awareness-only items not applicable. "Reset demo" restores the seed and keeps the view.
 - **Visual:** states are told apart by label and form (solid, outline, dashed), never by red, amber or green
   (§7.5).
-- **Constraints:** the tracker reads the archive and never writes it; it adds nothing to any item, run record or
+- **Constraints:** the Tracker reads the archive and never writes it; it adds nothing to any item, run record or
   log. The playbook and recommendation text are generic and institution-neutral, with no first person.
 
 ## 8. Tests and tooling
