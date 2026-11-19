@@ -12,7 +12,7 @@ const live = document.getElementById('live');
 let data = null;
 let dropped = null; // the Dropped page's log, loaded the first time the page opens
 let droppedState = 'idle';
-let watch = null; // the Global watch log, loaded the first time the page opens
+let watch = null; // the Regulatory Watch log, loaded the first time the page opens
 let watchState = 'idle';
 let trk = null; // the Tracker demo, seeded the first time its page opens (memory only)
 let loadError = null;
@@ -591,7 +591,7 @@ async function loadWatch() {
     watchState = 'ready';
   } catch (err) {
     watchState = 'error';
-    console.error('Readiness Signal: Global watch log failed to load.', err);
+    console.error('Readiness Signal: Regulatory Watch log failed to load.', err);
   }
   render();
 }
