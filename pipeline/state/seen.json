@@ -3792,6 +3792,78 @@
       "run_id": "2026-11-18-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bankingsupervision.europa.eu/press/pr/date/2026/html/ssm.pr261119~4cb883c88e.en.html": {
+      "first_seen": "2026-11-19T06:06:23-05:00",
+      "run_id": "2026-11-19-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/effective-practices-cyber-risk-and-resilience-management-relating-to-artificial-intelligence": {
+      "first_seen": "2026-11-19T06:06:23-05:00",
+      "run_id": "2026-11-19-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/effective-practices-cyber-risk-and-resilience-management-relating-to-quantum-computing": {
+      "first_seen": "2026-11-19T06:06:23-05:00",
+      "run_id": "2026-11-19-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankofengland.co.uk/news/2026/november/cyber-resilience-guidance-consultation-and-ai-and-quantum-effective-practices": {
+      "first_seen": "2026-11-19T06:06:23-05:00",
+      "run_id": "2026-11-19-0600",
+      "verdict": "published",
+      "item_id": "RS-261119-0600-01"
+    },
+    "https://www.fca.org.uk/news/press-releases/uk-financial-watchdogs-clarify-cyber-expectations-attacks-rise": {
+      "first_seen": "2026-11-19T06:06:23-05:00",
+      "run_id": "2026-11-19-0600",
+      "verdict": "published",
+      "item_id": "RS-261119-0600-01"
+    },
+    "https://www.fca.org.uk/publications/guidance-consultations/gc26-9-cyber-risk-resilience-management": {
+      "first_seen": "2026-11-19T06:06:23-05:00",
+      "run_id": "2026-11-19-0600",
+      "verdict": "published",
+      "item_id": "RS-261119-0600-01"
+    },
+    "https://www.securityweek.com/f5-patches-critical-nginx2root-flaws-as-poc-exploits-go-public": {
+      "first_seen": "2026-11-19T06:06:23-05:00",
+      "run_id": "2026-11-19-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://thehill.com/policy/technology/6228961-technology-outages-ai-vulnerabilities": {
+      "first_seen": "2026-11-19T06:06:23-05:00",
+      "run_id": "2026-11-19-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/news/press-releases/fca-launches-world-first-platform-giving-firms-new-insight-ai-innovation": {
+      "first_seen": "2026-11-19T06:06:23-05:00",
+      "run_id": "2026-11-19-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/news/news-stories/insurance-firms-called-improve-claims-handling": {
+      "first_seen": "2026-11-19T06:06:23-05:00",
+      "run_id": "2026-11-19-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/cyber-risk-and-resilience-management-consultation-paper": {
+      "first_seen": "2026-11-19T06:06:23-05:00",
+      "run_id": "2026-11-19-0600",
+      "verdict": "published",
+      "item_id": "RS-261119-0600-01"
+    },
+    "https://www.banking.senate.gov/newsroom/minority/warren-statement-ahead-of-anthropic-ipo": {
+      "first_seen": "2026-11-19T06:06:23-05:00",
+      "run_id": "2026-11-19-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

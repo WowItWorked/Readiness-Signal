@@ -2347,6 +2347,63 @@
       ],
       "backfilled": false,
       "update_of": null
+    },
+    {
+      "id": "RS-261119-0600-01",
+      "timestamp": "2026-11-19T06:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "UK regulators propose cyber guidance expecting named senior-manager accountability, asset inventories and tested recovery plans.",
+      "domains": [
+        "cyber",
+        "resilience"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "The draft names the NCSC Cyber Assessment Framework as the reference for informing and assessing cyber measures, so layered protections, access controls and detection are to be read against a published public framework."
+        },
+        {
+          "domain": "resilience",
+          "text": "The draft sets recovery from attacks next to an inventory of key assets, third-party dependencies and cyber risks, so recovery planning and dependency mapping appear in one set of expectations. It states that it clarifies existing rules and adds none."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The draft states that it clarifies existing rules and adds none. Its expectations on accountability, inventory, protection, monitoring, recovery and use of the NCSC framework sit in governance, operational resilience and third-party categories that supervisory expectations set out. No new failure mode or metric follows from draft text. This changes if final guidance, expected in the first half of 2027, adds expectations beyond existing rules.",
+      "sources": [
+        {
+          "publication": "Prudential Regulation Authority",
+          "url": "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/cyber-risk-and-resilience-management-consultation-paper",
+          "headline": "CP17/26 and GC26/9 – Cyber risk and resilience management",
+          "published": "2026-11-19",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "Financial Conduct Authority",
+          "url": "https://www.fca.org.uk/publications/guidance-consultations/gc26-9-cyber-risk-resilience-management",
+          "headline": "GC26/9: Cyber risk and resilience management",
+          "published": "2026-11-19",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "Bank of England",
+          "url": "https://www.bankofengland.co.uk/news/2026/november/cyber-resilience-guidance-consultation-and-ai-and-quantum-effective-practices",
+          "headline": "Cyber resilience guidance consultation and AI and quantum effective practices",
+          "published": "2026-11-19",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "Financial Conduct Authority",
+          "url": "https://www.fca.org.uk/news/press-releases/uk-financial-watchdogs-clarify-cyber-expectations-attacks-rise",
+          "headline": "UK financial watchdogs clarify cyber expectations as attacks rise",
+          "published": "2026-11-19",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": false,
+      "update_of": "RS-261118-1000-01"
     }
   ]
 }
