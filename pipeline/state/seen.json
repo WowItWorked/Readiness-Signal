@@ -3912,6 +3912,36 @@
       "run_id": "2026-11-19-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.eba.europa.eu/publications-and-media/press-releases/eueea-banks-continue-display-resilience-amid-sovereign-debt-pressures-borrower-vulnerabilities-and": {
+      "first_seen": "2026-11-19T14:06:16-05:00",
+      "run_id": "2026-11-19-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sec.gov/newsroom/press-releases/2026-115-sec-eight-entities-used-fake-crypto-asset-trading-platforms-steal-more-37-million-us-investors": {
+      "first_seen": "2026-11-19T14:06:16-05:00",
+      "run_id": "2026-11-19-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://thehill.com/policy/technology/6230277-jpmorgan-chase-customer-data-exposed-in-cyberattack": {
+      "first_seen": "2026-11-19T14:06:16-05:00",
+      "run_id": "2026-11-19-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/european-commission-confirms-cyberattack-using-ai": {
+      "first_seen": "2026-11-19T14:06:16-05:00",
+      "run_id": "2026-11-19-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.osfi-bsif.gc.ca/en/osfi-launches-its-competitive-prudential-initiative-putting-resilience-work-support-greater": {
+      "first_seen": "2026-11-19T14:06:16-05:00",
+      "run_id": "2026-11-19-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
