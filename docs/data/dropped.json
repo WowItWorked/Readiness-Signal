@@ -125,19 +125,6 @@
   },
   "items": [
     {
-      "id": "c-0a07056221",
-      "date": "2026-11-19",
-      "section": "executive_visibility",
-      "code": "EV_NO_PROMINENCE",
-      "reason": "E1 authority action dated today; E2c $37m stated; E3 no independent general or business outlet opened for the story, unknown is not met [alt CS:C1]",
-      "publication": "U.S. Securities and Exchange Commission",
-      "headline": "SEC: Eight Entities Used Fake Crypto Asset Trading Platforms to Steal More Than $37 Million From U.S. Investors",
-      "url": "https://www.sec.gov/newsroom/press-releases/2026-115-sec-eight-entities-used-fake-crypto-asset-trading-platforms-steal-more-37-million-us-investors",
-      "judged": "live",
-      "run": "2026-11-19-1400",
-      "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
-    },
-    {
       "id": "c-1ff2ff6774",
       "date": "2026-11-19",
       "section": "executive_visibility",
@@ -163,32 +150,6 @@
       "judged": "live",
       "run": "2026-11-19-0600",
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
-    },
-    {
-      "id": "c-3870b2b8de",
-      "date": "2026-11-19",
-      "section": "regulatory_trajectory",
-      "code": "RT_NOT_SPECIFIC",
-      "reason": "NEAR R4f: exam notice (supervisory priorities 2027-29); R1f, R2, R3f, R5 hold; technology-driven operational resilience named as focus area only, no examination content stated",
-      "publication": "ECB Banking Supervision",
-      "headline": "ECB keeps capital requirements broadly stable for 2027, focuses its priorities on banks’ financial and operational resilience",
-      "url": "https://www.bankingsupervision.europa.eu//press/pr/date/2026/html/ssm.pr261119~4cb883c88e.en.html",
-      "judged": "live",
-      "run": "2026-11-19-0600",
-      "near": "Near-miss: only “Technology-risk substance” failed."
-    },
-    {
-      "id": "c-3e8acf582b",
-      "date": "2026-11-19",
-      "section": "regulatory_trajectory",
-      "code": "RT_NO_DIRECTION",
-      "reason": "NEAR R3: non-binding effective practices compiled from existing publications and firm engagement; no observed findings or new expectation; archive: none on AI cyber practices",
-      "publication": "Prudential Regulation Authority",
-      "headline": "Effective practices: Cyber risk and resilience management relating to artificial intelligence (AI)",
-      "url": "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/effective-practices-cyber-risk-and-resilience-management-relating-to-artificial-intelligence",
-      "judged": "live",
-      "run": "2026-11-19-0600",
-      "near": "Near-miss: only “A change of direction” failed."
     },
     {
       "id": "c-3ea6b40f50",
@@ -238,19 +199,6 @@
       "url": "https://www.securityweek.com/critical-apache-roller-axis-vulnerabilities-exploited-in-attacks/",
       "judged": "live",
       "run": "2026-11-19-1000"
-    },
-    {
-      "id": "c-9fd4205878",
-      "date": "2026-11-19",
-      "section": "regulatory_trajectory",
-      "code": "RT_NO_DIRECTION",
-      "reason": "NEAR R3: non-binding effective practices on quantum cryptographic migration compiled from existing publications; no observed findings or new expectation; archive: none",
-      "publication": "Prudential Regulation Authority",
-      "headline": "Effective practices: Cyber risk and resilience management relating to quantum computing",
-      "url": "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/effective-practices-cyber-risk-and-resilience-management-relating-to-quantum-computing",
-      "judged": "live",
-      "run": "2026-11-19-0600",
-      "near": "Near-miss: only “A change of direction” failed."
     },
     {
       "id": "c-aa1a53ab0b",
