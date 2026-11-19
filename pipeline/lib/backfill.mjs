@@ -40,6 +40,11 @@ const yearToDate = (extra = {}) => Object.freeze({ sections: PASS_SECTIONS, inst
 const REJUDGE_SECTIONS = Object.freeze([...SECTIONS]);
 const REJUDGE_INSTRUCTION = '2026-10-20 ET: "Re-judge backfill 5–20 Oct" under FILTER.md v2, all three sections; the days the live routine judged under v1 (BACKFILL.md §1a).';
 const rejudge = (extra = {}) => Object.freeze({ sections: REJUDGE_SECTIONS, instruction: REJUDGE_INSTRUCTION, rejudge: true, ...extra });
+// 2026-11-19, owner, after FILTER.md v6 (thresholds revision 4): the days holding the dropped stories the owner
+// ticked on the Dropped page and approved as items (BACKFILL.md §1b); every section, only those stories
+const RECALL_DAYS = Object.freeze(['2026-10-23', '2026-10-27', '2026-10-28', '2026-11-04', '2026-11-06', '2026-11-09', '2026-11-11', '2026-11-12', '2026-11-13', '2026-11-19']);
+const RECALL_INSTRUCTION = '2026-11-19 ET: owner recall review of the Dropped page under FILTER.md v6; the owner approved the re-judged items for publishing ("Approvals done"), all three sections, the ticked stories only (BACKFILL.md §1b).';
+const recall = (extra = {}) => Object.freeze({ sections: REJUDGE_SECTIONS, instruction: RECALL_INSTRUCTION, recall: true, ...extra });
 
 /**
  * The passes the owner has instructed, mirroring the BACKFILL.md §1 table (binding). A pass key is
@@ -72,6 +77,8 @@ export const PASSES = Object.freeze({
     const day = `2026-10-${pad2(5 + i)}`;
     return [day, rejudge(day === '2026-10-20' ? { until: '2026-10-20T18:00:00-04:00' } : {})];
   })),
+  // owner recall review (BACKFILL.md §1b): single days, overlapping the live runs' windows by design
+  ...Object.fromEntries(RECALL_DAYS.map((day) => [day, recall(day === '2026-11-19' ? { until: '2026-11-19T18:00:00-05:00' } : {})])),
 });
 
 /**
@@ -80,6 +87,13 @@ export const PASSES = Object.freeze({
  * windows by design; the year-to-date passes above stay contiguous on their own.
  */
 export const REJUDGE_PASS_KEYS = Object.freeze(Object.keys(PASSES).filter((k) => PASSES[k].rejudge === true));
+
+/**
+ * Recall-review passes (BACKFILL.md §1b): single days after 2026-10-20 that hold dropped stories the
+ * owner rated "should have passed" on 2026-11-19 and approved as items under FILTER.md v6. Only those
+ * stories are registered and judged; the live records of those days are untouched.
+ */
+export const RECALL_PASS_KEYS = Object.freeze(Object.keys(PASSES).filter((k) => PASSES[k].recall === true));
 
 /** Backfill-only drop codes (BACKFILL.md §6); every other code is FILTER.md §8.2's closed list. */
 export const BF_REASON_CODES = Object.freeze(['BF_SECTION_EXCLUDED', 'BF_OUT_OF_WINDOW', 'BF_URL_UNVERIFIED']);

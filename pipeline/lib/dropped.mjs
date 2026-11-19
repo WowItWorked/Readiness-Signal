@@ -54,6 +54,8 @@ const KNOB_NAMES = Object.freeze({
   cs_demonstration_evidence: 'the demonstration evidence standard', cs_accept_preprints: 'the preprint rule', rt_standard_setters: 'the standard-setter scope',
   rt_speaker_tier: 'the speaker tier', ev_gov_tech_restriction_scope: 'the government-restriction scope', rt_cyber_agencies: 'the cyber-agency scope', rt_us_bills: 'the US bill stage',
   research_require_sample: 'the research sample rule', unnamed_source_reporting: 'the unnamed-source rule', m2_min_scope_factor: 'the update size factor',
+  rt_statement_bar: 'the statement bar', ev_authority_action_prominence: 'the press-coverage rule for authority actions', ev_authority_action_scope: 'the authority-action scope',
+  ev_simultaneous_outage: 'the simultaneous-outage rule', cs_sector_shift: 'the sector-shift rule', cs_supplier_access_breadth: 'the supplier-access breadth',
 });
 const SECTION_NAMES = Object.freeze({ EV: 'Executive Visibility', CS: 'Capability & Control Shift', RT: 'Regulatory & Executive Trajectory' });
 

@@ -3,7 +3,7 @@
   "description": "Tunable knobs for the selection standard in pipeline/FILTER.md (section 9). The routine agent reads this file at the start of every run, applies each knob's 'value', copies 'level' into decisions.json as threshold_level, and never edits it. Only the owner changes it, after a calibration review, one step per knob per review (FILTER.md 9.6). Fields named 'description', 'element', 'launch', 'loosening_steps' and 'tightening_steps' are documentation; only 'value' is applied. FILTER.md section 11 lists every launch choice that goes beyond the owner's brief, each with its knob here.",
   "level": "high",
   "level_description": "Overall posture label recorded in every run record. One of high, medium, low. Stays 'high' until the owner judges the overall posture has changed; individual knob changes are tracked by 'revision' and 'changelog'.",
-  "revision": 3,
+  "revision": 4,
   "changelog": [
     {
       "revision": 1,
@@ -25,6 +25,13 @@
       "level": "high",
       "change": "Owner calibration: new knob ev_gov_tech_restriction_scope (launch off; set to orders_and_designations) for FILTER.md version 4's new limbs E2g (government technology restriction) and E4g (restricted technology within institutions' reach). FILTER.md 8.2 adds EV_PASS_GOV_RESTRICTION; 10 #112-#115; 11.1 #25.",
       "evidence": "A government-wide order removing an AI developer's models, and third-party products built on them, from US federal civilian systems (Federal Register, 2026-10-20) was not collected and could not pass E2d, because it binds no institution. The owner rated it should-have-passed: executives ask whether a technology a government has excluded on security grounds is present at the institution or its suppliers. The owner chose the broader scope (exclusion orders, sanctions designations, entity listings and single-agency bans) over exclusion orders alone. Watch the EV_PASS_GOV_RESTRICTION share at each review; tightening to exclusion_orders is the first response if designations crowd the archive."
+    },
+    {
+      "revision": 4,
+      "date": "2026-11-19",
+      "level": "high",
+      "change": "Owner calibration from a recall review of the Dropped page, outside the FILTER.md 9.6(a) counts and the 9.6(d) one-knob limit by owner decision. New knob rt_statement_bar (launch direction_change) set to on_topic; rt_cyber_agencies false -> true; new knobs ev_authority_action_prominence (launch press_required) set to authority_publication, ev_authority_action_scope (launch financial_infrastructure) set to technology_enabled_schemes, ev_simultaneous_outage (launch false) set to true, cs_sector_shift (launch false) set to true, cs_supplier_access_breadth (launch mainstream_supplier) set to mainstream_platform. FILTER.md version 6 amends 4.2 (E2a, E2e, E3, E4f), 4.3 (C1, C4), 4.4.1, 4.4.3, 4.4.5, 6.9, 8.4, 9.3, 9.4; 10 #120-#132; 11.1 #26.",
+      "evidence": "The owner ticked 32 of the 1,081 stories on the Dropped page (1 January to 19 November 2026) as should have passed, with a note on each. 27 were documents of authorities and standard setters: 13 failed R3 (speeches, testimony, effective-practice and risk reports), 5 failed R4 or R4f (priorities and principles-based statements), 3 failed R3f (an extension, a transmittal and bulletins applying another authority's guidance), 3 failed R2 (two cyber or standards agencies and a ranking member's letter), 1 failed R1 (a standard setter's meeting release), 1 had no mechanism and 1 was a paywalled report with no primary text found. The owner's stated ground: any related statement, decision or guidance from a regulator makes the cut. On the projected volume the owner narrowed on_topic to documents an authority itself issues: speeches, testimony, periodic risk reports, standard setters' meeting releases and legislators' letters keep the earlier tests, so 13 of the 27 stay dropped and one transmittal folds into the joint statement it transmits. The other 5: an authority's fraud enforcement action with no press coverage (E3), a sanctions action against an IT-worker scheme (E2), same-day outages at several large banks (E2), a campaign shifting to the financial sector (C1) and a supplier compromise through a cloud platform's integrations (C4). The review was not a random sample and the unticked stories were not all rated. About 240 regulatory-section drops were logged in the period (113 R3, 24 R4 or R4f, 13 R3f, 44 R2, 45 R1): on_topic admits the issued documents among them (not the speeches, which are most of the 113 R3 drops), so published volume is reviewed at the next calibration and direction_change is the tightening step."
     }
   ],
   "dedup_window_days": 21,
@@ -172,6 +179,27 @@
       "loosening_steps": ["exclusion_orders", "orders_and_designations"],
       "description": "Which US, UK, EU or Canadian national government security restrictions on a named technology provider's commercially available products meet E2g (and so E4g). off: none. exclusion_orders: a government-wide order, rule or enacted law excluding or removing them from government systems or procurement. orders_and_designations: also a sanctions designation, export-control entity listing or equivalent designation of the provider, and one department's or agency's binding ban on its own systems. Never, at any value: proposals, investigations, advisories, sub-national actions, trade-only restrictions, or restatements of an existing restriction."
     },
+    "ev_authority_action_prominence": {
+      "value": "authority_publication",
+      "element": "E3",
+      "launch": "press_required",
+      "loosening_steps": ["authority_publication"],
+      "description": "Owner calibration 2026-11-19 (revision 4). press_required (launch): the E3 outlet counts apply to every event. authority_publication: E3 is met without press coverage when the event is an official action (an enforcement action, sanctions designation, indictment, announced arrest or takedown, emergency directive or binding order) that a US, UK, EU or Canadian authority announces on its own public page; the release is cited as sources[0]. Advisories, alerts and known-exploited listings are not official actions. E1, E2, E4 and E5 are unchanged."
+    },
+    "ev_authority_action_scope": {
+      "value": "technology_enabled_schemes",
+      "element": "E2e, E4c",
+      "launch": "financial_infrastructure",
+      "loosening_steps": ["technology_enabled_schemes"],
+      "description": "Owner calibration 2026-11-19 (revision 4). financial_infrastructure (launch): an authority's sanctions designation, indictment, arrest or takedown confirms a campaign under E2e only when its text describes a campaign against financial institutions' customer-facing infrastructure. technology_enabled_schemes: also when it describes a scheme working through organisations' technology or workforce access (fraudulent remote IT workers, impersonation, business email compromise, fraudulent investment or payment platforms), names the technique, dates activity within 12 months, and names financial institutions, their customers or investors among the targets or states that businesses across sectors are targeted; E4c then holds on the same text."
+    },
+    "ev_simultaneous_outage": {
+      "value": true,
+      "element": "E2a, E4f",
+      "launch": false,
+      "loosening_steps": [true],
+      "description": "Owner calibration 2026-11-19 (revision 4). When true, E2a is met by customer-facing digital services disrupted on the same day at ev_disruption_min_institutions or more financial institutions, each named in an opened report by a general or business outlet, with duration, customer counts and any shared dependency unknown; E4f then holds. Complaint-tracker counts alone never establish a disruption at an institution. When false, a multi-institution disruption needs a shared dependency or another E2a floor."
+    },
     "ev_common_threat_nexus": {
       "value": false,
       "element": "E4e",
@@ -231,10 +259,24 @@
       "launch": false,
       "loosening_steps": [true],
       "description": "When true, research meeting RA1-RA6 that invalidates a quantification assumption (loss distributions, scenario severities) can meet C1 even without a capability change or control failure; the mechanism is then limited to kri_kpi. When false, it fails C1 (CS_NO_SPECIFIC_CHANGE)."
+    },
+    "cs_sector_shift": {
+      "value": true,
+      "element": "C1",
+      "launch": false,
+      "loosening_steps": [true],
+      "description": "Owner calibration 2026-11-19 (revision 4). When true, an established technique, tool or framework newly turned on financial institutions as a campaign, observed in the wild and stated by an authority or a named research team with artefacts, meets C1 on Branch A (before: used elsewhere; now: a campaign aimed at financial institutions); C5 is the step-change first use against financial services, and the mechanism is never candidate_issue. When false, an actor adopting established techniques fails C1 whatever its targets."
+    },
+    "cs_supplier_access_breadth": {
+      "value": "mainstream_platform",
+      "element": "C4",
+      "launch": "mainstream_supplier",
+      "loosening_steps": ["mainstream_platform"],
+      "description": "Owner calibration 2026-11-19 (revision 4). mainstream_supplier (launch): a supplier-access compromise meets C4 only when the supplier is a mainstream product in its category or used by many financial institutions. mainstream_platform: also when the access the attacker used was granted through a mainstream platform's standard integration mechanism (a major cloud platform's cross-account roles or marketplace integrations, an identity provider's delegated application permissions), however small the supplier."
     }
   },
   "regulatory_trajectory": {
-    "description": "Section 3 entry test: a signal of where regulators or executives are heading (a speech, testimony, consultation or supervisory direction in the US, UK, EU or Canada, a public statement by a leading bank executive, or a newly issued formal rule or exam notice); reminders and restatements of existing rules do not count. Soft signals need R1-R5 (FILTER.md 4.4.3; bank executives 4.4.4); formal rules and exam notices need R1, R1f, R2, R3f, R4f and R5 (FILTER.md 4.4.5; scope set by formal_instrument_scope). Empty is expected. Fixed, never knobs: the US, UK, EU and Canadian jurisdiction scope for authorities and the Global watch route (FILTER.md 4.4.6), R3, R4, R5, R3b, and the formal-instrument elements R1f, R3f (apart from its max_event_age_days window) and R4f.",
+    "description": "Section 3 entry test: a signal of where regulators or executives are heading (a speech, testimony, consultation or supervisory direction in the US, UK, EU or Canada, a public statement by a leading bank executive, or a newly issued formal rule or exam notice); reminders and restatements of existing rules do not count. Soft signals need R1-R5 (FILTER.md 4.4.3; bank executives 4.4.4); formal rules and exam notices need R1, R1f, R2, R3f, R4f and R5 (FILTER.md 4.4.5; scope set by formal_instrument_scope). Empty is expected. Fixed, never knobs: the US, UK, EU and Canadian jurisdiction scope for authorities and the Global watch route (FILTER.md 4.4.6), R3, R4, R5, R3b, and the formal-instrument elements R1f, R3f (apart from its max_event_age_days window) and R4f. Since revision 4, rt_statement_bar chooses between two fixed readings of R3, R4, R3f and R4f (FILTER.md 4.4.3).",
     "rt_speaker_tier": {
       "value": "principal",
       "element": "R2",
@@ -250,11 +292,11 @@
       "description": "consultations (launch): consultative documents and calls for input from global financial standard setters (FSB, BCBS, CPMI, IOSCO, IAIS and other BIS-hosted committees) are RT instruments; nothing else of theirs is. consultations_and_final_guidance (2026-10-20, revision 2): also their final standards, principles, guidance and sound-practice reports within the seven domains, as soft signals under R1-R5 (a final text of an archived consultation is its M4 update). consultations_final_guidance_and_principal_speeches: also speeches by their chairs and secretaries-general. A tightening review may set it to none, under which standards_body sources can publish only through CS, which in practice is almost never."
     },
     "rt_cyber_agencies": {
-      "value": false,
+      "value": true,
       "element": "R2",
       "launch": false,
       "loosening_steps": [true],
-      "description": "When true, US, UK, EU and Canadian national cyber, technology-standards and AI authorities (for example NIST, CISA, the US National Cyber Director's office, NCSC, ENISA, the EU AI Office, the Canadian Centre for Cyber Security) are eligible issuers for consultation drafts and statements of policy direction on technology or controls widely used in financial services. When false, they fail R2 (RT_SPEAKER_INELIGIBLE); their advisories and directives are evidence under EV and CS either way."
+      "description": "When true, US, UK, EU and Canadian national cyber, technology-standards and AI authorities (for example NIST, CISA, the US National Cyber Director's office, NCSC, ENISA, the EU AI Office, the Canadian Centre for Cyber Security) are eligible issuers for consultation drafts and statements of policy direction on technology or controls widely used in financial services. When false, they fail R2 (RT_SPEAKER_INELIGIBLE); their advisories and directives are evidence under EV and CS either way. Set to true by owner calibration 2026-11-19 (revision 4); while rt_statement_bar is on_topic their published guidance, guidelines, reports and joint position papers on such technology or controls are admitted too."
     },
     "rt_implementing_consultations": {
       "value": false,
@@ -276,6 +318,13 @@
       "launch": "gsib_extended",
       "loosening_steps": ["domestic_systemic"],
       "description": "gsib_extended: the group-level CEO, chair, president, COO, CFO, CRO, CISO, CIO, CTO, chief data officer or chief AI officer of any bank on the current FSB G-SIB list, wherever headquartered. domestic_systemic: also the same roles at banks designated domestic systemically important by their home authority."
+    },
+    "rt_statement_bar": {
+      "value": "on_topic",
+      "element": "R3, R4, R3f, R4f",
+      "launch": "direction_change",
+      "loosening_steps": ["on_topic"],
+      "description": "Owner calibration 2026-11-19 (revision 4): guidance and decisions on technology risk that an eligible authority itself issues make the cut. direction_change (launch): R3 needs a concrete change of direction, R4 a specific topic and expected behaviour, R3f a first issuance in final form, R4f specific obligations or examination content. on_topic: for a document issued in an eligible authority's name (guidance, practices, supervisory statements, bulletins, findings, priorities, consultation-stage documents, position papers, notices), R3 is met when technology risk within the seven domains is a stated subject with at least one reportable statement, and the candidate reports its first publication within max_event_age_days; R4 needs only a specific technology-risk topic; a notice that carries a decision about an instrument or consultation is new under R3f; R4f is met by a named technology-risk priority, focus area or factor. Unchanged at every value: speeches, testimony, op-eds and letters by individuals, periodic risk reports, standard setters' meeting releases, legislators' letters and bank executives' statements. Passing mentions, ineligible issuers and re-publications still drop. Tightening step: direction_change."
     }
   },
   "writing": {

@@ -79,6 +79,32 @@ version 2 as day passes.
   the pass's earlier rows and item are untouched. Coverage dated 2026-10-19 is before the window and
   is not registered, so the item takes the slot of its earliest registered source (§4).
 
+## 1b. Recall-review passes (owner instruction 2026-11-19)
+
+On 2026-11-19 the owner reviewed the Dropped page, rated 32 dropped stories "should have passed" and
+revised the standard for them (FILTER.md version 6, `pipeline/thresholds.json` revision 4). The stories
+that pass under version 6 were drafted as items, and the owner approved all 16 for publishing
+("Approvals done"). They publish as backfilled items:
+
+| Pass | Window (ET) | Sections |
+|---|---|---|
+| 2026-07, 2026-09 (existing month passes) | unchanged | unchanged: `publish --append-missing --rejudge` for the ticked candidates |
+| 2026-10-23, 2026-10-27, 2026-10-28, 2026-11-04, 2026-11-06, 2026-11-09, 2026-11-11, 2026-11-12, 2026-11-13 (day passes) | each calendar day 00:00 – 23:59 | `executive_visibility`, `capability_shift`, `regulatory_trajectory` |
+| 2026-11-19 (day) | 2026-11-19 00:00 – 18:00 (`until` 2026-11-19T18:00:00-05:00) | all three |
+
+- **Only the ticked stories.** These are not full re-judge passes: each day pass registers the sources of
+  the stories the owner ticked for that day (`add`, discovery `feed` for the live runs' candidates and
+  `search` for primary documents found for them) and judges those under version 6. No other survivor of
+  those days is judged again; the owner chose to test the revised standard on the ticked stories before
+  any wider re-judge.
+- **Overlap by design**, as in §1a: the windows overlap the live runs' windows. Live records
+  (`docs/data/runs.json`, the live run logs, `pipeline/state/seen.json`) stay as they are, and the items
+  carry `backfilled: true`.
+- **Stories that stay dropped** keep their logged judgment: a ticked story that still fails under
+  version 6 is not registered in a pass.
+- A story dated in one pass whose later notice falls in another (a comment-period extension of a
+  September proposal) publishes in the later day's pass with `update_of` naming the earlier backfilled item.
+
 ## 2. Selection standard: the live standard, judged as of the date
 
 - **Same tests, same bar.** Every candidate is judged against `pipeline/FILTER.md` (gates G1–G9, §4.3
