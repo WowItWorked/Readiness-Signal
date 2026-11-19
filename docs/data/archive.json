@@ -2404,6 +2404,448 @@
       ],
       "backfilled": false,
       "update_of": "RS-261118-1000-01"
+    },
+    {
+      "id": "RS-260709-1800-01",
+      "timestamp": "2026-07-09T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "The FDIC encourages banks to share fraud information under section 314(b), citing FinCEN guidance that permits real-time sharing.",
+      "domains": [
+        "fraud",
+        "data"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "fraud",
+          "text": "FinCEN's updated guidance, as the FDIC describes it, allows sharing about attempted transactions, and sharing without reason to believe the information relates to a customer of the receiving institution, which widens what can pass between institutions about repeat actors and schemes that move across them."
+        },
+        {
+          "domain": "data",
+          "text": "The guidance lists video surveillance footage, cyber-related data such as IP addresses and fraud indicators as shareable, and requires both the sharing and the receiving party to maintain procedures protecting the information's security and confidentiality."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The letter encourages participation in a voluntary programme and summarises FinCEN's guidance of 12 June 2026 on what may be shared; it sets no expectation, target or deadline for FDIC-supervised institutions. The FDIC calls fraud a significant and growing concern. No requirement exists to test against. This changes if an agency makes participation or sharing a supervisory expectation.",
+      "sources": [
+        {
+          "publication": "Federal Deposit Insurance Corporation",
+          "url": "https://www.fdic.gov/news/financial-institution-letters/2026/fdic-encourages-voluntary-information-sharing-under-314b",
+          "headline": "FDIC Encourages Voluntary Information Sharing Under 314(b) of the USA PATRIOT Act",
+          "published": "2026-07-09",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "American Banker",
+          "url": "https://www.americanbanker.com/news/occ-fdic-encourage-banks-to-share-data-on-fraud",
+          "headline": "OCC, FDIC encourage banks to share data on fraud",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260716-1400-01",
+      "timestamp": "2026-07-16T14:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "US banking agencies will review banks' most sensitive information on-site in examinations and notify banks of supervisory data breaches within 72 hours.",
+      "domains": [
+        "data",
+        "cyber"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "data",
+          "text": "The agencies describe a coordinated approach to identifying highly sensitive data and documents, with enhanced procedures such as review on-site instead of transfer onto agency systems, so some examination material stays inside the supervised institution's environment."
+        },
+        {
+          "domain": "cyber",
+          "text": "The agencies commit to tell affected banks of any potential or confirmed material breach of confidential supervisory information as soon as practicable and within 72 hours of discovery unless legal restrictions apply, which makes the supervisor a notifying party when its own systems are breached."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The statement sets the agencies' own procedures: on-site review of highly sensitive material and a 72-hour notice to banks of material breaches of confidential supervisory information. It places duties on the agencies and their examiners and none on supervised institutions, so no institution-level control alters it. This changes if the agencies define which information qualifies or ask institutions to classify it.",
+      "sources": [
+        {
+          "publication": "Board of Governors of the Federal Reserve System",
+          "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260716a.htm",
+          "headline": "Agencies issue joint statement on handling of highly sensitive information during bank examinations",
+          "published": "2026-07-16",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-260911-1000-01",
+      "timestamp": "2026-09-11T10:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "US banking agencies propose principles-based third-party risk guidance and state how they will supervise core providers to community banks.",
+      "domains": [
+        "third_party"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "third_party",
+          "text": "The agencies plan to rescind existing third-party risk management guidance once the proposal is final, and a separate statement sets out factors they will weigh in supervisory and enforcement decisions about core service providers, including where a provider causes a community banking organisation to engage in unsafe or unsound practices."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The guidance is a proposal, described as non-binding, with comments due 60 days after Federal Register publication; the agencies plan to rescind existing guidance only when it is final. The core-provider statement describes factors the agencies will consider in their own supervisory and enforcement decisions. No final expectation exists to test against. This changes when the final guidance is issued.",
+      "sources": [
+        {
+          "publication": "Board of Governors of the Federal Reserve System",
+          "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260911a.htm",
+          "headline": "Agencies seek comment on proposed third-party risk management guidance and issue statement on community bank engagement with core service providers",
+          "published": "2026-09-11",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "Office of the Comptroller of the Currency",
+          "url": "https://www.occ.gov/news-issuances/bulletins/2026/bulletin-2026-47.html",
+          "headline": "Interagency Statement: Risk-Based Supervision of Certain Services Provided by Core Providers to Community Banking Organizations",
+          "published": "2026-09-11",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261023-1800-01",
+      "timestamp": "2026-10-23T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "The SEC's fiscal 2027 examination priorities name operational resiliency, cybersecurity and emerging technologies among focus areas for registrants.",
+      "domains": [
+        "cyber",
+        "resilience"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Cybersecurity and protection of customer information sit in one focus area with operational resiliency, across more than 34,000 registrants that include investment advisers, broker-dealers and clearing agencies, so one examination theme reaches firms of very different size and function."
+        },
+        {
+          "domain": "resilience",
+          "text": "A separate focus area covers emerging technologies, described as including super intelligence and other advanced technologies, where they affect market operations, compliance, fraud prevention and investor protection; the release gives no examination procedures for either area."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The release lists focus areas for the SEC's examination programme in fiscal 2027 and states that they are not exhaustive. It names cybersecurity, operational resiliency and emerging technologies without examination procedures, thresholds or new obligations, so it describes where examiners will look, which no institution-level control alters. This changes if the Division publishes examination observations or procedures for these areas.",
+      "sources": [
+        {
+          "publication": "U.S. Securities and Exchange Commission",
+          "url": "https://www.sec.gov/newsroom/press-releases/2026-109-sec-announces-fiscal-year-2027-examination-priorities",
+          "headline": "SEC Announces Fiscal Year 2027 Examination Priorities",
+          "published": "2026-10-23",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261027-1800-01",
+      "timestamp": "2026-10-27T18:00:00-04:00",
+      "section": "regulatory_trajectory",
+      "claim": "NIST finalises its timeline for retiring quantum-vulnerable algorithms, supporting federal migration deadlines of 2030, 2031 and 2035.",
+      "domains": [
+        "cyber",
+        "third_party"
+      ],
+      "source_class": "standards_body",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "The report identifies which of NIST's existing cryptographic standards are quantum-vulnerable and when each will be disallowed, or allowed only at the user's own risk, in federal systems, giving dated end-points for algorithms in NIST's current standards."
+        },
+        {
+          "domain": "third_party",
+          "text": "NIST says the timelines apply to federal systems but will affect many organisations that work with the federal government, and that technology providers can use the report when developing quantum-readiness road maps."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The report sets NIST's schedule for withdrawing quantum-vulnerable algorithms and supports federal deadlines of 2030 for key establishment, 2031 for digital signatures and 2035 overall. The deadlines apply to federal systems; NIST says organisations working with government will be affected. It is a standards-level schedule that no institution-level control alters. This changes if a financial supervisor adopts these dates as expectations.",
+      "sources": [
+        {
+          "publication": "NIST",
+          "url": "https://www.nist.gov/news-events/news/2026/10/nist-report-provides-guidelines-transition-post-quantum-cryptography",
+          "headline": "NIST Report Provides Guidelines for Transition to Post-Quantum Cryptography Standards",
+          "published": "2026-10-27",
+          "source_class": "standards_body"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261028-1800-01",
+      "timestamp": "2026-10-28T18:00:00-04:00",
+      "section": "executive_visibility",
+      "claim": "The US Treasury sanctions 10 individuals and one entity over North Korean IT worker schemes that defraud businesses.",
+      "domains": [
+        "cyber",
+        "fraud"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Treasury says the workers obtain employment with legitimate companies using fraudulent documents, stolen identities and fabricated personas, and have used their access to corporate networks to deploy malware and exfiltrate data, so the entry point described is the hiring process."
+        },
+        {
+          "domain": "fraud",
+          "text": "Treasury says the networks used cryptocurrency transactions, money-laundering techniques and AI tools to move proceeds, and that one designated intermediary has conducted nearly $2m of cryptocurrency conversions for North Korean officials since January 2025."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "Treasury describes a scheme that advisories from US agencies already set out: remote IT workers hired under false identities whose wages are diverted and who, in some cases, misuse network access. The action designates 10 people and one entity and follows a March 2026 designation. Guidance on verifying remote workers' identity predates it. This changes if a designation names a technique that defeats those checks.",
+      "sources": [
+        {
+          "publication": "U.S. Department of the Treasury",
+          "url": "https://home.treasury.gov/news/press-releases/sb0669",
+          "headline": "Treasury Sanctions Facilitators of DPRK IT Worker Fraud Targeting U.S. Businesses",
+          "published": "2026-10-28",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "The Hill",
+          "url": "https://thehill.com/policy/technology/6178280-treasury-department-sanctions-north-korean-it-scheme/",
+          "headline": "Treasury sanctions North Koreans, Russians for alleged IT fraud",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261104-1800-01",
+      "timestamp": "2026-11-04T18:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "The OCC issues an examiner framework for banks' AI use that ties control intensity to an AI agent's potential consequences.",
+      "domains": [
+        "ai"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "The framework tells examiners not to treat AI as a separate risk category and says classification of a use case may rest on potential consequences, transfer of agency and the degree of human oversight, not on technical sophistication; the OCC states that it sets no supervisory expectations for banks."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The OCC states that the framework is a resource for its examiners, sets no supervisory expectations and is not for banks to assess their own AI use. It describes how examiners may scale their work to a use case's consequences, agency and human oversight. It concerns examiner conduct, which no institution-level control alters. This changes if the OCC issues expectations for banks on AI agents.",
+      "sources": [
+        {
+          "publication": "Office of the Comptroller of the Currency",
+          "url": "https://www.occ.gov/news-issuances/bulletins/2026/bulletin-2026-54.html",
+          "headline": "Super Intelligence: Supervisory Framework",
+          "published": "2026-11-04",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261106-1800-01",
+      "timestamp": "2026-11-06T18:00:00-05:00",
+      "section": "capability_shift",
+      "claim": "Microsoft says a financially motivated group began using the agentic AI attack framework ARTEX against financial organisations in October 2026.",
+      "domains": [
+        "cyber",
+        "ai"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "Microsoft observed the group use the framework with conventional tools to scan internet-facing systems, exploit flaws including anonymous file upload and server-side request forgery, and install open-source remote access trojans; the report describes a trend of attackers accelerating every stage of the attack chain."
+        },
+        {
+          "domain": "ai",
+          "text": "Microsoft states that agentic frameworks send a wide variety of requests in a short time, retry variations and move to next-stage actions at machine speed, and that blocking their default tool signatures does not stop an agent, which changes them quickly."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "Microsoft reports a group that mainly targets financial organisations in Southeast Asia adopting an agentic framework to automate scanning, exploitation of known flaw types and credential abuse. The flaw types and trojans are established and fall within the patching, exposure reduction and identity controls that common frameworks describe; the change is tempo. This changes if a report shows the framework defeating a specific control.",
+      "sources": [
+        {
+          "publication": "Microsoft Threat Intelligence",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/11/06/artex-abuse-expands-as-cybercriminals-target-financial-sector/",
+          "headline": "ARTEX abuse expands as cybercriminals target financial sector",
+          "published": "2026-11-06",
+          "source_class": "vendor_threat_research"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261109-1800-01",
+      "timestamp": "2026-11-09T18:00:00-05:00",
+      "section": "capability_shift",
+      "claim": "Attackers used Qubole's AWS credentials to assume roles in customers' cloud accounts and steal secrets, Wiz researchers report.",
+      "domains": [
+        "third_party",
+        "cyber"
+      ],
+      "source_class": "vendor_threat_research",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "third_party",
+          "text": "Customers had created roles in their own AWS accounts that trusted the vendor's account; Wiz reports that many organisations left those trust policies active after they stopped using the platform, so the access outlived the commercial relationship."
+        },
+        {
+          "domain": "cyber",
+          "text": "Wiz reports that every role assumption it attributed to the attacker included an External ID and succeeded, and that the attacker then collected secrets from Secrets Manager, Parameter Store and Lambda and tested credentials for other identity services found there."
+        }
+      ],
+      "validation_question": "Are cross-account roles that trust third-party vendor accounts inventoried and removed when the integration is retired, with the date of the last review?",
+      "candidate_issue_statement": "Where roles trusting a third-party vendor's cloud account remain active after the integration is retired, or are not inventoried, a compromise of the vendor's credentials can give an attacker access to secrets and stored data without any credential of the organisation being stolen.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Wiz",
+          "url": "https://www.wiz.io/blog/qubole-cross-account-access-abused-in-the-wild",
+          "headline": "Trusted by Default: Qubole Cross-Account Access Abused in the Wild",
+          "source_class": "vendor_threat_research"
+        },
+        {
+          "publication": "The Register",
+          "url": "https://www.theregister.com/security/2026/11/09/attackers-backdoor-trusted-aws-integrations-to-steal-secrets/5308553",
+          "headline": "Attackers backdoor trusted AWS integrations to steal secrets",
+          "published": "2026-11-09",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261111-1800-01",
+      "timestamp": "2026-11-11T18:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "The FCA says firms' resilience self-assessments rely on planned remediation instead of evidence of current capability.",
+      "domains": [
+        "resilience",
+        "third_party"
+      ],
+      "source_class": "regulator",
+      "mechanism": "candidate_issue",
+      "interpretation": [
+        {
+          "domain": "resilience",
+          "text": "The FCA's review of 2025 to 2026 self-assessments finds the main area for development is evidence quality: stronger submissions show what can be delivered now during severe but plausible disruption, including when full recovery within impact tolerance is not possible, instead of pointing to future investment."
+        },
+        {
+          "domain": "third_party",
+          "text": "Among the capabilities that stronger submissions evidence is management of material third-party dependencies, and they explain how recovery priorities change when several services, firms or market participants are disrupted at once."
+        }
+      ],
+      "validation_question": "Does the latest operational resilience self-assessment evidence, for each important business service, the ability to limit harm during severe disruption using current capabilities, with the date of the supporting test?",
+      "candidate_issue_statement": "Where an operational resilience self-assessment rests on planned remediation or future investment instead of evidence of current capability, an important business service can breach its impact tolerance during a disruption that the assessment recorded as manageable.",
+      "awareness_rationale": null,
+      "sources": [
+        {
+          "publication": "Financial Conduct Authority",
+          "url": "https://www.fca.org.uk/publications/good-and-poor-practice/operational-resilience-demonstrating-resilience-practice",
+          "headline": "Operational resilience: demonstrating resilience in practice",
+          "published": "2026-11-11",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261112-1800-01",
+      "timestamp": "2026-11-12T18:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "ENISA and CERT-EU report an experiment using frontier AI models to review the security of EU institutions' open-source software.",
+      "domains": [
+        "ai",
+        "cyber"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "ai",
+          "text": "The report assesses whether frontier AI models can support security reviews of open-source software maintained by EU institutions, bodies and agencies, giving a public-sector account of AI used on the defensive side of code review."
+        },
+        {
+          "domain": "cyber",
+          "text": "ENISA addresses the report to national and EU authorities and the private sector, and lists it beside its July 2026 recommendations on cybersecurity in the frontier AI era, so it forms part of a series from the EU cyber agency."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The publication reports an experiment on software maintained by EU institutions and explores how AI models can assist security assessment. The page sets no expectation, standard or timetable for any organisation. No control or metric follows from an account of one experiment. This changes if ENISA or a financial supervisor turns the findings into recommendations on AI-assisted code review.",
+      "sources": [
+        {
+          "publication": "ENISA",
+          "url": "https://www.enisa.europa.eu/publications/joint-advisory-on-the-use-of-frontier-ai-models-for-code-review",
+          "headline": "Joint Advisory on the Use of Frontier AI Models for Code Review",
+          "published": "2026-11-12",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": null
+    },
+    {
+      "id": "RS-261113-1800-02",
+      "timestamp": "2026-11-13T18:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "Four US agencies extend to 16 December the comment period on proposed third-party risk management guidance.",
+      "domains": [
+        "third_party"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "third_party",
+          "text": "The proposal would replace the banking agencies' existing third-party risk management guidance with a principles-based, non-binding text tailored to the risk of each relationship; the extension moves the close of comments from 16 November to 16 December."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The notice changes one date: comments close on 16 December instead of 16 November. The proposed guidance is unchanged and is described by the agencies as non-binding, and they plan to rescind existing third-party guidance only once a final text is issued. No expectation or timetable for institutions follows from an extension. This changes when the agencies publish the final guidance.",
+      "sources": [
+        {
+          "publication": "Office of the Comptroller of the Currency",
+          "url": "https://www.occ.gov/news-issuances/news-releases/2026/nr-ia-2026-100.html",
+          "headline": "Agencies Extend Comment Period for Proposed Third-Party Risk Management Guidance",
+          "published": "2026-11-13",
+          "source_class": "regulator"
+        }
+      ],
+      "backfilled": true,
+      "update_of": "RS-260911-1000-01"
     }
   ]
 }
