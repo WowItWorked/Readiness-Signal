@@ -21,7 +21,7 @@ export const SECTIONS = Object.freeze([
   },
   {
     key: 'regulatory_trajectory', n: 3, title: 'Regulatory & Executive Trajectory', mark: 'dashed',
-    test: 'Is this a signal of where regulators or executives are heading — a speech, testimony, consultation or supervisory direction in the US, UK, EU or Canada, a public statement by a leading bank executive, or a newly issued formal rule or exam notice? Reminders and restatements of existing rules do not count.',
+    test: 'Is this a signal of where regulators or executives are heading, or guidance a regulator has issued on technology risk — a speech, testimony, consultation or supervisory direction in the US, UK, EU or Canada, guidance, priorities or a decision an authority itself issues, a public statement by a leading bank executive, or a newly issued formal rule or exam notice? Reminders and re-publications that change nothing do not count.',
     empty: 'Most soft signals do not survive the entry test, and genuinely new formal rules or exam notices on technology risk are rare. An empty section is a result, not a gap.',
   },
 ]);

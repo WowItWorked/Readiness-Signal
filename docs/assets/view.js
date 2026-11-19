@@ -239,7 +239,7 @@ function regulatoryCard(d) {
         <span class="reg-t">${r.issuer ? `<span class="reg-who">${esc(r.issuer)}</span>` : ''}<span class="reg-c">${esc(r.item.claim)}</span></span>
       </button></li>`).join('');
   return `<section class="card dcard d-reg" aria-labelledby="reg-h">
-    ${cardHead('reg-h', 'Regulatory direction', 'Where regulators and executives are signalling they are heading, newest first.')}
+    ${cardHead('reg-h', 'Regulatory direction', 'What regulators have issued and where regulators and executives are heading, newest first.')}
     ${rows ? `<ol class="reg-list">${rows}</ol>` : `<div class="dash-none">${QUIET}<p>No regulatory or executive signal has cleared the bar yet.</p></div>`}
     ${d.regulatoryTotal > d.regulatory.length ? `<footer class="dcard-foot"><a class="small-link" href="#archive"${navAttrs('archive', 'section', 'regulatory_trajectory')}>All ${d.regulatoryTotal} in the archive</a></footer>` : ''}
   </section>`;
@@ -302,7 +302,7 @@ function introCard() {
 const INTRO_TESTS = {
   executive_visibility: 'a material incident a director would ask about.',
   capability_shift: 'a new attack capability or a failed control.',
-  regulatory_trajectory: 'where US, UK, EU and Canadian supervisors are heading.',
+  regulatory_trajectory: 'what US, UK, EU and Canadian supervisors have issued and where they are heading.',
 };
 
 function dashboardMain(st) {

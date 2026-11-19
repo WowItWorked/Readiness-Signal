@@ -351,11 +351,8 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   Escape and outside click; visible focus.
 - Section entry tests (report headers): 1 "Could a director or executive credibly ask 'what are we doing about
   this?' unprompted?" 2 "Has adversary capability changed, or has a control failed somewhere in a way that
-  invalidates an assumption others rely on?" 3 "Is this a signal of where regulators or executives are
-  heading — a speech, testimony, consultation or supervisory direction in the US, UK, EU or Canada, a public statement by a
-  leading bank executive, or a newly issued formal rule or exam notice? Reminders and restatements of existing rules
-  do not count." (Owner decision 2026-10-03: new formal rules and exam notices are in scope in this section; the
-  brief had excluded formal rules and exam notices as "covered elsewhere". Owner decision 2026-10-21:
+  invalidates an assumption others rely on?" 3 "Is this a signal of where regulators or executives are heading, or guidance a regulator has issued on technology risk — a speech, testimony, consultation or supervisory direction in the US, UK, EU or Canada, guidance, priorities or a decision an authority itself issues, a public statement by a leading bank executive, or a newly issued formal rule or exam notice? Reminders and re-publications that change nothing do not count." (Owner decision 2026-10-03: new formal rules and exam notices are in scope in this section; the
+  brief had excluded formal rules and exam notices as "covered elsewhere". Owner calibration 2026-11-19, FILTER.md version 6: guidance, priorities and decisions an authority itself issues pass on their technology-risk topic. Owner decision 2026-10-21:
   Canada joins the US, UK and EU as a core jurisdiction, FILTER.md §4.4.6.)
 
 - Dropped (owner request 2026-10-21; a section of the Archive since the owner's request of 2026-11-19): for audit.

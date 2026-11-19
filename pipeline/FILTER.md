@@ -477,7 +477,7 @@ Two branches:
 
 ### 4.4 Section 3: Regulatory & Executive Trajectory (RT)
 
-**Entry test (site copy):** "Is this a signal of where regulators or executives are heading — a speech, testimony, consultation or supervisory direction in the US, UK, EU or Canada, a public statement by a leading bank executive, or a newly issued formal rule or exam notice? Reminders and restatements of existing rules do not count."
+**Entry test (site copy):** "Is this a signal of where regulators or executives are heading, or guidance a regulator has issued on technology risk — a speech, testimony, consultation or supervisory direction in the US, UK, EU or Canada, guidance, priorities or a decision an authority itself issues, a public statement by a leading bank executive, or a newly issued formal rule or exam notice? Reminders and re-publications that change nothing do not count."
 
 Two kinds of signal: soft signals of direction (R1–R5, §4.4.3; bank executives §4.4.4), and newly issued formal rules and exam notices (owner decision 2026-10-03, §4.4.5). **This section going empty is acceptable and expected.** Most candidates fail it.
 
