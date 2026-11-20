@@ -4026,6 +4026,18 @@
       "run_id": "2026-11-20-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.fsisac.com/newsroom/stop-the-scams-fsisac-new-phishing-prevention-framework-to-counter-surge-in-financial-scams-targeting-financial-services-firms": {
+      "first_seen": "2026-11-20T10:06:08-05:00",
+      "run_id": "2026-11-20-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=64015": {
+      "first_seen": "2026-11-20T10:06:08-05:00",
+      "run_id": "2026-11-20-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
