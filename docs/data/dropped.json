@@ -139,6 +139,68 @@
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
+      "id": "c-5596c5021b",
+      "date": "2026-11-20",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6: known-exploited listing; same flaw judged yesterday; no second exploited flaw in 30 days, no pre-patch or sector signal",
+      "publication": "CISA",
+      "headline": "CISA KEV adds CVE-2026-76466: Cisco Expressway Series — Cisco Expressway Series Use of Hard-coded Credentials Vulnerability",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-76466",
+      "judged": "live",
+      "run": "2026-11-20-1400"
+    },
+    {
+      "id": "c-61a5b2b53b",
+      "date": "2026-11-20",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6: known-exploited listing alone is routine; directory-service flaw in a management product, no exception shown, patch status unstated",
+      "publication": "CISA",
+      "headline": "CISA KEV adds CVE-2026-123890: Broadcom VMware vCenter — VMWare vCenter Authentication Bypass Using an Alternate Path or Channel Vulnerability",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-123890",
+      "judged": "live",
+      "run": "2026-11-20-1400"
+    },
+    {
+      "id": "c-707885cc6b",
+      "date": "2026-11-20",
+      "section": "executive_visibility",
+      "code": "EV_BELOW_FLOOR",
+      "reason": "E2b: no affected count stated; limited marketing data at one, none exposed at the other; below floors [alt CS:C1]",
+      "publication": "Cybersecurity Dive",
+      "headline": null,
+      "headline_withheld": true,
+      "url": "https://www.cybersecuritydive.com/news/jpmorgan-visa-customer-data-leaked-third-party-hacks/875333/",
+      "judged": "live",
+      "run": "2026-11-20-1400",
+      "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
+    },
+    {
+      "id": "c-7a9a180248",
+      "date": "2026-11-20",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6: known-exploited listing alone is routine; enterprise portal flaw, no exception shown",
+      "publication": "CISA",
+      "headline": "CISA KEV adds CVE-2025-42884: SAP NetWeaver — SAP NetWeaver Improper Neutralization of Special Elements in Data Query Logic Vulnerability",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2025-42884",
+      "judged": "live",
+      "run": "2026-11-20-1400"
+    },
+    {
+      "id": "c-94db5eeb13",
+      "date": "2026-11-20",
+      "section": "regulatory_trajectory",
+      "code": "RT_SPEAKER_INELIGIBLE",
+      "reason": "R2 phishing-prevention guidance issued in an industry body's name; trade body is not an eligible issuer",
+      "publication": "FS-ISAC",
+      "headline": "Stop the Scams: FS-ISAC’s New Phishing Prevention Framework Helps Financial Sector Counter Surge in Scams",
+      "url": "https://www.fsisac.com/newsroom/stop-the-scams-fsisac-new-phishing-prevention-framework-to-counter-surge-in-financial-scams-targeting-financial-services-firms",
+      "judged": "live",
+      "run": "2026-11-20-1000"
+    },
+    {
       "id": "c-b5912f5336",
       "date": "2026-11-20",
       "section": "executive_visibility",
@@ -176,6 +238,19 @@
       "judged": "live",
       "run": "2026-11-20-0600",
       "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
+    },
+    {
+      "id": "c-ea51260c28",
+      "date": "2026-11-20",
+      "section": "capability_shift",
+      "code": "CS_NO_SPECIFIC_CHANGE",
+      "reason": "C1: AI pen-testing tool adopted by another actor; agentic attack tooling already archived (RS-261106-1800-01); zero-day only apparent [alt EV:E2]",
+      "publication": "The Record",
+      "headline": "Amazon says Chinese hackers used Cairn AI tool to discover apparent zero-day during attack on university",
+      "url": "https://therecord.media/amazon-research-cairn-ai-university-attacks-possible-zero-day",
+      "judged": "live",
+      "run": "2026-11-20-1400",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
       "id": "c-0c4021ed0c",

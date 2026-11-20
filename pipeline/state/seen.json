@@ -4038,6 +4038,54 @@
       "run_id": "2026-11-20-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.sec.gov/newsroom/press-releases/2026-116-sec-charges-indianapolis-based-backward-hat-capital-its-co-founders-560-million-dollar-offering": {
+      "first_seen": "2026-11-20T14:06:09-05:00",
+      "run_id": "2026-11-20-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-123890": {
+      "first_seen": "2026-11-20T14:06:09-05:00",
+      "run_id": "2026-11-20-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.theregister.com/security/2026/11/20/china-attackers-deployed-ai-agents-that-autonomously-found-and-exploited-a-0-day-to-take-over-a-university-server/5311382": {
+      "first_seen": "2026-11-20T14:06:09-05:00",
+      "run_id": "2026-11-20-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/amazon-research-cairn-ai-university-attacks-possible-zero-day": {
+      "first_seen": "2026-11-20T14:06:09-05:00",
+      "run_id": "2026-11-20-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2025-42884": {
+      "first_seen": "2026-11-20T14:06:09-05:00",
+      "run_id": "2026-11-20-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-76466": {
+      "first_seen": "2026-11-20T14:06:09-05:00",
+      "run_id": "2026-11-20-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankingdive.com/news/banks-patching-vulnerabilities-tech-outage-risk-ai-cybersecurity/875329": {
+      "first_seen": "2026-11-20T14:06:09-05:00",
+      "run_id": "2026-11-20-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/jpmorgan-visa-customer-data-leaked-third-party-hacks/875333": {
+      "first_seen": "2026-11-20T14:06:09-05:00",
+      "run_id": "2026-11-20-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
