@@ -125,6 +125,18 @@
   },
   "items": [
     {
+      "id": "c-087ffc09c1",
+      "date": "2026-11-20",
+      "section": null,
+      "code": "GL_INSUFFICIENT_SUBSTANCE",
+      "reason": "G11 page blocked; headline and lead only: no confirming party, affected product breadth or before-to-now stated",
+      "publication": "BleepingComputer",
+      "headline": "Hackers use autonomous AI tool Cairn to find zero-day, take over server",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-use-autonomous-ai-tool-cairn-to-find-zero-day-take-over-server/",
+      "judged": "live",
+      "run": "2026-11-20-1800"
+    },
+    {
       "id": "c-12bf58342a",
       "date": "2026-11-20",
       "section": "capability_shift",
@@ -163,6 +175,20 @@
       "run": "2026-11-20-1400"
     },
     {
+      "id": "c-6ac4c079c0",
+      "date": "2026-11-20",
+      "section": "executive_visibility",
+      "code": "EV_BELOW_FLOOR",
+      "reason": "E2 page blocked; headline and lead only: no count of affected people stated, so E2b floor unmet; search found no count [alt CS:C1]",
+      "publication": "BleepingComputer",
+      "headline": null,
+      "headline_withheld": true,
+      "url": "https://www.bleepingcomputer.com/news/security/vendor-data-breach-exposes-chase-visa-mastercard-customer-info/",
+      "judged": "live",
+      "run": "2026-11-20-1800",
+      "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
+    },
+    {
       "id": "c-707885cc6b",
       "date": "2026-11-20",
       "section": "executive_visibility",
@@ -175,6 +201,19 @@
       "judged": "live",
       "run": "2026-11-20-1400",
       "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
+    },
+    {
+      "id": "c-70a287cfb9",
+      "date": "2026-11-20",
+      "section": "capability_shift",
+      "code": "CS_NO_SPECIFIC_CHANGE",
+      "reason": "C1 established vishing, AiTM and session-token replay tradecraft by tracked actors since Aug 2026; finance is one of several targeted sectors, no shift [alt EV:E1]",
+      "publication": "Palo Alto Networks Unit 42",
+      "headline": "Dialing for Data: Inside the Com’s High-Profile Heists",
+      "url": "https://unit42.paloaltonetworks.com/com-affiliate-vishing-attacks/",
+      "judged": "live",
+      "run": "2026-11-20-1800",
+      "alt": "Also tested as Executive Visibility: failed “A dated event”."
     },
     {
       "id": "c-7a9a180248",

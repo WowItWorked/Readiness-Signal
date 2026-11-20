@@ -4086,6 +4086,24 @@
       "run_id": "2026-11-20-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/hackers-use-autonomous-ai-tool-cairn-to-find-zero-day-take-over-server": {
+      "first_seen": "2026-11-20T18:05:52-05:00",
+      "run_id": "2026-11-20-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/vendor-data-breach-exposes-chase-visa-mastercard-customer-info": {
+      "first_seen": "2026-11-20T18:05:52-05:00",
+      "run_id": "2026-11-20-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://unit42.paloaltonetworks.com/com-affiliate-vishing-attacks": {
+      "first_seen": "2026-11-20T18:05:52-05:00",
+      "run_id": "2026-11-20-1800",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

@@ -7623,6 +7623,47 @@
         "awareness_only": 0
       },
       "notes": "source: 17 feeds failed; source: fed-testimony implausible dates skipped"
+    },
+    {
+      "run_id": "2026-11-20-1800",
+      "slot": "2026-11-20T18:00:00-05:00",
+      "started_at": "2026-11-20T18:05:52-05:00",
+      "finished_at": "2026-11-20T18:06:48-05:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 157,
+        "sources_failed": 16,
+        "fetched": 4362,
+        "in_window": 221,
+        "unseen": 209,
+        "stage1_pass": 3,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 1,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 1,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: 16 feeds failed incl. several news and trade feeds"
     }
   ]
 }
