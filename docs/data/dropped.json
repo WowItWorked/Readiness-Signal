@@ -125,6 +125,71 @@
   },
   "items": [
     {
+      "id": "c-12bf58342a",
+      "date": "2026-11-20",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 virtualisation management flaw is not a bank-common category; no exception; pre-patch exploitation since Sep, targeted, no mass exploitation shown [alt EV:E2]",
+      "publication": "Cybersecurity Dive",
+      "headline": "Chinese espionage group targets critical flaw in VMware vCenter",
+      "url": "https://www.cybersecuritydive.com/news/chinese-espionage-zero-day-flaw-vmware-vcenter/875273/",
+      "more_sources": 1,
+      "judged": "live",
+      "run": "2026-11-20-0600",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-b5912f5336",
+      "date": "2026-11-20",
+      "section": "executive_visibility",
+      "code": "EV_BELOW_FLOOR",
+      "reason": "E2b contact data of 16,000 people, below both floors; E3 one general outlet collected [alt CS:C1]",
+      "publication": "Euronews",
+      "headline": null,
+      "headline_withheld": true,
+      "url": "https://www.euronews.com/2026/11/20/hackers-leak-stolen-data-on-16000-visa-mastercard-and-jpmorgan-customers",
+      "judged": "live",
+      "run": "2026-11-20-0600",
+      "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
+    },
+    {
+      "id": "c-d715f18f98",
+      "date": "2026-11-20",
+      "section": "regulatory_trajectory",
+      "code": "RT_INSTRUMENT_INELIGIBLE",
+      "reason": "R1 draft on mobile driver's licences; use as technology widely used in financial services not established from the page read (D1, D5)",
+      "publication": "NIST",
+      "headline": "SP 1800-42, Digital Identities – Mobile Driver’s License (mDL)2nd Public Draft",
+      "url": "https://csrc.nist.gov/pubs/sp/1800/42/2pd",
+      "judged": "live",
+      "run": "2026-11-20-0600"
+    },
+    {
+      "id": "c-d8936dff35",
+      "date": "2026-11-20",
+      "section": "executive_visibility",
+      "code": "EV_NOT_AN_EVENT",
+      "reason": "E1 preprint on replicating agent incidents is research, not a dated event [alt CS:C1]",
+      "publication": "arXiv",
+      "headline": "Replication of Agentic Security Events: Audit and Investigation (ROGUE-AI)",
+      "url": "https://arxiv.org/abs/2611.26553",
+      "judged": "live",
+      "run": "2026-11-20-0600",
+      "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
+    },
+    {
+      "id": "c-0c4021ed0c",
+      "date": "2026-11-19",
+      "section": "executive_visibility",
+      "code": "EV_NO_PROMINENCE",
+      "reason": "E1 filing disclosure; E2b 1.6m personal data per SEC filing; E3 one trade outlet established, page blocked; E4 mechanism undisclosed, non-financial victim",
+      "publication": "BleepingComputer",
+      "headline": "Hackers steal data of 1.6 million SBC Medical Group customers",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-steal-data-of-16-million-sbc-medical-group-customers/",
+      "judged": "live",
+      "run": "2026-11-19-1800"
+    },
+    {
       "id": "c-1ff2ff6774",
       "date": "2026-11-19",
       "section": "executive_visibility",
@@ -189,6 +254,20 @@
       "run": "2026-11-19-1400"
     },
     {
+      "id": "c-90d8f6bf8a",
+      "date": "2026-11-19",
+      "section": "executive_visibility",
+      "code": "EV_BELOW_FLOOR",
+      "reason": "E2 no limb met: third-party breaches at several financial firms, only limited names and email addresses stated, no count confirmed [alt CS:C1]",
+      "publication": "The Register",
+      "headline": null,
+      "headline_withheld": true,
+      "url": "https://www.theregister.com/security/2026/11/19/chase-visa-mastercard-confirm-third-party-cyberattacks-that-may-have-exposed-customers-info/5311175",
+      "judged": "live",
+      "run": "2026-11-19-1800",
+      "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
+    },
+    {
       "id": "c-918f36ed66",
       "date": "2026-11-19",
       "section": "capability_shift",
@@ -236,6 +315,20 @@
       "url": "https://thehill.com/policy/technology/6228961-technology-outages-ai-vulnerabilities/",
       "judged": "live",
       "run": "2026-11-19-0600"
+    },
+    {
+      "id": "c-ef2aad4e7e",
+      "date": "2026-11-19",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 vulnerability: virtualisation management is not a bank-common edge category; targeted pre-patch exploitation, duration unstated; no listed exception holds [alt EV:E2]",
+      "publication": "Rapid7",
+      "headline": "CVE-2026-123890: Critical Authentication Bypass in VMware vCenter",
+      "url": "https://www.rapid7.com/blog/post/etr-cve-2026-123890-critical-authentication-bypass-vmware-vcenter",
+      "more_sources": 1,
+      "judged": "live",
+      "run": "2026-11-19-1800",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
       "id": "c-f0a72729ec",
