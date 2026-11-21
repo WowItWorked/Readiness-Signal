@@ -4104,6 +4104,12 @@
       "run_id": "2026-11-20-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/amazon-china-linked-hackers-ai-agents-exploited-medical-software-zero-day": {
+      "first_seen": "2026-11-21T10:05:44-05:00",
+      "run_id": "2026-11-21-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
