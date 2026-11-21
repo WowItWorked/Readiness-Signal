@@ -125,6 +125,19 @@
   },
   "items": [
     {
+      "id": "c-2ac1962233",
+      "date": "2026-11-21",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 fails: zero-day in niche open-source medical imaging tool, fix unreleased, no listed exception holds, no pre-patch mass exploitation shown [alt EV:E2]",
+      "publication": "SecurityWeek",
+      "headline": "Amazon: China-Linked Hackers’ AI Agents Exploited Medical Software Zero-Day",
+      "url": "https://www.securityweek.com/amazon-china-linked-hackers-ai-agents-exploited-medical-software-zero-day/",
+      "judged": "live",
+      "run": "2026-11-21-1000",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
       "id": "c-087ffc09c1",
       "date": "2026-11-20",
       "section": null,
