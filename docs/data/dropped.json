@@ -125,6 +125,19 @@
   },
   "items": [
     {
+      "id": "c-64b20ec1d5",
+      "date": "2026-11-22",
+      "section": "executive_visibility",
+      "code": "EV_BELOW_FLOOR",
+      "reason": "E2: no confirmed count of affected people stated; E2b floors unmet; page unread (403) [alt CS:C1]",
+      "publication": "BleepingComputer",
+      "headline": "Cleverbridge warns hackers stole credit card numbers, CVVs in data breach",
+      "url": "https://www.bleepingcomputer.com/news/security/cleverbridge-warns-hackers-stole-credit-card-numbers-cvvs-in-data-breach/",
+      "judged": "live",
+      "run": "2026-11-22-1400",
+      "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
+    },
+    {
       "id": "c-2ac1962233",
       "date": "2026-11-21",
       "section": "capability_shift",

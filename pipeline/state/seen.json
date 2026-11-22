@@ -4110,6 +4110,12 @@
       "run_id": "2026-11-21-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/cleverbridge-warns-hackers-stole-credit-card-numbers-cvvs-in-data-breach": {
+      "first_seen": "2026-11-22T14:05:49-05:00",
+      "run_id": "2026-11-22-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
