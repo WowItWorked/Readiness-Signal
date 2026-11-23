@@ -177,6 +177,19 @@
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
+      "id": "c-a0de9d3c09",
+      "date": "2026-11-23",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6: exploited cloud-service flaw; no cs_routine_vuln_exceptions limb shown, pre-patch exploitation only alleged, not confirmed [alt EV:E2]",
+      "publication": "BleepingComputer",
+      "headline": "Microsoft Azure flaw exploited to steal customers' API credentials",
+      "url": "https://www.bleepingcomputer.com/news/security/microsoft-azure-flaw-exploited-to-steal-customers-api-credentials/",
+      "judged": "live",
+      "run": "2026-11-23-1800",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
       "id": "c-a773d14804",
       "date": "2026-11-23",
       "section": "capability_shift",
