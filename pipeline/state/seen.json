@@ -4164,6 +4164,48 @@
       "run_id": "2026-11-23-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.darkreading.com/cyberattacks-data-breaches/ai-agents-flaw-discovery-root-access-11-minutes": {
+      "first_seen": "2026-11-23T14:06:33-05:00",
+      "run_id": "2026-11-23-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/azure-flaw-exploited-to-target-secrets-at-norwegian-energy-firms": {
+      "first_seen": "2026-11-23T14:06:33-05:00",
+      "run_id": "2026-11-23-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/norway-microsoft-cyberattack-equinor": {
+      "first_seen": "2026-11-23T14:06:33-05:00",
+      "run_id": "2026-11-23-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USTREAS/bulletins/433d3b9": {
+      "first_seen": "2026-11-23T14:06:33-05:00",
+      "run_id": "2026-11-23-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.sophos.com/en-us/blog/proof-of-concept-available-for-ghostscript-upload2shell": {
+      "first_seen": "2026-11-23T14:06:33-05:00",
+      "run_id": "2026-11-23-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://research.checkpoint.com/2026/23rd-november-threat-intelligence-report": {
+      "first_seen": "2026-11-23T14:06:33-05:00",
+      "run_id": "2026-11-23-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cbr.ru/eng/statistics/macro_itm/dkfs": {
+      "first_seen": "2026-11-23T14:06:33-05:00",
+      "run_id": "2026-11-23-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

@@ -8074,6 +8074,47 @@
         "awareness_only": 0
       },
       "notes": "source: fed-testimony implausible dates; source: 17 feeds failed, 156 ok; ambiguity: proliferation-financing assessment cyber passages treated as incidental"
+    },
+    {
+      "run_id": "2026-11-23-1400",
+      "slot": "2026-11-23T14:00:00-05:00",
+      "started_at": "2026-11-23T14:06:33-05:00",
+      "finished_at": "2026-11-23T14:07:48-05:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 157,
+        "sources_failed": 16,
+        "fetched": 4335,
+        "in_window": 227,
+        "unseen": 221,
+        "stage1_pass": 7,
+        "stage2_pass": 0,
+        "dedup_dropped": 1,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 3,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: darkreading-news and securityweek-news pages blocked, headline and lead only; source: 16 feeds failed, 157 ok; source: fed-testimony implausible dates"
     }
   ]
 }
