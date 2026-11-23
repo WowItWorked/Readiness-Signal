@@ -17,7 +17,8 @@
 // Writes logs/YYYY/MM/<run_id>.jsonl, seen.json, archive.json and runs.json, each atomically (temp
 // + rename) and as one unit: if any write fails, the files already written are restored.
 // A real run (default paths) then rebuilds docs/data/dropped.json and docs/data/watch.json by
-// running dropped.mjs and watch.mjs, and prints `git add: …`, the exact staging line for the commit.
+// running dropped.mjs and watch.mjs, stages those two files, and prints `git add: …`, the exact
+// staging line for the commit.
 // --dry-run prints everything and writes nothing, except with --seen-out F (owner replays only,
 // RUNBOOK section C): the seen.json this run would leave is written to F, outside docs/data,
 // pipeline/state and pipeline/logs, so the next replayed run can be fetched with --seen F.
@@ -320,7 +321,8 @@ runMain(async () => {
  * Regulatory Watch pages' data with their own scripts, the only writers of those files, so a run
  * never leaves the pages behind. The scheduled routine skipped RUNBOOK step 13's rebuild from
  * 5 Nov 2026, and the Dropped page fell two weeks behind. A failed rebuild leaves the old file
- * (both scripts write atomically) and is reported; the next run catches up.
+ * (both scripts write atomically) and is reported; the next run catches up. The rebuilt files are
+ * staged as well, so they reach the commit even if the routine restores the working copy.
  */
 function rebuildPages(paths) {
   if (paths.archive !== DEFAULT_PATHS.archive || paths.logsDir !== DEFAULT_PATHS.logsDir) return [];
@@ -332,5 +334,12 @@ function rebuildPages(paths) {
     else log(`  warn  ${name}.json not rebuilt: ${String(r.stderr || r.stdout || r.error || '').trim().split('\n')[0]}`);
   }
   for (const p of done) log(`  rebuilt ${p}`);
+  // Stage them too. The routine has restored these files and staged its own shorter list; a plain
+  // `git restore` resets only the working copy to the index, so a staged rebuild still gets committed.
+  if (done.length) {
+    const g = spawnSync('git', ['add', '--', ...done], { cwd: REPO_ROOT, encoding: 'utf8', windowsHide: true });
+    if (g.status === 0) log('  staged the rebuilt pages (git add)');
+    else log(`  warn  rebuilt pages not staged: ${String(g.stderr || g.error || '').trim().split('\n')[0]}`);
+  }
   return done;
 }

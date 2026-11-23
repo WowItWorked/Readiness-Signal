@@ -243,7 +243,7 @@ node pipeline/scripts/publish.mjs --run "$RUN" --dry-run
 node pipeline/scripts/publish.mjs --run "$RUN"
 ```
 
-- **Exit 0:** `publish.mjs` has appended the items (if any) to `docs/data/archive.json`, appended the run record to `docs/data/runs.json`, written `pipeline/logs/YYYY/MM/$RUN.jsonl`, updated `pipeline/state/seen.json`, and rebuilt `docs/data/dropped.json` and `docs/data/watch.json` by running `dropped.mjs` and `watch.mjs`. Its stdout JSON includes `commit_message` and `git_add`, the exact staging line for step 13. A `warn  dropped.json not rebuilt: …` (or `watch.json`) line means that page keeps its old data: add it to the final output.
+- **Exit 0:** `publish.mjs` has appended the items (if any) to `docs/data/archive.json`, appended the run record to `docs/data/runs.json`, written `pipeline/logs/YYYY/MM/$RUN.jsonl`, updated `pipeline/state/seen.json`, and rebuilt and staged (`git add`) `docs/data/dropped.json` and `docs/data/watch.json` by running `dropped.mjs` and `watch.mjs`. Both are expected changes: never restore or unstage them. Its stdout JSON includes `commit_message` and `git_add`, the exact staging line for step 13. A `warn  dropped.json not rebuilt: …` (or `watch.json`) line means that page keeps its old data: add it to the final output.
 - **Validation error:** return to step 11.
 - **`a run record for slot … already exists`:** another run recorded this slot. Stop, commit nothing, and report it.
 - **`has not started yet`, or `started_at … falls in slot`:** `$RUN` is wrong. Stop, commit nothing, and report it.

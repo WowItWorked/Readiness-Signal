@@ -1,6 +1,20 @@
 {
   "schema_version": 1,
   "note": "Derived from pipeline/logs by pipeline/scripts/watch.mjs; rebuilt whole after every publish. The logs are the record. Global watch signals are never archive items.",
-  "jurisdictions": [],
-  "items": []
+  "jurisdictions": [
+    "India"
+  ],
+  "items": [
+    {
+      "id": "c-149ea118b2",
+      "date": "2026-11-23",
+      "jurisdiction": "India",
+      "signal": "central bank; R3 on-topic: draft rules for customer controls over digital payment channels, wider bank negligence; R4 fraud-preventive safeguards for electronic transactions",
+      "publication": "Reserve Bank of India (RBI)",
+      "headline": "RBI issues Draft Amendment Directions for ‘Preventive Safeguards for Electronic Banking Transactions (EBTs)’",
+      "url": "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=64026",
+      "judged": "live",
+      "run": "2026-11-23-1000"
+    }
+  ]
 }
