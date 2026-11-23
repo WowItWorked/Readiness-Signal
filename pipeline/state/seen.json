@@ -4146,6 +4146,24 @@
       "run_id": "2026-11-23-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/sap-netweaver-cisco-expressway-flaws-exploited-in-attacks": {
+      "first_seen": "2026-11-23T10:06:55-05:00",
+      "run_id": "2026-11-23-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=64026": {
+      "first_seen": "2026-11-23T10:06:55-05:00",
+      "run_id": "2026-11-23-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.gov.uk/government/publications/national-risk-assessment-of-proliferation-financing-2026": {
+      "first_seen": "2026-11-23T10:06:55-05:00",
+      "run_id": "2026-11-23-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
