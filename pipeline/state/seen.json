@@ -4116,6 +4116,36 @@
       "run_id": "2026-11-22-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/cisa-flags-critical-cisco-expressway-rce-flaw-as-actively-exploited": {
+      "first_seen": "2026-11-23T06:06:27-05:00",
+      "run_id": "2026-11-23-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankofengland.co.uk/news/2026/november/general-insurance-stress-test-highlights-value-of-rehearsing-crisis-response-and-recovery": {
+      "first_seen": "2026-11-23T06:06:27-05:00",
+      "run_id": "2026-11-23-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cyberscoop.com/wpide-csrf-vulnerability-cve-2026-124251": {
+      "first_seen": "2026-11-23T06:06:27-05:00",
+      "run_id": "2026-11-23-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fsb.org/2026/11/fsb-publishes-2026-list-of-insurers-subject-to-resolution-standards": {
+      "first_seen": "2026-11-23T06:06:27-05:00",
+      "run_id": "2026-11-23-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.eiopa.europa.eu/keynote-speech-sp-conference-future-insurance-uncertain-world-2026-11-23_en": {
+      "first_seen": "2026-11-23T06:06:27-05:00",
+      "run_id": "2026-11-23-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
