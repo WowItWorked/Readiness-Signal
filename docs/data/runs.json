@@ -8281,6 +8281,46 @@
         "awareness_only": 0
       },
       "notes": "ambiguity: consumer anti-scam announcement read as passing mention of technology-enabled fraud"
+    },
+    {
+      "run_id": "2026-11-24-1800",
+      "slot": "2026-11-24T18:00:00-05:00",
+      "started_at": "2026-11-24T18:06:20-05:00",
+      "finished_at": "2026-11-24T18:06:44-05:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 158,
+        "sources_failed": 15,
+        "fetched": 4438,
+        "in_window": 316,
+        "unseen": 304,
+        "stage1_pass": 0,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 0,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 0,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      }
     }
   ]
 }
