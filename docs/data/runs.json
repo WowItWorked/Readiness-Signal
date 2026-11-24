@@ -8197,6 +8197,49 @@
         "awareness_only": 0
       },
       "notes": "source: 17 feeds failed, 156 ok; source: fed-testimony implausible dates"
+    },
+    {
+      "run_id": "2026-11-24-1000",
+      "slot": "2026-11-24T10:00:00-05:00",
+      "started_at": "2026-11-24T10:06:44-05:00",
+      "finished_at": "2026-11-24T10:08:20-05:00",
+      "status": "published",
+      "items": [
+        "RS-261124-1000-01"
+      ],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 157,
+        "sources_failed": 16,
+        "fetched": 4419,
+        "in_window": 276,
+        "unseen": 271,
+        "stage1_pass": 5,
+        "stage2_pass": 1,
+        "dedup_dropped": 0,
+        "published": 1
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 0,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 2,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 1
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 1
+      },
+      "notes": "source: 16 feeds failed, 157 ok; source: fed-testimony implausible dates"
     }
   ]
 }

@@ -4236,6 +4236,42 @@
       "run_id": "2026-11-24-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://therecord.media/cisa-nable-cybersecurity-bug": {
+      "first_seen": "2026-11-24T10:06:44-05:00",
+      "run_id": "2026-11-24-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rapid7.com/blog/post/ra-rapid7-analysis-vmware-vcenter-srp-authentication-bypass-to-root-cve-2026-123890": {
+      "first_seen": "2026-11-24T10:06:44-05:00",
+      "run_id": "2026-11-24-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.theregister.com/security/2026/11/24/crowdstrike-splashes-44b-on-zscaler-customers-brace-for-the-bill/5311877": {
+      "first_seen": "2026-11-24T10:06:44-05:00",
+      "run_id": "2026-11-24-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/cyberattacks-uk-artificial-intelligence": {
+      "first_seen": "2026-11-24T10:06:44-05:00",
+      "run_id": "2026-11-24-1000",
+      "verdict": "published",
+      "item_id": "RS-261124-1000-01"
+    },
+    "https://content.govdelivery.com/accounts/USFDIC/bulletins/4333b7d": {
+      "first_seen": "2026-11-24T10:06:44-05:00",
+      "run_id": "2026-11-24-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.ncsc.gov.uk/blogs/familiar-weaknesses-exploited-faster-defending-against-agentic-cyber-attacks": {
+      "first_seen": "2026-11-24T10:06:44-05:00",
+      "run_id": "2026-11-24-1000",
+      "verdict": "published",
+      "item_id": "RS-261124-1000-01"
     }
   }
 }

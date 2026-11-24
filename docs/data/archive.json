@@ -2990,6 +2990,49 @@
       ],
       "backfilled": true,
       "update_of": null
+    },
+    {
+      "id": "RS-261124-1000-01",
+      "timestamp": "2026-11-24T10:00:00-05:00",
+      "section": "regulatory_trajectory",
+      "claim": "The UK's NCSC says AI-assisted cyberattacks have risen markedly since September, exploiting familiar weaknesses faster and more persistently.",
+      "domains": [
+        "cyber",
+        "ai"
+      ],
+      "source_class": "regulator",
+      "mechanism": "awareness_only",
+      "interpretation": [
+        {
+          "domain": "cyber",
+          "text": "The NCSC reports that the exploited weaknesses are familiar ones, including leaked and default credentials, infrastructure-as-code misconfigurations and API flaws, so the change it describes lies in the speed, persistence and low cost of finding them rather than in new techniques."
+        },
+        {
+          "domain": "ai",
+          "text": "The NCSC says attackers use agentic offensive frameworks originally built for authorised red teaming, and that current frameworks are noisy and detectable while later ones may prioritise stealth, which would change how agent activity is distinguished in logs."
+        }
+      ],
+      "validation_question": null,
+      "candidate_issue_statement": null,
+      "awareness_rationale": "The post reports a rise in AI-assisted attacks on leaked or default credentials, misconfigurations and API flaws, and says neither the weaknesses nor the attacker capabilities are new. Its recommended steps, such as exposure inventories, patching and rate limits, sit within baseline expectations it cites (Cyber Assessment Framework, Cyber Essentials), so the change is tempo and cost, not the control set. This changes if frameworks start evading detection.",
+      "sources": [
+        {
+          "publication": "National Cyber Security Centre",
+          "url": "https://www.ncsc.gov.uk/blogs/familiar-weaknesses-exploited-faster-defending-against-agentic-cyber-attacks",
+          "headline": "Familiar weaknesses, exploited faster: defending against agentic cyber attacks",
+          "published": "2026-11-24",
+          "source_class": "regulator"
+        },
+        {
+          "publication": "The Record",
+          "url": "https://therecord.media/cyberattacks-uk-artificial-intelligence",
+          "headline": "UK cyber agency seeing ‘marked rise’ in AI-driven attacks",
+          "published": "2026-11-24",
+          "source_class": "news"
+        }
+      ],
+      "backfilled": false,
+      "update_of": null
     }
   ]
 }
