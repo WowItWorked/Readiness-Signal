@@ -4212,6 +4212,30 @@
       "run_id": "2026-11-23-1800",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://arxiv.org/abs/2611.29315": {
+      "first_seen": "2026-11-24T06:06:03-05:00",
+      "run_id": "2026-11-24-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.eiopa.europa.eu/eiopas-consultative-expert-group-data-use-puts-forward-key-principles-responsible-data-use-insurance-2026-11-24_en": {
+      "first_seen": "2026-11-24T06:06:03-05:00",
+      "run_id": "2026-11-24-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/november/critical-third-parties-regulatory-fees-and-cost-recovery": {
+      "first_seen": "2026-11-24T06:06:03-05:00",
+      "run_id": "2026-11-24-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_SpeechesView.aspx?id=1592": {
+      "first_seen": "2026-11-24T06:06:03-05:00",
+      "run_id": "2026-11-24-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

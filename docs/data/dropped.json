@@ -125,6 +125,19 @@
   },
   "items": [
     {
+      "id": "c-d5c0559657",
+      "date": "2026-11-24",
+      "section": null,
+      "code": "GL_RESEARCH_EXCLUDED",
+      "reason": "G9 preprint describing an audio deepfake detector design on edge hardware; no original adversary data, data or code release not shown; no event",
+      "publication": "arXiv",
+      "headline": null,
+      "headline_withheld": true,
+      "url": "https://arxiv.org/abs/2611.29315",
+      "judged": "live",
+      "run": "2026-11-24-0600"
+    },
+    {
       "id": "c-331c740fc7",
       "date": "2026-11-23",
       "section": "capability_shift",
