@@ -138,6 +138,45 @@
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
+      "id": "c-54a59e192c",
+      "date": "2026-11-24",
+      "section": "capability_shift",
+      "code": "CS_NO_SPECIFIC_CHANGE",
+      "reason": "C1 report states the change is speed and efficiency, not new techniques; web-shell footholds and familiar open-source tools; established technique, no before-now capability change [alt EV:E1]",
+      "publication": "Palo Alto Networks Unit 42",
+      "headline": "Recent Trends and Tactics of Agentic AI Attacks",
+      "url": "https://unit42.paloaltonetworks.com/autonomous-ai-agent-threat-campaigns/",
+      "judged": "live",
+      "run": "2026-11-24-1400",
+      "alt": "Also tested as Executive Visibility: failed “A dated event”."
+    },
+    {
+      "id": "c-a3ebfd1a36",
+      "date": "2026-11-24",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 exploitation campaign on edge management servers; one research report only, no vendor, authority or KEV confirmation, no pre-patch control shown, so no exception [alt EV:E2]",
+      "publication": "Cybersecurity Dive",
+      "headline": "AI-enabled campaign targets Check Point Security Management servers",
+      "url": "https://www.cybersecuritydive.com/news/ai-enabled-campaign-targets-check-point-security-management-servers/875622/",
+      "more_sources": 1,
+      "judged": "live",
+      "run": "2026-11-24-1400",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-b79cc53792",
+      "date": "2026-11-24",
+      "section": "regulatory_trajectory",
+      "code": "RT_NO_DIRECTION",
+      "reason": "R3 on-topic fails: release summarises consumer education and interagency outreach; technology-enabled fraud risk is a passing mention, no specific finding or expectation",
+      "publication": "Consumer Financial Protection Bureau",
+      "headline": "CFPB Joins Department of Justice and Other Federal Partners in Anti-Scam Efforts",
+      "url": "https://www.consumerfinance.gov/about-us/newsroom/cfpb-joins-department-of-justice-and-other-federal-partners-in-anti-scam-efforts/",
+      "judged": "live",
+      "run": "2026-11-24-1400"
+    },
+    {
       "id": "c-b85cc8d3d3",
       "date": "2026-11-24",
       "section": "capability_shift",

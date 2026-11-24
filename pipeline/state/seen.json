@@ -4272,6 +4272,54 @@
       "run_id": "2026-11-24-1000",
       "verdict": "published",
       "item_id": "RS-261124-1000-01"
+    },
+    "https://www.bleepingcomputer.com/news/security/new-shirudo-tool-uses-ai-to-shield-unpatched-linux-systems-from-exploits": {
+      "first_seen": "2026-11-24T14:06:28-05:00",
+      "run_id": "2026-11-24-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/hackers-compromise-check-point-servers-in-22-organizations": {
+      "first_seen": "2026-11-24T14:06:28-05:00",
+      "run_id": "2026-11-24-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cybersecuritydive.com/news/ai-enabled-campaign-targets-check-point-security-management-servers/875622": {
+      "first_seen": "2026-11-24T14:06:28-05:00",
+      "run_id": "2026-11-24-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://techcrunch.com/2026/11/24/uk-warns-ai-driven-cyberattacks-are-exposing-years-of-weak-security": {
+      "first_seen": "2026-11-24T14:06:28-05:00",
+      "run_id": "2026-11-24-1400",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://unit42.paloaltonetworks.com/autonomous-ai-agent-threat-campaigns": {
+      "first_seen": "2026-11-24T14:06:28-05:00",
+      "run_id": "2026-11-24-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://cyberscoop.com/uk-ncsc-ai-assisted-cyberattacks": {
+      "first_seen": "2026-11-24T14:06:28-05:00",
+      "run_id": "2026-11-24-1400",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.consumerfinance.gov/about-us/newsroom/cfpb-joins-department-of-justice-and-other-federal-partners-in-anti-scam-efforts": {
+      "first_seen": "2026-11-24T14:06:28-05:00",
+      "run_id": "2026-11-24-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USTREAS/bulletins/433f774": {
+      "first_seen": "2026-11-24T14:06:28-05:00",
+      "run_id": "2026-11-24-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
