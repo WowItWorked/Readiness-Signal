@@ -240,4 +240,35 @@ describe('Tracker demo', () => {
     assert.ok(render(t).includes('data-f="duplicateOf"'));
     assert.ok(render(t).includes('class="trk-log"'), 'the activity log is shown');
   });
+
+  test('items show the analyst\'s disposition once tracked, on screen only, labelled a demo', () => {
+    const t = T.initTracker(data, TODAY);
+    const it = data.items.find((i) => T.itemTracking(t, data, i.id).length);
+    const rows = T.itemTracking(t, data, it.id);
+    assert.deepEqual(rows.map((r) => r.domain), it.interpretation.map((r) => r.domain));
+    const html = V.renderApp({ ui: ui({ page: 'archive', archTime: 'all', open: { [it.id]: true } }), data, now: NOW, error: null, loading: false, trk: t });
+    assert.ok(html.includes('Disposition by the analyst') && html.includes('class="trk-demo">Demo<'));
+    assert.ok(html.includes(`data-act="trk-goto" data-key="${rows[0].key}"`));
+    assert.ok(html.includes('class="meta-trk">Tracked'));
+    const paper = V.renderApp({ ui: ui({ page: 'archive', archTime: 'all', open: { [it.id]: true }, printMode: 'expanded' }), data, now: NOW, error: null, loading: false, trk: t });
+    assert.ok(!paper.includes('Disposition by the analyst') && !paper.includes('meta-trk'), 'never on paper');
+    assert.ok(!V.renderApp({ ui: ui({ page: 'archive', archTime: 'all', open: { [it.id]: true } }), data, now: NOW, error: null, loading: false, trk: null }).includes('Disposition by the analyst'));
+    const goto = act(t, { act: 'trk-goto', key: rows[0].key });
+    assert.equal(goto.owner, rows[0].domain);
+    assert.equal(goto.sel, rows[0].key);
+    assert.equal(act(t, { act: 'trk-goto', key: 'x:nope' }), t);
+  });
+
+  test('risk-response metrics follow the responses', () => {
+    let t = T.initTracker(data, TODAY);
+    const m = T.trackerMetrics(t, data);
+    assert.equal(m.notified, T.notifications(data).length);
+    for (const k of ['ackRate', 'coverage']) assert.ok(m[k] >= 0 && m[k] <= 1, k);
+    const x = T.notifications(data)[0];
+    t = act(t, { act: 'trk-control', key: x.key, v: 'none' });
+    const m2 = T.trackerMetrics(t, data);
+    assert.equal(m2.openIssues, m.openIssues + 1, 'a new gap is an open issue');
+    assert.ok(m2.ackRate > m.ackRate);
+  });
 });
+

@@ -14,7 +14,7 @@ let dropped = null; // the Dropped page's log, loaded the first time the page op
 let droppedState = 'idle';
 let watch = null; // the Regulatory Watch log, loaded the first time the page opens
 let watchState = 'idle';
-let trk = null; // the Tracker demo, seeded the first time its page opens (memory only)
+let trk = null; // the Tracker demo, seeded once the archive has loaded (memory only)
 let loadError = null;
 let loading = true;
 let ui = M.defaultUi(new Date());
@@ -105,7 +105,8 @@ function renderOnce() {
   hideTip();
   if (ui.page === 'dropped' && droppedState === 'idle') loadDropped();
   if (ui.page === 'watch' && watchState === 'idle') loadWatch();
-  if (ui.page === 'tracker' && data && !trk) trk = T.initTracker(data, M.todayEt(clock()));
+  // Items show the demo's dispositions too (SPEC §7.6), so the demo is seeded once data arrives.
+  if (data && !trk) trk = T.initTracker(data, M.todayEt(clock()));
   const html = renderApp({
     ui, data, now: clock(), error: loadError, loading, dropped, droppedState, watch, watchState, trk,
   }).replace(/>\s+</g, '><');
@@ -120,6 +121,7 @@ function renderOnce() {
   root.style.setProperty('--fbar-h', `${bar ? Math.ceil(bar.getBoundingClientRect().height) : 0}px`);
 
   if (ui.pop) fitPopover();
+  countUp();
 
   if (pendingFocus) {
     const sels = [].concat(pendingFocus);
@@ -132,6 +134,32 @@ function renderOnce() {
     pendingScroll = null;
     setTimeout(() => (land ? landOn(id) : scrollToItem(id)), 0);
   }
+}
+
+/**
+ * The hero's figures count up once per page load (owner request 2026-11-24). The final value is
+ * in the markup, so a reader with reduced motion, a print or a later render always sees it.
+ */
+let counted = false;
+function countUp() {
+  if (counted) return;
+  const els = Array.from(root.querySelectorAll('.hero-n[data-count]'));
+  if (!els.length) return;
+  counted = true;
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || document.hidden) return;
+  const targets = els.map((el) => [el, Number(el.dataset.count), el.textContent]);
+  const t0 = performance.now();
+  const step = (t) => {
+    const k = Math.min(1, (t - t0) / 1400);
+    const e = 1 - (1 - k) ** 3;
+    for (const [el, n, final] of targets) {
+      if (!el.isConnected) continue;
+      el.textContent = k < 1 ? Math.round(n * e).toLocaleString('en-US') : final;
+    }
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
 
 /**
@@ -512,6 +540,7 @@ function trackerAct(d, value, el, type) {
   const before = trk;
   trk = T.trackerAct(trk, d, value, data, { type, at: M.fmtFull(clock()) });
   if (trk === before) return;
+  if (d.act === 'trk-goto') { go('tracker'); pendingFocus = ['.trk-back']; render(); return; }
   if (type === 'click' && (d.act === 'trk-open' || d.act === 'trk-back' || d.act === 'trk-owner')) {
     const focusFor = { 'trk-open': ['.trk-back'], 'trk-back': ['.trk-note'], 'trk-owner': [`.trk-intro [data-act="trk-owner"][data-v="${trk.owner}"]`] };
     pendingFocus = focusFor[d.act];
