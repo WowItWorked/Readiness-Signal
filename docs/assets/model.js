@@ -1302,6 +1302,73 @@ export function dashboard(data, now) {
   };
 }
 
+// ---------------------------------------------------------------------------------------
+// Signal metrics (owner request 2026-11-24): how the filter performs, each for the last 30 days
+// against the 30 before, from runs.json and the archive. Rates and durations, not raw counts.
+
+const median = (xs) => {
+  if (!xs.length) return null;
+  const s = [...xs].sort((a, b) => a - b);
+  const m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+};
+
+/** Scheduled slots in (from, to], from the first recorded run on, that should have finished by `now`. */
+function scheduledSlots(data, from, to, now) {
+  if (!data.runs.length) return [];
+  const first = data.runs[0].slotTs; // runs are oldest first
+  const out = [];
+  for (let day = todayEt(new Date(Math.max(from, first))); ; day = etDateKey(etDayStart(day, 1))) {
+    const start = +etDayStart(day);
+    if (start > to) break;
+    for (const h of SLOT_HOURS) {
+      const [y, m, d] = day.split('-').map(Number);
+      const ts = +etWallToDate(y, m, d, h);
+      if (ts > from && ts <= to && ts >= first && ts <= +now - RUN_BUDGET) out.push(ts);
+    }
+  }
+  return out;
+}
+
+function signalWindow(data, from, to, now) {
+  const runs = data.runs.filter((r) => r.slotTs > from && r.slotTs <= to);
+  const done = runs.filter((r) => r.status !== 'failed');
+  const read = done.reduce((n, r) => n + (r.unseen || 0), 0);
+  const published = done.reduce((n, r) => n + r.items.length, 0);
+  const slots = scheduledSlots(data, from, to, now);
+  const items = data.items.filter((i) => +i.date > from && +i.date <= to);
+  const live = items.filter((i) => !i.backfilled);
+  const lags = live.map((i) => {
+    const dates = i.sources.map((s) => s.published).filter(isIsoDate).sort();
+    return dates.length ? Math.max(0, (+etDayStart(todayEt(i.date)) - +etDayStart(dates[0])) / DAY) : null;
+  }).filter((x) => x != null);
+  return {
+    perThousand: read ? (published / read) * 1000 : null,
+    read,
+    published,
+    reliability: slots.length ? Math.min(1, done.length / slots.length) : null,
+    failed: runs.length - done.length,
+    silentShare: done.length ? done.filter((r) => r.status === 'silent').length / done.length : null,
+    lagDays: median(lags),
+    lagN: lags.length,
+    actionShare: items.length ? items.filter(asksForAction).length / items.length : null,
+    items: items.length,
+  };
+}
+
+export function signalMetrics(data, now, days = 30) {
+  const t = +now;
+  const cur = signalWindow(data, t - days * DAY, t, now);
+  const prev = signalWindow(data, t - 2 * days * DAY, t - days * DAY, now);
+  // Items published per week, oldest first, for the sparkline: 12 weeks ending today.
+  const weeks = Array.from({ length: 12 }, (_, k) => {
+    const to = t - (11 - k) * 7 * DAY;
+    const from = to - 7 * DAY;
+    return { from, n: data.items.filter((i) => +i.date > from && +i.date <= to).length };
+  });
+  return { days, cur, prev, weeks };
+}
+
 /**
  * The masthead's status line (owner change 2026-10-06, replacing "Last edition" and "Last
  * checked"): when the data last changed and when it next may. `updated` is when the latest

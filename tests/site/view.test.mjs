@@ -500,7 +500,7 @@ describe('states', () => {
     assert.ok(/<table class="dm">\s*<caption class="sr-only">Items by domain and month/.test(html));
     assert.ok(html.includes('<caption class="sr-only">Scheduled runs by day and slot (ET)</caption>'));
     for (const m of html.slice(html.indexOf('<main')).matchAll(/href="([^"]+)"/g)) {
-      assert.ok(/^#(RS-\d{6}-\d{4}-\d{2}|archive|report|dashboard|about)$/.test(m[1]), m[1]);
+      assert.ok(/^#(RS-\d{6}-\d{4}-\d{2}|archive|report|dashboard|tracker|about)$/.test(m[1]), m[1]);
     }
   });
 
@@ -618,4 +618,19 @@ describe('states', () => {
     }
     assert.ok(!/<script[^>]+src="https?:/i.test(index), 'no external scripts');
   });
+
+  test('dashboard hero and metrics (owner request 2026-11-24)', () => {
+    const html = render({ page: 'dashboard' });
+    assert.ok(html.includes('<h1 class="hero-h" id="hero-h">'), 'the hero carries the page heading');
+    assert.equal((html.match(/<h1/g) || []).length, 1);
+    assert.ok(html.includes('class="hero-viz"') && html.includes('class="hv-still"'), 'animated and still compositions');
+    assert.ok(html.indexOf('class="hero"') < html.indexOf('class="card metrics"') && html.indexOf('class="card metrics"') < html.indexOf('class="card intro"'));
+    for (const k of ['Selectivity', 'Run reliability', 'Silent runs', 'Time to signal', 'Asks for action']) assert.ok(html.includes(`>${k}<`), k);
+    assert.ok(!html.includes('Risk response'), 'no demo metrics without the demo');
+    const m = M.signalMetrics(data, NOW);
+    assert.equal(m.weeks.length, 12);
+    assert.ok(m.cur.reliability == null || (m.cur.reliability >= 0 && m.cur.reliability <= 1));
+    assert.ok(render({ page: 'dashboard' }, empty).includes('None yet'), 'an empty archive reads as none yet');
+  });
 });
+

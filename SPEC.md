@@ -291,6 +291,20 @@ Source class labels: News, Regulator, Standards body, Industry/trade, Vendor/thr
   development haloed) and steps to the earlier and later developments.
 - Dashboard (owner change 2026-10-06, replacing the design's 7-day counts, which said little with so few items):
   analysis, not counts, all computed in `model.js` from `archive.json` and `runs.json` (never at build time).
+  0. (Owner request 2026-11-24.) A **hero** opens the dashboard and carries the page's one `h1`: an eyebrow, the
+     headline "Thousands of headlines in. Only what changes your controls out.", the site's purpose in one
+     paragraph, links to the latest report and the Risk Tracker, and three figures for the last 30 days
+     (headlines read, items cleared, one in N headlines makes it through) that count up once per page load.
+     Beside it, an animated picture of the filter: headlines stream in, nearly all stop at a dashed bar and
+     fade, and a few cross it in their mechanism's hue. CSS animates it with transforms and opacity only;
+     under `prefers-reduced-motion` a still composition shows and nothing counts up. Then a **Metrics** card:
+     rates and durations for the last 30 days against the 30 before (`model.signalMetrics`). Signal: items
+     published per week over 12 weeks (sparkline), selectivity (headlines read per item published), run
+     reliability (completed runs over scheduled slots since the first run), the silent-run share, time to
+     signal (median days from a live item's earliest source date to its edition), and the share of items
+     that ask for action. Risk response, labelled Demo (`tracker.trackerMetrics`, §7.6): acknowledged share,
+     control coverage, open issues with those rated high or critical, open steps on schedule, mean days to
+     close, and risk acceptances expiring within 90 days. Dashboard panels rise in once, in order.
   1. (Owner change 2026-10-20: the dashboard now opens with "What this site is for": the site's purpose in
      one paragraph, the three entry tests in one line each with "unknown counts as not met; borderline counts
      as a drop", and the four mechanism asks, linking to About. The four readings below are no longer shown on
@@ -491,6 +505,12 @@ place the site shows control and remediation positions, and only for a fictional
   items are mitigated and awareness-only items not applicable. "Reset demo" restores the seed and keeps the view.
 - **Visual:** states are told apart by label and form (solid, outline, dashed), never by red, amber or green
   (§7.5).
+- **On items** (owner request 2026-11-24): once an item's read-across is tracked, its collapsed row shows
+  "Tracked · N issues open", "Tracked · awaiting decision" or "Tracked · dispositioned", and the expanded
+  item shows "Disposition by the analyst", labelled Demo and Example Bank: per domain, the owner, the state,
+  the control answer, disposition, rating, issue ID, target or closed date, acceptance expiry and steps done,
+  with "Open in Tracker". On screen only: never in print or export, never in email. The demo is seeded
+  once the archive loads, so items show it before the Tracker page is opened.
 - **Constraints:** the Tracker reads the archive and never writes it; it adds nothing to any item, run record or
   log. The playbook and recommendation text are generic and institution-neutral, with no first person.
 

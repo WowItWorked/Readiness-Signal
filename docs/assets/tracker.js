@@ -162,7 +162,7 @@ export function initTracker(data, today) {
     } else if (g === 3) {
       resp[x.key] = seeded('partial', 'risk_accepted', {
         ref: 'Compensating control in place.',
-        disp: { issueId: id(), title: `${M.DOMAIN_BY_KEY.get(x.domain).label} residual risk: ${x.claim.slice(0, 80)}`, rating: 'low', acceptApprover: 'Chief Risk Officer', acceptExpiry: addDays(today, 180), acceptRationale: 'Residual exposure is within appetite given the compensating control; reassess at expiry.' },
+        disp: { issueId: id(), title: `${M.DOMAIN_BY_KEY.get(x.domain).label} residual risk: ${x.claim.slice(0, 80)}`, rating: 'low', acceptApprover: 'Chief Risk Officer', acceptExpiry: addDays(today, 75), acceptRationale: 'Residual exposure is within appetite given the compensating control; reassess at expiry.' },
       });
     } else if (actionable) resp[x.key] = seeded('in_place', 'mitigated', { ref: 'Covered by an existing control.' });
     else resp[x.key] = seeded('na', 'not_applicable');
@@ -234,6 +234,93 @@ export function ownerSummary(trk, data) {
 }
 
 // ---------------------------------------------------------------------------------------
+// Risk-response metrics (owner request 2026-11-24): KRI-style measures of how the demo owners
+// respond to read-across. Example data only, like everything the Tracker holds.
+
+const daysBetween = (a, b) => (isDate(a) && isDate(b) ? Math.round((+new Date(`${b}T12:00:00Z`) - +new Date(`${a}T12:00:00Z`)) / 864e5) : null);
+const mean = (xs) => (xs.length ? xs.reduce((n, x) => n + x, 0) / xs.length : null);
+
+export function trackerMetrics(trk, data) {
+  const notes = notifications(data);
+  const rs = notes.map((x) => ({ x, r: trk.resp[x.key] || blankResp() }));
+  const answered = rs.filter(({ r }) => r.control || r.disp.disposition);
+  const st = rs.map(({ r }) => stateOf(r));
+  const covered = st.filter((s) => s === 'covered').length;
+  const issues = rs.filter(({ r }) => ['gap', 'closed'].includes(stateOf(r)));
+  const closed = issues.filter(({ r }) => stateOf(r) === 'closed');
+  const steps = rs.flatMap(({ r }) => r.steps);
+  const openSteps = steps.filter((s) => s.status !== 'done');
+  const late = openSteps.filter((s) => overdue(s, trk.today)).length;
+  const toDecide = answered.map(({ x, r }) => daysBetween(x.date, r.disp.identified)).filter((n) => n != null && n >= 0);
+  const toClose = closed.map(({ r }) => daysBetween(r.disp.identified, r.disp.closed)).filter((n) => n != null && n >= 0);
+  const in90 = addDays(trk.today, 90);
+  const expiring = rs.filter(({ r }) => r.disp.disposition === 'risk_accepted' && isDate(r.disp.acceptExpiry) && r.disp.acceptExpiry <= in90).length;
+  const rated = Object.fromEntries(Object.keys(RATING).map((k) => [k, issues.filter(({ r }) => r.disp.rating === k && stateOf(r) !== 'closed').length]));
+  return {
+    notified: notes.length,
+    ackRate: notes.length ? answered.length / notes.length : null,
+    coverage: answered.length ? covered / answered.length : null,
+    openIssues: issues.length - closed.length,
+    closedIssues: closed.length,
+    onSchedule: openSteps.length ? (openSteps.length - late) / openSteps.length : null,
+    lateSteps: late,
+    daysToDecide: mean(toDecide),
+    daysToClose: mean(toClose),
+    acceptances: st.filter((s) => s === 'accepted').length,
+    expiring,
+    rated,
+  };
+}
+
+/** Each owner's record for one item: what the item view shows once its read-across is tracked. */
+export function itemTracking(trk, data, itemId) {
+  if (!trk || !data) return [];
+  return notifications(data).filter((x) => x.itemId === itemId).map((x) => {
+    const r = trk.resp[x.key] || blankResp();
+    const done = r.steps.filter((s) => s.status === 'done').length;
+    return {
+      key: x.key, domain: x.domain, role: OWNER_BY_DOMAIN.get(x.domain).role, label: M.DOMAIN_BY_KEY.get(x.domain).label,
+      state: stateOf(r), control: r.control, disp: r.disp, done, steps: r.steps.length, late: lateSteps(r, trk.today),
+    };
+  });
+}
+
+/** One line for an item's collapsed row: where its tracking stands, or '' when nothing is tracked. */
+export function itemTrackLine(rows) {
+  if (!rows.length) return '';
+  const n = (s) => rows.filter((r) => r.state === s).length;
+  if (n('gap')) return `Tracked · ${n('gap')} issue${n('gap') === 1 ? '' : 's'} open`;
+  if (n('new') || n('open')) return 'Tracked · awaiting decision';
+  return 'Tracked · dispositioned';
+}
+
+/** The "Disposition by the analyst" block in an expanded item (demo data, labelled as such). */
+export function itemTrackBlock(rows) {
+  if (!rows.length) return '';
+  const line = (r) => {
+    const facts = [
+      r.control ? CONTROL[r.control].short : '',
+      r.disp.disposition ? DISPOSITION[r.disp.disposition] : '',
+      r.disp.rating ? `Rated ${RATING[r.disp.rating].toLowerCase()}` : '',
+      r.disp.issueId,
+      r.state === 'gap' && (r.disp.revised || r.disp.target) ? `Target ${fmtKey(r.disp.revised || r.disp.target)}` : '',
+      r.state === 'closed' && r.disp.closed ? `Closed ${fmtKey(r.disp.closed)}` : '',
+      r.disp.disposition === 'risk_accepted' && r.disp.acceptExpiry ? `Acceptance expires ${fmtKey(r.disp.acceptExpiry)}` : '',
+      r.steps ? `${r.done} of ${r.steps} steps done` : '',
+    ].filter(Boolean);
+    return `<li class="trk-item-row" data-k="trk-ir-${esc(r.key)}">
+        <span class="trk-item-who"><span class="trk-item-dom">${esc(r.label)}</span><span class="trk-item-role">${esc(r.role)}</span></span>
+        <span class="trk-item-what">${pill(r.state)}${r.late ? `<span class="trk-late">${r.late} overdue</span>` : ''}<span class="trk-item-facts">${facts.length ? esc(facts.join(' · ')) : 'Not yet acknowledged'}</span></span>
+        <button type="button" class="copy-btn" data-act="trk-goto" data-key="${esc(r.key)}">Open in Tracker</button>
+      </li>`;
+  };
+  return `<div class="b-trk">
+        <div class="trk-item-h"><span class="kicker">Disposition by the analyst</span><span class="trk-demo">Demo</span><span class="trk-item-sub">${esc(DEMO_ORG)}, example data</span></div>
+        <ul class="trk-item-list">${rows.map(line).join('')}</ul>
+      </div>`;
+}
+
+// ---------------------------------------------------------------------------------------
 // Actions: a pure reducer. `d` is the element's dataset; `value` the field's value; `meta`
 // { type: 'input' | 'change' | 'click', at: display time } decides what reaches the log.
 
@@ -253,6 +340,12 @@ export function trackerAct(trk, d, value, data, meta = {}) {
       if (d.v !== 'all' && !OWNER_BY_DOMAIN.has(d.v)) return trk;
       return { ...trk, owner: d.v, sel: null, preview: false, draft: '' };
     case 'trk-owner-sel': return trackerAct(trk, { act: 'trk-owner', v: v || 'all' }, undefined, data, meta);
+    case 'trk-goto': {
+      // From an item's disposition block: open that owner's record in the Tracker.
+      const domain = String(d.key || '').split(':')[1];
+      if (!OWNER_BY_DOMAIN.has(domain)) return trk;
+      return trackerAct({ ...trk, owner: domain }, { act: 'trk-open', key: d.key }, undefined, data, meta);
+    }
     case 'trk-open': return { ...patchResp(trk, d.key, (r) => (r.read ? r : logged({ ...r, read: true }, at, 'Notification read.'))), sel: d.key, preview: false, draft: '' };
     case 'trk-back': return { ...trk, sel: null, preview: false };
     case 'trk-preview': return { ...trk, preview: !trk.preview };

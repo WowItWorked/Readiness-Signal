@@ -3,7 +3,7 @@
 // model.safeHref (https:, our own mailto:, or an in-page #id; anything else renders as text).
 
 import * as M from './model.js';
-import { trackerMain } from './tracker.js';
+import { trackerMain, itemTracking, itemTrackBlock, itemTrackLine, trackerMetrics } from './tracker.js';
 
 const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 export const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ESC[c]);
@@ -307,11 +307,10 @@ const INTRO_TESTS = {
 
 function dashboardMain(st) {
   const d = M.dashboard(st.data, st.now);
+  const sm = M.signalMetrics(st.data, st.now);
   return `<main id="main" tabindex="-1" class="main dash" data-k="main-dashboard">
-  <div class="title-row start">
-    <h1 class="h1">Dashboard</h1>
-    ${d.scope ? `<span class="list-sub">${esc(d.scope)}</span>` : ''}
-  </div>
+  ${heroCard(d, sm)}
+  ${metricsCard(sm, st.trk ? trackerMetrics(st.trk, st.data) : null)}
   ${introCard()}
   <div class="dash-grid">
     ${latestCard(d)}
@@ -327,6 +326,109 @@ function dashboardMain(st) {
     <span class="arch-link-go">Browse the archive</span>
   </a>
 </main>`;
+}
+
+// ---------------------------------------------------------------------------------------
+// Hero (owner request 2026-11-24): what the site does, shown as the filter at work. Headlines stream
+// in from the left; nearly all stop at the bar and fade, and a few cross it in their mechanism's
+// hue. CSS animates it (SVG transforms only); under reduced motion a still composition shows.
+
+const HERO_ROWS = [34, 58, 82, 106, 130, 154, 178];
+const HERO_DOTS = Array.from({ length: 28 }, (_, i) => ({ y: HERO_ROWS[(i * 5) % HERO_ROWS.length], pass: i % 7 === 3 ? ['candidate_issue', 'kri_kpi', 'awareness_only'][((i / 7) | 0) % 3] : null }));
+const HERO_VIZ = `<svg class="hero-viz" viewBox="0 0 480 212" role="img" aria-label="Headlines stream in; most stop at the bar, a few clear it">
+  <g class="hv-grid" aria-hidden="true">${HERO_ROWS.map((y) => `<line x1="12" y1="${y}" x2="468" y2="${y}"></line>`).join('')}</g>
+  <line class="hv-bar" x1="318" y1="18" x2="318" y2="194"></line>
+  <rect class="hv-bar-glow" x="312" y="18" width="12" height="176" rx="6"></rect>
+  <text class="hv-label" x="12" y="208">Headlines read</text><text class="hv-label hv-mid" x="318" y="12">The bar</text><text class="hv-label hv-end" x="468" y="208">Published</text>
+  <g class="hv-move" aria-hidden="true">${HERO_DOTS.map((d, i) => `<circle class="hv-dot hv-d${i}${d.pass ? ' hv-pass' : ''}" cx="12" cy="${d.y}" r="${d.pass ? 4.5 : 3.2}"${d.pass ? ` data-mech="${d.pass}"` : ''}></circle>`).join('')}</g>
+  <g class="hv-still" aria-hidden="true">${HERO_DOTS.map((d, i) => `<circle class="hv-dot${d.pass ? ' hv-pass' : ''}" cx="${d.pass ? 360 + (i % 4) * 26 : 24 + ((i * 37) % 280)}" cy="${d.y}" r="${d.pass ? 4.5 : 3.2}"${d.pass ? ` data-mech="${d.pass}"` : ''}></circle>`).join('')}</g>
+</svg>`;
+
+const fmtInt = (n) => Math.round(n).toLocaleString('en-US');
+
+function heroCard(d, sm) {
+  const c = sm.cur;
+  const oneIn = c.published ? Math.round(c.read / c.published) : null;
+  const stat = (value, label, count) => `<div class="hero-stat"><b class="hero-n"${count != null ? ` data-count="${Math.round(count)}"` : ''}>${esc(value)}</b><span>${esc(label)}</span></div>`;
+  return `<section class="hero" aria-labelledby="hero-h" data-k="hero">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">Technology-risk triage · US, UK, EU and Canada</p>
+      <h1 class="hero-h" id="hero-h">Thousands of headlines in. Only what changes your controls out.</h1>
+      <p class="hero-p">Four runs a day read public sources on cyber, fraud, AI, data, resilience and third-party risk. An item is published only when it clears a deliberately high bar, and each one says what it asks of you. Most runs publish nothing.</p>
+      <div class="hero-cta">
+        <a class="hero-btn primary" href="#report"${navAttrs('report', 'day')}>Read the latest report</a>
+        <a class="hero-btn" href="#tracker"${navAttrs('tracker')}>Open the Risk Tracker</a>
+      </div>
+      <div class="hero-stats">
+        ${stat(fmtInt(c.read), `headlines read in ${sm.days} days`, c.read)}
+        ${stat(c.published ? fmtInt(c.published) : '0', `cleared the bar in ${sm.days} days`, c.published)}
+        ${stat(oneIn ? `1 in ${fmtInt(oneIn)}` : 'None yet', 'headlines makes it through')}
+      </div>
+    </div>
+    <div class="hero-art">${HERO_VIZ}</div>
+  </section>`;
+}
+
+// ---------------------------------------------------------------------------------------
+// Metrics (owner request 2026-11-24): rates and durations with a trend, not counts. Signal metrics
+// come from the runs and the archive; risk-response metrics from the Tracker demo, labelled so.
+
+const pct = (x) => (x == null ? '–' : `${Math.round(x * 100)}%`);
+const days1 = (x) => (x == null ? '–' : x < 0.5 ? 'Same day' : `${x < 10 ? Math.round(x * 10) / 10 : Math.round(x)} days`);
+
+function trend(cur, prev, fmt, label) {
+  if (cur == null || prev == null) return `<span class="mt-trend">No prior ${label}</span>`;
+  const a = fmt(cur), b = fmt(prev);
+  if (a === b) return `<span class="mt-trend">Same as the prior ${label}</span>`;
+  return `<span class="mt-trend"><span class="mt-arrow" aria-hidden="true">${cur > prev ? '↑' : '↓'}</span> from ${esc(b)} in the prior ${label}</span>`;
+}
+
+function sparkline(weeks) {
+  const max = Math.max(1, ...weeks.map((w) => w.n));
+  const W = 640, H = 64, step = W / (weeks.length - 1);
+  const pts = weeks.map((w, k) => [k * step, H - 6 - (w.n / max) * (H - 14)]);
+  const line = pts.map(([x, y], k) => `${k ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join('');
+  const last = pts[pts.length - 1];
+  return `<svg class="mt-spark" viewBox="-4 0 ${W + 8} ${H}" role="img" aria-label="Items published per week, last 12 weeks: ${weeks.map((w) => w.n).join(', ')}">
+      <path class="mt-area" d="${line}L${W} ${H}L0 ${H}Z"></path><path class="mt-line" d="${line}"></path>
+      <circle class="mt-end" cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="3.5"></circle>
+    </svg>`;
+}
+
+function metricsCard(sm, tm) {
+  const c = sm.cur, p = sm.prev;
+  const per = `${sm.days} days`;
+  const oneIn = (w) => (w.published ? w.read / w.published : null);
+  const tile = (label, value, foot, def) => `<div class="mt-tile"><span class="mt-k">${esc(label)}</span><b class="mt-v">${esc(value)}</b>${foot}<span class="mt-def">${esc(def)}</span></div>`;
+  const signal = [
+    tile('Selectivity', c.published ? `1 in ${fmtInt(oneIn(c))}` : 'None cleared', p.published ? trend(oneIn(c), oneIn(p), (x) => `1 in ${fmtInt(x)}`, per) : `<span class="mt-trend">Nothing cleared in the prior ${per}</span>`, 'Headlines read for each item published.'),
+    tile('Run reliability', pct(c.reliability), `<span class="mt-trend">${c.failed ? `${c.failed} failed run${c.failed === 1 ? '' : 's'}` : 'No failed runs'}</span>`, 'Scheduled runs that completed.'),
+    tile('Silent runs', pct(c.silentShare), trend(c.silentShare, p.silentShare, pct, per), 'Completed runs that published nothing. Silence is a result.'),
+    tile('Time to signal', days1(c.lagDays), `<span class="mt-trend">Median of ${c.lagN} live item${c.lagN === 1 ? '' : 's'}</span>`, 'From the source’s publication to the edition.'),
+    tile('Asks for action', pct(c.actionShare), trend(c.actionShare, p.actionShare, pct, per), 'Items carrying a candidate issue or an indicator check.'),
+  ].join('');
+  const response = tm ? [
+    tile('Acknowledged', pct(tm.ackRate), `<span class="mt-trend">${fmtInt(tm.notified)} read-across notifications</span>`, 'Notifications with a control answer or disposition.'),
+    tile('Control coverage', pct(tm.coverage), '<span class="mt-trend">Of acknowledged notifications</span>', 'Mitigated by a control, or not applicable.'),
+    tile('Open issues', String(tm.openIssues), `<span class="mt-trend">${tm.rated.high + tm.rated.critical} rated high or critical</span>`, 'Issues raised and not yet closed.'),
+    tile('Steps on schedule', pct(tm.onSchedule), `<span class="mt-trend">${tm.lateSteps} overdue</span>`, 'Open remediation steps not past their due date.'),
+    tile('Mean time to close', days1(tm.daysToClose), `<span class="mt-trend">${tm.closedIssues} closed issue${tm.closedIssues === 1 ? '' : 's'}</span>`, 'From identification to validated closure.'),
+    tile('Acceptances expiring', String(tm.expiring), `<span class="mt-trend">Within 90 days, of ${tm.acceptances}</span>`, 'Risk acceptances due for review.'),
+  ].join('') : '';
+  return `<section class="card metrics" aria-labelledby="mt-h" data-k="metrics">
+    <header class="card-head"><h2 class="h-19" id="mt-h">Metrics</h2><span class="sub-13">Last ${sm.days} days against the ${sm.days} before</span></header>
+    <div class="mt-group">
+      <div class="mt-gh"><span class="kicker">Signal</span><span class="mt-gs">How the filter performs, from every scheduled run</span></div>
+      <div class="mt-row">
+        <div class="mt-tile mt-wide"><span class="mt-k">Items published per week</span>${sparkline(sm.weeks)}<span class="mt-def">Last 12 weeks, live and backfilled; the dot is this week.</span></div>
+        ${signal}
+      </div>
+    </div>
+    ${tm ? `<div class="mt-group">
+      <div class="mt-gh"><span class="kicker">Risk response</span><span class="trk-demo">Demo</span><span class="mt-gs">How owners respond to read-across in the Risk Tracker, example data</span></div>
+      <div class="mt-row r3">${response}</div>
+    </div>` : ''}
+  </section>`;
 }
 
 function domainsCard(d) {
@@ -415,6 +517,9 @@ export function itemArticle(it, idx, st) {
   const d = M.itemDetail(it, data);
   const permalink = M.permalinkUrl(it.id);
   const ticks = it.sources.map(() => '<span></span>').join('');
+  // The Tracker demo's dispositions for this item (SPEC §7.6): on screen only, never on paper.
+  const tracked = screen && st.trk ? itemTracking(st.trk, data, it.id) : [];
+  const trackLine = itemTrackLine(tracked);
 
   const headRow = `<div class="row" role="button" tabindex="0" aria-expanded="${open}" data-act="toggle" data-id="${esc(it.id)}">
       ${mechTag(it.mechanism, 'mech row-mech')}
@@ -427,6 +532,7 @@ export function itemArticle(it, idx, st) {
           <span class="ticks"><span class="tick-set" aria-hidden="true">${ticks}</span><span class="tick-n">${esc(d.srcCount)}</span></span>
           <span>${esc(M.whenShort(it.date, now))}</span>
           ${d.thread ? `<span class="meta-thr">Thread · ${d.thread.n}</span>` : ''}
+          ${trackLine ? `<span class="meta-trk">${esc(trackLine)}</span>` : ''}
         </div>
       </div>
       <div class="row-tog" aria-hidden="true"><span class="chev${open ? ' up' : ''}"></span></div>
@@ -491,7 +597,7 @@ export function itemArticle(it, idx, st) {
         <div class="read-list">${d.read.map((r) => `<div class="read-row"><span class="read-d">${esc(r.label)}</span><span class="read-t">${esc(r.text)}</span></div>`).join('')}</div>
         ${d.noRead ? `<span class="no-read">No material read-across: ${esc(d.noRead)}</span>` : ''}
       </div>
-      <div class="b-act">${act}</div>
+      <div class="b-act">${act}${itemTrackBlock(tracked)}</div>
       ${thread}
       <div class="b-src">
         <div class="src-head"><span class="kicker">Sources · ${d.srcN}</span><span class="corrob">${esc(d.corrob)}</span></div>
