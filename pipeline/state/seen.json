@@ -4368,6 +4368,18 @@
       "run_id": "2026-11-25-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.rapid7.com/blog/post/etr-cve-2026-123903-critical-vmware-directory-service-authentication-bypass-affects-vcenter": {
+      "first_seen": "2026-11-25T10:06:14-05:00",
+      "run_id": "2026-11-25-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-103406": {
+      "first_seen": "2026-11-25T10:06:14-05:00",
+      "run_id": "2026-11-25-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

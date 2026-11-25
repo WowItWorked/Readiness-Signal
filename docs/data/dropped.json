@@ -125,6 +125,19 @@
   },
   "items": [
     {
+      "id": "c-09e91f27f3",
+      "date": "2026-11-25",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 first: critical auth-bypass flaw, vendor advisory and patch issued, no exploitation stated, no exception holds [alt EV:E2]",
+      "publication": "Rapid7",
+      "headline": "CVE-2026-123903: Critical VMware Directory Service Authentication Bypass affects vCenter",
+      "url": "https://www.rapid7.com/blog/post/etr-cve-2026-123903-critical-vmware-directory-service-authentication-bypass-affects-vcenter",
+      "judged": "live",
+      "run": "2026-11-25-1000",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
       "id": "c-586a3391f2",
       "date": "2026-11-25",
       "section": "executive_visibility",
@@ -161,6 +174,19 @@
       "url": "https://www.securityweek.com/drupal-flaw-found-by-anthropic-scanner-exploited-in-attacks/",
       "judged": "live",
       "run": "2026-11-25-0600",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-d6065f7982",
+      "date": "2026-11-25",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 first: known-exploited listing alone is routine; SD-WAN router not a bank-common escalation category, no escalation signal [alt EV:E2]",
+      "publication": "CISA",
+      "headline": "CISA KEV adds CVE-2026-103406: Hewlett Packard Enterprise (HPE) Juniper Session Smart Conductor and Session Smart Router — Hewlett Packard Enterprise (HPE) Juniper Session Smart Conductor and Session Smart Router OS Command Injection Vulnerability",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?search_api_fulltext=CVE-2026-103406",
+      "judged": "live",
+      "run": "2026-11-25-1000",
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
