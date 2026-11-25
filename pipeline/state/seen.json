@@ -4320,6 +4320,54 @@
       "run_id": "2026-11-24-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.ukfinance.org.uk/news-and-insight/press-release/ps660-million-stolen-fraudsters-uk-finance-calls-tougher-action": {
+      "first_seen": "2026-11-25T06:06:06-05:00",
+      "run_id": "2026-11-25-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://bankingjournal.aba.com/2026/11/aba-fraudcast-how-citizens-bank-defends-against-ai-powered-attacks": {
+      "first_seen": "2026-11-25T06:06:06-05:00",
+      "run_id": "2026-11-25-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.darkreading.com/cybersecurity-operations/cyber-insurers-see-new-ai-divide": {
+      "first_seen": "2026-11-25T06:06:06-05:00",
+      "run_id": "2026-11-25-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://therecord.media/treasury-fincen-takes-systems-offline-after-cyber-incident": {
+      "first_seen": "2026-11-25T06:06:06-05:00",
+      "run_id": "2026-11-25-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/drupal-flaw-found-by-anthropic-scanner-exploited-in-attacks": {
+      "first_seen": "2026-11-25T06:06:06-05:00",
+      "run_id": "2026-11-25-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://blog.talosintelligence.com/the-great-escape-tradecraft-insights-from-an-agentic-swarm": {
+      "first_seen": "2026-11-25T06:06:06-05:00",
+      "run_id": "2026-11-25-0600",
+      "verdict": "duplicate",
+      "item_id": null
+    },
+    "https://www.federalregister.gov/documents/2026/11/25/2026-23994/thresholds-increase-for-the-major-assets-prohibition-of-the-depository-institution-management": {
+      "first_seen": "2026-11-25T06:06:06-05:00",
+      "run_id": "2026-11-25-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.resbank.co.za/en/home/publications/publication-detail-pages/prudential-authority/pa-insurers/Insurance-Sector-Data/special-reports/2025/life-insurance-industry-experience": {
+      "first_seen": "2026-11-25T06:06:06-05:00",
+      "run_id": "2026-11-25-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

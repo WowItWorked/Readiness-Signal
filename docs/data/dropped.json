@@ -125,6 +125,45 @@
   },
   "items": [
     {
+      "id": "c-586a3391f2",
+      "date": "2026-11-25",
+      "section": "executive_visibility",
+      "code": "EV_NOT_AN_EVENT",
+      "reason": "E1 periodic trade-body fraud statistics release; a trend and loss total, not a specific dated incident or official action [alt CS:C1]",
+      "publication": "UK Finance",
+      "headline": "£660 million stolen by fraudsters as UK Finance calls for tougher action across sectors",
+      "url": "https://www.ukfinance.org.uk/news-and-insight/press-release/ps660-million-stolen-fraudsters-uk-finance-calls-tougher-action",
+      "judged": "live",
+      "run": "2026-11-25-0600",
+      "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
+    },
+    {
+      "id": "c-602278233f",
+      "date": "2026-11-25",
+      "section": "executive_visibility",
+      "code": "EV_BELOW_FLOOR",
+      "reason": "E2 systems taken offline after unauthorised access to a limited subset; no data count, outage duration or loss confirmed, so no limb met [alt CS:C1]",
+      "publication": "The Record",
+      "headline": "Treasury's FinCEN takes systems offline after cybersecurity incident",
+      "url": "https://therecord.media/treasury-fincen-takes-systems-offline-after-cyber-incident",
+      "judged": "live",
+      "run": "2026-11-25-0600",
+      "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
+    },
+    {
+      "id": "c-a287de1f42",
+      "date": "2026-11-25",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 content-management flaw exploited and KEV-listed; no exception shown (persistence, control negated, mitigation ineffective, distribution channel, bank-common edge product) [alt EV:E2]",
+      "publication": "SecurityWeek",
+      "headline": "Drupal Flaw Found by Anthropic Scanner Exploited in Attacks",
+      "url": "https://www.securityweek.com/drupal-flaw-found-by-anthropic-scanner-exploited-in-attacks/",
+      "judged": "live",
+      "run": "2026-11-25-0600",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
       "id": "c-4040c365b4",
       "date": "2026-11-24",
       "section": "capability_shift",
