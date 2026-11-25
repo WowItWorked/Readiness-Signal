@@ -164,6 +164,18 @@
       "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
     },
     {
+      "id": "c-8318524db7",
+      "date": "2026-11-25",
+      "section": null,
+      "code": "GL_RESEARCH_EXCLUDED",
+      "reason": "G9: vendor monthly statistics report; headline and lead disclose no method, sample or period (RA2, RA3 not established)",
+      "publication": "BleepingComputer",
+      "headline": "InfraTrust warns of exploited supply chain flaws in network appliances",
+      "url": "https://www.bleepingcomputer.com/news/security/infratrust-warns-of-exploited-supply-chain-flaws-in-network-appliances/",
+      "judged": "live",
+      "run": "2026-11-25-1400"
+    },
+    {
       "id": "c-a287de1f42",
       "date": "2026-11-25",
       "section": "capability_shift",

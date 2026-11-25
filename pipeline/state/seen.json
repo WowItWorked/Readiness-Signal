@@ -4380,6 +4380,18 @@
       "run_id": "2026-11-25-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/infratrust-warns-of-exploited-supply-chain-flaws-in-network-appliances": {
+      "first_seen": "2026-11-25T14:06:12-05:00",
+      "run_id": "2026-11-25-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://unit42.paloaltonetworks.com/ai-threat-horizon": {
+      "first_seen": "2026-11-25T14:06:12-05:00",
+      "run_id": "2026-11-25-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
