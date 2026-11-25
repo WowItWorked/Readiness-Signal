@@ -4392,6 +4392,48 @@
       "run_id": "2026-11-25-1400",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/palo-alto-networks-warns-of-fragnesia-flaw-exploited-in-pan-os-attacks": {
+      "first_seen": "2026-11-25T18:06:10-05:00",
+      "run_id": "2026-11-25-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://content.govdelivery.com/accounts/USFDIC/bulletins/43422f3": {
+      "first_seen": "2026-11-25T18:06:10-05:00",
+      "run_id": "2026-11-25-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/italy-and-switzerland-warn-of-autonomous-ai-driven-cyberattacks": {
+      "first_seen": "2026-11-25T18:06:10-05:00",
+      "run_id": "2026-11-25-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.federalreserve.gov/supervisionreg/srletters/SR2610.htm": {
+      "first_seen": "2026-11-25T18:06:10-05:00",
+      "run_id": "2026-11-25-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.occ.gov/news-issuances/bulletins/2026/bulletin-2026-59.html": {
+      "first_seen": "2026-11-25T18:06:10-05:00",
+      "run_id": "2026-11-25-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/1password-customer-data-stolen-after-employee-github-account-breach": {
+      "first_seen": "2026-11-25T18:06:10-05:00",
+      "run_id": "2026-11-25-1800",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse": {
+      "first_seen": "2026-11-25T18:06:10-05:00",
+      "run_id": "2026-11-25-1800",
+      "verdict": "duplicate",
+      "item_id": null
     }
   }
 }

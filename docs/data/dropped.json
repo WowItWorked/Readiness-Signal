@@ -138,6 +138,45 @@
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
+      "id": "c-1b6ec2368e",
+      "date": "2026-11-25",
+      "section": "executive_visibility",
+      "code": "EV_BELOW_FLOOR",
+      "reason": "E2: lead gives no confirmed count of people or credential-type data; page blocked, search found no primary disclosure [alt CS:C1]",
+      "publication": "BleepingComputer",
+      "headline": "1Password customer data stolen after employee GitHub account breach",
+      "url": "https://www.bleepingcomputer.com/news/security/1password-customer-data-stolen-after-employee-github-account-breach/",
+      "judged": "live",
+      "run": "2026-11-25-1800",
+      "alt": "Also tested as Capability & Control Shift: failed “A specific change”."
+    },
+    {
+      "id": "c-30b9a8b58c",
+      "date": "2026-11-25",
+      "section": "capability_shift",
+      "code": "CS_NO_SPECIFIC_CHANGE",
+      "reason": "C1: lead reports an agency warning on AI-agent-driven attacks, no before → now technique; page blocked, headline and lead only [alt EV:E2]",
+      "publication": "BleepingComputer",
+      "headline": "Italy and Switzerland warn of autonomous AI-driven cyberattacks",
+      "url": "https://www.bleepingcomputer.com/news/security/italy-and-switzerland-warn-of-autonomous-ai-driven-cyberattacks/",
+      "judged": "live",
+      "run": "2026-11-25-1800",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-3668d7ed9e",
+      "date": "2026-11-25",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6: exploited edge-firewall flaws; patch status and a 30-day escalation signal not established; page blocked, headline and lead only [alt EV:E2]",
+      "publication": "BleepingComputer",
+      "headline": "Palo Alto Networks warns of Fragnesia flaw exploited in PAN-OS attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/palo-alto-networks-warns-of-fragnesia-flaw-exploited-in-pan-os-attacks/",
+      "judged": "live",
+      "run": "2026-11-25-1800",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
       "id": "c-586a3391f2",
       "date": "2026-11-25",
       "section": "executive_visibility",
