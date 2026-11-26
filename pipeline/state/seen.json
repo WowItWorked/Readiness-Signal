@@ -4482,6 +4482,12 @@
       "run_id": "2026-11-26-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.theregister.com/security/2026/11/26/microsoft-hackers-in-china-n-korea-using-artex-ai-tool-to-break-into-global-tech-systems/5312433": {
+      "first_seen": "2026-11-26T14:05:58-05:00",
+      "run_id": "2026-11-26-1400",
+      "verdict": "duplicate",
+      "item_id": null
     }
   }
 }
