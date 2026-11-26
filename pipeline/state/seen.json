@@ -4470,6 +4470,18 @@
       "run_id": "2026-11-26-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.securityweek.com/mitel-micollab-zero-days-exploited-in-suspected-ai-assisted-attacks": {
+      "first_seen": "2026-11-26T10:06:11-05:00",
+      "run_id": "2026-11-26-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/critical-juniper-session-smart-conductor-flaw-exploited-in-attacks": {
+      "first_seen": "2026-11-26T10:06:11-05:00",
+      "run_id": "2026-11-26-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

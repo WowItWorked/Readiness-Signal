@@ -149,6 +149,32 @@
       "run": "2026-11-26-0600"
     },
     {
+      "id": "c-5b03a45cee",
+      "date": "2026-11-26",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6: exploited collaboration-product flaws, no listed exception shown (not a bank-common category; no persistence, control negation, patch bypass or channel compromise) [alt EV:E2]",
+      "publication": "SecurityWeek",
+      "headline": "Mitel MiCollab Zero-Days Exploited in Suspected AI-Assisted Attacks",
+      "url": "https://www.securityweek.com/mitel-micollab-zero-days-exploited-in-suspected-ai-assisted-attacks/",
+      "judged": "live",
+      "run": "2026-11-26-1000",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
+      "id": "c-a179a17c70",
+      "date": "2026-11-26",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6: exploited network-management flaw; lead states no escalation signal or listed exception (no run, pre-patch root control or sector-named authority statement) [alt EV:E2]",
+      "publication": "SecurityWeek",
+      "headline": "Critical Juniper Session Smart Conductor Flaw Exploited in Attacks",
+      "url": "https://www.securityweek.com/critical-juniper-session-smart-conductor-flaw-exploited-in-attacks/",
+      "judged": "live",
+      "run": "2026-11-26-1000",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
       "id": "c-fca92ad41e",
       "date": "2026-11-26",
       "section": "executive_visibility",
