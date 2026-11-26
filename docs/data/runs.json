@@ -8485,6 +8485,47 @@
         "awareness_only": 0
       },
       "notes": "source: 16 of 173 sources failed; source: fed-testimony implausible dates skipped; ambiguity: BSA relief statement judged off-domain"
+    },
+    {
+      "run_id": "2026-11-26-0600",
+      "slot": "2026-11-26T06:00:00-05:00",
+      "started_at": "2026-11-26T06:05:57-05:00",
+      "finished_at": "2026-11-26T06:07:03-05:00",
+      "status": "silent",
+      "items": [],
+      "threshold_level": "high",
+      "funnel": {
+        "sources_ok": 157,
+        "sources_failed": 16,
+        "fetched": 4404,
+        "in_window": 238,
+        "unseen": 228,
+        "stage1_pass": 6,
+        "stage2_pass": 0,
+        "dedup_dropped": 0,
+        "published": 0
+      },
+      "stage2_by_section": {
+        "executive_visibility": {
+          "tested": 2,
+          "passed": 0
+        },
+        "capability_shift": {
+          "tested": 0,
+          "passed": 0
+        },
+        "regulatory_trajectory": {
+          "tested": 1,
+          "passed": 0
+        }
+      },
+      "mechanism_distribution": {
+        "candidate_issue": 0,
+        "kri_kpi": 0,
+        "praf_coverage": 0,
+        "awareness_only": 0
+      },
+      "notes": "source: bis-cb-speeches reposts older speeches; source: fed-testimony implausible dates skipped; source: 16 of 173 sources failed"
     }
   ]
 }

@@ -125,6 +125,42 @@
   },
   "items": [
     {
+      "id": "c-24f2738e7a",
+      "date": "2026-11-26",
+      "section": "executive_visibility",
+      "code": "EV_BELOW_FLOOR",
+      "reason": "E2 government data exposure of about 11,000 people, below every floor; no financial-sector nexus stated",
+      "publication": "Euronews",
+      "headline": "New Danish data breach hits 11,000 despite security upgrades",
+      "url": "https://www.euronews.com/2026/11/26/new-danish-data-breach-hits-11000-despite-security-upgrades",
+      "judged": "live",
+      "run": "2026-11-26-0600"
+    },
+    {
+      "id": "c-2e34d7b4bc",
+      "date": "2026-11-26",
+      "section": "regulatory_trajectory",
+      "code": "RT_NO_DIRECTION",
+      "reason": "R3 periodic policy-committee record; technology topics (AI, cyber, third parties) restate earlier positions, no new direction established from the opened page",
+      "publication": "Bank of England",
+      "headline": "Financial Policy Committee Record – November 2026",
+      "url": "https://www.bankofengland.co.uk/financial-policy-committee-record/2026/november-2026",
+      "judged": "live",
+      "run": "2026-11-26-0600"
+    },
+    {
+      "id": "c-fca92ad41e",
+      "date": "2026-11-26",
+      "section": "executive_visibility",
+      "code": "EV_NOT_AN_EVENT",
+      "reason": "E1 consumer survey (2,558 adults) and annual fraud-report statistics with a warning to the public; no dated incident or official action; no firm expectations set",
+      "publication": "Financial Conduct Authority",
+      "headline": "Check the firm before you invest, FCA warns, as AI scams rise",
+      "url": "https://www.fca.org.uk/news/press-releases/check-firm-you-invest-fca-warns-ai-scams-rise",
+      "judged": "live",
+      "run": "2026-11-26-0600"
+    },
+    {
       "id": "c-09e91f27f3",
       "date": "2026-11-25",
       "section": "capability_shift",

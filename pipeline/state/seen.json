@@ -4434,6 +4434,42 @@
       "run_id": "2026-11-25-1800",
       "verdict": "duplicate",
       "item_id": null
+    },
+    "https://www.fca.org.uk/news/press-releases/check-firm-you-invest-fca-warns-ai-scams-rise": {
+      "first_seen": "2026-11-26T06:05:57-05:00",
+      "run_id": "2026-11-26-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.euronews.com/2026/11/26/new-danish-data-breach-hits-11000-despite-security-upgrades": {
+      "first_seen": "2026-11-26T06:05:57-05:00",
+      "run_id": "2026-11-26-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://thehill.com/regulation/court-battles/6244265-musk-appeals-twitter-fraud-verdict-report": {
+      "first_seen": "2026-11-26T06:05:57-05:00",
+      "run_id": "2026-11-26-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bankofengland.co.uk/financial-policy-committee-record/2026/november-2026": {
+      "first_seen": "2026-11-26T06:05:57-05:00",
+      "run_id": "2026-11-26-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.fca.org.uk/publications/discussion-papers/dp26-4-reforming-uk-benchmarks-regime": {
+      "first_seen": "2026-11-26T06:05:57-05:00",
+      "run_id": "2026-11-26-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.gov.uk/government/consultations/future-regulatory-regime-for-benchmarks-and-benchmark-administrators": {
+      "first_seen": "2026-11-26T06:05:57-05:00",
+      "run_id": "2026-11-26-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
