@@ -4488,6 +4488,30 @@
       "run_id": "2026-11-26-1400",
       "verdict": "duplicate",
       "item_id": null
+    },
+    "https://www.fca.org.uk/news/speeches/cyber-resilience-building-confidence-threats-evolve": {
+      "first_seen": "2026-11-27T06:06:10-05:00",
+      "run_id": "2026-11-27-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.securityweek.com/hex-package-manager-warns-of-potential-data-breach": {
+      "first_seen": "2026-11-27T06:06:10-05:00",
+      "run_id": "2026-11-27-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.pr261127~2e53af695e.en.html": {
+      "first_seen": "2026-11-27T06:06:10-05:00",
+      "run_id": "2026-11-27-0600",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_SpeechesView.aspx?id=1593": {
+      "first_seen": "2026-11-27T06:06:10-05:00",
+      "run_id": "2026-11-27-0600",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

@@ -125,6 +125,31 @@
   },
   "items": [
     {
+      "id": "c-695a16f1e8",
+      "date": "2026-11-27",
+      "section": "regulatory_trajectory",
+      "code": "RT_SPEAKER_INELIGIBLE",
+      "reason": "R2 speech by a staff-level director below principal speaker tier (rt_speaker_tier principal); R1 speech in scope, R3-R5 not assessed",
+      "publication": "Financial Conduct Authority",
+      "headline": "Cyber resilience: building confidence as threats evolve",
+      "url": "https://www.fca.org.uk/news/speeches/cyber-resilience-building-confidence-threats-evolve",
+      "judged": "live",
+      "run": "2026-11-27-0600"
+    },
+    {
+      "id": "c-ae2c9dfba4",
+      "date": "2026-11-27",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 vulnerability in an open-source package registry; no exception held, no evidence packages were modified [alt EV:E2]",
+      "publication": "SecurityWeek",
+      "headline": "Hex Package Manager Warns of Potential Data Breach",
+      "url": "https://www.securityweek.com/hex-package-manager-warns-of-potential-data-breach/",
+      "judged": "live",
+      "run": "2026-11-27-0600",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
       "id": "c-24f2738e7a",
       "date": "2026-11-26",
       "section": "executive_visibility",
