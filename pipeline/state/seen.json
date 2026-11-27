@@ -4524,6 +4524,54 @@
       "run_id": "2026-11-27-1000",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=64062": {
+      "first_seen": "2026-11-27T14:06:07-05:00",
+      "run_id": "2026-11-27-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution": {
+      "first_seen": "2026-11-27T14:06:07-05:00",
+      "run_id": "2026-11-27-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13768&Mode=0": {
+      "first_seen": "2026-11-27T14:06:07-05:00",
+      "run_id": "2026-11-27-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13767&Mode=0": {
+      "first_seen": "2026-11-27T14:06:07-05:00",
+      "run_id": "2026-11-27-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13766&Mode=0": {
+      "first_seen": "2026-11-27T14:06:07-05:00",
+      "run_id": "2026-11-27-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13765&Mode=0": {
+      "first_seen": "2026-11-27T14:06:07-05:00",
+      "run_id": "2026-11-27-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13764&Mode=0": {
+      "first_seen": "2026-11-27T14:06:07-05:00",
+      "run_id": "2026-11-27-1400",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13763&Mode=0": {
+      "first_seen": "2026-11-27T14:06:07-05:00",
+      "run_id": "2026-11-27-1400",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }

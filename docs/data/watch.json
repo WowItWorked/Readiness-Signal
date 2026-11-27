@@ -6,6 +6,83 @@
   ],
   "items": [
     {
+      "id": "c-3df80321bc",
+      "date": "2026-11-27",
+      "jurisdiction": "India",
+      "signal": "central bank; R3 draft SOP consulted Sep 2026 → final KYC directions for one bank type issued Nov 27; R4 debit holds on suspected mule accounts",
+      "publication": "Reserve Bank of India (RBI)",
+      "headline": "Reserve Bank of India (Urban Co-operative Banks - Know Your Customer) Second Amendment Directions, 2026",
+      "url": "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13767&Mode=0",
+      "judged": "live",
+      "run": "2026-11-27-1400"
+    },
+    {
+      "id": "c-3f76af26bc",
+      "date": "2026-11-27",
+      "jurisdiction": "India",
+      "signal": "central bank; R3 draft SOP consulted Sep 2026 → final KYC directions for one bank type issued Nov 27; R4 debit holds on suspected mule accounts",
+      "publication": "Reserve Bank of India (RBI)",
+      "headline": "Reserve Bank of India (Small Finance Banks - Know Your Customer) Second Amendment Directions, 2026",
+      "url": "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13764&Mode=0",
+      "judged": "live",
+      "run": "2026-11-27-1400"
+    },
+    {
+      "id": "c-4a5fe748a6",
+      "date": "2026-11-27",
+      "jurisdiction": "India",
+      "signal": "central bank; R3 draft SOP consulted Sep 2026 → final KYC directions for one bank type issued Nov 27; R4 debit holds on suspected mule accounts",
+      "publication": "Reserve Bank of India (RBI)",
+      "headline": "Reserve Bank of India (Regional Rural Banks - Know Your Customer) Second Amendment Directions, 2026",
+      "url": "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13766&Mode=0",
+      "judged": "live",
+      "run": "2026-11-27-1400"
+    },
+    {
+      "id": "c-64958bf1e5",
+      "date": "2026-11-27",
+      "jurisdiction": "India",
+      "signal": "central bank; R3 draft SOP consulted Sep 2026 → final KYC directions for one bank type issued Nov 27; R4 debit holds on suspected mule accounts",
+      "publication": "Reserve Bank of India (RBI)",
+      "headline": "Reserve Bank of India (Payment Banks - Know Your Customer) Amendment Directions, 2026",
+      "url": "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13768&Mode=0",
+      "judged": "live",
+      "run": "2026-11-27-1400"
+    },
+    {
+      "id": "c-7172009d2d",
+      "date": "2026-11-27",
+      "jurisdiction": "India",
+      "signal": "central bank; R3 draft SOP consulted Sep 2026 → final KYC amendment directions issued Nov 27; R4 temporary debit holds on suspected mule accounts, cyber-enabled fraud",
+      "publication": "Reserve Bank of India (RBI)",
+      "headline": "RBI Issues Amendment Directions on ‘Suspected Money Mule Accounts to Prevent Cyber-enabled Financial Frauds’",
+      "url": "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=64062",
+      "judged": "live",
+      "run": "2026-11-27-1400"
+    },
+    {
+      "id": "c-8524325dfb",
+      "date": "2026-11-27",
+      "jurisdiction": "India",
+      "signal": "central bank; R3 draft SOP consulted Sep 2026 → final KYC directions for one bank type issued Nov 27; R4 debit holds on suspected mule accounts",
+      "publication": "Reserve Bank of India (RBI)",
+      "headline": "Reserve Bank of India (Local Area Banks - Know Your Customer) Second Amendment Directions, 2026",
+      "url": "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13765&Mode=0",
+      "judged": "live",
+      "run": "2026-11-27-1400"
+    },
+    {
+      "id": "c-a9af244b66",
+      "date": "2026-11-27",
+      "jurisdiction": "India",
+      "signal": "central bank; R3 draft SOP consulted Sep 2026 → final KYC directions for one bank type issued Nov 27; R4 debit holds on suspected mule accounts",
+      "publication": "Reserve Bank of India (RBI)",
+      "headline": "Reserve Bank of India (Commercial Banks - Know Your Customer) Second Amendment Directions, 2026",
+      "url": "https://www.rbi.org.in/scripts/NotificationUser.aspx?Id=13763&Mode=0",
+      "judged": "live",
+      "run": "2026-11-27-1400"
+    },
+    {
       "id": "c-149ea118b2",
       "date": "2026-11-23",
       "jurisdiction": "India",

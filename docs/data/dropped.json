@@ -163,6 +163,19 @@
       "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
     },
     {
+      "id": "c-dc478ba580",
+      "date": "2026-11-27",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 fails: network monitoring platform zero-day with public exploit code; no persistence, control negation, ineffective patch, channel compromise or bank-common escalation shown [alt EV:E2]",
+      "publication": "BleepingComputer",
+      "headline": "Unpatched Cacti zero-day with public PoC gives remote code execution",
+      "url": "https://www.bleepingcomputer.com/news/security/unpatched-cacti-zero-day-with-public-poc-gives-remote-code-execution/",
+      "judged": "live",
+      "run": "2026-11-27-1400",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
       "id": "c-24f2738e7a",
       "date": "2026-11-26",
       "section": "executive_visibility",
