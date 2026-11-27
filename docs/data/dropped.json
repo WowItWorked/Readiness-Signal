@@ -137,6 +137,19 @@
       "run": "2026-11-27-0600"
     },
     {
+      "id": "c-83cdb5b566",
+      "date": "2026-11-27",
+      "section": "capability_shift",
+      "code": "CS_ROUTINE_VULN",
+      "reason": "C6 exploited flaw in a content platform with a patch available; no cs_routine_vuln_exceptions shown [alt EV:E2]",
+      "publication": "BleepingComputer",
+      "headline": "Drupal warns of new site takeover flaw exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/drupal-warns-of-new-access-bypass-flaw-exploited-in-attacks/",
+      "judged": "live",
+      "run": "2026-11-27-1000",
+      "alt": "Also tested as Executive Visibility: failed “Consequence floor”."
+    },
+    {
       "id": "c-ae2c9dfba4",
       "date": "2026-11-27",
       "section": "capability_shift",

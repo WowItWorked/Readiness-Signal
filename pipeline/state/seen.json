@@ -4512,6 +4512,18 @@
       "run_id": "2026-11-27-0600",
       "verdict": "dropped",
       "item_id": null
+    },
+    "https://www.bleepingcomputer.com/news/security/drupal-warns-of-new-access-bypass-flaw-exploited-in-attacks": {
+      "first_seen": "2026-11-27T10:06:28-05:00",
+      "run_id": "2026-11-27-1000",
+      "verdict": "dropped",
+      "item_id": null
+    },
+    "https://www.canada.ca/en/department-finance/news/2026/11/minister-champagne-will-visit-luxembourg-to-sign-the-defence-security-and-resilience-bank-agreement-and-strengthen-economic-ties.html": {
+      "first_seen": "2026-11-27T10:06:28-05:00",
+      "run_id": "2026-11-27-1000",
+      "verdict": "dropped",
+      "item_id": null
     }
   }
 }
